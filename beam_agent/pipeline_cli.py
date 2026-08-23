@@ -7,6 +7,10 @@
 Prints the generated queries, raw/deduped/filtered counts, and the top
 retained papers so results can be scanned by eye before anything downstream
 (Crossref validation, full-text retrieval, LLM extraction) touches them.
+
+Add --snapshot to also write a full reproducibility snapshot (see
+snapshot.py) to a timestamped run directory outside the git repo. Off by
+default -- a plain `--out results.json` run writes nothing but that one file.
 """
 
 from __future__ import annotations
@@ -16,6 +20,7 @@ import json
 import sys
 
 from beam_agent.pipeline import run_pipeline
+from beam_agent.snapshot import DEFAULT_RUNS_DIR, save_run_snapshot
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -32,6 +37,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", default=None, help="Optional JSON output path")
     parser.add_argument(
         "--show", type=int, default=10, help="How many top retained papers to print (default 10)"
+    )
+    parser.add_argument(
+        "--snapshot",
+        action="store_true",
+        help="Save a full reproducibility snapshot of this run (run_metadata.json, "
+        "queries.json, raw/deduplicated/retained/rejected JSON, report.md) to a "
+        f"timestamped directory under --snapshot-dir. Off by default.",
+    )
+    parser.add_argument(
+        "--snapshot-dir",
+        default=None,
+        help="Snapshot output root (default: outside the repo at "
+        f"{DEFAULT_RUNS_DIR}, or $BEAM_AGENT_RUNS_DIR if set). Only used with --snapshot.",
     )
     args = parser.parse_args(argv)
 
@@ -75,6 +93,20 @@ def main(argv: list[str] | None = None) -> int:
         with open(args.out, "w") as f:
             json.dump(payload, f, indent=2, ensure_ascii=False)
         print(f"\nWrote full result (including rejected papers) to {args.out}")
+
+    if args.snapshot:
+        run_dir = save_run_snapshot(result, runs_dir=args.snapshot_dir)
+        print(f"\nSnapshot saved to {run_dir}")
+        for name in (
+            "run_metadata.json",
+            "queries.json",
+            "raw_results.json",
+            "deduplicated.json",
+            "retained.json",
+            "rejected.json",
+            "report.md",
+        ):
+            print(f"  - {name}")
 
     return 0
 
