@@ -41,6 +41,12 @@ class Paper(BaseModel):
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
 
+    # Populated by a RelevanceFilter (see relevance_filter.py). None means
+    # "never scored" -- distinct from 0.0, which means "scored and found to
+    # have no lexical overlap with the query."
+    relevance_score: Optional[float] = None
+    matched_keywords: list[str] = Field(default_factory=list)
+
     def dedupe_key_doi(self) -> Optional[str]:
         """Normalized DOI for exact-match dedup, or None if no DOI."""
         if not self.doi:
