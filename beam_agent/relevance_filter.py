@@ -27,8 +27,8 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from beam_literature.models import Paper
-from beam_literature.text_utils import keywords, stem, stemmed_keywords
+from beam_agent.models import Paper
+from beam_agent.text_utils import keywords, stem, stemmed_keywords
 
 
 class RelevanceFilter(Protocol):

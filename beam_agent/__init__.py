@@ -1,4 +1,4 @@
-"""beam_literature: BEAM's pre-simulation literature + evidence layer.
+"""beam_agent: BEAM's pre-simulation literature + evidence layer.
 
 Currently implements the rule-based front half of the pipeline -- query
 expansion, multi-source search, dedupe, relevance filtering -- with no LLM
@@ -7,11 +7,11 @@ is meant to grow into (Crossref validation, full-text retrieval, LLM evidence
 extraction, the BEAM evidence schema + comparison layer).
 """
 
-from beam_literature.models import Paper
-from beam_literature.pipeline import PipelineResult, run_pipeline
-from beam_literature.query_expansion import QueryExpander, RuleBasedQueryExpander
-from beam_literature.relevance_filter import RelevanceFilter, RuleBasedRelevanceFilter
-from beam_literature.search import search_and_dedupe
+from beam_agent.models import Paper
+from beam_agent.pipeline import PipelineResult, run_pipeline
+from beam_agent.query_expansion import QueryExpander, RuleBasedQueryExpander
+from beam_agent.relevance_filter import RelevanceFilter, RuleBasedRelevanceFilter
+from beam_agent.search import search_and_dedupe
 
 __all__ = [
     "Paper",

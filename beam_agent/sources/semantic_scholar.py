@@ -15,7 +15,7 @@ from typing import Any
 
 import requests
 
-from beam_literature.models import ExternalIds, Paper
+from beam_agent.models import ExternalIds, Paper
 
 _BASE_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
 _FIELDS = ",".join(

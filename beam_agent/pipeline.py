@@ -20,12 +20,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from beam_literature.dedupe import dedupe_papers
-from beam_literature.models import Paper
-from beam_literature.query_expansion import QueryExpander, RuleBasedQueryExpander
-from beam_literature.relevance_filter import RelevanceFilter, RuleBasedRelevanceFilter
-from beam_literature.sources.openalex import search_openalex
-from beam_literature.sources.semantic_scholar import search_semantic_scholar
+from beam_agent.dedupe import dedupe_papers
+from beam_agent.models import Paper
+from beam_agent.query_expansion import QueryExpander, RuleBasedQueryExpander
+from beam_agent.relevance_filter import RelevanceFilter, RuleBasedRelevanceFilter
+from beam_agent.sources.openalex import search_openalex
+from beam_agent.sources.semantic_scholar import search_semantic_scholar
 
 
 @dataclass

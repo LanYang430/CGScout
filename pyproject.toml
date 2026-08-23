@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "beam-literature"
+name = "beam-agent"
 version = "0.1.0"
-description = "Phase 1 (search-only) pre-simulation literature layer for BEAM"
+description = "AI-assisted pre-simulation literature + evidence layer for BEAM (rule-based expand/search/filter so far; LLM extraction and decision support planned)"
 requires-python = ">=3.10"
 dependencies = [
     "requests>=2.31",
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["beam_literature*"]
+include = ["beam_agent*"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

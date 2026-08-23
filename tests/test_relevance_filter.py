@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from beam_literature.models import Paper
-from beam_literature.relevance_filter import RuleBasedRelevanceFilter
+from beam_agent.models import Paper
+from beam_agent.relevance_filter import RuleBasedRelevanceFilter
 
 
 def _paper(title: str, abstract: str | None = None) -> Paper:

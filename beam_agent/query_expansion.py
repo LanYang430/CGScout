@@ -25,7 +25,7 @@ from __future__ import annotations
 import re
 from typing import Protocol
 
-from beam_literature.text_utils import core_keyword_string
+from beam_agent.text_utils import core_keyword_string
 
 _SIZE_QUALIFIER_RE = re.compile(
     r"\b\d+[\s-]?(?:aa|kda|residues?|amino[\s-]?acids?)\b", re.IGNORECASE

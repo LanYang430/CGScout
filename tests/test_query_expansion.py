@@ -1,6 +1,6 @@
 """Unit tests for rule-based query expansion. No network calls."""
 
-from beam_literature.query_expansion import RuleBasedQueryExpander
+from beam_agent.query_expansion import RuleBasedQueryExpander
 
 
 def test_first_query_is_original_verbatim():

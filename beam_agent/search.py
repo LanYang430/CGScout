@@ -9,10 +9,10 @@ rank against.
 
 from __future__ import annotations
 
-from beam_literature.dedupe import dedupe_papers
-from beam_literature.models import Paper
-from beam_literature.sources.openalex import search_openalex
-from beam_literature.sources.semantic_scholar import search_semantic_scholar
+from beam_agent.dedupe import dedupe_papers
+from beam_agent.models import Paper
+from beam_agent.sources.openalex import search_openalex
+from beam_agent.sources.semantic_scholar import search_semantic_scholar
 
 
 def search_and_dedupe(

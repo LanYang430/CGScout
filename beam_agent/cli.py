@@ -1,6 +1,6 @@
 """Command-line entry point: run a search and write structured JSON to disk.
 
-    python -m beam_literature.cli "beta-helix protein folding coarse-grained model" \
+    python -m beam_agent.cli "beta-helix protein folding coarse-grained model" \
         --limit 20 --out results.json
 """
 
@@ -10,7 +10,7 @@ import argparse
 import json
 import sys
 
-from beam_literature.search import search_and_dedupe
+from beam_agent.search import search_and_dedupe
 
 
 def main(argv: list[str] | None = None) -> int:

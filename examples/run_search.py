@@ -3,7 +3,7 @@
     python examples/run_search.py
 """
 
-from beam_literature.search import search_and_dedupe
+from beam_agent.search import search_and_dedupe
 
 QUERY = "coarse-grained model protein folding beta-helix"
 

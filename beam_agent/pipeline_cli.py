@@ -1,6 +1,6 @@
 """CLI for the Phase 1.5 pipeline: expand -> search -> dedupe -> filter.
 
-    python -m beam_literature.pipeline_cli \
+    python -m beam_agent.pipeline_cli \
         "200-aa beta-helix protein folding coarse-grained model" \
         --limit-per-query 15 --out results.json
 
@@ -15,7 +15,7 @@ import argparse
 import json
 import sys
 
-from beam_literature.pipeline import run_pipeline
+from beam_agent.pipeline import run_pipeline
 
 
 def main(argv: list[str] | None = None) -> int:

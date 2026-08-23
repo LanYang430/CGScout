@@ -16,7 +16,7 @@ and `external_ids` so provenance from both is preserved.
 
 from __future__ import annotations
 
-from beam_literature.models import Paper
+from beam_agent.models import Paper
 
 
 def _richness(p: Paper) -> tuple[int, int, int]:
