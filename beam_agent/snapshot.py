@@ -4,9 +4,10 @@ Nothing in this module runs automatically. `run_pipeline()` (pipeline.py) has
 no knowledge this module exists and performs no file I/O of its own --
 snapshotting is opt-in at the outermost layer only: the CLI's `--snapshot`
 flag, or calling `save_run_snapshot()` yourself with a `PipelineResult`. That
-keeps the low-level search/expand/dedupe/filter functions free of I/O side
-effects and means snapshot logic lives in exactly one place instead of being
-threaded through every function that happens to produce data worth keeping.
+keeps the low-level resolve/plan/search/dedupe/filter/assess functions free
+of I/O side effects and means snapshot logic lives in exactly one place
+instead of being threaded through every function that happens to produce
+data worth keeping.
 
 Snapshots are written *outside* the git repository by default -- a sibling of
 the repo root, `../beam_agent_runs/` -- specifically so run outputs are never
@@ -60,6 +61,9 @@ def _dump_json(path: Path, payload: object) -> None:
 
 
 def _render_report(result: PipelineResult, run_id: str, timestamp_utc: str) -> str:
+    profile = result.concept_profile
+    summary = result.evidence_summary()
+
     lines = [
         f"# BEAM literature run `{run_id}`",
         "",
@@ -68,13 +72,35 @@ def _render_report(result: PipelineResult, run_id: str, timestamp_utc: str) -> s
         f"- **Sources:** {', '.join(result.sources)}",
         f"- **Limit per query:** {result.limit_per_query}",
         f"- **Pipeline version:** {PIPELINE_VERSION}",
-        f"- **Query expander:** {result.expander_config}",
+        f"- **Concept resolver:** {result.resolver_config}",
+        f"- **Query planner:** {result.planner_config}",
         f"- **Relevance filter:** {result.filter_config}",
+        f"- **Evidence extractor:** {result.extractor_config}",
         "",
-        "## Expanded queries",
+        "## Concept profile",
         "",
     ]
-    lines += [f"- {q!r}" for q in result.expanded_queries]
+
+    def _term_lines(label: str, terms) -> list[str]:
+        if not terms:
+            return [f"- **{label}:** (none)"]
+        rendered = [f"{t.term} ({', '.join(t.synonyms)})" if t.synonyms else t.term for t in terms]
+        return [f"- **{label}:** {', '.join(rendered)}"]
+
+    lines += _term_lines("Structural terms", profile.structural_terms)
+    lines += _term_lines("Related families", profile.related_families)
+    lines += _term_lines("Representative systems", profile.representative_systems)
+    lines += _term_lines("Scientific tasks", profile.scientific_tasks)
+    lines += _term_lines("Methodology terms", profile.methodology_terms)
+    lines.append(
+        "- **Size constraints:** "
+        + (", ".join(c.raw_text for c in profile.size_constraints) or "(none)")
+    )
+    lines.append("- **Other (uncategorized) terms:** " + (", ".join(profile.other_constraints) or "(none)"))
+
+    lines += ["", "## Planned queries", ""]
+    for pq in result.query_plan.queries:
+        lines.append(f"- `[{pq.category}]` {pq.query!r} -- {pq.rationale or ''}")
 
     lines += [
         "",
@@ -82,8 +108,12 @@ def _render_report(result: PipelineResult, run_id: str, timestamp_utc: str) -> s
         "",
         f"- Raw candidates: {result.raw_candidate_count}",
         f"- After dedup: {result.deduped_count}",
-        f"- Retained: {result.filtered_count}",
-        f"- Rejected: {len(result.rejected_papers)}",
+        f"- Retained (Stage 3, cheap filter): {result.filtered_count}",
+        f"- Rejected (Stage 3): {len(result.rejected_papers)}",
+        f"- Evidence extracted (Stage 4a): {summary['extracted']} ({summary['no_abstract']} skipped, no abstract)",
+        f"- With process evidence: {summary['with_process_evidence']}",
+        f"- With method evidence: {summary['with_method_evidence']}",
+        f"- With system evidence: {summary['with_system_evidence']}",
         "",
     ]
 
@@ -93,19 +123,24 @@ def _render_report(result: PipelineResult, run_id: str, timestamp_utc: str) -> s
         lines.append("")
 
     lines += [
-        "## Retained papers",
+        "## Stage 4a evidence extraction",
         "",
-        "| Score | Year | Sources | Title | DOI |",
-        "|---|---|---|---|---|",
+        "| Score | Year | Sources | Title | DOI | Model class | Processes |",
+        "|---|---|---|---|---|---|---|",
     ]
-    for p in result.retained_papers:
+    for p in result.evidence_papers:
         tag = "+".join(p.sources)
         score = f"{p.relevance_score:.1f}" if p.relevance_score is not None else ""
         title = p.title.replace("|", "\\|")
-        lines.append(f"| {score} | {p.year or ''} | {tag} | {title} | {p.doi or ''} |")
+        ev = p.evidence
+        model_class = ", ".join(ev.method.model_class) if ev else ""
+        processes = ", ".join(i.normalized_label for i in ev.processes) if ev else ""
+        lines.append(
+            f"| {score} | {p.year or ''} | {tag} | {title} | {p.doi or ''} | {model_class} | {processes} |"
+        )
 
     if result.rejected_papers:
-        lines += ["", "## Rejected papers", "", "| Score | Title |", "|---|---|"]
+        lines += ["", "## Rejected papers (Stage 3)", "", "| Score | Title |", "|---|---|"]
         for p in result.rejected_papers:
             score = f"{p.relevance_score:.1f}" if p.relevance_score is not None else ""
             title = p.title.replace("|", "\\|")
@@ -125,14 +160,17 @@ def save_run_snapshot(
     Creates `<runs_dir>/<run_id>/` (default run_id: today's UTC date plus the
     next sequence number, e.g. `2026-08-23_001`) containing:
 
-        run_metadata.json   query, timestamp, sources, limits, version,
-                             component config, counts at each stage
-        queries.json         user_query + all expanded queries
-        raw_results.json     every candidate before dedup (duplicates included)
-        deduplicated.json    candidates after cross-source/cross-query dedup
-        retained.json        candidates that passed the relevance filter
-        rejected.json        candidates the relevance filter dropped
-        report.md            human-readable summary of all of the above
+        run_metadata.json      query, timestamp, sources, limits, version,
+                                every component's config, counts at each stage
+        concept_profile.json   the resolved ScientificConceptProfile
+        queries.json           the full QueryPlan (categories + rationale)
+        raw_results.json       every candidate before dedup (duplicates included)
+        deduplicated.json      candidates after cross-source/cross-query dedup
+        retained.json          candidates that passed the Stage 3 cheap filter
+        rejected.json          candidates the Stage 3 cheap filter dropped
+        paper_evidence.json    Stage 4a output: retained papers annotated
+                                with their extracted PaperEvidence
+        report.md              human-readable summary of all of the above
 
     Returns the run directory path. Raises if `run_id` is given explicitly and
     already exists (auto-generated ids never collide by construction).
@@ -145,6 +183,7 @@ def save_run_snapshot(
     run_dir.mkdir(parents=False, exist_ok=False)
 
     timestamp_utc = datetime.now(timezone.utc).isoformat()
+    summary = result.evidence_summary()
 
     metadata = {
         "run_id": resolved_run_id,
@@ -153,27 +192,37 @@ def save_run_snapshot(
         "sources": list(result.sources),
         "limit_per_query": result.limit_per_query,
         "pipeline_version": PIPELINE_VERSION,
-        "query_expander": result.expander_config,
+        "concept_resolver": result.resolver_config,
+        "query_planner": result.planner_config,
         "relevance_filter": result.filter_config,
+        "evidence_extractor": result.extractor_config,
         "counts": {
-            "expanded_queries": len(result.expanded_queries),
+            "planned_queries": len(result.query_plan.queries),
+            "unique_queries_searched": len(result.expanded_queries),
             "raw_candidates": result.raw_candidate_count,
             "deduplicated": result.deduped_count,
             "retained": result.filtered_count,
             "rejected": len(result.rejected_papers),
+            **summary,
         },
         "source_errors": result.source_errors,
     }
 
     _dump_json(run_dir / "run_metadata.json", metadata)
-    _dump_json(
-        run_dir / "queries.json",
-        {"user_query": result.user_query, "expanded_queries": result.expanded_queries},
-    )
+    _dump_json(run_dir / "concept_profile.json", result.concept_profile.model_dump())
+    _dump_json(run_dir / "queries.json", result.query_plan.model_dump())
     _dump_json(run_dir / "raw_results.json", [p.model_dump() for p in result.raw_papers])
     _dump_json(run_dir / "deduplicated.json", [p.model_dump() for p in result.deduped_papers])
     _dump_json(run_dir / "retained.json", [p.model_dump() for p in result.retained_papers])
     _dump_json(run_dir / "rejected.json", [p.model_dump() for p in result.rejected_papers])
+    _dump_json(
+        run_dir / "paper_evidence.json",
+        {
+            "extractor": result.extractor_config,
+            "counts": summary,
+            "papers": [p.model_dump() for p in result.evidence_papers],
+        },
+    )
 
     with open(run_dir / "report.md", "w") as f:
         f.write(_render_report(result, resolved_run_id, timestamp_utc))

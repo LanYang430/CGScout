@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "beam-agent"
 version = "0.1.0"
-description = "AI-assisted pre-simulation literature + evidence layer for BEAM (rule-based expand/search/filter so far; LLM extraction and decision support planned)"
+description = "AI-assisted pre-simulation literature + evidence layer for BEAM (rule-based resolve/plan/search/filter through Stage 3; single-pass LLM-backed evidence extraction at Stage 4a; deterministic System/Process/Method matching and ranking at Stage 4b/5)"
 requires-python = ">=3.10"
 dependencies = [
     "requests>=2.31",

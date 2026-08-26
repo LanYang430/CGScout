@@ -61,6 +61,33 @@ def test_different_papers_stay_separate():
     assert len(result) == 2
 
 
+def test_doi_paper_then_later_no_doi_duplicate_does_not_crash():
+    # Real crash: a paper with a DOI creates a "doi::..." merge group. A
+    # later, different raw record for the same paper -- same title+year, but
+    # missing a DOI (e.g. one source/query variant just didn't return it) --
+    # used to look itself up under a "ty::..." key that had never actually
+    # been registered in merged_by_key (only the "doi::..." key had been),
+    # raising KeyError. See dedupe.py's dedupe_papers docstring for the fix.
+    with_doi = _paper(
+        title="Autotransporter folding avoids a kinetic trap",
+        year=2026,
+        doi="10.1/x",
+        sources=["semantic_scholar"],
+    )
+    without_doi = _paper(
+        title="Autotransporter folding avoids a kinetic trap",
+        year=2026,
+        doi=None,
+        sources=["openalex"],
+    )
+
+    result = dedupe_papers([with_doi, without_doi])
+
+    assert len(result) == 1
+    assert set(result[0].sources) == {"semantic_scholar", "openalex"}
+    assert result[0].doi == "10.1/x"  # DOI preserved through the merge
+
+
 def test_richer_record_wins_as_base():
     sparse = _paper(title="Same Paper", year=2020, doi="10.1/x", abstract=None, url=None)
     rich = _paper(
