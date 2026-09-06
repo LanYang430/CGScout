@@ -10,8 +10,10 @@ Strategy, in order:
 2. Fallback: normalized title + year match, for papers missing a DOI on one side.
 
 When two Paper records merge, we keep the richer one as the base (prefer whichever
-already has an abstract / DOI / more fields filled in) and union their `sources`
-and `external_ids` so provenance from both is preserved.
+already has an abstract / DOI / more fields filled in) and union their `sources`,
+`found_by_queries`, `query_categories`, and `external_ids` so provenance from both
+is preserved -- a paper found by two different planned queries, or by both
+sources, keeps every query/source that found it after merging into one record.
 """
 
 from __future__ import annotations
@@ -33,6 +35,8 @@ def _merge(a: Paper, b: Paper) -> Paper:
     merged = base.model_copy(deep=True)
 
     merged.sources = sorted(set(base.sources) | set(other.sources))
+    merged.found_by_queries = sorted(set(base.found_by_queries) | set(other.found_by_queries))
+    merged.query_categories = sorted(set(base.query_categories) | set(other.query_categories))
 
     if not merged.doi and other.doi:
         merged.doi = other.doi

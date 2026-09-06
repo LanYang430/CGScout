@@ -49,6 +49,14 @@ def search_openalex(
     mailto = os.environ.get("OPENALEX_MAILTO")
     if mailto:
         params["mailto"] = mailto
+    # OpenAlex's current (2026) usage-based pricing: keyless/anonymous callers
+    # get a $0.10/day budget (~10 search requests/day at 10 credits each); a
+    # free API key raises that 10x to $1/day. Opt-in via env var, same
+    # reasoning as OPENALEX_MAILTO above -- never hardcoded, since it's the
+    # user's own key.
+    api_key = os.environ.get("OPENALEX_API_KEY")
+    if api_key:
+        params["api_key"] = api_key
 
     last_error: Exception | None = None
     for attempt in range(max_retries):

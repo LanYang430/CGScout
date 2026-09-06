@@ -9,25 +9,65 @@ rank against.
 
 from __future__ import annotations
 
+from beam_agent import cache
 from beam_agent.dedupe import dedupe_papers
 from beam_agent.models import Paper
+from beam_agent.pipeline import group_queries_by_normalized_key, stamp_provenance
+from beam_agent.query_planner import QueryPlan
 from beam_agent.sources.openalex import search_openalex
 from beam_agent.sources.semantic_scholar import search_semantic_scholar
+
+_SEARCH_CACHE_NAMESPACE = "search_and_dedupe"
+# v1: 24h, simple and fixed -- OpenAlex/Semantic Scholar indexing and ranking
+# both change over time, unlike the Hop-1/Stage-4 extraction caches (whose
+# key already fully determines the answer: paper content + exact prompt/
+# schema/model). Past this age a cached entry is treated as a miss and
+# overwritten with a fresh result, exactly like any other miss.
+_SEARCH_CACHE_TTL_SECONDS = 24 * 60 * 60
 
 
 def search_and_dedupe(
     query: str,
     limit: int = 20,
     *,
-    sources: tuple[str, ...] = ("semantic_scholar", "openalex"),
+    sources: tuple[str, ...] = ("openalex",),
 ) -> list[Paper]:
     """Search the given sources, merge duplicates, and return a ranked list.
+
+    v1: defaults to OpenAlex only -- Semantic Scholar removed from the
+    default, not just deprioritized. Diagnosed live against this session's
+    canonical case (no S2_API_KEY set in this environment): all 5 real
+    flat-route queries failed after exhausting retries against S2's
+    unauthenticated rate limit, contributing exactly 0 papers, while still
+    costing ~10.5s/query (~40s total) in retry/backoff before giving up --
+    pure waste, not a recall/speed tradeoff. Callers that want Semantic
+    Scholar back (e.g. with an S2_API_KEY) can still pass
+    sources=("semantic_scholar", "openalex") explicitly; nothing about
+    search_semantic_scholar() itself changed.
 
     A failure in one source is not fatal to the other -- this is a search
     agent, not a database transaction; partial results with a note beats no
     results. Failures are printed to stderr-equivalent via a raised warning
     collected in `errors` accessible through `search_and_dedupe.last_errors`.
+
+    Dev-speed cache (beam_agent.cache): keyed on (query, limit, sources) --
+    the exact inputs that determine what this function asks the sources for.
+    Only a call with ZERO source errors is ever cached, so a rate-limit/
+    timeout/malformed-response is never mistaken for "this query genuinely
+    has no results" and baked in permanently. A cache hit reproduces the
+    same Paper list (same fields, same order) a fresh call would have
+    returned at cache-write time -- the ranking/dedupe logic below is
+    identical on both paths, only the network round-trip is skipped.
+    Entries older than _SEARCH_CACHE_TTL_SECONDS are treated as a miss and
+    re-fetched + overwritten -- OpenAlex/S2 indexing and ranking both drift
+    over time, unlike the paper-content-keyed extraction caches.
     """
+    cache_key = cache.content_hash(query, str(limit), ",".join(sorted(sources)))
+    cached = cache.get(_SEARCH_CACHE_NAMESPACE, cache_key, ttl_seconds=_SEARCH_CACHE_TTL_SECONDS)
+    if cached is not None:
+        search_and_dedupe.last_errors = []  # type: ignore[attr-defined] -- only error-free results are ever cached
+        return [Paper.model_validate(d) for d in cached]
+
     raw: list[Paper] = []
     errors: list[str] = []
 
@@ -47,7 +87,77 @@ def search_and_dedupe(
 
     deduped = dedupe_papers(raw)
     deduped.sort(key=lambda p: len(p.sources), reverse=True)
-    return deduped[:limit] if limit else deduped
+    result = deduped[:limit] if limit else deduped
+
+    if not errors:
+        cache.set(_SEARCH_CACHE_NAMESPACE, cache_key, [p.model_dump(mode="json") for p in result])
+
+    return result
 
 
 search_and_dedupe.last_errors = []  # type: ignore[attr-defined]
+
+
+DEFAULT_PER_SOURCE_LIMIT_PER_QUERY = 5
+
+
+def execute_query_plan(
+    plan: QueryPlan,
+    per_source_limit: int = DEFAULT_PER_SOURCE_LIMIT_PER_QUERY,
+    *,
+    sources: tuple[str, ...] = ("semantic_scholar", "openalex"),
+) -> list[Paper]:
+    """Execute every PlannedQuery in a QueryPlan (e.g. from
+    query_planner_handoff.plan_from_retrieval_intent(), or from a plain
+    BaselineQueryPlanner.plan()) against the given sources, stamp
+    provenance, dedupe, and return one combined list of Papers.
+
+    Reuses group_queries_by_normalized_key()/stamp_provenance() from
+    pipeline.py -- the exact same helpers run_pipeline()'s own per-query
+    loop already uses -- rather than duplicating that logic. This function
+    differs from run_pipeline() only in starting from an already-built
+    QueryPlan instead of running a ConceptResolver+QueryPlanner pass
+    itself, and in defaulting to a much smaller per-query limit (5, not
+    15) suited to an interactive first-round search rather than the heavy
+    batch pipeline.
+
+    Each source fails independently -- a failure in one never prevents
+    results from the other, matching search_and_dedupe()'s behavior above.
+    Failures are collected in `execute_query_plan.last_errors` (same
+    pattern) rather than raised. `execute_query_plan.last_raw_papers`
+    additionally exposes the pre-dedup list, so a caller can report
+    accurate per-source hit counts (dedupe merges make post-dedup counts
+    misleading for that purpose). If every source x query combination
+    fails, this returns an empty list -- never raises -- so the caller is
+    responsible for turning "no results and errors present" into a clear
+    user-facing failure message rather than a silent empty result.
+    """
+    grouped_queries = group_queries_by_normalized_key(plan.queries)
+
+    raw: list[Paper] = []
+    errors: list[str] = []
+
+    for query, categories in grouped_queries.values():
+        if "semantic_scholar" in sources:
+            try:
+                papers = search_semantic_scholar(query, limit=per_source_limit)
+                stamp_provenance(papers, query=query, categories=categories)
+                raw.extend(papers)
+            except Exception as exc:  # noqa: BLE001
+                errors.append(f"semantic_scholar[{query!r}]: {exc}")
+        if "openalex" in sources:
+            try:
+                papers = search_openalex(query, limit=per_source_limit)
+                stamp_provenance(papers, query=query, categories=categories)
+                raw.extend(papers)
+            except Exception as exc:  # noqa: BLE001
+                errors.append(f"openalex[{query!r}]: {exc}")
+
+    execute_query_plan.last_errors = errors  # type: ignore[attr-defined]
+    execute_query_plan.last_raw_papers = raw  # type: ignore[attr-defined]
+
+    return dedupe_papers(raw)
+
+
+execute_query_plan.last_errors = []  # type: ignore[attr-defined]
+execute_query_plan.last_raw_papers = []  # type: ignore[attr-defined]

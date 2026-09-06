@@ -309,10 +309,12 @@ Each entry is a `Paper` (see `beam_agent/models.py`):
   (or a dedicated, carefully-grounded field), not attempted yet.
 - No natural-language-to-`FilterCriteria` translation yet -- a user (or an agent
   acting for them) constructs `FilterCriteria` directly for now
-- `ConceptResolver`'s baseline never populates `related_families` or
-  `representative_systems` from raw text alone -- it uses a small, explicitly-tagged
-  (`source="baseline-curated"`) hand-curated association table keyed off matched
-  structural terms, not a general protein database (see `concept_resolver.py`)
+- `related_families`/`representative_systems` remain on `ScientificConceptProfile`
+  for backward compatibility but are no longer populated by any resolver -- the old
+  hardcoded beta-helix-only association table was removed. `LLMConceptResolver`'s
+  `expanded_concepts` (LLM-proposed, `term`/`relationship`/`basis`, no numeric
+  confidence) replaces it, but `QueryPlanner` doesn't consume `expanded_concepts`
+  yet -- that's the next integration step, not done (see `concept_resolver.py`)
 - No integration with BEAM's post-simulation analysis code
 
 Those are later phases per the BEAM plan; keeping each stage swappable behind its

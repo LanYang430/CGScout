@@ -88,6 +88,131 @@ def test_doi_paper_then_later_no_doi_duplicate_does_not_crash():
     assert result[0].doi == "10.1/x"  # DOI preserved through the merge
 
 
+def test_provenance_one_paper_one_query_one_source():
+    a = _paper(
+        title="Coarse-grained folding of beta-helix proteins",
+        doi="10.1/prov1",
+        sources=["openalex"],
+        found_by_queries=["beta-helix coarse-grained folding"],
+        query_categories=["system_specific"],
+    )
+
+    result = dedupe_papers([a])
+
+    assert len(result) == 1
+    assert result[0].found_by_queries == ["beta-helix coarse-grained folding"]
+    assert result[0].query_categories == ["system_specific"]
+    assert result[0].sources == ["openalex"]
+
+
+def test_provenance_same_paper_from_openalex_and_semantic_scholar():
+    a = _paper(
+        title="Coarse-grained folding of beta-helix proteins",
+        doi="10.1/prov2",
+        sources=["semantic_scholar"],
+        found_by_queries=["beta-helix folding"],
+        query_categories=["system_specific"],
+    )
+    b = _paper(
+        title="Coarse-grained folding of beta-helix proteins",
+        doi="10.1/prov2",
+        sources=["openalex"],
+        found_by_queries=["beta-helix folding"],
+        query_categories=["system_specific"],
+    )
+
+    result = dedupe_papers([a, b])
+
+    assert len(result) == 1
+    merged = result[0]
+    assert set(merged.sources) == {"semantic_scholar", "openalex"}
+    # same query on both sources -- union stays a single entry, not duplicated
+    assert merged.found_by_queries == ["beta-helix folding"]
+    assert merged.query_categories == ["system_specific"]
+
+
+def test_provenance_same_paper_found_by_two_different_queries():
+    a = _paper(
+        title="Coarse-grained folding of beta-helix proteins",
+        doi="10.1/prov3",
+        sources=["openalex"],
+        found_by_queries=["beta-helix protein folding"],
+        query_categories=["system_specific"],
+    )
+    b = _paper(
+        title="Coarse-grained folding of beta-helix proteins",
+        doi="10.1/prov3",
+        sources=["openalex"],
+        found_by_queries=["coarse-grained model protein folding"],
+        query_categories=["general_discovery"],
+    )
+
+    result = dedupe_papers([a, b])
+
+    assert len(result) == 1
+    merged = result[0]
+    assert set(merged.found_by_queries) == {"beta-helix protein folding", "coarse-grained model protein folding"}
+    assert set(merged.query_categories) == {"system_specific", "general_discovery"}
+    assert merged.sources == ["openalex"]
+
+
+def test_provenance_same_paper_two_queries_and_two_sources():
+    a = _paper(
+        title="Coarse-grained folding of beta-helix proteins",
+        doi="10.1/prov4",
+        sources=["semantic_scholar"],
+        found_by_queries=["beta-helix protein folding"],
+        query_categories=["system_specific"],
+    )
+    b = _paper(
+        title="Coarse-grained folding of beta-helix proteins",
+        doi="10.1/prov4",
+        sources=["openalex"],
+        found_by_queries=["coarse-grained model protein folding"],
+        query_categories=["general_discovery"],
+    )
+
+    result = dedupe_papers([a, b])
+
+    assert len(result) == 1
+    merged = result[0]
+    assert set(merged.sources) == {"semantic_scholar", "openalex"}
+    assert set(merged.found_by_queries) == {"beta-helix protein folding", "coarse-grained model protein folding"}
+    assert set(merged.query_categories) == {"system_specific", "general_discovery"}
+
+
+def test_provenance_union_survives_richness_based_base_selection():
+    # _merge() picks whichever record is "richer" as the base -- confirm
+    # provenance still unions correctly regardless of which side becomes
+    # base vs. other (the field-completeness winner has nothing to do with
+    # which side's provenance is kept).
+    sparse = _paper(
+        title="Same Paper",
+        doi="10.1/prov5",
+        abstract=None,
+        sources=["semantic_scholar"],
+        found_by_queries=["query one"],
+        query_categories=["system_specific"],
+    )
+    rich = _paper(
+        title="Same Paper",
+        doi="10.1/prov5",
+        abstract="Full abstract text.",
+        sources=["openalex"],
+        found_by_queries=["query two", "query three"],
+        query_categories=["general_discovery"],
+    )
+
+    result = dedupe_papers([sparse, rich])
+
+    assert len(result) == 1
+    merged = result[0]
+    assert merged.abstract == "Full abstract text."  # richer record correctly won as base
+    assert set(merged.found_by_queries) == {"query one", "query two", "query three"}
+    assert set(merged.query_categories) == {"system_specific", "general_discovery"}
+    assert set(merged.sources) == {"semantic_scholar", "openalex"}
+
+
 def test_richer_record_wins_as_base():
     sparse = _paper(title="Same Paper", year=2020, doi="10.1/x", abstract=None, url=None)
     rich = _paper(

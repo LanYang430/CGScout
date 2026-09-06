@@ -9,65 +9,57 @@ scientifically" from "what search strings should we run" -- the query planner
 consumes the profile, not raw text, so query strategy and concept
 understanding can evolve independently (see query_planner.py).
 
-Categories captured, each a list of `ConceptTerm` (a canonical term plus
-synonyms) except `size_constraints`:
+Two layers, deliberately different in how far they generalize:
 
-- `structural_terms`     the protein/system's structural class, e.g. beta-helix
-- `related_families`     broader biological families it belongs to, e.g.
-                          autotransporter passenger domains
-- `representative_systems`  specific proteins/systems, when identifiable
-- `scientific_tasks`     the actual scientific goal, e.g. protein folding,
-                          folding kinetics
-- `methodology_terms`    the modeling/computational approach, e.g.
-                          coarse-grained, molecular dynamics -- not one of the
-                          four categories named in the original spec, but a
-                          natural fifth bucket: it's neither a structural
-                          property of the system nor the scientific task, and
-                          the query planner needs it separately from both
-- `size_constraints`     numeric constraints like "200-aa"
-- `other_constraints`    leftover content words not confidently categorized
-                          into any of the above (kept, not discarded, so
-                          nothing silently vanishes)
+Layer 0 -- lexical vocabulary matching (`BaselineConceptResolver`, no LLM):
+- `structural_terms`, `methodology_terms`, `scientific_tasks` -- small
+  synonym-cluster tables (generic vocabulary, not protein names -- "beta-helix"
+  recognizes "beta-solenoid"/"parallel beta-helix" as surface synonyms, not as
+  a claim about what else is related to it). Genuinely generalizes to any term
+  actually in these tables.
+- `size_constraints` -- numeric constraints like "200-aa", via regex.
+- `other_constraints` -- leftover content words not confidently categorized
+  into any of the above (kept, not discarded, so nothing silently vanishes).
 
-`BaselineConceptResolver` is deliberately limited: it recognizes structural/
-methodology/task terms via small synonym-cluster tables (same pattern as the
-old query_expansion.py's synonym table -- generic vocabulary, not protein
-names) and extracts size constraints via regex.
+Layer 1 -- scientific concept expansion (`expanded_concepts`, LLM-backed only,
+see `LLMConceptResolver`): earlier versions of this module had a second,
+separate mechanism here -- `related_families`/`representative_systems`
+populated from a small hand-curated *association* table keyed off an exact
+structural-term match (e.g. `"beta-helix" -> ["autotransporter passenger
+domains", "phage tailspike proteins"]`). That table had exactly one key
+("beta-helix") and could never produce anything for a system it wasn't
+specifically pre-typed for -- not a mechanism, a single hardcoded worked
+example. It has been removed entirely (see git history for the old
+`_STRUCTURAL_TERM_FAMILY_ASSOCIATIONS`/`_STRUCTURAL_TERM_SYSTEM_ASSOCIATIONS`
+tables and `_curated_associations()`).
 
-`related_families` and `representative_systems` come from a second, separate
-mechanism: a small hand-curated *association* table keyed off already-matched
-structural terms (e.g. `"beta-helix" -> ["autotransporter passenger domains",
-"phage tailspike proteins"]`). This is real domain knowledge, not lexical
-pattern-matching, so it's held to a higher bar of honesty about what it is:
+`expanded_concepts` (a list of `ExpandedConcept`) replaces it: given the raw
+query, an LLM is asked to propose scientifically related concepts worth
+including in a literature search, and -- critically -- to explain, in its own
+words, what kind of relationship each one has to the described system
+(`relationship`) and why it's proposing it (`basis`). There is no fixed
+taxonomy the model is asked to fill in; it decides how many concepts to
+propose and what kinds of relationships are worth naming. Every concept is
+tagged `source="llm-proposed"` -- deliberately not scored with a numeric
+confidence (an LLM's self-reported confidence on its own scientific claims is
+not a calibrated signal worth trusting as a filter or a rank). If a concept's
+reliability needs to be judged later, that should come from something outside
+the LLM's own opinion of itself -- e.g. corroboration against papers actually
+retrieved using it, or human review -- not a number it made up about itself.
 
-- It is intentionally tiny (currently one structural term with associations)
-  and exists to prove the architecture carries this kind of knowledge
-  end-to-end into query planning -- it is NOT an attempt at a general protein
-  or biological-family database, and adding entries for every structural
-  motif this resolver recognizes would be exactly the kind of large hardcoded
-  protein list this module should avoid.
-- Every association-derived `ConceptTerm` is tagged `source="baseline-curated"`
-  (distinct from the plain `"baseline"` used for lexical matches) and given
-  `confidence < 1.0`, because it's an inference from the structural term, not
-  something the user's own text said. A future LLM-backed resolver, or an
-  external ontology/database check, should be expected to overwrite or
-  corroborate these -- that's what the distinct provenance tag is for.
-
-`confidence` and `source` on every `ConceptTerm` are the hook for later
-external verification (e.g. an LLM-proposed or baseline-curated family
-checked against a real ontology/database and re-tagged
-`source="external:<db>"`) without needing a separate verifier protocol yet --
-the schema already has room for it.
-
-`ConceptResolver` is a Protocol specifically so an LLM-backed resolver can be
-dropped in later without changing anything that calls it.
+`ConceptResolver` is a Protocol so `LLMConceptResolver` can be dropped in (or
+swapped for a different backend) without changing anything that calls it;
+`BaselineConceptResolver` (Layer 0 only, no LLM, no `expanded_concepts`)
+remains available as the no-LLM fallback/baseline.
 """
 
 from __future__ import annotations
 
+import json
 import re
-from typing import Protocol
+from typing import Optional, Protocol
 
+import requests
 from pydantic import BaseModel, Field
 
 from beam_agent.text_utils import STOPWORDS, keywords, stem, tokenize
@@ -104,33 +96,6 @@ _SIZE_CONSTRAINT_RE = re.compile(
     r"\b(\d+)[\s-]?(aa|kda|residues?|amino[\s-]?acids?)\b", re.IGNORECASE
 )
 
-# Small, hand-curated associations from a *matched structural term* to
-# biological families / representative systems known to exhibit it. Each
-# value is a list of (canonical_term, [synonyms]) -- same shape as the
-# lexical clusters above, but this table encodes domain knowledge, not
-# vocabulary, hence the separate confidence/provenance treatment in
-# _curated_associations() below. See the module docstring for why this stays
-# intentionally tiny rather than growing into a protein database.
-_STRUCTURAL_TERM_FAMILY_ASSOCIATIONS: dict[str, list[tuple[str, list[str]]]] = {
-    "beta-helix": [
-        ("autotransporter passenger domains", ["autotransporter passenger domain"]),
-        ("phage tailspike proteins", ["bacteriophage tailspike proteins", "tailspike proteins"]),
-    ],
-}
-
-_STRUCTURAL_TERM_SYSTEM_ASSOCIATIONS: dict[str, list[tuple[str, list[str]]]] = {
-    "beta-helix": [
-        ("pertactin", []),
-        ("P22 tailspike", ["P22 tailspike protein", "bacteriophage P22 tailspike"]),
-    ],
-}
-
-# Confidence assigned to every baseline-curated association: lower than the
-# 1.0 used for direct lexical matches, since this is an inference ("beta-helix
-# structures include autotransporter passenger domains") rather than
-# something the user's own query text said.
-_CURATED_ASSOCIATION_CONFIDENCE = 0.6
-
 
 class ConceptTerm(BaseModel):
     term: str
@@ -145,6 +110,31 @@ class SizeConstraint(BaseModel):
     raw_text: str
 
 
+class ExpandedConcept(BaseModel):
+    """One LLM-proposed, scientifically related concept worth including in a
+    literature search -- see the module docstring for the full design
+    rationale (this replaces the old hardcoded association table). No
+    numeric confidence by design: an LLM's self-reported score on its own
+    scientific claim is not a calibrated signal. If reliability needs
+    judging later, it should come from outside the LLM's own opinion of
+    itself -- e.g. corroborating it against papers actually retrieved using
+    it, or human review.
+    """
+
+    term: str
+    relationship: str = Field(
+        description="What kind of relationship this concept has to the described system, in the model's own "
+        "words -- not a fixed category. E.g. a structural/fold synonym, a broader or narrower fold family, a "
+        "biological system class known to exhibit the described feature, a specific well-characterized example, "
+        "or anything else with a genuine scientific basis."
+    )
+    basis: str = Field(
+        description="Why this concept is being proposed -- a real structural/biological reason, not a "
+        "restatement of the term."
+    )
+    source: str = "llm-proposed"
+
+
 class ScientificConceptProfile(BaseModel):
     raw_query: str
     structural_terms: list[ConceptTerm] = Field(default_factory=list)
@@ -154,10 +144,21 @@ class ScientificConceptProfile(BaseModel):
     methodology_terms: list[ConceptTerm] = Field(default_factory=list)
     size_constraints: list[SizeConstraint] = Field(default_factory=list)
     other_constraints: list[str] = Field(default_factory=list)
+    expanded_concepts: list[ExpandedConcept] = Field(
+        default_factory=list,
+        description="LLM-proposed scientifically related concepts (LLMConceptResolver only; always empty from "
+        "BaselineConceptResolver). See ExpandedConcept -- replaces the old related_families/representative_systems "
+        "hardcoded-association mechanism. related_families/representative_systems remain on this schema for "
+        "backward compatibility with existing consumers (query_planner.py, evidence_matching.py) but are no "
+        "longer populated by any resolver; downstream consumption of expanded_concepts is a separate, later step.",
+    )
     resolver: str = "baseline"
 
     def all_terms(self) -> list[ConceptTerm]:
-        """Every ConceptTerm across all categories, flattened."""
+        """Every ConceptTerm across all categories, flattened. Does NOT
+        include expanded_concepts -- those are ExpandedConcept, a different
+        shape (term/relationship/basis, no synonyms/confidence), and are not
+        yet consumed by anything that calls this method."""
         return (
             self.structural_terms
             + self.related_families
@@ -181,21 +182,12 @@ class BaselineConceptResolver:
         scientific_tasks = self._match_clusters(query, _TASK_TERM_CLUSTERS)
         size_constraints = self._extract_size_constraints(query)
 
-        related_families = self._curated_associations(
-            structural_terms, _STRUCTURAL_TERM_FAMILY_ASSOCIATIONS
-        )
-        representative_systems = self._curated_associations(
-            structural_terms, _STRUCTURAL_TERM_SYSTEM_ASSOCIATIONS
-        )
-
         matched = structural_terms + methodology_terms + scientific_tasks
         other_constraints = self._residual_terms(query, matched, size_constraints)
 
         return ScientificConceptProfile(
             raw_query=query,
             structural_terms=structural_terms,
-            related_families=related_families,
-            representative_systems=representative_systems,
             scientific_tasks=scientific_tasks,
             methodology_terms=methodology_terms,
             size_constraints=size_constraints,
@@ -217,31 +209,6 @@ class BaselineConceptResolver:
                     )
                 )
         return matches
-
-    @staticmethod
-    def _curated_associations(
-        structural_terms: list[ConceptTerm],
-        table: dict[str, list[tuple[str, list[str]]]],
-    ) -> list[ConceptTerm]:
-        """Look up each matched structural term in a small curated association
-        table and return any hits as ConceptTerms, tagged with the distinct
-        "baseline-curated" provenance (see module docstring)."""
-        seen: set[str] = set()
-        out: list[ConceptTerm] = []
-        for structural_term in structural_terms:
-            for canonical, synonyms in table.get(structural_term.term, []):
-                if canonical in seen:
-                    continue
-                seen.add(canonical)
-                out.append(
-                    ConceptTerm(
-                        term=canonical,
-                        synonyms=synonyms,
-                        confidence=_CURATED_ASSOCIATION_CONFIDENCE,
-                        source="baseline-curated",
-                    )
-                )
-        return out
 
     @staticmethod
     def _extract_size_constraints(query: str) -> list[SizeConstraint]:
@@ -277,3 +244,162 @@ class BaselineConceptResolver:
                 seen.add(word)
                 residual.append(word)
         return residual
+
+
+# ---------------------------------------------------------------------------
+# LLM-backed concept expansion
+# ---------------------------------------------------------------------------
+
+_EXPANSION_SYSTEM_PROMPT = """\
+You are a computational biophysicist helping plan a literature search for coarse-grained (CG) \
+molecular simulation models relevant to a described system. Given the system description below, \
+propose scientifically related concepts that would be worth including in a literature search, \
+beyond directly searching for the system as described.
+
+For each concept you propose, decide for yourself what kind of relationship it has to the described \
+system, and explain it in your own words in the `relationship` field -- there is no fixed list of \
+relationship types you must use. Examples of the KINDS of relationship you might find (not an \
+exhaustive or required list, and you do not need to cover every kind): a structurally equivalent or \
+closely related term/synonym, a broader or more specific structural/fold family, a biological system \
+class known to exhibit this feature, a specific well-characterized example system, or something else \
+entirely if you have a scientifically grounded reason. It is fine to propose concepts that highlight a \
+meaningful DIFFERENCE or distinction worth being aware of (e.g. a related-but-structurally-distinct \
+subtype), not only concepts that are straightforwardly similar.
+
+You do not need to propose a fixed number of concepts. Propose only what you have a genuine, specific \
+scientific basis for -- quality over coverage.
+
+For every concept, `basis` must state WHY you are proposing it -- a real structural/biological reason, \
+not a restatement of the term. If you are not confident of a real, correct, specific example (e.g. a \
+named protein/system), do NOT invent one -- leave it out rather than guessing a plausible-sounding name \
+that might not be real or might not actually be correct.
+
+Do not assign a confidence or reliability score to any concept -- that is not part of your job here.
+
+Respond with a single JSON object matching the given schema, and nothing else."""
+
+
+class _ExpandedConceptCandidate(BaseModel):
+    """LLM-facing shape for one expansion candidate -- deliberately missing
+    `source` (stamped in code afterward; not the model's to decide) and any
+    confidence field (see ExpandedConcept's docstring for why)."""
+
+    term: str
+    relationship: str
+    basis: str
+
+
+class _ExpansionResponse(BaseModel):
+    expanded_concepts: list[_ExpandedConceptCandidate] = Field(default_factory=list)
+
+
+def _expansion_output_schema() -> dict:
+    schema = _ExpansionResponse.model_json_schema()
+    # Drop class-level docstrings from the schema sent to the model -- same
+    # reasoning as evidence_extraction.py's _llm_output_schema(): they
+    # describe this codebase's internal design, not prompting instructions
+    # the model needs; per-field descriptions (kept) do that job already.
+    schema.pop("description", None)
+    for defn in schema.get("$defs", {}).values():
+        defn.pop("description", None)
+    return schema
+
+
+def _post_ollama_chat(
+    *,
+    session: requests.Session,
+    host: str,
+    model: str,
+    timeout: float,
+    system_prompt: str,
+    user_message: str,
+    schema: dict,
+    think: bool = False,
+) -> dict:
+    """One Ollama /api/chat request with JSON-schema-constrained output. Same
+    shape as evidence_extraction.py's helper of the same name -- duplicated
+    rather than imported across modules to keep each module's LLM-calling
+    code independent of the other's internals; if a third module needs this
+    it's worth factoring out into a shared client module then, not before.
+    """
+    response = session.post(
+        f"{host}/api/chat",
+        json={
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message},
+            ],
+            "format": schema,
+            "stream": False,
+            "think": think,
+            "options": {"temperature": 0},
+        },
+        timeout=timeout,
+    )
+    response.raise_for_status()
+    content = response.json()["message"]["content"]
+    return json.loads(content)
+
+
+class LLMConceptResolver:
+    """Stage 0 resolver backed by a local model served through Ollama.
+
+    Layers on top of `BaselineConceptResolver` rather than replacing it:
+    Layer 0 (structural/methodology/task synonym-cluster matching, size
+    constraints, other_constraints) runs unchanged and deterministically;
+    this class adds `expanded_concepts` via one LLM call against the raw
+    query. `related_families`/`representative_systems` are never populated
+    by this resolver -- see ScientificConceptProfile's docstring for why
+    those fields stay on the schema but unused going forward.
+
+    Default model `qwen3:8b`, `think=False` by default -- same choices as
+    `OllamaPaperEvidenceExtractor`, for the same reasons (structured-
+    extraction quality at this size tier; thinking-mode preamble buys
+    nothing on a schema-constrained task like this one).
+    """
+
+    def __init__(
+        self,
+        model: str = "qwen3:8b",
+        host: str = "http://localhost:11434",
+        timeout: float = 120.0,
+        *,
+        think: bool = False,
+        session: Optional[requests.Session] = None,
+    ) -> None:
+        self.model = model
+        self.host = host.rstrip("/")
+        self.timeout = timeout
+        self.think = think
+        self._session = session or requests.Session()
+        self._deterministic = BaselineConceptResolver()
+
+    @property
+    def name(self) -> str:
+        return f"LLMConceptResolver:{self.model}"
+
+    def resolve(self, user_query: str) -> ScientificConceptProfile:
+        profile = self._deterministic.resolve(user_query)
+        expanded = self._expand_concepts(profile.raw_query)
+        return profile.model_copy(update={"expanded_concepts": expanded, "resolver": self.name})
+
+    def _expand_concepts(self, query: str) -> list[ExpandedConcept]:
+        try:
+            raw = _post_ollama_chat(
+                session=self._session,
+                host=self.host,
+                model=self.model,
+                timeout=self.timeout,
+                system_prompt=_EXPANSION_SYSTEM_PROMPT,
+                user_message=f"System description: {query}",
+                schema=_expansion_output_schema(),
+                think=self.think,
+            )
+            response = _ExpansionResponse.model_validate(raw)
+        except Exception:  # noqa: BLE001 -- any failure degrades to no expansion, never crashes resolve()
+            return []
+        return [
+            ExpandedConcept(term=c.term, relationship=c.relationship, basis=c.basis, source="llm-proposed")
+            for c in response.expanded_concepts
+        ]

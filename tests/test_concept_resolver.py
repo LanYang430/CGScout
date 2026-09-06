@@ -1,8 +1,11 @@
-"""Unit tests for the Stage 0 baseline concept resolver. No network calls."""
+"""Unit tests for the Stage 0 concept resolvers. No real network calls --
+LLMConceptResolver is exercised against a fake `requests.Session`."""
 
 from __future__ import annotations
 
-from beam_agent.concept_resolver import BaselineConceptResolver
+import json
+
+from beam_agent.concept_resolver import BaselineConceptResolver, LLMConceptResolver
 
 
 def test_extracts_structural_term_and_its_synonyms():
@@ -48,56 +51,25 @@ def test_extracts_size_constraint():
     assert c.raw_text.lower() == "200-aa"
 
 
-def test_beta_helix_triggers_curated_related_family_associations():
+def test_baseline_resolver_never_populates_related_families_or_representative_systems():
+    # The old hardcoded beta-helix -> autotransporter/pertactin/P22 tailspike
+    # association table was removed entirely -- BaselineConceptResolver is
+    # Layer 0 only (lexical vocabulary matching), never LLM-backed concept
+    # expansion. These fields stay on the schema for existing consumers but
+    # are never populated by this resolver, for any query.
     profile = BaselineConceptResolver().resolve("200-aa beta-helix protein folding")
-
-    family_terms = {t.term for t in profile.related_families}
-    assert "autotransporter passenger domains" in family_terms
-    assert "phage tailspike proteins" in family_terms
-
-
-def test_beta_helix_triggers_curated_representative_system_associations():
-    profile = BaselineConceptResolver().resolve("200-aa beta-helix protein folding")
-
-    system_terms = {t.term for t in profile.representative_systems}
-    assert "pertactin" in system_terms
-    assert "P22 tailspike" in system_terms
-
-
-def test_curated_associations_carry_distinct_provenance_and_lower_confidence():
-    # These are inferred from the structural term, not stated in the user's
-    # own query text -- source and confidence should make that legible so a
-    # future LLM/external-verification step knows these are candidates to
-    # corroborate or overwrite, not ground truth.
-    profile = BaselineConceptResolver().resolve("200-aa beta-helix protein folding")
-
-    for term in profile.related_families + profile.representative_systems:
-        assert term.source == "baseline-curated"
-        assert term.confidence < 1.0
-
-    # Direct lexical matches remain source="baseline", confidence=1.0, so the
-    # two kinds of knowledge stay visibly distinct in the profile.
-    for term in profile.structural_terms:
-        assert term.source == "baseline"
-        assert term.confidence == 1.0
-
-
-def test_no_structural_term_means_no_curated_associations():
-    profile = BaselineConceptResolver().resolve("xyz completely unrelated query")
 
     assert profile.related_families == []
     assert profile.representative_systems == []
+    assert profile.expanded_concepts == []
 
 
-def test_curated_associations_do_not_duplicate_across_multiple_structural_terms():
-    # Both alpha-helix and beta-helix are present; only beta-helix has curated
-    # associations in the table, and each association appears once even if
-    # matched via more than one structural term (not the case here, but the
-    # dedup-by-canonical-name logic should hold regardless).
-    profile = BaselineConceptResolver().resolve("alpha-helix beta-helix protein folding")
+def test_baseline_resolver_direct_lexical_matches_keep_source_and_confidence():
+    profile = BaselineConceptResolver().resolve("200-aa beta-helix protein folding")
 
-    family_terms = [t.term for t in profile.related_families]
-    assert len(family_terms) == len(set(family_terms))
+    for term in profile.structural_terms:
+        assert term.source == "baseline"
+        assert term.confidence == 1.0
 
 
 def test_residual_words_land_in_other_constraints():
@@ -142,3 +114,101 @@ def test_all_terms_flattens_every_category():
     assert len(flattened) == len(profile.structural_terms) + len(profile.related_families) + len(
         profile.representative_systems
     ) + len(profile.scientific_tasks) + len(profile.methodology_terms)
+
+
+# --- LLMConceptResolver -------------------------------------------------------
+
+
+class _FakeResponse:
+    def __init__(self, payload: dict) -> None:
+        self._payload = payload
+
+    def raise_for_status(self) -> None:
+        pass
+
+    def json(self) -> dict:
+        return {"message": {"content": json.dumps(self._payload)}}
+
+
+class _FailingResponse:
+    def raise_for_status(self) -> None:
+        raise RuntimeError("connection refused")
+
+
+class _FakeSession:
+    def __init__(self, responses: list) -> None:
+        self._responses = list(responses)
+        self.requests: list[dict] = []
+
+    def post(self, url, *, json, timeout):  # noqa: A002 -- matches requests.Session.post's signature
+        self.requests.append({"url": url, "json": json, "timeout": timeout})
+        response = self._responses.pop(0)
+        if isinstance(response, Exception):
+            raise response
+        return response
+
+
+def test_llm_resolver_runs_layer_0_deterministically_underneath():
+    session = _FakeSession([_FakeResponse({"expanded_concepts": []})])
+    resolver = LLMConceptResolver(session=session)
+
+    profile = resolver.resolve("200-aa beta-helix protein folding coarse-grained model")
+
+    terms = {t.term for t in profile.structural_terms}
+    assert "beta-helix" in terms
+    assert len(profile.size_constraints) == 1
+
+
+def test_llm_resolver_populates_expanded_concepts_with_no_confidence_field():
+    raw_response = {
+        "expanded_concepts": [
+            {
+                "term": "autotransporter passenger domains",
+                "relationship": "biological system class known to adopt this fold",
+                "basis": "many autotransporter passenger domains fold into right-handed beta-helices",
+            }
+        ]
+    }
+    session = _FakeSession([_FakeResponse(raw_response)])
+    resolver = LLMConceptResolver(session=session)
+
+    profile = resolver.resolve("200-aa beta-helix protein folding coarse-grained model")
+
+    assert len(profile.expanded_concepts) == 1
+    concept = profile.expanded_concepts[0]
+    assert concept.term == "autotransporter passenger domains"
+    assert concept.relationship == "biological system class known to adopt this fold"
+    assert concept.basis
+    assert concept.source == "llm-proposed"
+    assert not hasattr(concept, "confidence")
+
+
+def test_llm_resolver_never_populates_related_families_or_representative_systems():
+    session = _FakeSession([_FakeResponse({"expanded_concepts": []})])
+    resolver = LLMConceptResolver(session=session)
+
+    profile = resolver.resolve("200-aa beta-helix protein folding")
+
+    assert profile.related_families == []
+    assert profile.representative_systems == []
+
+
+def test_llm_resolver_degrades_to_empty_expansion_on_request_failure():
+    session = _FakeSession([_FailingResponse()])
+    resolver = LLMConceptResolver(session=session)
+
+    profile = resolver.resolve("200-aa beta-helix protein folding")
+
+    assert profile.expanded_concepts == []
+    # Layer 0 still ran -- a failed LLM call degrades only the expansion, not
+    # the whole resolve() call.
+    assert profile.structural_terms
+
+
+def test_llm_resolver_records_its_own_name_as_resolver_provenance():
+    session = _FakeSession([_FakeResponse({"expanded_concepts": []})])
+    resolver = LLMConceptResolver(model="qwen3:8b", session=session)
+
+    profile = resolver.resolve("folding")
+
+    assert profile.resolver == "LLMConceptResolver:qwen3:8b"

@@ -5,8 +5,14 @@ literature pipeline:
       -> ConceptResolver.resolve()          Stage 0: structured concept profile
       -> QueryPlanner.plan()                Stage 1: system-specific + general-
                                              discovery search queries
-      -> search each query x each source    Stage 2: raw candidate pool
-      -> dedupe_papers()                    merge duplicates across queries+sources
+      -> search each query x each source    Stage 2: raw candidate pool,
+                                             each Paper stamped with which
+                                             PlannedQuery(s)/categor(y/ies)
+                                             found it (found_by_queries/
+                                             query_categories -- see
+                                             stamp_provenance() below)
+      -> dedupe_papers()                    merge duplicates across queries+sources,
+                                             unioning provenance (dedupe.py)
       -> RelevanceFilter.filter()           Stage 3: cheap keyword-overlap filter
       -> PaperEvidenceExtractor.extract_many()  Stage 4a: single-pass, query-
                                              independent evidence extraction
@@ -41,12 +47,54 @@ from beam_agent.concept_resolver import BaselineConceptResolver, ConceptResolver
 from beam_agent.dedupe import dedupe_papers
 from beam_agent.evidence_extraction import BaselineEvidenceExtractor, PaperEvidenceExtractor
 from beam_agent.models import Paper
-from beam_agent.query_planner import BaselineQueryPlanner, QueryPlan, QueryPlanner
+from beam_agent.query_planner import BaselineQueryPlanner, PlannedQuery, QueryPlan, QueryPlanner
 from beam_agent.relevance_filter import RelevanceFilter, RuleBasedRelevanceFilter
 from beam_agent.sources.openalex import search_openalex
 from beam_agent.sources.semantic_scholar import search_semantic_scholar
 
 _JSON_SAFE_TYPES = (str, int, float, bool, type(None), list, dict)
+
+
+def group_queries_by_normalized_key(queries: list[PlannedQuery]) -> dict[str, tuple[str, list[str]]]:
+    """Maps a normalized query key -> (first-seen original query string, every
+    category that produced it). Same normalization QueryPlan.unique_query_strings()
+    and BaselineQueryPlanner._dedupe() already use for the same purpose (lowercased,
+    whitespace-collapsed) -- kept as its own copy here rather than imported, matching
+    how those two already duplicate the same one-liner rather than sharing it.
+
+    A query string that happens to come from more than one category (rare, but not
+    impossible -- system_specific and general_discovery build queries independently)
+    is searched exactly once, carrying every category it belongs to, rather than
+    searched twice for the same string.
+    """
+    grouped: dict[str, tuple[str, list[str]]] = {}
+    for pq in queries:
+        key = " ".join(pq.query.lower().split())
+        if not key:
+            continue
+        if key not in grouped:
+            grouped[key] = (pq.query, [pq.category])
+        else:
+            original, categories = grouped[key]
+            if pq.category not in categories:
+                categories.append(pq.category)
+    return grouped
+
+
+def stamp_provenance(papers: list[Paper], *, query: str, categories: list[str]) -> None:
+    """Attach which planned query (and its category/categories) found each paper,
+    right after the search call that produced it -- before anything gets flattened
+    across queries/sources and this context becomes unrecoverable (see dedupe.py's
+    _merge(), which unions this across duplicate papers the same way it already
+    unions `sources`). Mutates in place: each Paper here was just constructed by
+    this call's search_*() function and isn't shared/aliased anywhere else yet.
+    """
+    for paper in papers:
+        if query not in paper.found_by_queries:
+            paper.found_by_queries.append(query)
+        for category in categories:
+            if category not in paper.query_categories:
+                paper.query_categories.append(category)
 
 
 def _config_snapshot(obj: object) -> dict:
@@ -146,22 +194,30 @@ def run_pipeline(
 
     profile = resolver.resolve(user_query)
     plan = planner.plan(profile)
-    query_strings = plan.unique_query_strings()
+
+    # Grouped (not plan.unique_query_strings()) so PlannedQuery.category
+    # survives into the search calls below -- unique_query_strings() would
+    # flatten it away before we ever get a chance to stamp provenance.
+    grouped_queries = group_queries_by_normalized_key(plan.queries)
 
     raw: list[Paper] = []
     errors: list[str] = []
 
-    for q in query_strings:
+    for query, categories in grouped_queries.values():
         if "semantic_scholar" in sources:
             try:
-                raw.extend(search_semantic_scholar(q, limit=limit_per_query))
+                papers = search_semantic_scholar(query, limit=limit_per_query)
+                stamp_provenance(papers, query=query, categories=categories)
+                raw.extend(papers)
             except Exception as exc:  # noqa: BLE001
-                errors.append(f"semantic_scholar[{q!r}]: {exc}")
+                errors.append(f"semantic_scholar[{query!r}]: {exc}")
         if "openalex" in sources:
             try:
-                raw.extend(search_openalex(q, limit=limit_per_query))
+                papers = search_openalex(query, limit=limit_per_query)
+                stamp_provenance(papers, query=query, categories=categories)
+                raw.extend(papers)
             except Exception as exc:  # noqa: BLE001
-                errors.append(f"openalex[{q!r}]: {exc}")
+                errors.append(f"openalex[{query!r}]: {exc}")
 
     deduped = dedupe_papers(raw)
     retained, rejected = filterer.filter(profile, deduped)

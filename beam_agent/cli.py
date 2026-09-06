@@ -15,7 +15,8 @@ from beam_agent.search import search_and_dedupe
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Search Semantic Scholar + OpenAlex, dedupe, write JSON."
+        description="Search OpenAlex (default; pass sources= to search_and_dedupe directly "
+                     "for Semantic Scholar too), dedupe, write JSON."
     )
     parser.add_argument("query", help="Search query, e.g. a system + goal description")
     parser.add_argument(

@@ -10,8 +10,10 @@ dist/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.cache/
 results*.json
 *.log
+*log.txt
 .env
 .env.*
 *.key

@@ -164,6 +164,48 @@ class Paper(BaseModel):
     venue: Optional[str] = None
 
     sources: list[str] = Field(default_factory=list)
+
+    # Query provenance -- which planned query string(s) (and their
+    # PlannedQuery.category, e.g. "system_specific"/"general_discovery")
+    # actually returned this paper, before cross-source/cross-query dedup
+    # merges it with any other copy found elsewhere. `sources` already means
+    # retrieval source (openalex/semantic_scholar) so it's reused as-is, not
+    # duplicated. Stamped by the orchestrator (pipeline.py), right after each
+    # search call -- search_openalex()/search_semantic_scholar() never see or
+    # set these; they only know a bare query string, not a PlannedQuery's
+    # category. See dedupe.py's _merge() for how these union across a merge,
+    # same pattern already used for `sources`.
+    found_by_queries: list[str] = Field(
+        default_factory=list,
+        description="Planned query string(s) that returned this paper from a search source.",
+    )
+    query_categories: list[str] = Field(
+        default_factory=list,
+        description="PlannedQuery.category value(s) (e.g. 'system_specific', 'general_discovery') for every "
+        "query in found_by_queries that matched this paper. Open vocabulary, matching PlannedQuery.category's "
+        "own typing (plain str, not an enum).",
+    )
+    structural_discovered_system: Optional[str] = Field(
+        default=None,
+        description="Set ONLY for a paper found via the 'structural' route (Hop-2) -- the FIRST Hop-1-discovered "
+        "system (by Hop-2 processing order, not by relevance) whose query returned this paper "
+        "(RetrievedPaper.hop1_provenance.discovered_system in route_retrieval_plan.py). None for every other "
+        "route. Kept for backward compatibility with any consumer expecting a single name; "
+        "structural_discovered_systems below is the complete, order-independent set and is what Stage 3's gate "
+        "actually checks.",
+    )
+    structural_discovered_systems: list[str] = Field(
+        default_factory=list,
+        description="Every Hop-1-discovered system whose OWN Hop-2 query independently retrieved this paper "
+        "(RetrievedPaper.hop1_provenances in route_retrieval_plan.py) -- NOT the full set of all Hop-1 "
+        "discovered systems, only those that actually found this specific paper. Empty for every "
+        "non-structural-route paper. Stage 3 (relevance_filter_handoff.py) does an EXISTENTIAL check across "
+        "this list: pass if ANY of them has grounded lexical evidence (system name + CG marker) in "
+        "title/abstract -- so a paper legitimately retrieved by multiple systems is no longer order-dependently "
+        "dropped just because whichever system's query happened to be processed first isn't the one this "
+        "paper's own text supports.",
+    )
+
     external_ids: ExternalIds = Field(default_factory=ExternalIds)
 
     is_open_access: Optional[bool] = None

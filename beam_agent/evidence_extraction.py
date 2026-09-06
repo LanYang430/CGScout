@@ -51,6 +51,7 @@ from typing import Optional, Protocol
 
 import requests
 
+from beam_agent import cache
 from beam_agent.models import (
     MethodEvidence,
     Paper,
@@ -132,7 +133,13 @@ paper itself, not any particular search or target.
 
 METHOD EVIDENCE: model_class is the modeling/method class(es) explicitly named or clearly described \
 (e.g. "coarse-grained", "all-atom", "structure-based", "elastic-network", "Go model") -- open \
-vocabulary, leave empty if no simulation model/method is actually discussed. study_role is what role \
+vocabulary, leave empty if no simulation model/method is actually discussed. If the abstract clearly \
+describes a simulation/computational modeling approach being used but does NOT specify its \
+resolution/granularity (you cannot tell whether it is coarse-grained, all-atom, or something else), \
+do NOT leave model_class empty -- populate it with a generic marker that says so, e.g. "simulation \
+(resolution unspecified)" or "molecular dynamics (granularity unspecified)". Leaving model_class \
+empty means the paper does not describe any computational method at all -- a materially different, \
+stronger claim than "describes one but doesn't say which kind." study_role is what role \
 the model played in THIS paper -- "developed" (introduces a new model/method), "applied" (uses an \
 existing model to study a system), "benchmarked"/"validated" (tests or compares a model's \
 performance/accuracy against something), "reviewed_only" (a review/survey that discusses models \
@@ -183,10 +190,6 @@ you are not restricted to a fixed list; invent a new concise label if none fit. 
 everything into a folding-specific vocabulary -- report whatever process the paper actually studied, \
 even if it's something else entirely (e.g. pocket gating, membrane insertion, phase separation).
 
-MISSING INFORMATION: list anything a full-text read would likely clarify that the abstract leaves \
-unstated (e.g. "abstract doesn't state residue count", "abstract doesn't name a specific protein \
-system").
-
 Do not assess eligibility, evidence strength, confidence, or relevance to any target -- none of that \
 is part of your job here.
 
@@ -203,7 +206,28 @@ def _build_user_message(paper: Paper) -> str:
     )
 
 
-_LLM_FACING_FIELDS = {"method", "system", "processes", "missing_information", "reasoning_summary"}
+_LLM_FACING_FIELDS = {"method", "system", "processes"}
+# `missing_information` and `reasoning_summary` (both top-level PaperEvidence
+# fields) removed from this set -- schema-slimming pass, audited first: zero
+# prompt guidance for reasoning_summary (never appeared in _SYSTEM_PROMPT at
+# all), and grep across the whole codebase found no production consumer of
+# either field's real LLM-generated content (missing_information's one
+# pipeline.py reference only checks a hardcoded Python-set sentinel string
+# for the no-abstract case, never the LLM's own generated items). The
+# PaperEvidence/MethodEvidence/SystemEvidence pydantic FIELDS themselves are
+# untouched -- callers reading .missing_information/.reasoning_summary still
+# get the normal pydantic default (empty list / None), only the LLM is no
+# longer asked to fill them, so nothing that reads these fields today
+# changes behavior (they already only ever saw the "no abstract" sentinel or
+# nothing).
+_NESTED_LLM_FIELDS_TO_DROP = {
+    # `grounding_text` on both MethodEvidence and SystemEvidence: same
+    # audit -- never mentioned in _SYSTEM_PROMPT (no instruction on what to
+    # put there), and empirically 0/37 real cached extractions ever
+    # populated either one. No production consumer found anywhere.
+    "MethodEvidence": {"grounding_text"},
+    "SystemEvidence": {"grounding_text"},
+}
 
 
 def _llm_output_schema() -> dict:
@@ -217,9 +241,22 @@ def _llm_output_schema() -> dict:
     # already say more usefully. Field-level descriptions are untouched;
     # they carry the actual per-field prompting instructions.
     schema.pop("description", None)
-    for defn in schema.get("$defs", {}).values():
+    for def_name, defn in schema.get("$defs", {}).items():
         defn.pop("description", None)
+        drop = _NESTED_LLM_FIELDS_TO_DROP.get(def_name)
+        if drop and "properties" in defn:
+            defn["properties"] = {k: v for k, v in defn["properties"].items() if k not in drop}
+            if "required" in defn:
+                defn["required"] = [k for k in defn["required"] if k not in drop]
     return schema
+
+
+# Computed once at import time (both _SYSTEM_PROMPT and _llm_output_schema()
+# are static/deterministic) -- included in every Stage 4 extraction cache
+# key (see OllamaPaperEvidenceExtractor._cache_key below) so an edit to
+# either automatically invalidates every previously-cached entry.
+_SYSTEM_PROMPT_HASH = cache.content_hash(_SYSTEM_PROMPT)
+_SCHEMA_HASH = cache.content_hash(json.dumps(_llm_output_schema(), sort_keys=True))
 
 
 def _post_ollama_chat(
@@ -295,6 +332,8 @@ class OllamaPaperEvidenceExtractor:
         self.think = think
         self._session = session or requests.Session()
 
+    _CACHE_NAMESPACE = "stage4_extract"
+
     @property
     def name(self) -> str:
         return f"OllamaPaperEvidenceExtractor:{self.model}"
@@ -309,7 +348,30 @@ class OllamaPaperEvidenceExtractor:
             out.append(_annotate_paper(paper, evidence))
         return out
 
+    def _cache_key(self, user_message: str) -> str:
+        # _SYSTEM_PROMPT/_llm_output_schema() are static -- hashed once at
+        # module import (see _SYSTEM_PROMPT_HASH/_SCHEMA_HASH below), so an
+        # edit to either automatically invalidates every previously-cached
+        # entry, no version number to remember to bump. user_message already
+        # fully encodes this paper's title/year/venue/abstract (see
+        # _build_user_message) -- two papers only ever collide here if every
+        # one of those fields is byte-identical, which is the correct cache
+        # semantics (identical LLM input -> identical cached output).
+        # self.model/self.think are included so switching either -- a
+        # different local model, or re-enabling qwen3's thinking preamble --
+        # is a cache miss, never a stale reuse across a semantic change.
+        return cache.content_hash(_SYSTEM_PROMPT_HASH, _SCHEMA_HASH, user_message, self.model, str(self.think))
+
     def _extract_one(self, paper: Paper) -> PaperEvidence:
+        user_message = _build_user_message(paper)
+        cache_key = self._cache_key(user_message)
+        cached_raw = cache.get(self._CACHE_NAMESPACE, cache_key)
+        if cached_raw is not None:
+            try:
+                return PaperEvidence.model_validate({**cached_raw, "extractor": self.name})
+            except Exception:  # noqa: BLE001 -- a cached shape that no longer validates is a miss, not a crash
+                pass
+
         try:
             raw = _post_ollama_chat(
                 session=self._session,
@@ -317,7 +379,7 @@ class OllamaPaperEvidenceExtractor:
                 model=self.model,
                 timeout=self.timeout,
                 system_prompt=_SYSTEM_PROMPT,
-                user_message=_build_user_message(paper),
+                user_message=user_message,
                 schema=_llm_output_schema(),
                 think=self.think,
             )
@@ -328,9 +390,19 @@ class OllamaPaperEvidenceExtractor:
             )
 
         try:
-            return PaperEvidence.model_validate({**raw, "extractor": self.name})
+            evidence = PaperEvidence.model_validate({**raw, "extractor": self.name})
         except Exception as exc:  # noqa: BLE001 -- malformed model output degrades, doesn't crash
             return PaperEvidence(
                 missing_information=[f"extraction output failed schema validation: {exc}"],
                 extractor=self.name,
             )
+
+        # Cache the RAW llm dict (pre-extractor-stamp), not the validated
+        # PaperEvidence -- a cache hit re-runs the exact same
+        # {**raw, "extractor": self.name} + model_validate() path a fresh
+        # call would, so hit and miss are byte-identical in how they build
+        # the final object. Only reached on a successful parse+validate --
+        # a failure (either except block above) returns before this line,
+        # so a failed extraction is never cached.
+        cache.set(self._CACHE_NAMESPACE, cache_key, raw)
+        return evidence

@@ -184,3 +184,83 @@ def test_ollama_extractor_handles_multiple_papers_independently():
     assert papers[0].evidence.method.model_class == ["coarse-grained"]
     assert papers[1].evidence.method.model_class == ["all-atom"]
     assert len(session.requests) == 2
+
+
+# --- Stage 4 extraction cache (tests/conftest.py isolates BEAM_CACHE_DIR per test) --
+
+
+def test_ollama_extractor_second_identical_call_is_a_cache_hit_no_second_request():
+    raw = {"method": {"model_class": ["coarse-grained"]}, "system": {}, "processes": []}
+    # only ONE response queued -- a second real request would raise IndexError
+    # (list.pop(0) on empty), so this only passes if the cache actually skips it
+    session = _FakeSession([_FakeResponse(raw)])
+    extractor = OllamaPaperEvidenceExtractor(session=session)
+
+    first = extractor.extract_many([_paper()])
+    second = extractor.extract_many([_paper()])  # identical paper -- must be a cache hit
+
+    assert len(session.requests) == 1
+    assert first[0].evidence.method.model_class == ["coarse-grained"]
+    assert second[0].evidence.method.model_class == ["coarse-grained"]
+    assert second[0].evidence.extractor == extractor.name  # re-stamped fresh on the hit path too
+
+
+def test_ollama_extractor_different_paper_content_is_a_cache_miss():
+    responses = [
+        _FakeResponse({"method": {"model_class": ["coarse-grained"]}, "system": {}, "processes": []}),
+        _FakeResponse({"method": {"model_class": ["all-atom"]}, "system": {}, "processes": []}),
+    ]
+    session = _FakeSession(responses)
+    extractor = OllamaPaperEvidenceExtractor(session=session)
+
+    a = extractor.extract_many([_paper(abstract="Abstract A")])
+    b = extractor.extract_many([_paper(abstract="Abstract B")])
+
+    assert len(session.requests) == 2
+    assert a[0].evidence.method.model_class == ["coarse-grained"]
+    assert b[0].evidence.method.model_class == ["all-atom"]
+
+
+def test_ollama_extractor_does_not_cache_a_request_failure():
+    session = _FakeSession([_FailingResponse(), _FakeResponse(
+        {"method": {"model_class": ["coarse-grained"]}, "system": {}, "processes": []})])
+    extractor = OllamaPaperEvidenceExtractor(session=session)
+
+    first = extractor.extract_many([_paper()])
+    assert "extraction failed" in first[0].evidence.missing_information[0]
+
+    second = extractor.extract_many([_paper()])  # same paper -- must NOT reuse the failure
+    assert len(session.requests) == 2
+    assert second[0].evidence.method.model_class == ["coarse-grained"]
+
+
+def test_ollama_extractor_does_not_cache_a_schema_validation_failure():
+    bad = _FakeResponse({"method": {}, "system": {}, "processes": [{"raw_text": "folding"}]})  # missing normalized_label
+    good = _FakeResponse({"method": {"model_class": ["coarse-grained"]}, "system": {}, "processes": []})
+    session = _FakeSession([bad, good])
+    extractor = OllamaPaperEvidenceExtractor(session=session)
+
+    first = extractor.extract_many([_paper()])
+    assert "schema validation" in first[0].evidence.missing_information[0]
+
+    second = extractor.extract_many([_paper()])  # same paper -- must NOT reuse the failure
+    assert len(session.requests) == 2
+    assert second[0].evidence.method.model_class == ["coarse-grained"]
+
+
+def test_ollama_extractor_different_model_name_is_a_cache_miss():
+    """Same paper, same prompt/schema -- but a different declared model must
+    still be treated as a different cache entry (switching models must never
+    silently reuse another model's cached output)."""
+    responses = [
+        _FakeResponse({"method": {"model_class": ["coarse-grained"]}, "system": {}, "processes": []}),
+        _FakeResponse({"method": {"model_class": ["all-atom"]}, "system": {}, "processes": []}),
+    ]
+    session = _FakeSession(responses)
+
+    a = OllamaPaperEvidenceExtractor(model="qwen3:8b", session=session).extract_many([_paper()])
+    b = OllamaPaperEvidenceExtractor(model="qwen3:14b", session=session).extract_many([_paper()])
+
+    assert len(session.requests) == 2
+    assert a[0].evidence.method.model_class == ["coarse-grained"]
+    assert b[0].evidence.method.model_class == ["all-atom"]
