@@ -168,3 +168,119 @@ def test_demote_system_gap_then_no_injected_system_gap_when_absent_but_b_asked()
     ns, audit = run_intake_readiness_gate(es, "absent", "actionable_for_first_retrieval", categorize=cat)
     assert audit["readiness_overrides"] == []
     assert sum(g.blocks_first_retrieval for g in ns.gaps) == 1
+
+
+# ---- resolution=search demotion (category-independent) --------------------
+#
+# CG-model-recommendation scope decision (this session): a gap B marked
+# resolution=search must never block first retrieval, regardless of gap
+# category or whether a categorizer is even available -- final readiness
+# is still decided purely by the existing system-presence + objective-
+# specificity axes above, unchanged. No categorizer is passed in ANY of
+# these tests (categorize=None) specifically to prove the search demotion
+# does not depend on it, unlike the system_identity/scientific_objective
+# demotions above.
+
+def test_regression_1_phospho_idp_long_query_search_gap_demoted_to_ready():
+    """Fixture is the REAL Gap B produced (this session's live diagnostic
+    run) for: "I want to study how serine or threonine phosphorylation
+    changes the conformational ensemble of an intrinsically disordered
+    protein. Is there a CG model that explicitly supports phosphorylated
+    residues?" -- system/objective were already grounded fine; this SEARCH
+    gap alone is what used to send next_action=SEARCH (search_unsupported,
+    a dead end) instead of READY."""
+    search_gap = _gap(
+        "specific coarse-grained model or models that support phosphorylated residues",
+        blocking=True, resolution=v5.ResolutionType.SEARCH,
+        effect="Identifying specific CG models that support phosphorylated residues "
+               "would allow for a focused search on the capabilities and performance "
+               "of these models in simulating the conformational changes induced by "
+               "phosphorylation.",
+    )
+    es = _es(
+        v5.ObjectiveStatus.EXPLICIT,
+        "study how serine or threonine phosphorylation changes the conformational "
+        "ensemble of an intrinsically disordered protein",
+        gaps=[search_gap],
+    )
+    ns, audit = run_intake_readiness_gate(es, "present", "actionable_for_first_retrieval")
+    assert v5.controller_decide(ns.gaps).next_action == "READY"
+    assert len(audit["readiness_overrides"]) == 1
+    override = audit["readiness_overrides"][0]
+    assert override["action"] == "DEMOTED"
+    assert override["category"] is None  # category-independent -- no categorizer was even passed
+    assert "search" in override["reason"].lower()
+    # original gap preserved verbatim in audit (still resolution=search, still blocking)
+    assert audit["raw_b_gaps"][0]["resolution"] == "search"
+    assert audit["raw_b_gaps"][0]["blocks_first_retrieval"] is True
+    # working gap D's contract requires (blocks_first_retrieval=False <=> not_yet_needed)
+    assert ns.gaps[0].blocks_first_retrieval is False
+    assert ns.gaps[0].resolution == v5.ResolutionType.NOT_YET_NEEDED
+
+
+def test_regression_2_plain_short_system_and_objective_query_is_ready():
+    """No gaps at all -- the ordinary case a short, clean query produces.
+    Confirms the new pass 0 is a strict no-op when there's nothing to
+    demote (same outcome as test_present_system_actionable_objective_is_ready,
+    kept here too as an explicit named regression point for this change)."""
+    es = _es(v5.ObjectiveStatus.EXPLICIT, "folding")
+    ns, audit = run_intake_readiness_gate(es, "present", "actionable_for_first_retrieval")
+    assert audit["readiness_overrides"] == []
+    assert v5.controller_decide(ns.gaps).next_action == "READY"
+
+
+def test_regression_3_missing_system_still_asks_user_even_with_search_gap():
+    """A resolution=search gap sitting alongside a genuinely absent system
+    must NOT paper over the missing system -- readiness is still governed
+    by the system-presence axis, unchanged."""
+    search_gap = _gap(
+        "specific coarse-grained model that supports phosphorylated residues",
+        blocking=True, resolution=v5.ResolutionType.SEARCH,
+    )
+    es = _es(v5.ObjectiveStatus.EXPLICIT, "conformational ensemble changes", gaps=[search_gap])
+    ns, audit = run_intake_readiness_gate(es, "absent", "actionable_for_first_retrieval")
+    d = v5.controller_decide(ns.gaps)
+    assert d.next_action == "ASK_USER"
+    assert d.target_gap.characteristic == SYSTEM_GAP_CHARACTERISTIC
+    # the search gap was still demoted (it's not what's asking the question)
+    assert any(o["action"] == "DEMOTED" for o in audit["readiness_overrides"])
+
+
+def test_regression_4_missing_actionable_objective_still_asks_user_even_with_search_gap():
+    """Same, but for the objective axis: objective_status=MISSING (B never
+    grounded a scientific_objective fact at all) must still ASK_USER, even
+    with an unrelated resolution=search gap present."""
+    obj_gap = _gap(v5.OBJECTIVE_GAP_CHARACTERISTIC)
+    search_gap = _gap(
+        "specific coarse-grained model that supports phosphorylated residues",
+        blocking=True, resolution=v5.ResolutionType.SEARCH,
+    )
+    es = _es(v5.ObjectiveStatus.MISSING, None, gaps=[obj_gap, search_gap])
+    ns, audit = run_intake_readiness_gate(es, "present", None)
+    d = v5.controller_decide(ns.gaps)
+    assert d.next_action == "ASK_USER"
+    assert d.target_gap.characteristic == v5.OBJECTIVE_GAP_CHARACTERISTIC
+    assert any(o["action"] == "DEMOTED" for o in audit["readiness_overrides"])
+
+
+def test_search_demotion_does_not_need_a_categorizer():
+    """Category-independent by construction -- must demote even when
+    categorize=None (unlike the system_identity/scientific_objective
+    demotions, which explicitly require a working categorizer)."""
+    search_gap = _gap("some external fact", blocking=True, resolution=v5.ResolutionType.SEARCH)
+    es = _es(v5.ObjectiveStatus.EXPLICIT, "folding", gaps=[search_gap])
+    ns, audit = run_intake_readiness_gate(es, "present", "actionable_for_first_retrieval", categorize=None)
+    assert len(audit["readiness_overrides"]) == 1
+    assert v5.controller_decide(ns.gaps).next_action == "READY"
+
+
+def test_non_blocking_search_gap_is_left_untouched():
+    """A resolution=search gap that was never blocking in the first place
+    (blocks_first_retrieval=False already) is passed through verbatim --
+    nothing to demote, no spurious audit entry."""
+    search_gap = _gap("some external fact", blocking=False, resolution=v5.ResolutionType.SEARCH)
+    es = _es(v5.ObjectiveStatus.EXPLICIT, "folding", gaps=[search_gap])
+    ns, audit = run_intake_readiness_gate(es, "present", "actionable_for_first_retrieval")
+    assert audit["readiness_overrides"] == []
+    assert ns.gaps[0].resolution == v5.ResolutionType.SEARCH  # untouched, not rewritten
+    assert v5.controller_decide(ns.gaps).next_action == "READY"

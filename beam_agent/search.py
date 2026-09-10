@@ -98,7 +98,15 @@ def search_and_dedupe(
 search_and_dedupe.last_errors = []  # type: ignore[attr-defined]
 
 
-DEFAULT_PER_SOURCE_LIMIT_PER_QUERY = 5
+# Was 5. Raised to 20 (CG-model-recommendation retrieval-tightening,
+# concept_resolver_reasoning session): this is the actual live default
+# chat_with_beam.py's --per-source-limit flag and RouteRetrievalBudgets.
+# max_papers_per_query both trace back to -- diagnosed live that a query
+# genuinely returning the target paper at rank 13 was silently cut off by
+# a top-5 fetch. execute_query_plan() below (legacy/unused in the live
+# chat_with_beam.py path) inherits this too, but its own default was
+# already confirmed a no-op there.
+DEFAULT_PER_SOURCE_LIMIT_PER_QUERY = 20
 
 
 def execute_query_plan(
