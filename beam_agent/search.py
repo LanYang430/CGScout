@@ -31,8 +31,15 @@ def search_and_dedupe(
     limit: int = 20,
     *,
     sources: tuple[str, ...] = ("openalex",),
+    mode: str = "lexical",
 ) -> list[Paper]:
     """Search the given sources, merge duplicates, and return a ranked list.
+
+    `mode` ("lexical" default, or "semantic") is threaded straight to
+    search_openalex()'s own `mode` -- see that function's docstring.
+    Semantic Scholar has no equivalent mode; `mode="semantic"` with
+    "semantic_scholar" in `sources` is not a supported combination (no
+    caller does this today).
 
     v1: defaults to OpenAlex only -- Semantic Scholar removed from the
     default, not just deprioritized. Diagnosed live against this session's
@@ -50,7 +57,7 @@ def search_and_dedupe(
     results. Failures are printed to stderr-equivalent via a raised warning
     collected in `errors` accessible through `search_and_dedupe.last_errors`.
 
-    Dev-speed cache (beam_agent.cache): keyed on (query, limit, sources) --
+    Dev-speed cache (beam_agent.cache): keyed on (query, limit, sources, mode) --
     the exact inputs that determine what this function asks the sources for.
     Only a call with ZERO source errors is ever cached, so a rate-limit/
     timeout/malformed-response is never mistaken for "this query genuinely
@@ -62,7 +69,7 @@ def search_and_dedupe(
     re-fetched + overwritten -- OpenAlex/S2 indexing and ranking both drift
     over time, unlike the paper-content-keyed extraction caches.
     """
-    cache_key = cache.content_hash(query, str(limit), ",".join(sorted(sources)))
+    cache_key = cache.content_hash(query, str(limit), ",".join(sorted(sources)), mode)
     cached = cache.get(_SEARCH_CACHE_NAMESPACE, cache_key, ttl_seconds=_SEARCH_CACHE_TTL_SECONDS)
     if cached is not None:
         search_and_dedupe.last_errors = []  # type: ignore[attr-defined] -- only error-free results are ever cached
@@ -79,7 +86,7 @@ def search_and_dedupe(
 
     if "openalex" in sources:
         try:
-            raw.extend(search_openalex(query, limit=limit))
+            raw.extend(search_openalex(query, limit=limit, mode=mode))
         except Exception as exc:  # noqa: BLE001
             errors.append(f"openalex: {exc}")
 

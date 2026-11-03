@@ -13,7 +13,7 @@ from beam_agent.models import Paper
 
 
 def _fake_source(papers_by_query: dict, calls: list):
-    def _fn(query: str, limit: int = 20):
+    def _fn(query: str, limit: int = 20, *, mode: str = "lexical"):
         calls.append(query)
         return list(papers_by_query.get(query, []))
     return _fn
@@ -55,7 +55,7 @@ def test_different_query_or_limit_or_sources_is_a_cache_miss(monkeypatch):
 def test_a_source_error_is_never_cached(monkeypatch):
     calls_oa: list = []
 
-    def _flaky_openalex(query, limit=20):
+    def _flaky_openalex(query, limit=20, *, mode="lexical"):
         calls_oa.append(query)
         if len(calls_oa) == 1:
             raise RuntimeError("simulated rate limit")

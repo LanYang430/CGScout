@@ -15,7 +15,7 @@ from beam_agent.models import Paper
 
 
 def _fake_source(papers_by_query: dict, calls: list):
-    def _fn(query: str, limit: int = 20):
+    def _fn(query: str, limit: int = 20, *, mode: str = "lexical"):
         calls.append(query)
         return list(papers_by_query.get(query, []))
     return _fn

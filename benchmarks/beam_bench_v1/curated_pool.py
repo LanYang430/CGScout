@@ -1,0 +1,36 @@
+"""The hand-curated pool of 30 CG application papers (ids 1-30) that the user pasted, plus which classifier-data case
+(if any) each one was the SEED of.  The mapping below comes from the `case` labels in the user's classifier CSVs
+(training: T1-T8 + Mpipi-Helix + Pertactin->EspP; external test: E1-E10), matched by topic and then CONFIRMED against the
+CSVs by DOI/title in overlap_audit.py (a seed paper normally shows up as a row of its own case)."""
+CURATED = [
+ (1, "Structural basis of outer membrane biogenesis by the TamAB translocase", 2026, "membrane", "E1: TamAB"),
+ (2, "PIP2 modulates TRPC3 activity via TRP helix and S4-S5 linker", 2024, "membrane", None),
+ (3, "SND3 is the membrane insertase within a distinct SEC61 translocon complex", 2025, "membrane", None),
+ (4, "Structural basis for lipid-mediated activation of G protein-coupled receptor GPR55", 2025, "membrane", None),
+ (5, "Cardiolipin dynamics promote membrane remodeling by mitochondrial OPA1", 2025, "membrane", None),
+ (6, "Synthesis of lipid-linked precursors of the bacterial cell wall is governed by a feedback control mechanism in Pseudomonas aeruginosa", 2024, "membrane", None),
+ (7, "Single-molecule tweezers decode hidden dimerization patterns of membrane proteins within lipid bilayers", 2025, "membrane", None),
+ (8, "A two-step clockwork mechanism opens a proteo-lipidic pore in PIEZO2", 2026, "membrane", "T7: PIEZO2 gating"),
+ (9, "Conformational dynamics and membrane insertion mechanism of B4GALNT1 in ganglioside synthesis", 2025, "membrane", None),
+ (10, "TMEM63 proteins act as mechanically activated cholesterol modulated lipid scramblases contributing to membrane mechano-resilience", 2026, "membrane", None),
+ (11, "Viral fusion proteins of classes II and III recognize and reorganize complex biological membranes", 2025, "membrane", "E10: viral fusion proteins"),
+ (12, "Human class B1 GPCR modulation by plasma membrane lipids", 2026, "membrane", None),
+ (13, "Membrane lipids drive formation of KRAS4b-RAF1 RBDCRD nanoclusters on the membrane", 2024, "membrane", "E8: KRAS-RAF nanoclusters"),
+ (14, "Polymyxins slow down lateral diffusion of proteins and lipopolysaccharide in the E. coli outer membrane", 2025, "membrane", None),
+ (15, "Modulation of alpha-synuclein aggregation amid diverse environmental perturbation", 2024, "idp_condensate", None),
+ (16, "Molecular simulations of enzymatic phosphorylation of disordered proteins and their condensates", 2025, "idp_condensate", "E3: CK1d + TDP-43 phosphorylation"),
+ (17, "Interplay between charge distribution and DNA in shaping HP1 paralog phase separation and localization", 2024, "idp_condensate", "E4: HP1 + DNA LLPS"),
+ (18, "Simulations show increased lipid interdigitation in transmembrane coupling of protein condensates", 2026, "idp_condensate", None),
+ (19, "Spermine modulation of Alzheimer's Tau and Parkinson's alpha-synuclein: implications for biomolecular condensation and neurodegeneration", 2025, "idp_condensate", None),
+ (20, "Alzheimer's Abeta catalyzes Tau phase separation and aggregation via early nanocluster solubilization", 2026, "idp_condensate", None),
+ (21, "Biomolecular condensates form spatially inhomogeneous network fluids", 2024, "idp_condensate", None),
+ (22, "Selective phase separation of transcription factors is driven by orthogonal molecular grammar", 2025, "idp_condensate", None),
+ (23, "Disordered regions of human eIF4B orchestrate a dynamic self-association landscape", 2024, "idp_condensate", None),
+ (24, "SARS-CoV-2 membrane protein conformations induce distinct membrane curvatures", 2026, "viral_other", None),
+ (25, "Structural organization of HBV pgRNA genome driven by phase separation in capsid confinement", 2026, "viral_other", "T5: HBV capsid + pgRNA"),
+ (26, "Transient non-local interactions dominate the dynamics of measles virus NTAIL", 2025, "viral_other", "E9: measles NTAIL"),
+ (27, "Molecular mechanism of parental H3/H4 recycling at a replication fork", 2024, "viral_other", "T6: H3/H4 recycling at replication fork"),
+ (28, "Evolution of the conformational dynamics of the molecular chaperone Hsp90", 2024, "viral_other", "E2: Hsp90 dynamics"),
+ (29, "Complete enzyme clustering enhances coenzyme Q biosynthesis via substrate channeling", 2026, "viral_other", "T8: enzyme clustering / substrate channeling"),
+ (30, "Mechanistic models of asymmetric hand-over-hand translocation and nucleosome navigation by CMG helicase", 2025, "viral_other", None),
+]

@@ -18,3 +18,8 @@ results*.json
 .env.*
 *.key
 credentials.json
+
+# sim_classifier_train.py's local embedding-call cache (regenerable,
+# large) -- NOT sim_classifier_model.joblib, the small (~750KB) persisted
+# model artifact itself, which IS a real runtime dependency and stays tracked.
+benchmarks/concept_resolver_reasoning/mellea_integration/sim_classifier_embed_cache.json

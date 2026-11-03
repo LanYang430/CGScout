@@ -179,6 +179,13 @@ class Paper(BaseModel):
         default_factory=list,
         description="Planned query string(s) that returned this paper from a search source.",
     )
+    retrieval_modes: list[str] = Field(
+        default_factory=list,
+        description="'lexical' / 'semantic' -- which OpenAlex retrieval mode(s) (search=/search.semantic=) "
+        "actually returned this paper, one entry per found_by_queries entry that contributed a mode "
+        "(same union-across-merge treatment as found_by_queries/query_categories). Audit/benchmark only -- "
+        "Stage 3 relevance judgment never reads this field.",
+    )
     query_categories: list[str] = Field(
         default_factory=list,
         description="PlannedQuery.category value(s) (e.g. 'system_specific', 'general_discovery') for every "
@@ -207,6 +214,13 @@ class Paper(BaseModel):
     )
 
     external_ids: ExternalIds = Field(default_factory=ExternalIds)
+
+    oa_type: Optional[str] = Field(
+        default=None,
+        description="OpenAlex's own coarse `type` field (e.g. 'article', 'review', 'preprint') for this work, "
+        "when the source is OpenAlex -- None for any other source or if OpenAlex omitted it. Used by the Stage 3 "
+        "review/perspective filter (mellea_integration/review_filter.py); no other Stage-3 logic reads this.",
+    )
 
     is_open_access: Optional[bool] = None
     oa_pdf_url: Optional[str] = None
