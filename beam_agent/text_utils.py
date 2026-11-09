@@ -85,3 +85,14 @@ def core_keyword_string(text: str) -> str:
         if normalized in kw:
             kept.append(raw_word)
     return " ".join(kept)
+
+
+# Methodology synonym clusters (canonical term, [synonyms]) -- vocabulary, not protein names.  Lives here (not in concept_resolver.py, where it
+# was first defined) so that the Stage-3 filter (relevance_filter_handoff.py) can read it without importing the v1 concept resolver.
+# concept_resolver.py imports it back under its old private name.
+METHODOLOGY_TERM_CLUSTERS: list[tuple[str, list[str]]] = [
+    ("coarse-grained", ["cg", "coarse grained"]),
+    ("all-atom", ["all atom", "atomistic"]),
+    ("molecular dynamics", ["md simulation", "md"]),
+    ("machine learning", ["ml", "deep learning", "neural network"]),
+]

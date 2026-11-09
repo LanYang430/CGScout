@@ -62,6 +62,7 @@ from typing import Optional, Protocol
 import requests
 from pydantic import BaseModel, Field
 
+from beam_agent.text_utils import METHODOLOGY_TERM_CLUSTERS as _METHODOLOGY_TERM_CLUSTERS  # table now lives in text_utils.py
 from beam_agent.text_utils import STOPWORDS, keywords, stem, tokenize
 
 # Small, generic synonym-cluster tables -- vocabulary, not protein names.
@@ -75,13 +76,6 @@ _STRUCTURAL_TERM_CLUSTERS: list[tuple[str, list[str]]] = [
     ("beta-barrel", ["beta barrel"]),
     ("coiled-coil", ["coiled coil"]),
     ("intrinsically disordered", ["disordered protein", "idp"]),
-]
-
-_METHODOLOGY_TERM_CLUSTERS: list[tuple[str, list[str]]] = [
-    ("coarse-grained", ["cg", "coarse grained"]),
-    ("all-atom", ["all atom", "atomistic"]),
-    ("molecular dynamics", ["md simulation", "md"]),
-    ("machine learning", ["ml", "deep learning", "neural network"]),
 ]
 
 _TASK_TERM_CLUSTERS: list[tuple[str, list[str]]] = [

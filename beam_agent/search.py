@@ -9,13 +9,16 @@ rank against.
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from beam_agent import cache
 from beam_agent.dedupe import dedupe_papers
 from beam_agent.models import Paper
-from beam_agent.pipeline import group_queries_by_normalized_key, stamp_provenance
-from beam_agent.query_planner import QueryPlan
 from beam_agent.sources.openalex import search_openalex
 from beam_agent.sources.semantic_scholar import search_semantic_scholar
+
+if TYPE_CHECKING:  # only a type annotation of execute_query_plan(); not needed at import time
+    from beam_agent.query_planner import QueryPlan
 
 _SEARCH_CACHE_NAMESPACE = "search_and_dedupe"
 # v1: 24h, simple and fixed -- OpenAlex/Semantic Scholar indexing and ranking
@@ -147,6 +150,10 @@ def execute_query_plan(
     responsible for turning "no results and errors present" into a clear
     user-facing failure message rather than a silent empty result.
     """
+    # Imported here, not at module top: pipeline.py pulls in the whole v1 pipeline (concept resolver, extractor, matcher, ...), and only this
+    # legacy function needs its two helpers.  search_and_dedupe() -- the one function the CGScout path uses -- must not load all that.
+    from beam_agent.pipeline import group_queries_by_normalized_key, stamp_provenance
+
     grouped_queries = group_queries_by_normalized_key(plan.queries)
 
     raw: list[Paper] = []

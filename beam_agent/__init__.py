@@ -16,73 +16,7 @@ grow into (Crossref validation, full-text retrieval).
 # snapshot.py's run_metadata.json for reproducibility.
 __version__ = "0.1.0"
 
-from beam_agent.concept_resolver import (
-    BaselineConceptResolver,
-    ConceptResolver,
-    ConceptTerm,
-    ScientificConceptProfile,
-    SizeConstraint,
-)
-from beam_agent.evidence_extraction import (
-    BaselineEvidenceExtractor,
-    OllamaPaperEvidenceExtractor,
-    PaperEvidenceExtractor,
-)
-from beam_agent.evidence_matching import (
-    DimensionMatch,
-    DimensionMatchResult,
-    DimensionRequirement,
-    EvidenceMatchResult,
-    FilterCriteria,
-    match_evidence,
-    rank_papers,
-)
-from beam_agent.models import (
-    ExternalIds,
-    MethodEvidence,
-    Paper,
-    PaperEvidence,
-    ProcessEvidenceItem,
-    SystemEvidence,
-)
-from beam_agent.pipeline import PipelineResult, run_pipeline
-from beam_agent.query_planner import BaselineQueryPlanner, PlannedQuery, QueryPlan, QueryPlanner
-from beam_agent.relevance_filter import RelevanceFilter, RuleBasedRelevanceFilter
-from beam_agent.search import search_and_dedupe
-from beam_agent.snapshot import DEFAULT_RUNS_DIR, save_run_snapshot
-
-__all__ = [
-    "__version__",
-    "Paper",
-    "ExternalIds",
-    "search_and_dedupe",
-    "run_pipeline",
-    "PipelineResult",
-    "ConceptResolver",
-    "BaselineConceptResolver",
-    "ConceptTerm",
-    "SizeConstraint",
-    "ScientificConceptProfile",
-    "QueryPlanner",
-    "BaselineQueryPlanner",
-    "PlannedQuery",
-    "QueryPlan",
-    "RelevanceFilter",
-    "RuleBasedRelevanceFilter",
-    "PaperEvidenceExtractor",
-    "BaselineEvidenceExtractor",
-    "OllamaPaperEvidenceExtractor",
-    "MethodEvidence",
-    "SystemEvidence",
-    "ProcessEvidenceItem",
-    "PaperEvidence",
-    "DimensionRequirement",
-    "FilterCriteria",
-    "DimensionMatch",
-    "DimensionMatchResult",
-    "EvidenceMatchResult",
-    "match_evidence",
-    "rank_papers",
-    "save_run_snapshot",
-    "DEFAULT_RUNS_DIR",
-]
+# The v1 pipeline names (run_pipeline, ConceptResolver, QueryPlanner, ...) are NOT re-exported here any more: importing this package used to load
+# nine v1 modules (pipeline, query_planner, concept_resolver, evidence_matching, relevance_filter, snapshot, ...) that the CGScout / BEAM
+# path never uses.  Import what you need from its own submodule, e.g. `from beam_agent.pipeline import run_pipeline`.
+__all__ = ["__version__"]
