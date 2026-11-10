@@ -9,7 +9,7 @@ blocks the others.
 The old structural route (TerminologyExpander -> Hop-1 -> Hop-2 inside this
 module) is historical code, kept in the git tag `legacy-pre-cgscout`: the live
 path never enables it (the structural / related-system work is done by
-transfer_retrieval_bridge). Its provenance and result types stay in the
+orchestrator). Its provenance and result types stay in the
 schema below.
 
 Reuses, UNMODIFIED:
@@ -71,7 +71,7 @@ class RouteRetrievalBudgets(BaseModel):
     # (select_systems_for_hop2, ranked by (-n_support, first_seen_rank),
     # unchanged) is the real cost gate.
     structural_max_discovered_systems: int = 150
-    structural_hop2_max_systems: int = 30        # == related_system_hop2.DEFAULT_MAX_SYSTEMS override; the real cost gate
+    structural_hop2_max_systems: int = 30        # == types.DEFAULT_MAX_SYSTEMS override; the real cost gate
     # Was 60 (see prior regression-fix note in git/session history: the live
     # wiring once silently fell back to discover_related_systems()'s own
     # default of 25). Raised again here, to 150, as a SAFETY CAP alongside
@@ -83,7 +83,7 @@ class RouteRetrievalBudgets(BaseModel):
     # 150 keeps it a safety cap, not a normal selection cutoff.
     structural_max_papers_to_extract: int = 150
     # Bounded concurrency for Hop-1's per-paper extract_fn calls
-    # (related_system_discovery.discover_related_systems()'s own
+    # (discovery.discover_related_systems()'s own
     # max_workers parameter -- ONLY the extract_fn calls run concurrently;
     # grounding/merge/ranking always stays sequential in original order,
     # unaffected). Validated by this session's own standalone benchmark
@@ -265,7 +265,7 @@ class RouteOutcome(BaseModel):
     n_new_unique_contributed: int = 0  # of those, how many were NEW unique paper_refs this route added
     n_dropped_route_cap: int = 0       # candidates dropped by this route's own max_papers_per_route
     n_dropped_global_cap: int = 0      # candidates dropped by the global max_total_unique_papers
-    structural_cleanup_log: list[str] = Field(default_factory=list)  # hop1_cleanup.py audit trail (structural route only)
+    structural_cleanup_log: list[str] = Field(default_factory=list)  # cleanup.py audit trail (structural route only)
     empty: bool = False
     empty_reason: Optional[Literal[
         "not_applicable_no_grounded_term",
@@ -415,7 +415,7 @@ def _clean_chunk(text: str, hygiene: bool, *, leading: bool = True) -> str:
 
 # --- short-context anchoring (v4 / P1) ---------------------------------------------------------------------------------------
 # A single common word ('membrane', 'intracellular', 'cholesterol') searched alone -- `membrane coarse-grained model` -- no longer
-# says anything about the user's system, and the legacy marker extractor (evidence_route_planner._CONTEXT_LEXICAL_MARKERS) produces
+# says anything about the user's system, and the legacy marker extractor (evidence_plan._CONTEXT_LEXICAL_MARKERS) produces
 # exactly such words by construction.  They are searched together with the system head instead.  A single token that IS an entity
 # (digits, Greek letters, CamelCase / several capitals: 'HP1α', 'PHC3', 'GlnBP') keeps its own query -- it is rare enough to be
 # informative alone -- and every context term of two or more content words keeps its own standalone query too.
@@ -698,9 +698,9 @@ def select_primary_structural_term(structural_terms: list[RouteTerm]) -> tuple[O
     """Deterministic priority: USER_GROUNDED > LITERATURE_GROUNDED > original
     EvidenceRoutePlan order (as the tiebreak within a tier). Returns
     (primary, secondary_terms_for_audit). structural_terms is guaranteed by
-    evidence_route_planner's own contract to contain only USER_GROUNDED /
+    evidence_plan's own contract to contain only USER_GROUNDED /
     LITERATURE_GROUNDED terms (never PLANNER_DERIVED) -- see
-    evidence_route_planner.validate_hard_stops.
+    evidence_plan.validate_hard_stops.
     Hop-1 is run ONCE from the primary term only; TerminologyExpander is
     already responsible for widening structural terminology, so secondary
     terms are preserved for audit, never re-run through Hop-1 separately."""
@@ -727,7 +727,7 @@ def build_route_retrieval_plan(
     #     build_direct_system_queries() and its "direct_system" FlatRoute
     #     literal are gone). Only _extract_direct_system_terms() /
     #     EvidenceRoutePlan.direct_system_terms remain in
-    #     evidence_route_planner.py -- untouched because ~6 standalone
+    #     evidence_plan.py -- untouched because ~6 standalone
     #     diagnostic scripts still read that field; it is now simply unused
     #     by the route system.
     #   - process             "{system} {process} coarse-grained model"
@@ -1004,7 +1004,7 @@ def run_route_retrieval(
     never blocks the others (each route is independently try/except'd).
     The structural branch (EvidenceRoutePlan.structural_terms non-empty) is no
     longer part of this function: the live path never enables it (the
-    structural / related-system work is done by transfer_retrieval_bridge), and
+    structural / related-system work is done by orchestrator), and
     a plan that enables it raises NotImplementedError. The parameters `call`,
     `hop1_search_fn`, `hop1_extract_fn`, `hop2_search_fn` and `hop1_progress_fn`
     are accepted for signature compatibility but not used."""

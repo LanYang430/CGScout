@@ -1,15 +1,15 @@
-"""transfer_entity_extraction -- richer Hop-1 per-paper extraction for the
+"""extraction -- richer Hop-1 per-paper extraction for the
 transfer-aware related-system branch (P5).
 
-Same ONE-call-per-paper extraction slot related_system_discovery.py's
+Same ONE-call-per-paper extraction slot discovery.py's
 discover_related_systems() uses (via its injectable extract_fn) -- NOT a
 new LLM call. It asks that per-paper call for two fields the model must
 genuinely judge from the text: entity_type and identity_context (plus the
 class_membership_quote described below).
 
 Backend-agnostic ("one run, one LLM backend" invariant): the SAME
-`llm_backend.LLMBackend` every other LLM-calling module takes is an explicit,
-REQUIRED argument here (no default -- see llm_backend.get_backend()'s own
+`llm.LLMBackend` every other LLM-calling module takes is an explicit,
+REQUIRED argument here (no default -- see llm.get_backend()'s own
 docstring: no module may resolve or fall back to a backend on its own), and
 this module calls its `.structured()` method.
 
@@ -41,12 +41,12 @@ Design (per this session's explicit decisions):
   - NO transfer_basis field: that's an axis-level property (axis.basis,
     already available), never needs re-deriving per mention.
   - NO LLM-generated retrieval_anchor: built deterministically in
-    related_system_identity.py from entity_type + identity_context, once
-    both have flowed through related_system_discovery.py's existing
+    identity.py from entity_type + identity_context, once
+    both have flowed through discovery.py's existing
     verbatim-grounding checks.
 
 No side-channel dict anywhere in this design: entity_type/identity_context
-ride on related_system_discovery.SupportingPaper itself (two new, additive,
+ride on discovery.SupportingPaper itself (two new, additive,
 Optional fields on that existing object -- see its own docstring comment),
 via _ground_mention()'s existing getattr()-based pass-through, which also
 verbatim-verifies identity_context against the paper's own text before
@@ -68,7 +68,7 @@ from cgscout.retrieval.related_systems.terminology import _STRUCTURAL_MORPHEMES 
 # --- Hop-1 per-paper extraction: input shape + user message (moved here from intake_contract.py, verbatim) -----------------------------------------------
 # RelatedSystemDiscovery -- Hop-1 per-paper extraction. Given ONE paper's TITLE + ABSTRACT and a structural class, name the SPECIFIC system(s) THAT
 # TEXT says have that structure. The name is later validated as a verbatim substring of the paper (deterministic grounding, in
-# related_system_discovery.py). The model must NEVER add a name from its own knowledge -- only what the given text states.
+# discovery.py). The model must NEVER add a name from its own knowledge -- only what the given text states.
 
 class SystemMention(BaseModel):
     name: str                     # verbatim from the title/abstract
@@ -82,7 +82,7 @@ class SystemMention(BaseModel):
     # extract_related_systems_with_mellea() now asks the LLM for only `name`
     # + `evidence_quote` (see SystemMentionLLM below) and fills this field
     # deterministically afterward, in Python, before handing a full
-    # SystemMention to related_system_discovery.py -- which is UNCHANGED,
+    # SystemMention to discovery.py -- which is UNCHANGED,
     # still receives the exact same shape it always has and still runs the
     # exact same verbatim-grounding checks against this field.
     #
@@ -126,7 +126,7 @@ def _find_structural_term_matched(evidence_quote: str, structural_class: str, al
     over a shorter one it contains (e.g. "beta-helix"). Reports the KNOWN
     term itself, not an extracted quote substring -- evidence_quote's own
     exact wording is untouched/unaffected elsewhere; this field's only real
-    job in related_system_discovery.py's _ground_mention() is to be a
+    job in discovery.py's _ground_mention() is to be a
     normalized substring of evidence_quote, checked case/dash-insensitively
     regardless. Empty string if no known term matches verbatim (rare) --
     grounding's own independent _quote_ties_to_class() canon-normalized
@@ -160,7 +160,7 @@ def _find_structural_term_matched(evidence_quote: str, structural_class: str, al
 # Two independent, narrowly-scoped safeguards -- Hop-1 extraction ONLY:
 #
 #   1. _MAX_ABSTRACT_CHARS_FOR_EXTRACTION -- truncates ONLY what THIS
-#      function sends to the LLM. related_system_discovery.py's own
+#      function sends to the LLM. discovery.py's own
 #      grounding (_ground_mention, via _paper_text) always reads the
 #      paper's REAL, untruncated abstract from the Paper object directly --
 #      completely unaffected by this cap, so grounding integrity for
@@ -180,8 +180,8 @@ _EXTRACTION_TIMEOUT_SECONDS = 20
 
 # --- end of the Hop-1 helper block ---------------------------------------------------------------------------------------------------------------
 
-# A handful of entries in the shared morpheme list (terminology_expansion.
-# _STRUCTURAL_MORPHEMES -- used elsewhere as related_system_discovery.py's
+# A handful of entries in the shared morpheme list (terminology.
+# _STRUCTURAL_MORPHEMES -- used elsewhere as discovery.py's
 # _quote_ties_to_class() loose, backward-compatible fallback for the OLD
 # pipeline) are too common in ordinary protein-biology prose to indicate
 # genuine structural-CLASS identity by themselves: "domain", "membrane",
@@ -382,21 +382,21 @@ def extract_related_systems_rich(
     title: str, abstract: str, structural_class: str, also_known_as=None,
     *, backend: LLMBackend, basis: Optional[str] = None, case_id: Optional[str] = None,
 ) -> RichSystemExtraction:
-    """Drop-in extract_fn for related_system_discovery.discover_related_
+    """Drop-in extract_fn for discovery.discover_related_
     systems() -- same one-call-per-paper slot, with abstract truncation, a
     call timeout and a dev-cache (own cache namespace). Raises on failure --
     the caller (discover_related_systems) treats a failed paper as
     contributing nothing.
 
     `backend` is REQUIRED, no default -- the single LLMBackend this whole
-    BEAM run/session already resolved once (llm_backend.get_backend(),
+    BEAM run/session already resolved once (llm.get_backend(),
     called by the top-level entry point, threaded down through every
     caller in between). This function never resolves or falls back to a
-    backend on its own -- see llm_backend.get_backend()'s own docstring on
+    backend on its own -- see llm.get_backend()'s own docstring on
     the "one run, one backend" invariant. `case_id` just rides through to
     the usage log, same as every other .structured() call already does.
 
-    `basis` is the axis's own axis.basis (transfer_retrieval_bridge.py threads
+    `basis` is the axis's own axis.basis (orchestrator.py threads
     it in through a closure; execution_mode dispatch still reads only
     axis.execution_mode). It selects the RELATIONSHIP CRITERION appended to
     the user message (AXIS_RELATIONSHIP_CRITERIA: family / architecture /

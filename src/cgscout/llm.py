@@ -7,7 +7,7 @@ or constructs an OpenAI client; no other file should reach for it directly.
 One backend implements the protocol:
   - OpenAILunaBackend: GPT-5.6 Luna via the Responses API + structured
     outputs (`client.responses.parse(text_format=<pydantic model>, ...)`).
-    The backend of the live path (chat_with_beam_v2.py) and of every
+    The backend of the live path (cli.py) and of every
     evaluated run.
 The protocol is kept as the single extension point for another backend; no
 other backend is part of this project (the earlier optional local Qwen/Mellea
@@ -62,7 +62,7 @@ class LLMBackend(Protocol):
         OpenAI's SDK default). Every caller that batches many calls concurrently (e.g. Hop-1
         related-system extraction, one call per paper) should pass one, so a
         single hung call can never stall the whole batch -- see
-        transfer_entity_extraction.py."""
+        extraction.py."""
         ...
 
 
@@ -74,7 +74,7 @@ class LLMBackend(Protocol):
 # take a `call: CallFn` of shape `(system_prompt: str, user_message: str,
 # schema: dict) -> str` -- predates LLMBackend. make_call_fn() bridges an
 # injected LLMBackend into that shape, so every call site (e.g.
-# transfer_retrieval_bridge.py's terminology expansion step, part of the
+# orchestrator.py's terminology expansion step, part of the
 # Hop-1 chain) goes through the one configured backend -- the "one run, one
 # backend" invariant get_backend() documents.
 
@@ -210,7 +210,7 @@ def get_backend() -> LLMBackend:
     execution): call this ONCE per run/session and thread the SAME instance
     into every module that needs an LLM -- ScientificPlanner,
     ExpertPriorPlanner, and Hop-1 related-system extraction
-    (transfer_entity_extraction.extract_related_systems_rich) alike. None of
+    (extraction.extract_related_systems_rich) alike. None of
     those modules call get_backend() themselves or fall back to a different
     backend on their own; they take `backend` as an explicit, required
     argument. Any future module that needs an LLM call should follow the

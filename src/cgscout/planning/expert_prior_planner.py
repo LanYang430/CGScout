@@ -2,7 +2,7 @@
 Luna structured call. NEW, additive module.
 
 Runs ONLY after ScientificPlanner has reached status="ready" (clarification
-already resolved) -- see planner_session.PlannerSession / chat_with_beam_v2.py.
+already resolved) -- see session.PlannerSession / cli.py.
 Produces ONE judgment: the transfer hypothesis.  (A former second judgment, `canonical_methods`, was removed on 2026-10-28: BEAM no longer
 proposes or independently verifies "commonly considered" CG methods; method papers reach the user only through the normal retrieval routes.)
 
@@ -12,7 +12,7 @@ proposes or independently verifies "commonly considered" CG methods; method pape
      looks similar". Replaces the old lexical-morpheme-triggered structural
      branch. Every axis also carries execution_mode, the MODEL's own
      judgment of how that axis should be searched (direct_concept_search vs
-     related_system_discovery) -- this module and its downstream bridge
+     discovery) -- this module and its downstream bridge
      never hardcode a basis -> execution_mode table; dispatch always reads
      whatever the model returned for that specific axis.
 
@@ -34,7 +34,7 @@ happened to phrase one string.
 
 `retrieval_anchors` (added one pass later, this session) is a further
 split -- diagnosed live: even after the scientific_class/discriminative_
-features/objective_relevance split above, transfer_retrieval_bridge.py
+features/objective_relevance split above, orchestrator.py
 was concatenating scientific_class with a full discriminative_features
 SENTENCE into one query, and a 15-20 word conjunctive query routinely
 returned zero OpenAlex results (a live, reproducible regression on the

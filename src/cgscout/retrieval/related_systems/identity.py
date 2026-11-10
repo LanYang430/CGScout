@@ -1,8 +1,8 @@
-"""related_system_identity (scientific-planner-v2 branch) -- deterministic
+"""identity (scientific-planner-v2 branch) -- deterministic
 identity preservation for Hop-1-discovered related systems. NEW, additive
 module. No LLM call of its own -- consumes entity_type/identity_context
-already produced by transfer_entity_extraction.py's extraction call and
-carried, grounding-verified, on related_system_discovery.SupportingPaper.
+already produced by extraction.py's extraction call and
+carried, grounding-verified, on discovery.SupportingPaper.
 
 History (this session, two earlier fixes superseded by this one): the
 first version tried to DETECT an abbreviation-expansion relationship
@@ -52,7 +52,7 @@ free wording is now IGNORED for anchor construction: `query_anchor =
 _NAMED_SYSTEM_ENTITY_TYPES -- `scientific_class` is the axis's own single
 already-canonical, already-deterministic phrase (the same string that
 seeded Hop-1 and was checked by the relationship-fidelity gate in
-transfer_entity_extraction.py, so asserting it of this entity is not
+extraction.py, so asserting it of this entity is not
 speculative -- for this basis every accepted mention already had that
 relationship verified by evidence at extraction time). `identity_context`
 is still carried on `RelatedSystemIdentity` and still decides the
@@ -82,7 +82,7 @@ def _norm(s: str) -> str:
 
 class RelatedSystemIdentity(BaseModel):
     label: str                                    # Hop-1's own grounded name -- NEVER dropped/overwritten
-    entity_type: Optional[str] = None             # as classified by transfer_entity_extraction.py, if any
+    entity_type: Optional[str] = None             # as classified by extraction.py, if any
     identity_context: Optional[str] = None        # verbatim-grounded broader-context phrase, if any
     grounding: Literal["grounded_full", "grounded_contextual", "insufficient"]
     query_anchor: Optional[str] = None            # what Hop-2 actually searches; None only for insufficient
@@ -94,14 +94,14 @@ class RelatedSystemIdentity(BaseModel):
 
 
 def build_related_system_identity(ds, *, scientific_class: str, basis: Optional[str] = None) -> RelatedSystemIdentity:
-    """`ds` is a related_system_discovery.DiscoveredSystem -- typed loosely
+    """`ds` is a discovery.DiscoveredSystem -- typed loosely
     here (duck-typed on .name/.supporting_papers/.n_support/.first_seen_rank)
     so this module has no import-time dependency on that class's exact
     location, only on the shape Hop-1 already guarantees. No paper_cache
     needed -- entity_type/identity_context already rode along on each
     SupportingPaper, already grounding-verified by _ground_mention().
 
-    `basis` is the axis's own axis.basis (transfer_retrieval_bridge.py
+    `basis` is the axis's own axis.basis (orchestrator.py
     threads it in -- not a new field, execution_mode dispatch is untouched).
     It exists ONLY to gate the canonical-class-projection query_anchor rule
     described in this module's own docstring to "distinctive_structure"

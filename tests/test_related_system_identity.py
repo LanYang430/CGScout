@@ -1,10 +1,10 @@
-"""Unit tests for related_system_identity.py -- the entity_type/
+"""Unit tests for identity.py -- the entity_type/
 identity_context-driven query-anchor policy (this session's fourth-pass
 fix, replacing the earlier Schwartz-Hearst/regex-based approach entirely).
 
 No LLM, no network: builds DiscoveredSystem/SupportingPaper objects by
-hand, exactly as transfer_entity_extraction.py's real extraction ->
-related_system_discovery._ground_mention()'s pass-through would produce
+hand, exactly as extraction.py's real extraction ->
+discovery._ground_mention()'s pass-through would produce
 them.
 """
 

@@ -5,7 +5,7 @@
 ProcessEvidenceItem / PaperEvidence) are the query-independent evidence schema;
 they live here because `Paper.evidence` references `PaperEvidence` as a field
 type, so they are part of the Paper schema (and of its cached/serialized shape).
-Stage 4 (stage4_v2.py) reuses ProcessEvidenceItem. The earlier v1 evidence
+Stage 4 (stage4.py) reuses ProcessEvidenceItem. The earlier v1 evidence
 extractor and matcher that produced/consumed PaperEvidence are historical code,
 kept in the git tag `legacy-pre-cgscout`.
 

@@ -1,4 +1,4 @@
-"""transfer_retrieval_bridge (scientific-planner-v2 branch) -- executes an
+"""orchestrator (scientific-planner-v2 branch) -- executes an
 ExpertPriorOutput (transfer_axes) for a resolved
 PlannerOutput, merges the transfer evidence stream with the existing
 direct-evidence stream, and runs the existing Stage 3 gate ONCE over the
@@ -19,22 +19,22 @@ what they say, deterministically:
     table anywhere in this file.
 
 direct_concept_search fires 3 fixed, deterministic template queries per
-axis (see direct_concept_semantic_intent.render_direct_concept_queries(),
+axis (see concept_3a.render_direct_concept_queries(),
 no LLM call) via beam_agent.search.search_and_dedupe() directly
-(function-level reuse, bypassing route_retrieval_plan.py's routing layer
+(function-level reuse, bypassing route_plan.py's routing layer
 -- there is nothing case-specific this needs from that layer), and unions
 their results.
 
-related_system_discovery calls related_system_discovery.discover_related_
-systems() (Hop-1) and hop2_converged (Hop-2) DIRECTLY
+discovery calls discovery.discover_related_
+systems() (Hop-1) and hop2 (Hop-2) DIRECTLY
 -- the raw retrieval primitives -- rather than going through route_
 retrieval_plan.py's structural-branch orchestration. That orchestration's
 EvidenceRoutePlan.structural_terms / RouteTerm.source contract is
 specifically "only USER_GROUNDED / LITERATURE_GROUNDED, no LLM inference
-about what fold a system belongs to" (evidence_route_planner.py's own
+about what fold a system belongs to" (evidence_plan.py's own
 docstring) -- exactly what a transfer_axes hypothesis intentionally IS.
 Routing it through that contract would both mislabel provenance and risk
-tripping evidence_route_planner.validate_hard_stops. Calling the two Hop
+tripping evidence_plan.validate_hard_stops. Calling the two Hop
 functions directly reuses the actual, already-validated retrieval
 machinery without stretching a different module's contract to cover a
 case it was not designed for -- exactly the old lexical structural
@@ -42,7 +42,7 @@ morpheme TRIGGER is what is not reused; the Hop-1/Hop-2 EXECUTION machinery
 is reused unmodified, seeded by axis.concept instead.
 
 Every LLM step of this branch (terminology expansion, Hop-1 per-paper
-extraction, ...) uses the ONE injected `backend` (llm_backend.LLMBackend); a
+extraction, ...) uses the ONE injected `backend` (llm.LLMBackend); a
 failure surfaces as that one axis's TransferAxisExecutionLog.error, never a
 crash of the whole run.
 
@@ -54,21 +54,21 @@ system at all ("Bordetella pertussis" is an organism, not a protein).
 Fixed upstream of this file, not in it: Hop-1's own per-paper extraction
 call (still ONE call per paper, no new LLM call) now also classifies each
 mention's entity_type and states its grounded identity_context, if the
-text gives one -- see transfer_entity_extraction.py and related_system_
+text gives one -- see extraction.py and related_system_
 identity.py. This file's own job is unchanged: it just consumes
 identity.query_anchor as before.
 
 Reuses, UNMODIFIED:
-  - planner_retrieval_bridge.run_retrieval_from_plan()  (direct stream)
-  - related_system_discovery.discover_related_systems() (Hop-1 orchestration)
-  - hop2_converged (Hop-2: structured search-anchor normalization, <=2 systems per axis, queries A/B (+fallback C);
-    replaces the earlier related_system_hop2 query concatenation in THIS branch -- see hop2_converged.py)
-  - hop1_cleanup.cleanup_discovered_systems()
-  - terminology_expansion.expand_terminology()  (its `call` is
-    llm_backend.make_call_fn(backend, response_schema=TerminologyExpansion, ...)
+  - from_planner.run_retrieval_from_plan()  (direct stream)
+  - discovery.discover_related_systems() (Hop-1 orchestration)
+  - hop2 (Hop-2: structured search-anchor normalization, <=2 systems per axis, queries A/B (+fallback C);
+    replaces the earlier types query concatenation in THIS branch -- see hop2.py)
+  - cleanup.cleanup_discovered_systems()
+  - terminology.expand_terminology()  (its `call` is
+    llm.make_call_fn(backend, response_schema=TerminologyExpansion, ...)
     -- the injected backend, so the whole run uses one backend)
-  - transfer_entity_extraction.extract_related_systems_rich  (Hop-1's per-paper LLM call, richer schema, also backend-injected -- see that module)
-  - relevance_filter_handoff.filter_papers()  (Stage 3, run ONCE over the merged pool)
+  - extraction.extract_related_systems_rich  (Hop-1's per-paper LLM call, richer schema, also backend-injected -- see that module)
+  - filter.filter_papers()  (Stage 3, run ONCE over the merged pool)
   - beam_agent.search.search_and_dedupe()
 
 Query generation (this session's structured-signature redesign): axis.
@@ -80,7 +80,7 @@ plan.scientific_objective is what participates in query text, exactly the
 same objective the direct route already uses. Every query this module
 builds keeps scientific_class as a mandatory prefix; a bare discriminative
 feature or a bare related-system label is never searched on its own -- see
-related_system_identity.py for how a Hop-1-discovered label is qualified
+identity.py for how a Hop-1-discovered label is qualified
 before ever becoming a Hop-2 anchor.
 
 Second-pass fix (same session, diagnosed live on the phospho-IDP case):
@@ -102,7 +102,7 @@ Hop-1's job is discovery ("why is this related system worth finding"),
 Hop-2's job is retrieval ("now that we know its name, search its CG
 literature as simply as possible") -- these had been blurring together.
 Concretely: (1) `identity.query_anchor` used to be able to lose the
-literal discovered label entirely (see related_system_identity.py's own
+literal discovered label entirely (see identity.py's own
 docstring for the "another SPATE (EspP)" false-positive) -- fixed there,
 not here; this file's consumption of `identity.query_anchor` is
 unchanged, it just receives a correct value now. (2) Hop-2's own
@@ -112,13 +112,13 @@ verbatim into every Hop-2 query -- an earlier version ran it through
 `objective_normalization.normalize_objective()` (historical code, git tag
 `legacy-pre-cgscout`) so the query became "{related_system}
 {normalized_objective} {methodology}" (e.g. "EspP folding coarse-grained
-model"); Hop-2 is now built by hop2_converged.py (structured search-anchor
+model"); Hop-2 is now built by hop2.py (structured search-anchor
 normalization). Hop-1's own query construction (scientific_class +
 retrieval_anchors, above) is NOT touched by this pass -- scientific_class
 stays central to discovery; it is Hop-2 specifically that should default
 to just the discovered system's own name once discovery is done.
 Supporting-paper quotes were never query material and still aren't --
-`related_system_identity.py`'s own fix already guarantees that.
+`identity.py`'s own fix already guarantees that.
 """
 from __future__ import annotations
 
@@ -167,7 +167,7 @@ class TransferAxisExecutionLog(BaseModel):
     executed: bool
     skip_reason: Optional[str] = None
     direct_queries: list[str] = Field(default_factory=list)          # direct_concept_search only
-    hop1_queries: list[str] = Field(default_factory=list)            # related_system_discovery only
+    hop1_queries: list[str] = Field(default_factory=list)            # discovery only
     related_system_identities: list[RelatedSystemIdentity] = Field(default_factory=list)
     hop2_queries: list[str] = Field(default_factory=list)            # exact per-identity Hop-2 query text
     hop2_plan: list[dict] = Field(default_factory=list)              # per system: search_anchor / core_process / stable_descriptor, queries + n_results, fallback_used
@@ -196,7 +196,7 @@ def _make_search_fn(
     """`mode`/`semantic_query_override` are this session's route-based
     lexical/semantic split (see module docstring's Hop-1/Hop-2 callers).
     When `semantic_query_override` is set and mode="semantic", the `query`
-    argument the CALLER passes in (e.g. related_system_discovery.py's own
+    argument the CALLER passes in (e.g. discovery.py's own
     per-term lexical-style query, built inside the UNCHANGED
     build_discovery_queries()) is ignored, and this closure always searches
     with the single precomputed override sentence instead -- relying on
@@ -238,7 +238,7 @@ def _run_direct_concept_search(
     """direct_concept_search axes describe a transferable PROCESS/
     CAPABILITY/ENVIRONMENT, never one named entity, by construction -- so
     this route is semantic. `queries` is precomputed by the caller
-    (run_expert_prior_retrieval, via direct_concept_semantic_intent.
+    (run_expert_prior_retrieval, via concept_3a.
     render_direct_concept_queries() -- 3 fixed deterministic templates,
     no LLM call) -- this function just executes them and unions the
     results; it builds no query of its own.
@@ -255,7 +255,7 @@ def _run_direct_concept_search(
     way it differs from betting on one LLM output: 3 differently-structured
     templates are searched and their results unioned here (the `queries`
     loop below), not one template treated as ground truth -- see
-    direct_concept_semantic_intent.py's module docstring for the
+    concept_3a.py's module docstring for the
     validation run (12-case pilot benchmark, 0 regressions, 3 recoveries)
     and the one known residual risk it also surfaced."""
     mode = "semantic"
@@ -311,7 +311,7 @@ def _run_related_system_discovery(
     via objective_normalization.normalize_objective()); it never propagated any
     system/component text onto related-system queries.
 
-    `backend` is REQUIRED (no default -- see llm_backend.get_backend()'s
+    `backend` is REQUIRED (no default -- see llm.get_backend()'s
     docstring): the SAME LLMBackend instance this whole run already
     resolved once, used for BOTH LLM calls this function makes
     (terminology expansion below, and every Hop-1 per-paper extraction
@@ -329,7 +329,7 @@ def _run_related_system_discovery(
 
     # Hop-1 seed: scientific_class alone is system_description; every
     # combination below rides in as an "expansion term" of build_discovery_
-    # queries() (related_system_discovery.py, UNCHANGED) -- which builds
+    # queries() (discovery.py, UNCHANGED) -- which builds
     # [term, term+" structure"] per term -- so scientific_class prefixes
     # every single Hop-1 query by construction, never a bare anchor word.
     # Built from retrieval_anchors (short, searchable phrases), NEVER from
@@ -342,15 +342,15 @@ def _run_related_system_discovery(
     # systems sharing it -- the search target here is never one named
     # entity's exact identity (if it were, this would just be a direct
     # search for that name, not a discovery step) -- so it routes semantic.
-    # One precomputed sentence, produced by hop1_semantic_intent.py's small
+    # One precomputed sentence, produced by semantic_intent.py's small
     # cached rephrase call (kept entirely separate from direct_concept_
-    # search's own cleanup call, direct_concept_semantic_intent.py -- see
-    # hop1_semantic_intent.py's docstring for why); related_system_discovery.
+    # search's own cleanup call, concept_3a.py -- see
+    # semantic_intent.py's docstring for why); discovery.
     # py's own per-term lexical-style query construction (build_discovery_
     # queries(), UNCHANGED) still runs internally and calls this closure
     # once per term, but every call is overridden to the SAME sentence --
     # search_and_dedupe()'s mode-aware cache collapses those into one real
-    # HTTP request, and hop1_semantic_intent's own cache collapses repeat
+    # HTTP request, and semantic_intent's own cache collapses repeat
     # calls for the same (scientific_class, objective) pair across axes/
     # cases into zero additional LLM calls.
     hop1_semantic_query = rephrase_hop1_semantic_intent(
@@ -366,7 +366,7 @@ def _run_related_system_discovery(
         paper_cache, STRUCTURAL_HOP2_SEARCH_LIMIT, STRUCTURAL_SEARCH_SOURCES, mode="lexical",
     )
 
-    # discover_related_systems() (related_system_discovery.py, UNCHANGED)
+    # discover_related_systems() (discovery.py, UNCHANGED)
     # calls extract_fn(title, abstract, structural_class, aka) positionally
     # -- this closure threads axis.basis (scopes the relationship-fidelity
     # gate to "distinctive_structure" axes only) AND this function's own
@@ -404,7 +404,7 @@ def _run_related_system_discovery(
     # audit records only.
     identities = build_related_system_identities(
         discovery.discovered_systems, scientific_class=scientific_class, basis=axis.basis)
-    # Hop-2 is CONVERGED (hop2_converged.py): Hop-1 may diverge, Hop-2 must not. Only grounded identities enter; their
+    # Hop-2 is CONVERGED (hop2.py): Hop-1 may diverge, Hop-2 must not. Only grounded identities enter; their
     # `query_anchor` (which for distinctive_structure axes carries the whole class phrase) is NOT used as query text.
     ds_by_label = {ds.name.strip().lower(): ds for ds in discovery.discovered_systems}
     candidates = []
@@ -471,12 +471,12 @@ def run_expert_prior_retrieval(
     case_id: Optional[str] = None,
     stage3_classifier_threshold: float = SIM_CLASSIFIER_THRESHOLD,
 ) -> ExpertPriorRetrievalResult:
-    """`backend` is REQUIRED (no default -- llm_backend.get_backend()'s
+    """`backend` is REQUIRED (no default -- llm.get_backend()'s
     docstring: no module resolves or falls back to a backend on its own).
     The caller resolves ONE backend for the whole run/session and passes
     the SAME instance here as it does to ScientificPlanner/
     ExpertPriorPlanner -- this function threads it into every Hop-1 LLM
-    call a related_system_discovery-mode transfer axis makes. Routes that
+    call a discovery-mode transfer axis makes. Routes that
     make no LLM call at all (direct-route
     retrieval, direct_concept_search axes, Stage 3) don't need it and don't
     receive it.
@@ -488,7 +488,7 @@ def run_expert_prior_retrieval(
     budgets = budgets or RouteRetrievalBudgets()
     result = ExpertPriorRetrievalResult(transfer_needed=expert_prior.transfer_needed)
 
-    # -- direct evidence: UNCHANGED, reuse planner_retrieval_bridge --
+    # -- direct evidence: UNCHANGED, reuse from_planner --
     # budgets are forwarded so the flat-query / need_semantic switches (RouteRetrievalBudgets) reach the direct-evidence routes too;
     # with budgets=None this is exactly the previous call (defaults are applied inside).
     evidence_plan, route_result, direct_paper_cache = run_retrieval_from_plan(plan, budgets=budgets)
@@ -506,7 +506,7 @@ def run_expert_prior_retrieval(
     # table in this file. --
 
     # direct_concept_search's queries: 3 fixed deterministic templates per
-    # axis (no LLM call -- see direct_concept_semantic_intent.py), capped
+    # axis (no LLM call -- see concept_3a.py), capped
     # to at most MAX_DIRECT_CONCEPT_SEMANTIC_QUERIES_PER_CASE axes per
     # case (so at most 3x that many OpenAlex calls). Computed up front so
     # the per-axis loop below just looks its result up.

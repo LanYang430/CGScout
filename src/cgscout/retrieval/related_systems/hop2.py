@@ -1,4 +1,4 @@
-"""hop2_converged (scientific-planner-v2 branch) -- a CONVERGED Hop-2 for the transfer-aware related-system branch.
+"""hop2 (scientific-planner-v2 branch) -- a CONVERGED Hop-2 for the transfer-aware related-system branch.
 
 Hop-1 may diverge (it discovers concrete related systems); Hop-2 must converge: "we know the system's name, now find ITS
 coarse-grained literature as simply as possible".  The earlier Hop-2 concatenated the system, the scientific class, the whole

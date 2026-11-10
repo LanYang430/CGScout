@@ -18,7 +18,7 @@ review-artifact title pattern) left out as too prone to false positives:
      phrasings: "in this review", "this review", "here we review",
      "we review".
 
-Runs BEFORE the classifier in relevance_filter_handoff.filter_papers() --
+Runs BEFORE the classifier in filter.filter_papers() --
 a flagged paper is dropped without ever spending an embedding call.
 """
 from __future__ import annotations

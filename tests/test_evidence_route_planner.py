@@ -1,5 +1,5 @@
 """Unit tests for this session's fix to
-evidence_route_planner.extract_lexical_structural_feature(): Case B, a
+evidence_plan.extract_lexical_structural_feature(): Case B, a
 fallback for when the grounded system span IS the bare structural-class
 name itself (e.g. "beta helix"), with no class-head noun ("protein"/"fold"/
 ...) for the pre-existing Case A anchor-and-walk algorithm to anchor on.

@@ -7,7 +7,7 @@ Route attribution is by SOURCE LIST, not by category label alone:
   in_flat      = target DOI present in result.direct_papers (flat/direct route)
   in_3a        = present in result.transfer_papers with 'transfer_direct' in its categories
   in_3b        = present in result.transfer_papers with 'structural' in its categories
-                 (Hop-1/Hop-2 related_system_discovery)
+                 (Hop-1/Hop-2 discovery)
 A target counts as a 3B contribution only if in_3b is true; if it is ALSO
 in_flat that is reported (`3b_and_flat`) rather than hidden.
 """

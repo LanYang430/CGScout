@@ -1,4 +1,4 @@
-"""Unit tests for relevance_filter_handoff.py -- the methodology
+"""Unit tests for filter.py -- the methodology
 surface-form normalization fix (coarse-grained / coarse grained / coarse
 graining / coarse-graining), the route-aware CG/system-evidence gate, the
 review filter, and the general-path classifier gate.
@@ -7,8 +7,8 @@ No network: every filter_papers() call here injects a fake `classify_fn`
 (_fake_marker_classify_fn, or an inline lambda for the classifier-specific
 tests below) instead of the real sim_classifier.default_classify_fn, which
 would call the OpenAI embeddings API and load the persisted model
-artifact. relevance_filter_handoff.py itself only needs beam_agent.
-models/text_utils/concept_resolver's read-only cluster table, plus
+artifact. filter.py itself only needs beam_agent.
+models/text/concept_resolver's read-only cluster table, plus
 review_filter.py (also network-free -- pure regex/field check).
 """
 
@@ -108,7 +108,7 @@ def test_beta_helix_exact_match_still_works():
 
 def test_beta_helix_space_variant_deliberately_NOT_normalized():
     # "beta helix" (space) is ALREADY a listed synonym of beta-helix in
-    # _STRUCTURAL_TERM_CLUSTERS -- but relevance_filter_handoff.py doesn't
+    # _STRUCTURAL_TERM_CLUSTERS -- but filter.py doesn't
     # read that table at all (only _METHODOLOGY_TERM_CLUSTERS), so this
     # exercises the UNCHANGED strict compound-stem path, not the new
     # equivalence map. Title deliberately avoids any other word the query
@@ -321,7 +321,7 @@ def test_falls_back_to_singular_field_when_plural_list_is_empty():
 # includes "transfer_direct") -- its own provenance alone would clear the
 # simple CG-evidence-only gate -- but Hop-2 ALSO (mis-)attached it to
 # unrelated discovered systems, adding "structural" to its merged query_
-# categories (transfer_retrieval_bridge.py's _merge_papers unions
+# categories (orchestrator.py's _merge_papers unions
 # categories across every route that found the same paper_ref). The OLD
 # if/elif branching judged such a paper ONLY by the stricter structural
 # gate whenever "structural" was present at all, discarding it on a

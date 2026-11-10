@@ -1,5 +1,5 @@
 """Hop-1 conservative cleanup: high-confidence duplicate/fragment handling
-ONLY. Called from transfer_retrieval_bridge.py, strictly between
+ONLY. Called from orchestrator.py, strictly between
 discover_related_systems() (Hop-1 discovery + grounding, UNTOUCHED) and the
 Hop-2 query building (UNTOUCHED) -- so
 Hop-1's own recall behavior is provably unaffected by anything in this

@@ -1,4 +1,4 @@
-"""Pure unit tests for terminology_expansion deterministic helpers. No LLM."""
+"""Pure unit tests for terminology deterministic helpers. No LLM."""
 
 
 from cgscout.retrieval.related_systems.terminology import filter_instance_terms, strip_size_qualifiers  # noqa: E402

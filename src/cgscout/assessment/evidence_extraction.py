@@ -1,6 +1,6 @@
 """Stage 4 per-paper extraction prompt (P8) and its user-message builder.
 
-stage4_v2.py reuses, unchanged, this query-independent extraction prompt
+stage4.py reuses, unchanged, this query-independent extraction prompt
 (`_SYSTEM_PROMPT`, hashed into the Stage 4 extraction cache key by
 `_SYSTEM_PROMPT_HASH`) and the per-paper user message (`_build_user_message`):
 the extractor is given ONLY a paper's title/abstract/metadata -- never the
@@ -106,6 +106,6 @@ def _build_user_message(paper: Paper) -> str:
 
 
 # Computed once at import time (_SYSTEM_PROMPT is static) -- included in every
-# Stage 4 extraction cache key (see stage4_v2.py), so an edit to the prompt
+# Stage 4 extraction cache key (see stage4.py), so an edit to the prompt
 # automatically invalidates every previously-cached entry.
 _SYSTEM_PROMPT_HASH = cache.content_hash(_SYSTEM_PROMPT)

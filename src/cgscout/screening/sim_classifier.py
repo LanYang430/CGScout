@@ -12,11 +12,11 @@ computational/molecular simulation" (title+abstract only -- it was never
 trained or evaluated on full text, so this module never fetches it).
 It has NO signal about topical relevance to a specific query or system --
 that is scored separately, upstream, by the existing keyword-overlap gate
-in relevance_filter_handoff.py.
+in filter.py.
 
 Dependencies (openai, scikit-learn, joblib, numpy; scikit-learn is needed
 to read sim_classifier_model.joblib) are imported lazily inside functions so
-importing this module -- or relevance_filter_handoff.py, which imports it --
+importing this module -- or filter.py, which imports it --
 never requires these packages unless a classifier score is actually
 requested.
 """
@@ -61,7 +61,7 @@ def _load_model():
 
 
 def embed_texts(texts: list[str]) -> "np.ndarray":  # noqa: F821 -- numpy typed lazily
-    """Batched OpenAI embedding call, same pattern as llm_backend.py's
+    """Batched OpenAI embedding call, same pattern as llm.py's
     OpenAI() client: reads OPENAI_API_KEY from env, never a literal key."""
     import numpy as np
     from openai import OpenAI  # local import -- see module docstring
@@ -103,7 +103,7 @@ ClassifyFn = "Callable[[list[Paper]], list[float]]"
 
 def default_classify_fn(papers: list[Paper]) -> list[float]:
     """The real classifier, as a `classify_fn` matching the signature
-    relevance_filter_handoff.py expects -- its default when a caller
+    filter.py expects -- its default when a caller
     (production code) doesn't inject a fake one (tests do, to stay
     network-free; see tests/test_relevance_filter_handoff.py)."""
     return classify_papers(papers)

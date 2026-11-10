@@ -19,7 +19,7 @@ def classify(qualname: str, mode: str) -> str:
     for needle, kind in _KINDS:
         if needle in qualname:
             return kind
-    if "_make_search_fn" in qualname:                  # Hop-1 / Hop-2 closure of transfer_retrieval_bridge
+    if "_make_search_fn" in qualname:                  # Hop-1 / Hop-2 closure of orchestrator
         return "hop1" if mode == "semantic" else "hop2"
     return "other:" + qualname
 

@@ -6,7 +6,7 @@ helpers around it. Pure Python except for the injected `call`.
    (TERMINOLOGY_EXPANDER_SYSTEM_PROMPT), schema (TerminologyExpansion), user
    message (terminology_expander_user_message). `call` is any callable
    (system_prompt, user_message, schema_dict) -> raw JSON content string; the
-   live path builds it with llm_backend.make_call_fn.
+   live path builds it with llm.make_call_fn.
 
 2. strip_size_qualifiers(term): drop leading size / residue-count / mass
    qualifiers ("200-aa beta-helix protein" -> "beta-helix protein") so a
@@ -119,7 +119,7 @@ def filter_instance_terms(
 # "beta-solenoid" / "autotransporter passenger domain"). It must NEVER emit
 # a specific protein/gene/organism/PDB name -- that would recreate the old
 # hard-coded association table. Deterministic instance-shape filtering
-# (terminology_expansion.filter_instance_terms) is a second line of defence.
+# (terminology.filter_instance_terms) is a second line of defence.
 # ---------------------------------------------------------------------------
 
 MAX_EXPANSION_TERMS = 6

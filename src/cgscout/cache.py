@@ -27,8 +27,8 @@ never differs between a TTL and a non-TTL caller). Whether that timestamp
 is ever CHECKED is entirely opt-in per call: `get(..., ttl_seconds=None)`
 (the default) never expires an entry -- appropriate for a cache keyed on
 content that fully determines the answer (a paper's own text + the exact
-prompt/schema/model that produced it -- see transfer_entity_extraction.py /
-stage4_v2.py, neither passes ttl_seconds). `get(..., ttl_seconds=N)`
+prompt/schema/model that produced it -- see extraction.py /
+stage4.py, neither passes ttl_seconds). `get(..., ttl_seconds=N)`
 treats an entry older than N seconds as a miss -- appropriate for a cache
 keyed on a QUERY whose real-world answer can change over time as new papers
 get indexed or a ranking shifts (see search.py, which does pass ttl_seconds).

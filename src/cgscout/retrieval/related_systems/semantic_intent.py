@@ -24,20 +24,20 @@ verbatim, search for MORE pertactin literature instead of related systems.
 This cannot be mechanically derived from such a sentence by further string
 surgery for the same reason the old template failed -- so this narrow,
 Hop-1-specific call is genuinely needed. direct_concept_search's own
-equivalent call now lives in direct_concept_semantic_intent.py, entirely
+equivalent call now lives in concept_3a.py, entirely
 separate from this one (each scoped to its own route).
 
 Design, per this round's explicit constraints:
   - ONE call per DISTINCT (scientific_class, objective) pair, not one call
-    per query -- related_system_discovery.py's own internal loop (build_
+    per query -- discovery.py's own internal loop (build_
     discovery_queries(), UNCHANGED) fires many lexical-style candidate
-    queries per Hop-1 axis, but transfer_retrieval_bridge.py calls this
+    queries per Hop-1 axis, but orchestrator.py calls this
     module exactly once per axis (same override-closure trick the deleted
     template used), and the persistent cache below collapses any repeat of
     the exact same pair -- across axes, across cases, across process runs
     -- into zero additional calls.
   - No exposed temperature knob exists on this codebase's LLMBackend
-    protocol (see llm_backend.py -- GPT-5.6 Luna is reasoning-effort based,
+    protocol (see llm.py -- GPT-5.6 Luna is reasoning-effort based,
     not sampling-temperature based); reproducibility is instead achieved
     by the persistent cache below (same inputs -> same cached sentence on
     every call after the first), which is the property that actually

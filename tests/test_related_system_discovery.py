@@ -1,4 +1,4 @@
-"""Pure unit tests for related_system_discovery deterministic grounding/merge.
+"""Pure unit tests for discovery deterministic grounding/merge.
 No LLM, no network -- search_fn and extract_fn are fakes.
 """
 

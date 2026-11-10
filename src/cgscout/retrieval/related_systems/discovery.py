@@ -19,7 +19,7 @@ are NOT here.
 
 Pure orchestration + deterministic grounding/merge. `search_fn` and
 `extract_fn` are injected (stubs in the tests, the backend-injected
-transfer_entity_extraction.extract_related_systems_rich in production).
+extraction.extract_related_systems_rich in production).
 """
 from __future__ import annotations
 
@@ -273,8 +273,8 @@ class SupportingPaper(BaseModel):
     system_name: str = ""               # the cleaned name grounded against THIS quote
     name_as_extracted: str = ""         # what the extractor returned, pre-cleanup
     name_in_quote: bool = False         # was the raw extracted name already in the quote
-    # Optional, additive (transfer_entity_extraction.py). None for an extractor
-    # whose mention has no such attributes (transfer_entity_extraction.SystemMention),
+    # Optional, additive (extraction.py). None for an extractor
+    # whose mention has no such attributes (extraction.SystemMention),
     # since the getattr() defaults in _ground_mention() below just leave these
     # None. When present: `entity_type`
     # is the extractor's own classification of what kind of thing `name` is
@@ -284,7 +284,7 @@ class SupportingPaper(BaseModel):
     # evidence_quote) phrase from the SAME paper naming the broader class
     # this entity belongs to (e.g. "autotransporter" for "Pet"), or None if
     # the text never states one. Both are read, never written, by
-    # related_system_identity.py -- this file has no opinion on what they
+    # identity.py -- this file has no opinion on what they
     # mean, it only preserves and verbatim-verifies them.
     entity_type: Optional[str] = None
     identity_context: Optional[str] = None
@@ -405,7 +405,7 @@ def _ground_mention(mention, paper, query: str, rank: int, structural_class: str
 
     # Optional pass-through (see SupportingPaper's own docstring comment):
     # `mention` won't have these attributes at all for the plain
-    # transfer_entity_extraction.SystemMention -- getattr(..., None) just leaves both
+    # extraction.SystemMention -- getattr(..., None) just leaves both
     # None there. `identity_context`, when present, gets
     # the SAME verbatim-substring discipline every other field here already
     # gets -- an ungrounded claim is dropped (None), never trusted as-is.

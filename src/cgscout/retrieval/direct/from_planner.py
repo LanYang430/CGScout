@@ -1,11 +1,11 @@
-"""planner_retrieval_bridge (scientific-planner-v2 branch) -- turns a
+"""from_planner (scientific-planner-v2 branch) -- turns a
 PlannerOutput into a Stage-2 retrieval run. NEW, additive module.
 
 Owns zero retrieval logic of its own: it only maps PlannerOutput fields
 onto the EXISTING, UNMODIFIED plan_evidence_routes() / run_route_retrieval()
-public functions (evidence_route_planner.py / route_retrieval_plan.py --
+public functions (evidence_plan.py / route_plan.py --
 shared, unedited infrastructure used by both the old and new intake path)
-and reuses route_retrieval_live_adapter.py's _make_capturing_search_fns /
+and reuses search_adapters.py's _make_capturing_search_fns /
 papers_for_stage3 / provenance_index helpers UNCHANGED rather than
 reimplementing them.
 
@@ -18,7 +18,7 @@ run_route_retrieval() because they are never needed while structural_
 terms is empty.
 
 modeling_requirement_mode="rule" + call=None: the modeling_requirement
-LLM call (dead -- that route is disabled, see route_retrieval_plan.py) is
+LLM call (dead -- that route is disabled, see route_plan.py) is
 never made on this path, by construction, not by a special case.
 """
 from __future__ import annotations
@@ -62,7 +62,7 @@ def evidence_plan_from_planner_output(plan: PlannerOutput) -> EvidenceRoutePlan:
     # Hard guarantee, independent of grounded_structural_feature above:
     # plan_evidence_routes() ALSO derives structural_terms lexically from
     # system_description itself (extract_lexical_structural_feature(),
-    # evidence_route_planner.py -- unmodified, unrelated to this branch's
+    # evidence_plan.py -- unmodified, unrelated to this branch's
     # work). Diagnosed live: "EspP passenger domain" -> structural_terms=
     # ['EspP passenger'], because "passenger" is itself in
     # _STRUCTURAL_MORPHEMES (added for the earlier EspP/pertactin case) --

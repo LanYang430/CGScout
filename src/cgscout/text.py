@@ -88,7 +88,7 @@ def core_keyword_string(text: str) -> str:
 
 
 # Methodology synonym clusters (canonical term, [synonyms]) -- vocabulary, not protein names.  Lives here (not in concept_resolver.py, where it
-# was first defined) so that the Stage-3 filter (relevance_filter_handoff.py) can read it without importing the v1 concept resolver.
+# was first defined) so that the Stage-3 filter (filter.py) can read it without importing the v1 concept resolver.
 # concept_resolver.py imports it back under its old private name.
 METHODOLOGY_TERM_CLUSTERS: list[tuple[str, list[str]]] = [
     ("coarse-grained", ["cg", "coarse grained"]),

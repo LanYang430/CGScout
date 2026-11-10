@@ -6,7 +6,7 @@ It only:
      every real Paper object retrieved (across the routes) is cached by
      paper_ref -- the sidecar RouteRetrievalResult.papers alone cannot carry
      (it only has paper_ref/title/year, not abstract/authors/etc.), and
-     Stage 3 (relevance_filter_handoff.filter_papers) needs full Paper
+     Stage 3 (filter.filter_papers) needs full Paper
      objects;
   2. defines the Hop-1 / Hop-2 retrieval depths and sources
      (STRUCTURAL_*), and the two small adapters papers_for_stage3() /

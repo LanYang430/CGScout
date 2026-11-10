@@ -121,7 +121,7 @@ import re
 from typing import Callable, Optional
 
 
-from cgscout.text import METHODOLOGY_TERM_CLUSTERS as _METHODOLOGY_TERM_CLUSTERS  # noqa: E402 -- same table concept_resolver.py uses; lives in text_utils.py so this module no longer imports the v1 concept resolver
+from cgscout.text import METHODOLOGY_TERM_CLUSTERS as _METHODOLOGY_TERM_CLUSTERS  # noqa: E402 -- same table concept_resolver.py uses; lives in text.py so this module no longer imports the v1 concept resolver
 from cgscout.models import Paper  # noqa: E402
 from cgscout.text import keywords, stem, stemmed_keywords  # noqa: E402
 
@@ -160,10 +160,10 @@ MIN_TERM_LEN = 2
 # required -- see the `elif {"system_specific_cg", "process", "context"} &
 # set(...)` branch below. The old direct_system route was deleted (replaced
 # by system_specific_cg); modeling_requirement is disabled at the route-
-# planning level (route_retrieval_plan.py), so it never reaches Stage 3.
+# planning level (route_plan.py), so it never reaches Stage 3.
 #
 # CG marker vocabulary: _CG_MARKERS (imported above) is the SAME literal
-# substring list related_system_hop2.py's own Hop2Paper.mentions_cg already
+# substring list types.py's own Hop2Paper.mentions_cg already
 # uses for an identical "does this title+abstract blob mention CG" check --
 # reused, not reinvented. Extended with "cg simulation(s)"/"cg model(s)"
 # specifically named in the design decision (not covered by the
@@ -330,7 +330,7 @@ def score_paper_against_its_provenance(
     # not something this stage claims to see.
     structural_gate_note = ""
     # Existential over ALL systems that independently retrieved this paper
-    # (paper.structural_discovered_systems, route_retrieval_plan.py's
+    # (paper.structural_discovered_systems, route_plan.py's
     # RetrievedPaper.hop1_provenances) -- NOT the full set of every Hop-1-
     # discovered system, only the ones whose OWN Hop-2 query actually found
     # THIS paper. Falls back to the single-name field for any caller that
@@ -351,7 +351,7 @@ def score_paper_against_its_provenance(
     # Route-aware CG/system gate (this session's fix -- diagnosed real false
     # negative). A paper found via MORE THAN ONE route (e.g. both Hop-2/
     # structural AND a flat direct_concept_search -- query_categories is
-    # their UNION once transfer_retrieval_bridge.py's _merge_papers combines
+    # their UNION once orchestrator.py's _merge_papers combines
     # duplicate refs) used to be judged ONLY by whichever branch an if/elif
     # happened to check first -- in practice always the stricter structural
     # branch whenever "structural" was among its categories, even when the
@@ -503,7 +503,7 @@ def _recover_missing_abstracts(
     same MIN_ABSTRACT_CHARS rule as Stage 4's abstract fallback, which this moves in front of Stage 3). Returns the
     papers (enriched copies where an abstract was found) and a per-paper `recovered` flag. A failed or empty
     lookup leaves the paper untouched -- Stage 3 then sees exactly what it saw before. Lookups run in a small
-    thread pool; successful answers are cached by stage4_v2 (failures never are)."""
+    thread pool; successful answers are cached by stage4 (failures never are)."""
     from concurrent.futures import ThreadPoolExecutor
     from cgscout.assessment.stage4 import MIN_ABSTRACT_CHARS, europepmc_abstract   # local import: optional network dependency, only touched here
     lookup = lookup or europepmc_abstract
@@ -604,7 +604,7 @@ def filter_papers(
     abstract is what the review filter, classifier, keyword score and gates judge, and the returned (retained/
     rejected) Paper objects carry it; each verdict's `abstract_recovered` says so. Without it a title-only paper is
     scored on the title alone, which the classifier systematically under-scores (observed on benchmark seeds).
-    `abstract_lookup`: injectable lookup (tests); None -> stage4_v2.europepmc_abstract."""
+    `abstract_lookup`: injectable lookup (tests); None -> stage4.europepmc_abstract."""
     classify_fn = classify_fn or default_classify_fn
     abstract_flags: list[bool] = [False] * len(papers)
     if recover_abstracts:

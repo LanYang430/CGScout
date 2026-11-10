@@ -64,8 +64,8 @@ def test_hop1_can_return_more_than_30_grounded_systems():
         search_fn=lambda q: papers,
         extract_fn=_extract(extract_map),
         max_discovered=budgets.structural_max_discovered_systems,
-        # both budget values passed explicitly, exactly as route_retrieval_plan.py's
-        # live call does (route_retrieval_plan.py:447-451) -- otherwise
+        # both budget values passed explicitly, exactly as route_plan.py's
+        # live call does (route_plan.py:447-451) -- otherwise
         # discover_related_systems()'s own max_papers_to_extract DEFAULT (25,
         # an unrelated, untouched value) truncates the paper pool before
         # ranking ever runs, which would falsely look like this budget change

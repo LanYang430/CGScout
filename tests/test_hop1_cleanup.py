@@ -1,4 +1,4 @@
-"""Unit tests for hop1_cleanup.py -- the conservative Hop-1 post-processing
+"""Unit tests for cleanup.py -- the conservative Hop-1 post-processing
 layer (suffix duplicate merge / exact fragment blocklist / objective-aware
 interaction-duplicate merge) added this session. Runs strictly between
 discover_related_systems() and the Hop-2 query building -- does NOT touch either;

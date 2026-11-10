@@ -1,5 +1,5 @@
 """Enforces the "one run, one LLM backend, no mixed execution" invariant
-(llm_backend.py::get_backend()'s own docstring) at the real call site that
+(llm.py::get_backend()'s own docstring) at the real call site that
 matters most: Hop-1 related-system extraction must call exactly the backend
 it was given and never fall back to any other transport.
 

@@ -3,7 +3,7 @@
 Scoped minimally, per explicit instruction: this round only touches
 direct_concept_search's own query construction, nothing else (Hop-1,
 Hop-2, the direct route, canonical-method verification, ExpertPriorPlanner's
-own schema are all untouched -- see transfer_retrieval_bridge.py).
+own schema are all untouched -- see orchestrator.py).
 
 History on this one file (kept here rather than in git alone, since the
 earlier attempts are exactly what this round had to reckon with):
@@ -18,7 +18,7 @@ earlier attempts are exactly what this round had to reckon with):
   3. THIS round: back to deterministic, no-LLM rendering -- but not a
      repeat of (1). Where (1) tried to guarantee ONE "correct" sentence,
      this renders 3 differently-STRUCTURED templates per axis and unions
-     their search results (transfer_retrieval_bridge.py's
+     their search results (orchestrator.py's
      _run_direct_concept_search already loops over a queries list, so this
      is a union at the retrieval layer, not a single bet). Motivation: a
      forensic trace on one case (the 2026-09-27/28 thermoresponsive-IDP
@@ -32,7 +32,7 @@ earlier attempts are exactly what this round had to reckon with):
      Validated (not just argued) before landing: replayed real production
      axes from 8 of the 12-case pilot benchmark (the other 4 either
      triggered a ScientificPlanner clarification or had their only axis
-     routed to related_system_discovery, so had no direct_concept_search
+     routed to discovery, so had no direct_concept_search
      axis to compare) against this exact rendering, same OpenAlex
      mode=semantic depth=20 as production -- 15 (axis, target) pairs: 0
      regressions (baseline hit -> template miss), 3 recoveries (baseline

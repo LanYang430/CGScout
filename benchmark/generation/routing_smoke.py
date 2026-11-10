@@ -1,5 +1,5 @@
 """Routing smoke test for the six hand-built L3 queries (Q15-Q20): does the CURRENT BEAM route them to
-related_system_discovery (3B)?  Runs the unmodified Planner -> ExpertPrior -> run_expert_prior_retrieval.  In THIS process only:
+discovery (3B)?  Runs the unmodified Planner -> ExpertPrior -> run_expert_prior_retrieval.  In THIS process only:
 Stage 3 is a pass-through (no classifier / embedding calls) and canonical-method verification is skipped -- both are
 irrelevant to routing and cost credits.  No Stage 4, no OpenAlex baseline, no routing logic touched.  One draw per case.
 Everything BEAM-side is read-only; results go to data/routing_smoke.json."""

@@ -13,7 +13,7 @@ already complete scientific concepts.  This module is deterministic (no LLM, no 
   * the semantic queries are one natural sentence (need_semantic) and, per 3A class, [one complete-need query] + distinct emphases;
   * the flat budget stays at the existing ceiling (6 lexical queries); 3A never exceeds the existing 3 queries per class.
 
-Used by route_retrieval_plan.build_route_retrieval_plan (lexical + need_semantic) and transfer_retrieval_bridge.run_expert_prior_retrieval (3A).
+Used by route_plan.build_route_retrieval_plan (lexical + need_semantic) and orchestrator.run_expert_prior_retrieval (3A).
 ExpertPriorPlanner's route decisions are untouched: it still chooses which classes get 3A / 3B; only the text of the 3A queries changes."""
 from __future__ import annotations
 

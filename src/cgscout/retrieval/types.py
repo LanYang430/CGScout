@@ -7,10 +7,10 @@ user's objective and/or coarse-grained modelling.
 
 This module holds only the result types of that chain -- Hop1Provenance,
 Hop2Query, Hop2Paper, Hop2SystemResult, Hop2Result (they are part of the
-route_retrieval_plan result schema) -- and the coarse-grained surface forms
-_CG_MARKERS that Stage 3 (relevance_filter_handoff) reuses. The old Hop-2
+route_plan result schema) -- and the coarse-grained surface forms
+_CG_MARKERS that Stage 3 (filter) reuses. The old Hop-2
 implementation that lived here (query building, discover_hop2) was replaced
-by hop2_converged.py and is historical code, kept in the git tag
+by hop2.py and is historical code, kept in the git tag
 `legacy-pre-cgscout`.
 """
 from __future__ import annotations

@@ -25,7 +25,7 @@ from pydantic import BaseModel, Field
 
 # Reused, NOT duplicated: the same closed, morphology-based structural
 # vocabulary and generic-head/connective word sets Hop-1's class-modifier
-# stripping already uses (related_system_discovery._strip_class_modifier is
+# stripping already uses (discovery._strip_class_modifier is
 # the inverse operation of the lexical extraction below -- that peels a
 # structural modifier OFF a name; this recovers the modifier ITSELF from
 # grounded system text). Importing these rather than re-declaring a second,
