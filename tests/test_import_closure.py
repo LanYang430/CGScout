@@ -57,12 +57,12 @@ def test_cgscout_path_loads_no_v1_or_session_stack_and_needs_no_local_model_pack
     assert not [m for m, v in loaded.items() if v], loaded
 
 
-def test_legacy_session_path_keeps_its_module_level_names():
-    """The old scripts (and benchmark recorders) access these as attributes of the module; they must still exist."""
+def test_search_adapters_keep_the_module_level_names_the_harness_uses():
+    """The two bridges and the benchmark recorders access these as attributes of the module (the recorder wraps `search_and_dedupe` in it and
+    classifies requests by the closure names inside `_make_capturing_search_fns`); they must keep existing under the same names."""
     import route_retrieval_live_adapter as adapter  # noqa: E402 -- sys.path is set up by the module itself, like every other test of this directory
-    for name in ("plan_evidence_routes", "run_route_retrieval", "search_and_dedupe", "STRUCTURAL_HOP1_SEARCH_LIMIT",
-                 "STRUCTURAL_HOP2_SEARCH_LIMIT", "STRUCTURAL_SEARCH_SOURCES", "_make_capturing_search_fns", "make_need_semantic_search_fn",
-                 "papers_for_stage3", "provenance_index", "run_live_route_retrieval", "build_evidence_route_plan_from_session"):
+    for name in ("search_and_dedupe", "STRUCTURAL_HOP1_SEARCH_LIMIT", "STRUCTURAL_HOP2_SEARCH_LIMIT", "STRUCTURAL_SEARCH_SOURCES",
+                 "_make_capturing_search_fns", "make_need_semantic_search_fn", "papers_for_stage3", "provenance_index"):
         assert hasattr(adapter, name), name
 
 
