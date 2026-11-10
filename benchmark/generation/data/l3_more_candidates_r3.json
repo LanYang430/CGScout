@@ -1,0 +1,1051 @@
+{
+ "seeds": [
+  {
+   "domain": "gasdermin",
+   "doi": "10.1186/s12915-020-00936-8",
+   "title": "Native-like membrane models of E. coli polar lipid extract shed light on the importance of lipid composition complexity",
+   "year": 2021,
+   "venue": "BMC Biology",
+   "abstract_sha256": "20aea72463e5c62ec6fb81b7c0eab3b597de164e8c4abff07ac95dd7043ae46a",
+   "abstract_chars": 2787,
+   "authors": [
+    "Kristýna Pluháčková",
+    "Andreas Hörner"
+   ],
+   "system_specific": true,
+   "named_system": "E. coli polar lipid extract membranes with aquaporin-1",
+   "paper_type": "application"
+  },
+  {
+   "domain": "vps13",
+   "doi": "10.3389/fmolb.2021.619381",
+   "title": "Optimizing Gō-MARTINI Coarse-Grained Model for F-BAR Protein on Lipid Membrane",
+   "year": 2021,
+   "venue": "Frontiers in Molecular Biosciences",
+   "abstract_sha256": "c9f8fb8ab6ce4999a7653c719a0e7982c1c746cd411dcdce74c6a9c805724a0f",
+   "abstract_chars": 1295,
+   "authors": [
+    "Md. Iqbal Mahmood",
+    "Adolfo B. Poma",
+    "Kei-ichi Okazaki"
+   ],
+   "system_specific": true,
+   "named_system": "F-BAR Pacsin1 protein dimers on a lipid membrane",
+   "paper_type": "application"
+  },
+  {
+   "domain": "polymerase",
+   "doi": "10.3389/fmolb.2021.772486",
+   "title": "Modeling DNA Opening in the Eukaryotic Transcription Initiation Complexes via Coarse-Grained Models",
+   "year": 2021,
+   "venue": "Frontiers in Molecular Biosciences",
+   "abstract_sha256": "91cfb90a733d7574d078bdf019b8a12b4cbcee63fe260561f6eebbea172915d6",
+   "abstract_chars": 2606,
+   "authors": [
+    "Genki Shino",
+    "Shoji Takada"
+   ],
+   "system_specific": true,
+   "named_system": "Yeast RNA polymerase II pre-initiation complex with promoter DNA",
+   "paper_type": "application"
+  },
+  {
+   "domain": "cas9",
+   "doi": "10.3390/biomedicines8070195",
+   "title": "Coarse-Grained Models of RNA Nanotubes for Large Time Scale Studies in Biomedical Applications",
+   "year": 2020,
+   "venue": "Biomedicines",
+   "abstract_sha256": "8467e70af81af41cb43193b812bd80b46869cfc87480158c2c1aaa0d1cd70f3f",
+   "abstract_chars": 1392,
+   "authors": [
+    "Shyam R. Badu",
+    "Sanjay Prabhakar",
+    "Roderick Melnik"
+   ],
+   "system_specific": true,
+   "named_system": "RNA nanotubes",
+   "paper_type": "application"
+  },
+  {
+   "domain": "escrt",
+   "doi": "10.1038/s41467-020-16424-0",
+   "title": "Large-scale simulation of biomembranes incorporating realistic kinetics into coarse-grained models",
+   "year": 2020,
+   "venue": "Nature Communications",
+   "abstract_sha256": "b7f73e83aefbd00be3932c709ef75b86e128b3f02495b721616ac21cbe12766a",
+   "abstract_chars": 1182,
+   "authors": [
+    "Mohsen Sadeghi",
+    "Frank Noé"
+   ],
+   "system_specific": true,
+   "named_system": "red blood cells",
+   "paper_type": "application"
+  },
+  {
+   "domain": "bam_bcs",
+   "doi": "10.1021/acs.jctc.4c01348",
+   "title": "Validation of a Coarse-Grained Martini 3 Model for Molecular Oxygen",
+   "year": 2024,
+   "venue": "Journal of Chemical Theory and Computation",
+   "abstract_sha256": "7ad3e620f7117a9c064c4b80dab3920e2dfafb6dabbfa6c86379510054f89e82",
+   "abstract_chars": 1660,
+   "authors": [
+    "Samaneh Davoudi",
+    "Petteri A. Vainikka",
+    "‪Siewert J. Marrink",
+    "An Ghysels"
+   ],
+   "system_specific": true,
+   "named_system": "Molecular oxygen (O₂), phospholipid/cholesterol membranes, and T4 lysozyme L99A",
+   "paper_type": "method_or_forcefield"
+  },
+  {
+   "domain": "atp_synthase",
+   "doi": "10.1038/s41467-023-41343-1",
+   "title": "Machine learning coarse-grained potentials of protein thermodynamics",
+   "year": 2023,
+   "venue": "Nature Communications",
+   "abstract_sha256": "fc7ea721e8538f570f7523b2bac72d0845687006137055798dece5bb5e729e42",
+   "abstract_chars": 1175,
+   "authors": [
+    "Maciej Majewski",
+    "Adrià Pérez",
+    "Philipp Thölke",
+    "Stefan Helmut Doerr",
+    "Nicholas E. Charron",
+    "Toni Giorgino",
+    "Brooke E. Husic",
+    "Cecilia Clementi",
+    "Frank Noé",
+    "Gianni De Fabritiis"
+   ],
+   "system_specific": true,
+   "named_system": "Twelve proteins",
+   "paper_type": "method_or_forcefield"
+  }
+ ],
+ "pairs": [
+  {
+   "n": "gasdermin:M. tuberculosis plasma membrane",
+   "source_seed_X": {
+    "title": "Native-like membrane models of E. coli polar lipid extract shed light on the importance of lipid composition complexity",
+    "doi": "10.1186/s12915-020-00936-8",
+    "title_ratio": 1.0,
+    "found_title": "Native-like membrane models of E. coli polar lipid extract shed light on the importance of lipid composition complexity",
+    "doi_matches_claim": true,
+    "year": 2021,
+    "venue": "BMC Biology",
+    "abstract_chars": 2787,
+    "overlap": []
+   },
+   "target_system_Y": "M. tuberculosis plasma membrane",
+   "claimed_axis": "Lipid-mediated stabilization and organization of membrane proteins in compositionally heterogeneous biological bilayers.",
+   "transfer": {
+    "target_objective": "Model how the chemically heterogeneous M. tuberculosis plasma membrane organizes and stabilizes membrane proteins, including lipid binding, local ordering, and membrane remodeling around proteins.",
+    "transfer_axis": "environment_context",
+    "transferable_feature": "Construction and validation of coarse-grained heterogeneous biological membranes containing multiple lipid classes, tail chemistries, and unsaturation patterns rather than a single-component bilayer.",
+    "reason_seed_is_useful_for_Y": "The seed provides a practical Martini3 workflow for representing compositionally complex membranes and validating properties such as thickness, lipid ordering, mobility, compressibility, and protein-induced lipid organization. These principles could guide development and benchmarking of an M. tuberculosis membrane model before studying lipid-mediated protein stabilization.",
+    "confidence": "medium",
+    "caveat": "The E. coli lipid models are not directly transferable: M. tuberculosis membranes have distinct lipid chemistries, abundant mycolic-acid-containing species, potentially important asymmetry, and different physical properties. Reliable transfer therefore requires species-specific lipid parameters and experimental validation; the aquaporin-1 cardiolipin-binding result itself should not be extrapolated."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of M. tuberculosis plasma membrane",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "M. tuberculosis plasma membrane molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "M. tuberculosis plasma membrane coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 49,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Supramolecular organization and dynamics of mannosylated phosphatidylinositol lipids in the mycobacterial plasma membrane",
+     "doi": "10.1073/pnas.2212755120",
+     "year": 2023,
+     "reason": "The study directly models the supramolecular organization and dynamics of mannosylated phosphatidylinositol lipids in the M. tuberculosis plasma membrane, providing relevant membrane-level CG or multiscale modeling evidence."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "gasdermin",
+   "Y_proposal": {
+    "system_name": "M. tuberculosis plasma membrane",
+    "description": "A highly heterogeneous mycobacterial plasma membrane whose unusual phosphatidylinositol-derived lipids and cardiolipin could be modeled to determine how native lipids organize respiratory and transport proteins.",
+    "shared_feature": "Lipid-mediated stabilization and organization of membrane proteins in compositionally heterogeneous biological bilayers.",
+    "key_difference": "Unlike the E. coli inner membrane, it contains abundant phosphatidylinositol mannosides and is embedded within a lipid-rich mycobacterial envelope with markedly different lipid chemistry."
+   }
+  },
+  {
+   "n": "gasdermin:Sulfolobus acidocaldarius membrane",
+   "source_seed_X": {
+    "title": "Native-like membrane models of E. coli polar lipid extract shed light on the importance of lipid composition complexity",
+    "doi": "10.1186/s12915-020-00936-8",
+    "title_ratio": 1.0,
+    "found_title": "Native-like membrane models of E. coli polar lipid extract shed light on the importance of lipid composition complexity",
+    "doi_matches_claim": true,
+    "year": 2021,
+    "venue": "BMC Biology",
+    "abstract_chars": 2787,
+    "overlap": []
+   },
+   "target_system_Y": "Sulfolobus acidocaldarius membrane",
+   "claimed_axis": "Lipid-mediated control of membrane-protein organization and permeability in a native-like membrane environment.",
+   "transfer": {
+    "target_objective": "Model how the native-like Sulfolobus acidocaldarius membrane composition regulates membrane-protein organization, lipid recruitment, membrane structure, and permeability.",
+    "transfer_axis": "chemistry_representation",
+    "transferable_feature": "A workflow for constructing and validating compositionally complex coarse-grained membranes, including assessment of lipid mobility, ordering, thickness, compressibility, water permeability, and protein-induced lipid remodeling.",
+    "reason_seed_is_useful_for_Y": "The seed demonstrates that a CG membrane model should represent relevant lipid diversity and be validated against structural, dynamical, and permeability observables rather than relying on a single generic bilayer. This workflow could guide development and testing of an S. acidocaldarius membrane model and analysis of lipid-mediated protein organization.",
+    "confidence": "medium",
+    "caveat": "E. coli phospholipid membranes are chemically and structurally unlike archaeal S. acidocaldarius membranes, which may contain highly distinctive ether-linked, often tetraether or monolayer-forming lipids. The specific Martini3 lipid compositions, cardiolipin-binding conclusions, bilayer assumptions, and permeability behavior therefore cannot be transferred directly and may require new lipid parameters and validation."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Sulfolobus acidocaldarius membrane",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Sulfolobus acidocaldarius membrane molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Sulfolobus acidocaldarius membrane coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 54,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Stability and Rupture of Archaebacterial Cell Membrane: A Model Study",
+     "doi": "10.1021/jp808079h",
+     "year": 2009,
+     "reason": "This simulation study explicitly models the Sulfolobus acidocaldarius archaeal membrane using a model vesicle and examines its stability and rupture."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "gasdermin",
+   "Y_proposal": {
+    "system_name": "Sulfolobus acidocaldarius membrane",
+    "description": "An archaeal membrane dominated by ether-linked tetraether lipids that could be simulated to reveal how extreme lipid architectures control protein mobility, permeability, and organization under acidic high-temperature conditions.",
+    "shared_feature": "Lipid-mediated control of membrane-protein organization and permeability in a native-like membrane environment.",
+    "key_difference": "Unlike the E. coli bilayer, it is largely a highly thermostable tetraether monolayer with archaeal ether lipids rather than bacterial ester-linked phospholipids."
+   }
+  },
+  {
+   "n": "vps13:human FBP17",
+   "source_seed_X": {
+    "title": "Optimizing Gō-MARTINI Coarse-Grained Model for F-BAR Protein on Lipid Membrane",
+    "doi": "10.3389/fmolb.2021.619381",
+    "title_ratio": 1.0,
+    "found_title": "Optimizing Gō-MARTINI Coarse-Grained Model for F-BAR Protein on Lipid Membrane",
+    "doi_matches_claim": true,
+    "year": 2021,
+    "venue": "Frontiers in Molecular Biosciences",
+    "abstract_chars": 1295,
+    "overlap": []
+   },
+   "target_system_Y": "human FBP17",
+   "claimed_axis": "F-BAR scaffolds use curved membrane-binding dimers that laterally assemble to couple protein organization with membrane remodeling.",
+   "transfer": {
+    "target_objective": "Model the conformational fluctuations, membrane binding, and lateral assembly of human FBP17 F-BAR dimers as a mechanism for coupling protein organization to membrane remodeling.",
+    "transfer_axis": "family_function",
+    "transferable_feature": "A Go-MARTINI strategy for non-globular F-BAR dimers that preserves large-amplitude structural fluctuations while representing their membrane-bound lateral assembly.",
+    "reason_seed_is_useful_for_Y": "Pacsin1 and FBP17 are F-BAR membrane-remodeling scaffolds with curved dimeric architectures and analogous assembly-driven functions. The seed provides a directly relevant workflow for tuning native-contact definitions and interaction strengths before studying FBP17 dimer association on membranes.",
+    "confidence": "high",
+    "caveat": "Pacsin1-specific native contacts, membrane interactions, oligomerization geometry, and optimized force-field parameters should not be transferred quantitatively to FBP17 without reparameterization and validation against atomistic or experimental data."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of human FBP17",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "human FBP17 molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "human FBP17 coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 53,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Membrane Sculpting by F-BAR Domains Studied by Molecular Dynamics Simulations",
+     "doi": "10.1371/journal.pcbi.1002892",
+     "year": 2013,
+     "reason": "This paper uses molecular-dynamics modeling, including coarse-grained methods, to study F-BAR-domain membrane sculpting consistent with the FBP17 F-BAR scaffold system."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "vps13",
+   "Y_proposal": {
+    "system_name": "human FBP17",
+    "description": "FBP17 is an F-BAR membrane scaffold involved in clathrin-independent endocytosis and membrane tubulation, making it a target for simulating curvature generation and cooperative assembly.",
+    "shared_feature": "F-BAR scaffolds use curved membrane-binding dimers that laterally assemble to couple protein organization with membrane remodeling.",
+    "key_difference": "FBP17 is a distinct mammalian F-BAR paralog with different dimer geometry and regulatory disordered regions from Pacsin1."
+   }
+  },
+  {
+   "n": "vps13:fission-yeast Cdc15",
+   "source_seed_X": {
+    "title": "Optimizing Gō-MARTINI Coarse-Grained Model for F-BAR Protein on Lipid Membrane",
+    "doi": "10.3389/fmolb.2021.619381",
+    "title_ratio": 1.0,
+    "found_title": "Optimizing Gō-MARTINI Coarse-Grained Model for F-BAR Protein on Lipid Membrane",
+    "doi_matches_claim": true,
+    "year": 2021,
+    "venue": "Frontiers in Molecular Biosciences",
+    "abstract_chars": 1295,
+    "overlap": []
+   },
+   "target_system_Y": "fission-yeast Cdc15",
+   "claimed_axis": "F-BAR proteins assemble on membranes into higher-order scaffolds whose collective organization can drive or stabilize membrane deformation.",
+   "transfer": {
+    "target_objective": "Model how fission-yeast Cdc15 F-BAR proteins assemble on lipid membranes into higher-order scaffolds that can drive or stabilize membrane deformation.",
+    "transfer_axis": "family_function",
+    "transferable_feature": "Coarse-grained representation of non-globular F-BAR dimers, including native-contact-dependent structural flexibility and lateral protein-protein assembly on a membrane.",
+    "reason_seed_is_useful_for_Y": "Pacsin1 and Cdc15 are F-BAR proteins, so the optimized Gō-MARTINI strategy for tuning native-contact cutoffs and interaction strengths is directly relevant to capturing Cdc15 conformational fluctuations and membrane-bound dimer assembly. The demonstrated treatment of lateral association provides a plausible starting framework for simulating Cdc15 higher-order scaffold formation.",
+    "confidence": "high",
+    "caveat": "Cdc15 may differ substantially from Pacsin1 in sequence, domain architecture, oligomerization interfaces, curvature preference, and membrane-binding interactions; the force-field tuning and native-contact definition would therefore require validation and likely reparameterization before making quantitative claims about scaffold organization or membrane deformation."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of fission-yeast Cdc15",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "fission-yeast Cdc15 molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "fission-yeast Cdc15 coarse-grained",
+     "n_results": 16
+    }
+   ],
+   "n_unique_papers_judged": 50,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Biophysical Modeling of the Cytokinetic Ring Anchoring Machinery",
+     "doi": null,
+     "year": 2023,
+     "reason": "This paper explicitly develops biophysical, micrometer-scale or coarser mathematical modeling of the cytokinetic-ring anchoring machinery involving fission-yeast F-BAR Cdc15 and its membrane linkage."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "vps13",
+   "Y_proposal": {
+    "system_name": "fission-yeast Cdc15",
+    "description": "Cdc15 is an F-BAR scaffold that organizes membrane-associated cytokinetic nodes, motivating CG simulations of its clustering and interaction with the division membrane.",
+    "shared_feature": "F-BAR proteins assemble on membranes into higher-order scaffolds whose collective organization can drive or stabilize membrane deformation.",
+    "key_difference": "Cdc15 functions in cytokinesis and node assembly rather than endocytic membrane remodeling, and has a distinct oligomerization and regulatory architecture from Pacsin1."
+   }
+  },
+  {
+   "n": "polymerase:Sulfolobus RNAP",
+   "source_seed_X": {
+    "title": "Modeling DNA Opening in the Eukaryotic Transcription Initiation Complexes via Coarse-Grained Models",
+    "doi": "10.3389/fmolb.2021.772486",
+    "title_ratio": 1.0,
+    "found_title": "Modeling DNA Opening in the Eukaryotic Transcription Initiation Complexes via Coarse-Grained Models",
+    "doi_matches_claim": true,
+    "year": 2021,
+    "venue": "Frontiers in Molecular Biosciences",
+    "abstract_chars": 2606,
+    "overlap": []
+   },
+   "target_system_Y": "Sulfolobus RNAP",
+   "claimed_axis": "The same physical process: promoter DNA melting and bubble formation during transcription initiation.",
+   "transfer": {
+    "target_objective": "Model promoter DNA melting, transcription-bubble formation, and associated conformational intermediates in the Sulfolobus RNAP initiation complex.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "A multiscale coarse-grained/all-atom strategy for simulating DNA duplex opening and identifying transient protein-DNA-gated intermediates during transcription initiation.",
+    "reason_seed_is_useful_for_Y": "The seed demonstrates how CG simulations initialized from structural states can capture promoter-bubble fluctuations, progression from closed to open complexes, and mechanically important interactions that may be difficult to resolve experimentally. This workflow could guide analogous simulations of Sulfolobus RNAP, particularly for testing whether its initiation pathway contains metastable DNA-opening intermediates.",
+    "confidence": "medium",
+    "caveat": "The identified fork-loop-1 bottleneck and Rpb2 interaction network are specific to eukaryotic Pol II and may have no direct counterpart in archaeal RNAP; Sulfolobus-specific structures, initiation factors, thermophilic conditions, and CG parametrization would be required rather than transferring the proposed molecular mechanism directly."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Sulfolobus RNAP",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Sulfolobus RNAP molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Sulfolobus RNAP coarse-grained",
+     "n_results": 6
+    }
+   ],
+   "n_unique_papers_judged": 36,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "polymerase",
+   "Y_proposal": {
+    "system_name": "Sulfolobus RNAP",
+    "description": "The archaeal RNA polymerase promoter complex, which can be simulated to resolve how promoter DNA opens before initiation in an extremophile transcription system.",
+    "shared_feature": "The same physical process: promoter DNA melting and bubble formation during transcription initiation.",
+    "key_difference": "Unlike the yeast system, this complex uses archaeal TBP and TFB factors with archaeal RNA polymerase architecture rather than eukaryotic Pol II and its general transcription factors."
+   }
+  },
+  {
+   "n": "polymerase:E. coli σ70 holoenzyme",
+   "source_seed_X": {
+    "title": "Modeling DNA Opening in the Eukaryotic Transcription Initiation Complexes via Coarse-Grained Models",
+    "doi": "10.3389/fmolb.2021.772486",
+    "title_ratio": 1.0,
+    "found_title": "Modeling DNA Opening in the Eukaryotic Transcription Initiation Complexes via Coarse-Grained Models",
+    "doi_matches_claim": true,
+    "year": 2021,
+    "venue": "Frontiers in Molecular Biosciences",
+    "abstract_chars": 2606,
+    "overlap": []
+   },
+   "target_system_Y": "E. coli σ70 holoenzyme",
+   "claimed_axis": "The same physical process: promoter DNA melting and bubble formation during transcription initiation.",
+   "transfer": {
+    "target_objective": "Model promoter DNA melting and transcription-bubble formation in the E. coli σ70 RNA polymerase holoenzyme, including sequence-dependent dynamics, intermediates, and interactions that regulate initiation.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Coarse-grained/multiscale modeling of protein–DNA rearrangements during promoter opening, including transient DNA-bubble states, sequence-dependent bubble fluctuations, and kinetic intermediates along the opening pathway.",
+    "reason_seed_is_useful_for_Y": "The seed demonstrates how CG simulations initialized from multiple structural states can investigate promoter melting dynamics that are difficult to resolve experimentally, and its treatment of DNA-bubble formation and sequence-dependent fluctuations may inform analogous simulations of σ70 initiation. However, the general physical strategy transfers more readily than the identified molecular mechanism.",
+    "confidence": "medium",
+    "caveat": "Eukaryotic Pol II promoter opening involves a substantially different polymerase architecture and general transcription-factor assembly than the bacterial σ70 holoenzyme. The reported fork-loop-1 bottleneck, gatekeeper mechanism, and specific protein–DNA contacts are therefore unlikely to transfer directly and would need to be re-derived for E. coli."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of E. coli σ70 holoenzyme",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "E. coli σ70 holoenzyme molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "E. coli σ70 holoenzyme coarse-grained",
+     "n_results": 6
+    }
+   ],
+   "n_unique_papers_judged": 35,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "polymerase",
+   "Y_proposal": {
+    "system_name": "E. coli σ70 holoenzyme",
+    "description": "The bacterial σ70 RNA polymerase promoter complex, which can be simulated to determine how sigma-factor contacts and polymerase conformational changes drive promoter opening.",
+    "shared_feature": "The same physical process: promoter DNA melting and bubble formation during transcription initiation.",
+    "key_difference": "Unlike the yeast Pol II pre-initiation complex, it is a bacterial holoenzyme organized around a σ70 factor and lacks the eukaryotic multi-factor initiation assembly."
+   }
+  },
+  {
+   "n": "cas9:DNA origami nanotubes",
+   "source_seed_X": {
+    "title": "Coarse-Grained Models of RNA Nanotubes for Large Time Scale Studies in Biomedical Applications",
+    "doi": "10.3390/biomedicines8070195",
+    "title_ratio": 1.0,
+    "found_title": "Coarse-Grained Models of RNA Nanotubes for Large Time Scale Studies in Biomedical Applications",
+    "doi_matches_claim": true,
+    "year": 2020,
+    "venue": "Biomedicines",
+    "abstract_chars": 1392,
+    "overlap": []
+   },
+   "target_system_Y": "DNA origami nanotubes",
+   "claimed_axis": "Self-assembly into elongated tubular nanostructures.",
+   "transfer": {
+    "target_objective": "Develop and validate a coarse-grained model that captures the sequence-dependent base pairing, scaffold–staple organization, and self-assembly of DNA origami nanotubes into elongated tubular structures.",
+    "transfer_axis": "chemistry_representation",
+    "transferable_feature": "Coarse-grained representation of extended nucleic-acid nanotubes using bead-level bonded, angular, and dihedral interactions to reduce computational cost while retaining large-scale structural behavior.",
+    "reason_seed_is_useful_for_Y": "The RNA nanotube study provides a possible starting framework for representing long nucleic-acid tubular architectures and analyzing bond-angle, dihedral-angle, bead-distance, and equilibration behavior. These analyses could help characterize the mechanical stability and geometry of assembled DNA origami tubes, although the model would need substantial modification for DNA-specific interactions and origami assembly.",
+    "confidence": "low",
+    "caveat": "The seed primarily models already constructed RNA nanotubes and does not demonstrate self-assembly, sequence-specific base pairing, scaffold–staple binding, or strand exchange; therefore its methodology may not realistically predict DNA origami nanotube formation without major additional modeling."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of DNA origami nanotubes",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "DNA origami nanotubes molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "DNA origami nanotubes coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 48,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Characterizing the free-energy landscapes of DNA origamis",
+     "doi": "10.1039/d1nr05716b",
+     "year": 2022,
+     "reason": "CG modeling with umbrella sampling is explicitly applied to the deformation free-energy landscape of DNA nanotubes."
+    },
+    {
+     "title": "A coarse-grained model captures the temporal evolution of DNA nanotube length distributions",
+     "doi": "10.1007/s11047-017-9657-7",
+     "year": 2017,
+     "reason": "The title explicitly states that a CG model captures the temporal evolution of DNA nanotube length distributions."
+    },
+    {
+     "title": "Understanding the free energy landscapes and self-limiting assembly of DNA origamis using coarse-grained modelling",
+     "doi": "10.5287/ora-aqbqqej4g",
+     "year": 2022,
+     "reason": "This thesis explicitly uses coarse-grained modeling and free-energy calculations to study DNA nanotubes and self-limiting assembly of DNA origamis."
+    },
+    {
+     "title": "DNA-Origami Nanotubes and their Interaction with Membranes: Insights through Multiscale Molecular Dynamics Simulations",
+     "doi": "10.1016/j.bpj.2015.11.2195",
+     "year": 2016,
+     "reason": "Its title explicitly identifies multiscale molecular-dynamics simulations of DNA-origami nanotubes and their membrane interactions, directly matching the target system."
+    },
+    {
+     "title": "DNA nanotubes and their interaction with membranes: insights through multiscale molecular dynamics simulations",
+     "doi": "10.5287/ora-xqvanrgxe",
+     "year": 2016,
+     "reason": "This paper explicitly uses multiscale molecular dynamics to model a DNA nanotube and its interactions with membranes, directly matching the target system."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "cas9",
+   "Y_proposal": {
+    "system_name": "DNA origami nanotubes",
+    "description": "Programmable DNA-origami tubes assembled from designed tiles, suitable for coarse-grained studies of structural stability, flexibility, and cargo transport.",
+    "shared_feature": "Self-assembly into elongated tubular nanostructures.",
+    "key_difference": "They are built from DNA origami scaffolds and staple strands rather than RNA nanorings connected into tubes."
+   }
+  },
+  {
+   "n": "cas9:Diphenylalanine nanotubes",
+   "source_seed_X": {
+    "title": "Coarse-Grained Models of RNA Nanotubes for Large Time Scale Studies in Biomedical Applications",
+    "doi": "10.3390/biomedicines8070195",
+    "title_ratio": 1.0,
+    "found_title": "Coarse-Grained Models of RNA Nanotubes for Large Time Scale Studies in Biomedical Applications",
+    "doi_matches_claim": true,
+    "year": 2020,
+    "venue": "Biomedicines",
+    "abstract_chars": 1392,
+    "overlap": []
+   },
+   "target_system_Y": "Diphenylalanine nanotubes",
+   "claimed_axis": "Self-assembly into elongated tubular nanostructures.",
+   "transfer": {
+    "target_objective": "Model the self-assembly, stability, and structural dynamics of diphenylalanine molecules into elongated tubular nanostructures.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Coarse-grained characterization of tubular nanostructure geometry, including bond-angle and dihedral distributions, inter-bead distances, and equilibration or structural stability over long simulations.",
+    "reason_seed_is_useful_for_Y": "The seed provides generic analysis strategies for assessing the conformational organization and stability of elongated nanotubes in CG simulations. These geometric observables could help analyze diphenylalanine tube morphology after an appropriate diphenylalanine-specific model is developed.",
+    "confidence": "low",
+    "caveat": "The seed models preconstructed RNA nanotubes rather than their self-assembly, and RNA connectivity, electrostatics, hydrogen bonding, and flexibility differ substantially from diphenylalanine chemistry. Its CG potentials and methodology therefore cannot be transferred directly to predict diphenylalanine assembly or nucleation."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Diphenylalanine nanotubes",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Diphenylalanine nanotubes molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Diphenylalanine nanotubes coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 49,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Using the Bending Beam Model to Estimate the Elasticity of Diphenylalanine Nanotubes",
+     "doi": "10.1021/la7010106",
+     "year": 2007,
+     "reason": "It applies a reduced continuum bending-beam model directly to diphenylalanine nanotubes to estimate their elastic properties."
+    },
+    {
+     "title": "On the origin of the great rigidity of self-assembled diphenylalanine nanotubes",
+     "doi": "10.1039/c6cp04337b",
+     "year": 2016,
+     "reason": "It models diphenylalanine nanotube elasticity using a reduced mass-in-mass one-dimensional model, providing direct coarse-grained modeling evidence."
+    },
+    {
+     "title": "Influence of pH on the self-assembly of diphenylalanine peptides: molecular insights from coarse-grained simulations",
+     "doi": "10.1039/d3sm00739a",
+     "year": 2023,
+     "reason": "This paper explicitly performs coarse-grained molecular dynamics simulations of 1000 diphenylalanine peptides and their pH-dependent assembly into nanostructures."
+    },
+    {
+     "title": "A Probabilistic Approach to Multiscale Simulation: Evaluating Machine-Learned Backmapping Models of Diphenylalanine",
+     "doi": null,
+     "year": 2026,
+     "reason": "This paper directly develops and evaluates a multiscale/backmapping modeling approach for diphenylalanine, targeting its self-assembly behavior."
+    },
+    {
+     "title": "Self-assembly of phenylalanine oligopeptides: development of transferable bottom-up coarse-grained potentials",
+     "doi": "10.1039/d5me00207a",
+     "year": 2026,
+     "reason": "The paper develops transferable bottom-up coarse-grained potentials for phenylalanine-based oligopeptides, directly covering the diphenylalanine-related target system and its self-assembly."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "cas9",
+   "Y_proposal": {
+    "system_name": "Diphenylalanine nanotubes",
+    "description": "Peptide nanotubes formed by self-assembly of diphenylalanine molecules, whose mechanics and interactions are relevant to biomolecular nanomaterials and delivery systems.",
+    "shared_feature": "Self-assembly into elongated tubular nanostructures.",
+    "key_difference": "They are composed of small aromatic dipeptides with non-nucleic-acid interactions, rather than covalently connected RNA strands."
+   }
+  },
+  {
+   "n": "escrt:mitochondrial cristae",
+   "source_seed_X": {
+    "title": "Large-scale simulation of biomembranes incorporating realistic kinetics into coarse-grained models",
+    "doi": "10.1038/s41467-020-16424-0",
+    "title_ratio": 1.0,
+    "found_title": "Large-scale simulation of biomembranes incorporating realistic kinetics into coarse-grained models",
+    "doi_matches_claim": true,
+    "year": 2020,
+    "venue": "Nature Communications",
+    "abstract_chars": 1182,
+    "overlap": []
+   },
+   "target_system_Y": "mitochondrial cristae",
+   "claimed_axis": "Membrane-shape fluctuations and remodeling are controlled by viscous hydrodynamic dissipation.",
+   "transfer": {
+    "target_objective": "Model mitochondrial cristae shape fluctuations and remodeling while accounting for viscous hydrodynamic dissipation and realistic membrane kinetics.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Coupling a solvent-free coarse-grained membrane model to continuum hydrodynamics to represent viscosity-dependent dissipation and non-equilibrium membrane dynamics.",
+    "reason_seed_is_useful_for_Y": "The framework directly addresses how hydrodynamic viscosity controls membrane fluctuations and remodeling, which is central to cristae dynamics. Its multiscale treatment could enable simulations of cristae over biologically relevant timescales and sizes more efficiently than explicit-solvent CG models.",
+    "confidence": "medium",
+    "caveat": "The demonstration concerns relatively open red-blood-cell membranes, whereas cristae are highly curved, topologically complex, protein-rich, and confined within mitochondria; the hydrodynamic coupling and boundary conditions may therefore require substantial adaptation and validation."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of mitochondrial cristae",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "mitochondrial cristae molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "mitochondrial cristae coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 52,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "An integrative modelling approach to the mitochondrial cristae",
+     "doi": "10.1038/s42003-025-08381-5",
+     "year": 2025,
+     "reason": "The paper develops an integrative computational model specifically of mitochondrial cristae, providing direct multiscale-modeling evidence for the target system."
+    },
+    {
+     "title": "The molecular basis of mitochondrial cristae formation by the MIC10 complex",
+     "doi": "10.5281/zenodo.20643049",
+     "year": 2026,
+     "reason": "The paper concerns simulations of the MIC10 complex, a direct molecular determinant of mitochondrial cristae formation, and thus provides CG-relevant modeling evidence for the target system."
+    },
+    {
+     "title": "Membrane shape remodeling by ETC complex III2 of the innner mitochondrial membrane : A coarse-grained molecular dynamic study",
+     "doi": null,
+     "year": 2026,
+     "reason": "The paper explicitly uses coarse-grained molecular dynamics to study membrane-shape remodeling by respiratory complex III2 in the mitochondrial inner membrane and its relevance to cristae architecture."
+    },
+    {
+     "title": "Membrane-mediated interaction drives mitochondrial ATPase assembly and cristae formation",
+     "doi": "10.1085/jgp.201812077",
+     "year": 2018,
+     "reason": "It reports coarse-grained simulations of mitochondrial ATP synthase dimers and their spontaneous association in relation to cristae formation."
+    },
+    {
+     "title": "Curvature sensing lipid dynamics in a mitochondrial inner membrane model",
+     "doi": "10.1038/s42003-023-05657-6",
+     "year": 2024,
+     "reason": "The study uses a coarse-grained model of the mitochondrial inner membrane, including cardiolipin and other mitochondrial lipids, to investigate curvature-related membrane behavior."
+    },
+    {
+     "title": "Cristae formation is a mechanical buckling event controlled by the inner membrane lipidome",
+     "doi": "10.1101/2023.03.13.532310",
+     "year": 2023,
+     "reason": "The study directly investigates mitochondrial cristae morphology using experimental lipidome manipulation combined with multiscale modeling."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "escrt",
+   "Y_proposal": {
+    "system_name": "mitochondrial cristae",
+    "description": "The folded inner-membrane compartments of mitochondria could be simulated to determine how membrane composition, protein crowding, and matrix viscosity control crista morphology and relaxation.",
+    "shared_feature": "Membrane-shape fluctuations and remodeling are controlled by viscous hydrodynamic dissipation.",
+    "key_difference": "Cristae are highly curved, protein-rich internal organelle membranes with an intermembrane-space and matrix geometry, rather than the relatively open plasma membrane of a red blood cell."
+   }
+  },
+  {
+   "n": "escrt:influenza A virion",
+   "source_seed_X": {
+    "title": "Large-scale simulation of biomembranes incorporating realistic kinetics into coarse-grained models",
+    "doi": "10.1038/s41467-020-16424-0",
+    "title_ratio": 1.0,
+    "found_title": "Large-scale simulation of biomembranes incorporating realistic kinetics into coarse-grained models",
+    "doi_matches_claim": true,
+    "year": 2020,
+    "venue": "Nature Communications",
+    "abstract_chars": 1182,
+    "overlap": []
+   },
+   "target_system_Y": "influenza A virion",
+   "claimed_axis": "Membrane budding and fission pathways depend on coupled membrane mechanics and surrounding-fluid hydrodynamics.",
+   "transfer": {
+    "target_objective": "Model influenza A virion membrane budding and fission pathways by capturing the coupling between membrane mechanics and surrounding-fluid hydrodynamics.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Coupled coarse-grained membrane mechanics and continuum hydrodynamics for efficient simulation of large membrane systems and their non-equilibrium kinetics.",
+    "reason_seed_is_useful_for_Y": "The framework directly addresses how surrounding-fluid viscosity and hydrodynamic dissipation influence membrane fluctuations and kinetics, which are relevant to viral budding and neck evolution. Its multiscale treatment could extend simulations toward the longer timescales needed for virion assembly while retaining more realistic fluid-mediated dynamics than a solvent-free membrane model alone.",
+    "confidence": "medium",
+    "caveat": "The seed study demonstrates the method only for red-blood-cell fluctuations and does not establish its ability to represent influenza-specific proteins, membrane curvature generation, scission chemistry, or topological changes during fission; additional membrane-protein and topology-handling capabilities would be required."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of influenza A virion",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "influenza A virion molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "influenza A virion coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 53,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Breathing and Tilting: Mesoscale Simulations Illuminate Influenza Glycoprotein Vulnerabilities",
+     "doi": "10.1021/acscentsci.2c00981",
+     "year": 2022,
+     "reason": "The study uses mesoscale simulations of influenza glycoproteins in the whole-virion context, directly modeling components of the target influenza A virion at CG-like resolution."
+    },
+    {
+     "title": "Coarse-Grained Molecular Dynamics Simulations of the Entire Influenza Virus Envelope",
+     "doi": "10.1016/j.bpj.2010.12.2392",
+     "year": 2011,
+     "reason": "The title explicitly identifies coarse-grained molecular-dynamics simulations of the entire influenza virus envelope, directly matching the target system."
+    },
+    {
+     "title": "Entropic forces drive clustering and spatial localization of influenza A M2 during viral budding",
+     "doi": "10.1073/pnas.1805443115",
+     "year": 2018,
+     "reason": "It explicitly uses coarse-grained simulations of influenza A M2 assemblies to study membrane curvature and mechanisms relevant to virion budding and scission."
+    },
+    {
+     "title": "Nanoscale Electrical and Coarse-grained Molecular Dynamics Studies of Influenza Hemagglutinin-mediated Membrane Fusion Pores",
+     "doi": "10.7916/d85b0ds9",
+     "year": 2017,
+     "reason": "It explicitly uses coarse-grained molecular dynamics to model influenza hemagglutinin-mediated membrane fusion-pore dynamics, directly modeling an influenza membrane process."
+    },
+    {
+     "title": "Investigation of Triton X-100 Mixtures in Viral Membranes Using a Coarse Grain Model",
+     "doi": null,
+     "year": 2019,
+     "reason": "This paper explicitly uses a coarse-grained model to study Triton X-100 interactions and rupture of influenza viral membranes, directly modeling the virion envelope."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "escrt",
+   "Y_proposal": {
+    "system_name": "influenza A virion",
+    "description": "The enveloped influenza A particle could be simulated to study the kinetics of matrix-protein-driven budding, membrane scission, and fusion.",
+    "shared_feature": "Membrane budding and fission pathways depend on coupled membrane mechanics and surrounding-fluid hydrodynamics.",
+    "key_difference": "Influenza A involves a nanoscale, strongly curved viral envelope actively remodeled by viral proteins, whereas the seed system concerns passive fluctuations of a much larger red-blood-cell membrane."
+   }
+  },
+  {
+   "n": "bam_bcs:nitric oxide",
+   "source_seed_X": {
+    "title": "Validation of a Coarse-Grained Martini 3 Model for Molecular Oxygen",
+    "doi": "10.1021/acs.jctc.4c01348",
+    "title_ratio": 1.0,
+    "found_title": "Validation of a Coarse-Grained Martini 3 Model for Molecular Oxygen",
+    "doi_matches_claim": true,
+    "year": 2024,
+    "venue": "Journal of Chemical Theory and Computation",
+    "abstract_chars": 1660,
+    "overlap": []
+   },
+   "target_system_Y": "nitric oxide",
+   "claimed_axis": "Membrane permeation of a small, weakly polar gaseous solute.",
+   "transfer": {
+    "target_objective": "Develop and validate a Martini 3 coarse-grained model for nitric oxide that reproduces its partitioning, diffusion, and permeation across phospholipid and cholesterol-containing membranes.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Coarse-grained representation and validation strategy for a small neutral gaseous solute crossing lipid membranes, including comparison of diffusion and permeability with atomistic simulations or experiments.",
+    "reason_seed_is_useful_for_Y": "The seed provides a directly relevant workflow for selecting a Martini 3 bead and testing membrane partitioning, aqueous and hydrocarbon diffusion, and permeability for a small gas. These methods can guide NO model development and validation, but the O2 bead parameters should not be transferred unchanged.",
+    "confidence": "medium",
+    "caveat": "NO has a permanent dipole, different polarity and solubility, radical electronic character, and potentially distinct chemical reactivity, so its interactions with water, lipids, proteins, and oxygen-containing species may not be captured by the nonpolar O2 representation or by simple parameter analogy."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of nitric oxide",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "nitric oxide molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "nitric oxide coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 56,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "bam_bcs",
+   "Y_proposal": {
+    "system_name": "nitric oxide",
+    "description": "Nitric oxide is a reactive gasotransmitter whose membrane diffusion and access to hydrophobic protein or heme pockets are important to simulate across large cellular environments.",
+    "shared_feature": "Membrane permeation of a small, weakly polar gaseous solute.",
+    "key_difference": "Unlike dioxygen, nitric oxide is an open-shell radical that reacts readily with metals, radicals, and oxygenated species, so its CG model must represent distinct reactivity and binding behavior."
+   }
+  },
+  {
+   "n": "bam_bcs:carbon monoxide",
+   "source_seed_X": {
+    "title": "Validation of a Coarse-Grained Martini 3 Model for Molecular Oxygen",
+    "doi": "10.1021/acs.jctc.4c01348",
+    "title_ratio": 1.0,
+    "found_title": "Validation of a Coarse-Grained Martini 3 Model for Molecular Oxygen",
+    "doi_matches_claim": true,
+    "year": 2024,
+    "venue": "Journal of Chemical Theory and Computation",
+    "abstract_chars": 1660,
+    "overlap": []
+   },
+   "target_system_Y": "carbon monoxide",
+   "claimed_axis": "Partitioning and diffusion of a small neutral diatomic gas through lipid membranes.",
+   "transfer": {
+    "target_objective": "Develop and validate a coarse-grained model of carbon monoxide for predicting its partitioning, diffusion, and permeability through lipid membranes.",
+    "transfer_axis": "chemistry_representation",
+    "transferable_feature": "A neutral, small diatomic gas represented in Martini 3 and validated across aqueous, hydrocarbon, and lipid-membrane environments using diffusion, partitioning, and permeability observables.",
+    "reason_seed_is_useful_for_Y": "The seed provides a directly relevant workflow for parameterizing and validating a CG gas model against atomistic or experimental diffusivities and membrane permeation rates. Its oxygen bead and validation results may serve as a starting reference for selecting the size and nonpolar interaction representation of carbon monoxide, but CO-specific parameters would still need to be established.",
+    "confidence": "medium",
+    "caveat": "Carbon monoxide differs from oxygen in size, quadrupole and electronic interactions, solubility, and possible specific interactions with lipids or proteins; therefore the oxygen TC3 bead should not be transferred quantitatively without dedicated validation and likely reparameterization."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of carbon monoxide",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "carbon monoxide molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "carbon monoxide coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 59,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "bam_bcs",
+   "Y_proposal": {
+    "system_name": "carbon monoxide",
+    "description": "Carbon monoxide is a membrane-permeable signaling and toxic gas whose transport and binding to heme proteins would benefit from large-scale CG simulations.",
+    "shared_feature": "Partitioning and diffusion of a small neutral diatomic gas through lipid membranes.",
+    "key_difference": "Unlike dioxygen, carbon monoxide has a strong, directional affinity for reduced heme centers and is chemically less oxidizing, making protein binding rather than oxygen-like transport the dominant specificity."
+   }
+  },
+  {
+   "n": "atp_synthase:Escherichia coli FtsZ",
+   "source_seed_X": {
+    "title": "Machine learning coarse-grained potentials of protein thermodynamics",
+    "doi": "10.1038/s41467-023-41343-1",
+    "title_ratio": 1.0,
+    "found_title": "Machine learning coarse-grained potentials of protein thermodynamics",
+    "doi_matches_claim": true,
+    "year": 2023,
+    "venue": "Nature Communications",
+    "abstract_chars": 1175,
+    "overlap": []
+   },
+   "target_system_Y": "Escherichia coli FtsZ",
+   "claimed_axis": "Protein conformational-state transitions that couple structural fluctuations to biological function.",
+   "transfer": {
+    "target_objective": "Model FtsZ conformational-state transitions and determine how structural fluctuations couple to its biological function, including potentially functionally relevant structural ensembles.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "A statistically grounded, machine-learning coarse-grained potential designed to preserve protein thermodynamics and relevant conformational states while accelerating dynamical sampling.",
+    "reason_seed_is_useful_for_Y": "The seed demonstrates that a single neural-network CG framework can represent diverse protein conformational ensembles and retain energetically relevant states, providing a plausible methodological starting point for FtsZ dynamics. Its accelerated sampling could help explore FtsZ transitions that are difficult to access with all-atom simulations, provided the model is trained or adapted using FtsZ-specific data.",
+    "confidence": "medium",
+    "caveat": "The abstract does not establish transfer to FtsZ, whose function depends on GTP binding, nucleotide-state changes, longitudinal and lateral polymer interfaces, and possibly filament assembly; these features may be absent from the seed training set and require explicit retraining and validation."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Escherichia coli FtsZ",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Escherichia coli FtsZ molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Escherichia coli FtsZ coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 47,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Modeling FtsZ ring formation in the bacterial cell—anisotropic aggregation via mutual interactions of polymer rods",
+     "doi": "10.1088/1478-3975/8/2/026007",
+     "year": 2011,
+     "reason": "It directly models E. coli FtsZ ring formation using interacting polymer rods, a coarse-grained representation of FtsZ polymers."
+    },
+    {
+     "title": "FtsZ rings and helices: physical mechanisms for the dynamic alignment of biopolymers in rod-shaped bacteria",
+     "doi": "10.1088/1478-3975/9/1/016009",
+     "year": 2012,
+     "reason": "It theoretically models dynamic FtsZ aggregates as physical polymers to study ring and helix alignment, constituting direct coarse-grained modeling of FtsZ."
+    },
+    {
+     "title": "The Assembly Switch Mechanism of FtsZ Filament Revealed by All-Atom Molecular Dynamics Simulations and Coarse-Grained Models",
+     "doi": "10.3389/fmicb.2021.639883",
+     "year": 2021,
+     "reason": "This paper explicitly combines all-atom MD with coarse-grained models of assembled E. coli FtsZ to study conformational transitions."
+    },
+    {
+     "title": "Biological Insights from a Simulation Model of the Critical FtsZ Accumulation Required for Prokaryotic Cell Division",
+     "doi": "10.1021/acs.biochem.5b00261",
+     "year": 2015,
+     "reason": "It uses a simulation model of FtsZ Z-ring assembly and dynamics in prokaryotic division, directly representing the target system at a coarse-grained level."
+    },
+    {
+     "title": "Dynamics of the formation of rings of protein filaments",
+     "doi": null,
+     "year": 2014,
+     "reason": "It explicitly uses Monte Carlo simulations with a lattice representation in which FtsZ monomers occupy multiple lattice sites, a coarse-grained model of FtsZ filament-ring formation."
+    },
+    {
+     "title": "A Unified Model for Treadmilling and Nucleation of Single-Stranded FtsZ Protofilaments",
+     "doi": "10.1016/j.bpj.2020.05.041",
+     "year": 2020,
+     "reason": "The paper presents a unified mechanistic model of FtsZ protofilament nucleation and treadmilling, which is direct modeling of the target FtsZ system at a reduced/coarse-grained level."
+    },
+    {
+     "title": "Biophysical models for bacterial FtsZ filaments",
+     "doi": null,
+     "year": 2010,
+     "reason": "This thesis is specifically devoted to biophysical modeling of bacterial FtsZ filaments, providing direct reduced/coarse-grained modeling evidence relevant to the target FtsZ system."
+    },
+    {
+     "title": "Simple modeling of FtsZ polymers on flat and curved surfaces: correlation with experimental in vitro observations",
+     "doi": "10.1186/1757-5036-2-8",
+     "year": 2009,
+     "reason": "This paper develops a simplified polymer model of E. coli FtsZ assembly on flat and curved surfaces, providing direct coarse-grained modeling of the target protein system."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "atp_synthase",
+   "Y_proposal": {
+    "system_name": "Escherichia coli FtsZ",
+    "description": "FtsZ is a bacterial tubulin homolog whose nucleotide-dependent conformational dynamics control protofilament assembly, making it a useful target for accelerated simulations of cytoskeletal remodeling.",
+    "shared_feature": "Protein conformational-state transitions that couple structural fluctuations to biological function.",
+    "key_difference": "FtsZ undergoes nucleotide-dependent polymerization into higher-order filaments, whereas the seed study focuses on a heterogeneous panel of individual proteins with varied secondary-structure arrangements."
+   }
+  },
+  {
+   "n": "atp_synthase:Yeast Mgm1",
+   "source_seed_X": {
+    "title": "Machine learning coarse-grained potentials of protein thermodynamics",
+    "doi": "10.1038/s41467-023-41343-1",
+    "title_ratio": 1.0,
+    "found_title": "Machine learning coarse-grained potentials of protein thermodynamics",
+    "doi_matches_claim": true,
+    "year": 2023,
+    "venue": "Nature Communications",
+    "abstract_chars": 1175,
+    "overlap": []
+   },
+   "target_system_Y": "Yeast Mgm1",
+   "claimed_axis": "Large-amplitude protein conformational dynamics coupled to nucleotide-dependent mechanochemical activity.",
+   "transfer": {
+    "target_objective": "Model Yeast Mgm1 large-amplitude conformational dynamics and their coupling to nucleotide-dependent mechanochemical activity.",
+    "transfer_axis": "other",
+    "transferable_feature": "A statistically grounded machine-learning coarse-grained potential can accelerate protein conformational sampling while approximately preserving thermodynamic state populations across diverse protein structures.",
+    "reason_seed_is_useful_for_Y": "The seed provides a potentially useful framework for learning CG protein potentials and assessing whether accelerated simulations reproduce conformational ensembles and mutation-induced structural changes. These validation principles could guide development of an Mgm1 model focused on large-scale conformational transitions.",
+    "confidence": "low",
+    "caveat": "The seed abstract does not establish transferability to membrane-bound oligomeric proteins or to nucleotide-dependent mechanochemistry. Mgm1 requires explicit treatment of membranes, GTP chemistry, oligomerization, long-range domain coupling, and possibly nonequilibrium force generation, none of which are demonstrated in the seed study."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Yeast Mgm1",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Yeast Mgm1 molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Yeast Mgm1 coarse-grained",
+     "n_results": 10
+    }
+   ],
+   "n_unique_papers_judged": 48,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "atp_synthase",
+   "Y_proposal": {
+    "system_name": "Yeast Mgm1",
+    "description": "Mgm1 is a mitochondrial dynamin-like GTPase whose conformational changes and oligomerization drive inner-membrane fusion and remodeling.",
+    "shared_feature": "Large-amplitude protein conformational dynamics coupled to nucleotide-dependent mechanochemical activity.",
+    "key_difference": "Mgm1 is a membrane-bound, oligomeric GTPase operating in a lipid environment, unlike the seed study's general protein-dynamics benchmark."
+   }
+  }
+ ]
+}

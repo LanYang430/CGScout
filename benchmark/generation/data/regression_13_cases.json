@@ -1,0 +1,228 @@
+{
+  "_note": "Fixed development regression suite. Cases 1-10 = application scenarios, 11-13 = Scientific Resolver / 3B. target `kind`: system_specific = literature about the named system itself (flat route may legitimately find it); cross_system = literature about a RELATED system that only the 3B route is meant to surface -- a cross_system target only counts as a 3B contribution if it is in transfer_papers with 3B categories (in_3b), never if only the flat route found it. Case 13 (challenging 3B case) defined 2026-10-06: the query names no protein, only a generic structural feature (~200-residue beta-helical protein); all three targets are cross_system, so recall can only come from the Scientific Resolver (3B) discovering related systems.",
+  "cases": [
+    {
+      "id": 1,
+      "short": "mpipi_helix",
+      "group": "application",
+      "query": "I want to study whether a folded domain can unfold or refold inside a biomolecular condensate. What coarse-grained approaches could capture both folding and condensate interactions?",
+      "targets": {
+        "Mpipi-Helix (JACS 2026)": {
+          "dois": [
+            "10.1021/jacs.6c01403"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "short": "idp_thermoresponsive",
+      "group": "application",
+      "query": "I want to simulate an IDP that phase separates when temperature increases rather than decreases. What CG models can capture this?",
+      "targets": {
+        "Thermoresponsive IDP (Protein Sci 2025)": {
+          "dois": [
+            "10.1002/pro.70284"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "short": "idp_crowding",
+      "group": "application",
+      "query": "I want to simulate an IDP under PEG crowding and understand how the crowded environment changes its conformations and condensation behavior. What CG models can represent both the protein and PEG?",
+      "targets": {
+        "IDP crowded conditions (Protein Sci 2025)": {
+          "dois": [
+            "10.1002/pro.70232"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "short": "enzyme_channeling",
+      "group": "application",
+      "query": "I want to simulate a multienzyme metabolic pathway where the enzymes can associate dynamically, and test whether spatial organization changes reaction efficiency. What coarse-grained approaches can couple enzyme organization with reaction kinetics?",
+      "targets": {
+        "Enzyme clustering CoQ biosynthesis (Nat Commun 2026)": {
+          "dois": [
+            "10.1038/s41467-026-74806-2"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "short": "cofactor_condensate",
+      "group": "application",
+      "query": "I want to simulate how metabolic cofactors partition into a protein condensate and affect enzyme organization. Are there residue-level CG models that can include small cofactors?",
+      "targets": {
+        "Cofactor condensate sMACs (bioRxiv 2026)": {
+          "dois": [
+            "10.64898/2026.04.24.720695"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "short": "protein_rna_vesicles",
+      "group": "application",
+      "query": "I want to model internal organization and morphology of multiphase protein-RNA condensates, not just whether they phase separate. What CG approaches could do this?",
+      "targets": {
+        "Protein-RNA vesicles (JACS Au 2026)": {
+          "dois": [
+            "10.1021/jacsau.6c00322"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "short": "synapsin_mesoscale",
+      "group": "application",
+      "query": "I want to model mesoscale organization of thousands of multidomain proteins, beyond the scale accessible to residue-level CG. What approaches can bridge molecular interactions to mesoscale aggregation?",
+      "targets": {
+        "Synapsin aggregation (bioRxiv 2026)": {
+          "dois": [
+            "10.64898/2026.08.16.745062"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "short": "condensate_ageing",
+      "group": "application",
+      "query": "I want to study how a liquid protein condensate gradually hardens through inter-protein beta-sheet formation. What CG approaches can capture both phase separation and structural ageing?",
+      "targets": {
+        "Condensate ageing (bioRxiv 2026, corrected DOI)": {
+          "dois": [
+            "10.64898/2026.03.05.709844"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "short": "protein_dna",
+      "group": "application",
+      "query": "I want to predict sequence-specific protein-DNA recognition and binding affinities while retaining a simulation-based physical model. What CG approaches could be suitable?",
+      "targets": {
+        "Protein-DNA structure-sequence (eLife 2025)": {
+          "dois": [
+            "10.7554/elife.105565",
+            "10.1101/2024.05.26.595895"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "short": "sirah_glycosylation",
+      "group": "application",
+      "query": "I need to simulate a large glycoprotein where glycan flexibility and glycan-protein recognition matter. What CG force fields can explicitly represent protein glycosylation?",
+      "targets": {
+        "SIRAH glycosylation (JCTC 2024)": {
+          "dois": [
+            "10.1021/acs.jctc.3c00783"
+          ],
+          "kind": "system_specific"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "short": "pertactin",
+      "group": "resolver_3b",
+      "query": "I want to study pertactin passenger domain folding, could you recommend me some Coarse-grained model?",
+      "targets": {
+        "Pertactin 2026 preprint": {
+          "dois": [
+            "10.64898/2026.08.22.746429"
+          ],
+          "kind": "system_specific"
+        },
+        "EspP CG 2021": {
+          "dois": [
+            "10.1016/j.bpj.2020.11.1310"
+          ],
+          "kind": "cross_system"
+        },
+        "EspP CG 2026 (BPS)": {
+          "dois": [
+            "10.1016/j.bpj.2025.11.1743"
+          ],
+          "kind": "cross_system"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "short": "espp",
+      "group": "resolver_3b",
+      "query": "I want to study EspP passenger domain folding, could you recommend me some CG models?",
+      "targets": {
+        "EspP CG 2021": {
+          "dois": [
+            "10.1016/j.bpj.2020.11.1310"
+          ],
+          "kind": "system_specific"
+        },
+        "EspP CG 2026 (BPS)": {
+          "dois": [
+            "10.1016/j.bpj.2025.11.1743"
+          ],
+          "kind": "system_specific"
+        },
+        "Pertactin 2026 preprint": {
+          "dois": [
+            "10.64898/2026.08.22.746429"
+          ],
+          "kind": "cross_system"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "short": "beta_helix_generic",
+      "group": "resolver_3b",
+      "query": "I want to simulate the folding of a ~200-residue beta-helical protein. What coarse-grained models might be suitable?",
+      "targets": {
+        "Pertactin 2026 preprint": {
+          "dois": [
+            "10.64898/2026.08.22.746429"
+          ],
+          "kind": "cross_system",
+          "verified": "TARGET_DOI in run_beta_helix_folding_e2e_check.py / run_full_pipeline_performance_eval.py; OpenAlex title 'Autotransporter folding avoids a kinetic trap during vectorial translocation across the bacterial outer membrane'"
+        },
+        "EspP CG 2021": {
+          "dois": [
+            "10.1016/j.bpj.2020.11.1310"
+          ],
+          "kind": "cross_system",
+          "verified": "beam_agent_runs/2026-08-23_003/retained.json; OpenAlex 'Developing a Coarse-Grained Model for Secretion of the Passenger Domain of the Autotransporter ESPP...'"
+        },
+        "EspP CG 2026 (BPS)": {
+          "dois": [
+            "10.1016/j.bpj.2025.11.1743"
+          ],
+          "kind": "cross_system",
+          "verified": "beam_agent_runs/2026-08-23_003/retained.json; OpenAlex 'BPS2026 - Using shape-based coarse-grained models for simulating the secretion of the passenger domain of the autotransporter EspP...'"
+        }
+      },
+      "difficulty": "challenging"
+    }
+  ]
+}

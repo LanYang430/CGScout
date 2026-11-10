@@ -1,0 +1,604 @@
+[
+ {
+  "case": "Q15",
+  "candidate": 1,
+  "query": "I want to model Arabidopsis MSL10's tension-dependent gating and predict how bilayer stress drives nonconducting-to-conducting transitions; which CG approaches could capture this?",
+  "seed_doi": "10.1021/jp9053567",
+  "expected_X": "MscS",
+  "planner": {
+   "status": "ready",
+   "system": "Arabidopsis MSL10",
+   "target_component": null,
+   "scientific_objective": "Model tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states",
+   "search_context": [
+    "membrane-embedded protein",
+    "bilayer mechanical stress/tension",
+    "Arabidopsis biological context"
+   ],
+   "clarification_question": null
+  },
+  "expert_prior": {
+   "transfer_needed": true,
+   "axes": [
+    {
+     "basis": "family_homology",
+     "scientific_class": "MscS-related mechanosensitive ion channels",
+     "confidence": "high",
+     "execution_mode": "related_system_discovery"
+    },
+    {
+     "basis": "physical_process",
+     "scientific_class": "bilayer-tension-gated mechanosensitive ion channels",
+     "confidence": "high",
+     "execution_mode": "direct_concept_search"
+    }
+   ]
+  },
+  "axis_logs": [
+   {
+    "basis": "family_homology",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 0,
+    "direct_queries": [],
+    "hop1_queries": [
+     "Identify other MscS-related mechanosensitive ion channels relevant to modeling tension-dependent gating and predicting bilayer-stress-driven transitions from nonconducting to conducting states."
+    ],
+    "hop2_queries": [],
+    "related_systems": []
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 24,
+    "direct_queries": [
+     "Coarse-grained models for bilayer-tension-gated mechanosensitive ion channels to model tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states.",
+     "Modeling tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states in bilayer-tension-gated mechanosensitive ion channels using coarse-grained approaches.",
+     "bilayer-tension-gated mechanosensitive ion channels: coarse-grained modeling of tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states."
+    ],
+    "hop1_queries": [],
+    "hop2_queries": [],
+    "related_systems": []
+   }
+  ],
+  "three_b_triggered": true,
+  "hop1_related_systems": [],
+  "expected_X_exact": false,
+  "equivalent_system_matches": [],
+  "seed_in_pool": {
+   "flat": false,
+   "3A": true,
+   "3B": false
+  },
+  "seed_found_by_queries": [
+   "Coarse-grained models for bilayer-tension-gated mechanosensitive ion channels to model tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states.",
+   "Modeling tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states in bilayer-tension-gated mechanosensitive ion channels using coarse-grained approaches.",
+   "bilayer-tension-gated mechanosensitive ion channels: coarse-grained modeling of tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states."
+  ],
+  "seed_rank_in_3b_queries": [],
+  "pool_sizes": {
+   "direct_papers": 27,
+   "transfer_papers": 24
+  },
+  "api_usage": {
+   "http_requests": 8,
+   "http_200": 8,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 80,
+   "credits_assumed_requests": 8,
+   "remaining_first": 9980,
+   "remaining_last": 9910,
+   "label": "routing_smoke_Q15",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 58.7
+ },
+ {
+  "case": "Q16",
+  "candidate": 2,
+  "query": "I need a multiscale simulation of the chloroplast 70S ribosome to determine how nucleic-acid and protein interactions drive rearrangements despite large size. Which CG models or approaches could capture it?",
+  "seed_doi": "10.1021/ja2028487",
+  "expected_X": "E. coli / bacterial 70S ribosome",
+  "planner": {
+   "status": "ready",
+   "system": "chloroplast 70S ribosome",
+   "target_component": null,
+   "scientific_objective": "Determine how nucleic-acid–protein interactions drive conformational rearrangements in the large ribosome complex using multiscale simulation.",
+   "search_context": [
+    "multiscale simulation",
+    "chloroplast 70S ribosome",
+    "large ribonucleoprotein complex"
+   ],
+   "clarification_question": null
+  },
+  "expert_prior": {
+   "transfer_needed": true,
+   "axes": [
+    {
+     "basis": "distinctive_structure",
+     "scientific_class": "bacterial-type ribosomal ribonucleoprotein complexes",
+     "confidence": "high",
+     "execution_mode": "related_system_discovery"
+    },
+    {
+     "basis": "chemistry_representation",
+     "scientific_class": "ribosomal RNA–protein assemblies",
+     "confidence": "high",
+     "execution_mode": "direct_concept_search"
+    }
+   ]
+  },
+  "axis_logs": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 0,
+    "direct_queries": [],
+    "hop1_queries": [
+     "Identify bacterial-type ribosomal ribonucleoprotein complexes in which nucleic-acid–protein interactions drive conformational rearrangements, particularly systems amenable to multiscale simulation."
+    ],
+    "hop2_queries": [],
+    "related_systems": [
+     {
+      "label": "ribosomes",
+      "grounding": "insufficient",
+      "query_anchor": null,
+      "n_support": 2
+     }
+    ]
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 25,
+    "direct_queries": [
+     "Coarse-grained models for ribosomal RNA–protein assemblies to model how nucleic-acid–protein interactions drive conformational rearrangements in the large ribosome complex using multiscale simulation.",
+     "Modeling how nucleic-acid–protein interactions drive conformational rearrangements in the large ribosome complex using multiscale simulation in ribosomal RNA–protein assemblies using coarse-grained approaches.",
+     "ribosomal RNA–protein assemblies: coarse-grained modeling of how nucleic-acid–protein interactions drive conformational rearrangements in the large ribosome complex using multiscale simulation."
+    ],
+    "hop1_queries": [],
+    "hop2_queries": [],
+    "related_systems": []
+   }
+  ],
+  "three_b_triggered": true,
+  "hop1_related_systems": [
+   "ribosomes"
+  ],
+  "expected_X_exact": false,
+  "equivalent_system_matches": [],
+  "seed_in_pool": {
+   "flat": false,
+   "3A": true,
+   "3B": false
+  },
+  "seed_found_by_queries": [
+   "Coarse-grained models for ribosomal RNA–protein assemblies to model how nucleic-acid–protein interactions drive conformational rearrangements in the large ribosome complex using multiscale simulation.",
+   "Modeling how nucleic-acid–protein interactions drive conformational rearrangements in the large ribosome complex using multiscale simulation in ribosomal RNA–protein assemblies using coarse-grained approaches.",
+   "ribosomal RNA–protein assemblies: coarse-grained modeling of how nucleic-acid–protein interactions drive conformational rearrangements in the large ribosome complex using multiscale simulation."
+  ],
+  "seed_rank_in_3b_queries": [],
+  "pool_sizes": {
+   "direct_papers": 20,
+   "transfer_papers": 25
+  },
+  "api_usage": {
+   "http_requests": 8,
+   "http_200": 8,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 80,
+   "credits_assumed_requests": 8,
+   "remaining_first": 9900,
+   "remaining_last": 9830,
+   "label": "routing_smoke_Q16",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 57.4,
+  "note_fixed": "expected_X_exact corrected to False: only the generic, ungrounded label 'ribosomes' was found"
+ },
+ {
+  "case": "Q17",
+  "candidate": 2,
+  "query": "I need to model how chloroplast Alb3 insertase transfers a flexible transmembrane substrate into the thylakoid membrane and selects its sequence-dependent topology. Which CG models or approaches could capture this?",
+  "seed_doi": "10.1038/s41467-021-27315-3",
+  "expected_X": "YidC",
+  "planner": {
+   "status": "awaiting_user",
+   "system": "Chloroplast Alb3 insertase transferring a flexible transmembrane substrate into the thylakoid membrane",
+   "target_component": "Full Alb3–substrate–thylakoid membrane insertion assembly versus the substrate's membrane insertion/topology alone",
+   "scientific_objective": "Model substrate transfer into the thylakoid membrane and sequence-dependent selection of its transmembrane topology",
+   "search_context": [
+    "chloroplast thylakoid membrane",
+    "Alb3 insertase",
+    "flexible transmembrane substrate",
+    "sequence-dependent transmembrane topology selection"
+   ],
+   "clarification_question": "Do you want literature on the full Alb3–substrate–thylakoid membrane insertion process, or primarily on the substrate’s sequence-dependent membrane insertion/topology with Alb3 treated implicitly or omitted?"
+  },
+  "note": "planner asked for clarification -- not run further"
+ },
+ {
+  "case": "Q18",
+  "candidate": 1,
+  "query": "I want to model the archaeal archaellum, a rotating helical motility filament, to explain torque-driven bending-twisting transitions between global conformations; which CG approaches could capture it?",
+  "seed_doi": "10.1529/biophysj.106.093443",
+  "expected_X": "bacterial flagellum",
+  "planner": {
+   "status": "ready",
+   "system": "archaeal archaellum, a rotating helical motility filament",
+   "target_component": null,
+   "scientific_objective": "Model torque-driven bending–twisting transitions between global filament conformations during rotation",
+   "search_context": [
+    "rotating helical motility filament",
+    "torque-driven deformation"
+   ],
+   "clarification_question": null
+  },
+  "expert_prior": {
+   "transfer_needed": true,
+   "axes": [
+    {
+     "basis": "distinctive_structure",
+     "scientific_class": "rotary helical motility filaments",
+     "confidence": "high",
+     "execution_mode": "related_system_discovery"
+    },
+    {
+     "basis": "physical_process",
+     "scientific_class": "torque-loaded helical motility filaments",
+     "confidence": "high",
+     "execution_mode": "direct_concept_search"
+    }
+   ]
+  },
+  "axis_logs": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 5,
+    "direct_queries": [],
+    "hop1_queries": [
+     "Identify other rotary helical motility filaments that can inform models of torque-driven bending–twisting transitions between global filament conformations during rotation."
+    ],
+    "hop2_queries": [
+     "R. lupini rotary helical motility filaments coarse-grained model",
+     "R. lupini rotary helical motility filaments torque-driven bending–twisting transitions between global filament conformations during rotation coarse-grained model"
+    ],
+    "related_systems": [
+     {
+      "label": "R. lupini",
+      "grounding": "grounded_contextual",
+      "query_anchor": "R. lupini rotary helical motility filaments",
+      "n_support": 1
+     }
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 30,
+    "direct_queries": [
+     "Coarse-grained models for torque-loaded helical motility filaments to model torque-driven bending–twisting transitions between global filament conformations during rotation.",
+     "Modeling torque-driven bending–twisting transitions between global filament conformations during rotation in torque-loaded helical motility filaments using coarse-grained approaches.",
+     "torque-loaded helical motility filaments: coarse-grained modeling of torque-driven bending–twisting transitions between global filament conformations during rotation."
+    ],
+    "hop1_queries": [],
+    "hop2_queries": [],
+    "related_systems": []
+   }
+  ],
+  "three_b_triggered": true,
+  "hop1_related_systems": [
+   "R. lupini"
+  ],
+  "expected_X_exact": false,
+  "equivalent_system_matches": [],
+  "seed_in_pool": {
+   "flat": false,
+   "3A": false,
+   "3B": false
+  },
+  "seed_found_by_queries": [],
+  "seed_rank_in_3b_queries": [],
+  "pool_sizes": {
+   "direct_papers": 39,
+   "transfer_papers": 35
+  },
+  "api_usage": {
+   "http_requests": 10,
+   "http_200": 10,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 100,
+   "credits_assumed_requests": 10,
+   "remaining_first": 9820,
+   "remaining_last": 9730,
+   "label": "routing_smoke_Q18",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 53.5
+ },
+ {
+  "case": "Q19",
+  "candidate": 1,
+  "query": "I want to simulate Sulfolobus RNA polymerase with TBP- and TFB-type factors to determine how promoter DNA opening evolves while preserving sequence specificity. Which CG approaches could capture it?",
+  "seed_doi": "10.3389/fmolb.2021.772486",
+  "expected_X": "Pol II / homologous transcription machinery",
+  "planner": {
+   "status": "ready",
+   "system": "Sulfolobus RNA polymerase with TBP- and TFB-type factors and promoter DNA",
+   "target_component": null,
+   "scientific_objective": "Model the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity",
+   "search_context": [
+    "Sulfolobus archaeal transcription system",
+    "promoter DNA",
+    "TBP- and TFB-type transcription factors",
+    "sequence-specific promoter recognition"
+   ],
+   "clarification_question": null
+  },
+  "expert_prior": {
+   "transfer_needed": true,
+   "axes": [
+    {
+     "basis": "distinctive_structure",
+     "scientific_class": "archaeal promoter-recognition transcription initiation complexes",
+     "confidence": "high",
+     "execution_mode": "related_system_discovery"
+    },
+    {
+     "basis": "physical_process",
+     "scientific_class": "promoter-opening transcription initiation systems",
+     "confidence": "high",
+     "execution_mode": "direct_concept_search"
+    },
+    {
+     "basis": "chemistry_representation",
+     "scientific_class": "sequence-specific archaeal promoter recognition complexes",
+     "confidence": "high",
+     "execution_mode": "direct_concept_search"
+    }
+   ]
+  },
+  "axis_logs": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 0,
+    "direct_queries": [],
+    "hop1_queries": [
+     "Find other archaeal promoter-recognition transcription initiation complexes that can illuminate the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity."
+    ],
+    "hop2_queries": [],
+    "related_systems": []
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 24,
+    "direct_queries": [
+     "Coarse-grained models for promoter-opening transcription initiation systems to model the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity.",
+     "Modeling the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity in promoter-opening transcription initiation systems using coarse-grained approaches.",
+     "promoter-opening transcription initiation systems: coarse-grained modeling of the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity."
+    ],
+    "hop1_queries": [],
+    "hop2_queries": [],
+    "related_systems": []
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 31,
+    "direct_queries": [
+     "Coarse-grained models for sequence-specific archaeal promoter recognition complexes to model the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity.",
+     "Modeling the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity in sequence-specific archaeal promoter recognition complexes using coarse-grained approaches.",
+     "sequence-specific archaeal promoter recognition complexes: coarse-grained modeling of the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity."
+    ],
+    "hop1_queries": [],
+    "hop2_queries": [],
+    "related_systems": []
+   }
+  ],
+  "three_b_triggered": true,
+  "hop1_related_systems": [],
+  "expected_X_exact": false,
+  "equivalent_system_matches": [],
+  "seed_in_pool": {
+   "flat": false,
+   "3A": true,
+   "3B": false
+  },
+  "seed_found_by_queries": [
+   "Coarse-grained models for promoter-opening transcription initiation systems to model the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity.",
+   "Modeling the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity in promoter-opening transcription initiation systems using coarse-grained approaches.",
+   "promoter-opening transcription initiation systems: coarse-grained modeling of the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity."
+  ],
+  "seed_rank_in_3b_queries": [],
+  "pool_sizes": {
+   "direct_papers": 8,
+   "transfer_papers": 45
+  },
+  "api_usage": {
+   "http_requests": 11,
+   "http_200": 11,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 110,
+   "credits_assumed_requests": 11,
+   "remaining_first": 9720,
+   "remaining_last": 9620,
+   "label": "routing_smoke_Q19",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 52.1
+ },
+ {
+  "case": "Q20",
+  "candidate": 2,
+  "query": "For yeast Mgm1, I need to determine how nucleotide-dependent assembly of a membrane-bound oligomer generates constriction and possible topological remodeling. Which CG models could capture this?",
+  "seed_doi": "10.1021/acs.jpclett.5c02867",
+  "expected_X": "dynamin",
+  "planner": {
+   "status": "ready",
+   "system": "yeast Mgm1 and its membrane-bound oligomer",
+   "target_component": null,
+   "scientific_objective": "Determine how nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling.",
+   "search_context": [
+    "membrane-bound oligomer",
+    "nucleotide-dependent assembly",
+    "membrane constriction",
+    "possible topological remodeling"
+   ],
+   "clarification_question": null
+  },
+  "expert_prior": {
+   "transfer_needed": true,
+   "axes": [
+    {
+     "basis": "distinctive_structure",
+     "scientific_class": "dynamin-family membrane fission GTPase assemblies",
+     "confidence": "high",
+     "execution_mode": "related_system_discovery"
+    },
+    {
+     "basis": "physical_process",
+     "scientific_class": "nucleotide-driven membrane remodeling assemblies",
+     "confidence": "high",
+     "execution_mode": "direct_concept_search"
+    },
+    {
+     "basis": "chemistry_representation",
+     "scientific_class": "dynamin-family GTPase membrane assemblies",
+     "confidence": "high",
+     "execution_mode": "direct_concept_search"
+    }
+   ]
+  },
+  "axis_logs": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 0,
+    "direct_queries": [],
+    "hop1_queries": [
+     "Find other dynamin-family membrane fission GTPase assemblies in which nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling."
+    ],
+    "hop2_queries": [],
+    "related_systems": []
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 31,
+    "direct_queries": [
+     "Coarse-grained models for nucleotide-driven membrane remodeling assemblies to model how nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling.",
+     "Modeling how nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling in nucleotide-driven membrane remodeling assemblies using coarse-grained approaches.",
+     "nucleotide-driven membrane remodeling assemblies: coarse-grained modeling of how nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling."
+    ],
+    "hop1_queries": [],
+    "hop2_queries": [],
+    "related_systems": []
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "executed": true,
+    "skip_reason": null,
+    "error": null,
+    "n_papers": 23,
+    "direct_queries": [
+     "Coarse-grained models for dynamin-family GTPase membrane assemblies to model how nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling.",
+     "Modeling how nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling in dynamin-family GTPase membrane assemblies using coarse-grained approaches.",
+     "dynamin-family GTPase membrane assemblies: coarse-grained modeling of how nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling."
+    ],
+    "hop1_queries": [],
+    "hop2_queries": [],
+    "related_systems": []
+   }
+  ],
+  "three_b_triggered": true,
+  "hop1_related_systems": [],
+  "expected_X_exact": false,
+  "equivalent_system_matches": [],
+  "seed_in_pool": {
+   "flat": false,
+   "3A": false,
+   "3B": false
+  },
+  "seed_found_by_queries": [],
+  "seed_rank_in_3b_queries": [],
+  "pool_sizes": {
+   "direct_papers": 48,
+   "transfer_papers": 52
+  },
+  "api_usage": {
+   "http_requests": 12,
+   "http_200": 12,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 120,
+   "credits_assumed_requests": 12,
+   "remaining_first": 9610,
+   "remaining_last": 9500,
+   "label": "routing_smoke_Q20",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 73.8
+ }
+]

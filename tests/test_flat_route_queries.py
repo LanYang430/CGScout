@@ -6,14 +6,9 @@ wrappers stripped from every flat-route query. No LLM, no network.
 """
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 
-BENCH = Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"
-sys.path.insert(0, str(BENCH))
-
-from evidence_route_planner import EvidenceRoutePlan, RouteTerm  # noqa: E402
-from route_retrieval_plan import (  # noqa: E402
+from cgscout.retrieval.direct.evidence_plan import EvidenceRoutePlan, RouteTerm  # noqa: E402
+from cgscout.retrieval.direct.route_plan import (  # noqa: E402
     FLAT_ROUTES,
     RouteRetrievalBudgets,
     _strip_conversational_wrapper,
@@ -42,7 +37,7 @@ def _plan(*, system="", objective=None, context=None):
 def test_direct_system_route_no_longer_exists():
     assert "direct_system" not in FLAT_ROUTES
     assert "system_specific_cg" in FLAT_ROUTES
-    import route_retrieval_plan as m
+    import cgscout.retrieval.direct.route_plan as m
     assert not hasattr(m, "build_direct_system_queries")
 
 
@@ -184,9 +179,8 @@ def test_context_term_naming_the_cg_method_is_skipped():
 
 
 def test_bridge_passes_each_search_context_item_as_its_own_context_term():
-    sys.path.insert(0, str(BENCH / "mellea_integration"))
-    from planner_retrieval_bridge import evidence_plan_from_planner_output
-    from scientific_planner import PlannerOutput
+    from cgscout.retrieval.direct.from_planner import evidence_plan_from_planner_output
+    from cgscout.planning.scientific_planner import PlannerOutput
     po = PlannerOutput(system="a protein A bound to a protein B", target_component=None, scientific_objective="Simulate bridging",
                        clarification_needed=False, search_context=["alpha one", "beta two", "gamma three"])
     ctx = [t.term for t in evidence_plan_from_planner_output(po).context_terms]
@@ -194,7 +188,7 @@ def test_bridge_passes_each_search_context_item_as_its_own_context_term():
 
 
 # ---- v3: uncovered-modifier chunks, system+process combination, same-route dedupe ---------------------------------------
-from route_retrieval_plan import _system_chunks, _system_part  # noqa: E402
+from cgscout.retrieval.direct.route_plan import _system_chunks, _system_part  # noqa: E402
 
 
 def test_system_chunks_split_head_and_modifiers_keeping_substantive_connectors():
@@ -256,7 +250,7 @@ def test_combo_respects_the_route_query_cap_and_word_ceiling():
     qs = build_process_queries(_plan(system="a very long system description with many components and modifiers here and there",
                                      objective="Determine how confinement reshapes the architecture of composite networks across several scales and conditions"), _B)
     assert len(qs) <= _B.max_queries_per_route
-    from route_retrieval_plan import _content_words, _MAX_COMBO_WORDS
+    from cgscout.retrieval.direct.route_plan import _content_words, _MAX_COMBO_WORDS
     for q in qs:
         assert len(_content_words(q.query)) <= _MAX_COMBO_WORDS + 3      # +'coarse-grained model'
 
@@ -265,7 +259,7 @@ def test_same_string_in_two_routes_is_kept_but_a_repeat_inside_one_route_is_drop
     plan = _plan(system="EspP", objective="folding", context="folding")
     routes = [(q.route, q.query) for q in build_route_retrieval_plan(plan).route_queries]
     assert len(routes) == len(set((r, " ".join(q.lower().split())) for r, q in routes))      # no exact repeat within a route
-    from route_retrieval_plan import RouteQuery
+    from cgscout.retrieval.direct.route_plan import RouteQuery
     assert FLAT_ROUTES                                                                       # provenance route names unchanged
 
 
@@ -275,7 +269,7 @@ def test_flat_routes_are_unchanged():
 
 # ---- v4: P1 (anchor generic one-word context), P2 (hygiene), P3 (need_semantic) ----------------------------------------
 # Switches live on RouteRetrievalBudgets; every one of them OFF reproduces the v3 queries exactly.
-from route_retrieval_plan import (  # noqa: E402
+from cgscout.retrieval.direct.route_plan import (  # noqa: E402
     NEED_SEMANTIC_ROUTE,
     _clean_chunk,
     _is_entity_like,
@@ -437,7 +431,7 @@ class _P:
 
 
 def test_run_route_retrieval_executes_need_semantic_with_its_own_limit_and_provenance(monkeypatch):
-    import route_retrieval_plan as RP
+    import cgscout.retrieval.direct.route_plan as RP
     monkeypatch.setattr(RP, "_paper_ref", lambda p: p.doi)
     calls = []
     flat = lambda q, l: [_P("f1")]
@@ -453,7 +447,7 @@ def test_run_route_retrieval_executes_need_semantic_with_its_own_limit_and_prove
 
 
 def test_run_route_retrieval_off_has_no_need_route_and_enabled_without_fn_fails_loudly(monkeypatch):
-    import route_retrieval_plan as RP
+    import cgscout.retrieval.direct.route_plan as RP
     monkeypatch.setattr(RP, "_paper_ref", lambda p: p.doi)
     plan = _plan(system="EspP passenger domain", objective="Simulate folding")
     res = run_route_retrieval(plan, flat_search_fn=lambda q, l: [_P("f1")])

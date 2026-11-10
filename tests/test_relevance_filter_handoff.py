@@ -12,15 +12,11 @@ models/text_utils/concept_resolver's read-only cluster table, plus
 review_filter.py (also network-free -- pure regex/field check).
 """
 
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning" / "mellea_integration"))
+from cgscout.screening.filter import _METHODOLOGY_EQUIVALENCE, _STRUCTURAL_CG_MARKERS, _normalize_methodology_stem, filter_papers  # noqa: E402
 
-from relevance_filter_handoff import _METHODOLOGY_EQUIVALENCE, _STRUCTURAL_CG_MARKERS, _normalize_methodology_stem, filter_papers  # noqa: E402
-
-from beam_agent.models import Paper  # noqa: E402
-from beam_agent.text_utils import stemmed_keywords  # noqa: E402
+from cgscout.models import Paper  # noqa: E402
+from cgscout.text import stemmed_keywords  # noqa: E402
 
 
 def _fake_marker_classify_fn(papers):
@@ -132,7 +128,7 @@ def test_methodology_equivalence_map_has_no_beta_helix_entries():
     _METHODOLOGY_TERM_CLUSTERS must never contain a key/value derived from
     beta-helix (which lives only in the separate _STRUCTURAL_TERM_CLUSTERS,
     never imported by this module)."""
-    from relevance_filter_handoff import _METHODOLOGY_EQUIVALENCE
+    from cgscout.screening.filter import _METHODOLOGY_EQUIVALENCE
 
     assert "beta-helix" not in _METHODOLOGY_EQUIVALENCE.values()
     assert "beta-heli" not in _METHODOLOGY_EQUIVALENCE  # beta-helix's own compound stem

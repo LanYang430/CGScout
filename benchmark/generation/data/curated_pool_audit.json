@@ -1,0 +1,830 @@
+{
+ "case_labels": {
+  "train557": [
+   "Mpipi-Helix",
+   "Pertactin→EspP",
+   "T1: Mpipi-T / thermoresponsive IDP",
+   "T2: PEG crowding / CALVADOS",
+   "T3: protein–DNA recognition / IDEA",
+   "T4: glycoprotein / SIRAH",
+   "T5: HBV capsid + pgRNA",
+   "T6: H3/H4 recycling at replication fork",
+   "T7: PIEZO2 gating",
+   "T8: enzyme clustering / substrate channeling"
+  ],
+  "test519": [
+   "E10: viral fusion proteins",
+   "E1: TamAB",
+   "E2: Hsp90 dynamics",
+   "E3: CK1δ + TDP-43 phosphorylation",
+   "E4: HP1 + DNA LLPS",
+   "E5: multiphase protein–RNA condensates",
+   "E6: Synapsin mesoscale organization",
+   "E7: condensate β-sheet ageing",
+   "E8: KRAS–RAF nanoclusters",
+   "E9: measles NTAIL"
+  ],
+  "labels89": [
+   "Mpipi-Helix",
+   "Pertactin→EspP"
+  ],
+  "silver91": [
+   "Mpipi-Helix",
+   "Pertactin→EspP"
+  ]
+ },
+ "dev13": [
+  {
+   "case": 1,
+   "label": "Mpipi-Helix (JACS 2026)",
+   "doi": "10.1021/jacs.6c01403"
+  },
+  {
+   "case": 2,
+   "label": "Thermoresponsive IDP (Protein Sci 2025)",
+   "doi": "10.1002/pro.70284"
+  },
+  {
+   "case": 3,
+   "label": "IDP crowded conditions (Protein Sci 2025)",
+   "doi": "10.1002/pro.70232"
+  },
+  {
+   "case": 4,
+   "label": "Enzyme clustering CoQ biosynthesis (Nat Commun 2026)",
+   "doi": "10.1038/s41467-026-74806-2"
+  },
+  {
+   "case": 5,
+   "label": "Cofactor condensate sMACs (bioRxiv 2026)",
+   "doi": "10.64898/2026.04.24.720695"
+  },
+  {
+   "case": 6,
+   "label": "Protein-RNA vesicles (JACS Au 2026)",
+   "doi": "10.1021/jacsau.6c00322"
+  },
+  {
+   "case": 7,
+   "label": "Synapsin aggregation (bioRxiv 2026)",
+   "doi": "10.64898/2026.08.16.745062"
+  },
+  {
+   "case": 8,
+   "label": "Condensate ageing (bioRxiv 2026, corrected DOI)",
+   "doi": "10.64898/2026.03.05.709844"
+  },
+  {
+   "case": 9,
+   "label": "Protein-DNA structure-sequence (eLife 2025)",
+   "doi": "10.7554/elife.105565"
+  },
+  {
+   "case": 9,
+   "label": "Protein-DNA structure-sequence (eLife 2025)",
+   "doi": "10.1101/2024.05.26.595895"
+  },
+  {
+   "case": 10,
+   "label": "SIRAH glycosylation (JCTC 2024)",
+   "doi": "10.1021/acs.jctc.3c00783"
+  },
+  {
+   "case": 11,
+   "label": "Pertactin 2026 preprint",
+   "doi": "10.64898/2026.08.22.746429"
+  },
+  {
+   "case": 11,
+   "label": "EspP CG 2021",
+   "doi": "10.1016/j.bpj.2020.11.1310"
+  },
+  {
+   "case": 11,
+   "label": "EspP CG 2026 (BPS)",
+   "doi": "10.1016/j.bpj.2025.11.1743"
+  },
+  {
+   "case": 12,
+   "label": "EspP CG 2021",
+   "doi": "10.1016/j.bpj.2020.11.1310"
+  },
+  {
+   "case": 12,
+   "label": "EspP CG 2026 (BPS)",
+   "doi": "10.1016/j.bpj.2025.11.1743"
+  },
+  {
+   "case": 12,
+   "label": "Pertactin 2026 preprint",
+   "doi": "10.64898/2026.08.22.746429"
+  },
+  {
+   "case": 13,
+   "label": "Pertactin 2026 preprint",
+   "doi": "10.64898/2026.08.22.746429"
+  },
+  {
+   "case": 13,
+   "label": "EspP CG 2021",
+   "doi": "10.1016/j.bpj.2020.11.1310"
+  },
+  {
+   "case": 13,
+   "label": "EspP CG 2026 (BPS)",
+   "doi": "10.1016/j.bpj.2025.11.1743"
+  }
+ ],
+ "papers": [
+  {
+   "id": 1,
+   "title": "Structural basis of outer membrane biogenesis by the TamAB translocase",
+   "year": 2026,
+   "domain": "membrane",
+   "doi": "10.1038/s41467-025-67115-7",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "train557",
+     "case": "Pertactin→EspP",
+     "label": "YES",
+     "in_final_training_set": true
+    },
+    {
+     "file": "labels89",
+     "case": "Pertactin→EspP",
+     "label": "YES",
+     "in_final_training_set": false
+    },
+    {
+     "file": "silver91",
+     "case": "Pertactin→EspP",
+     "label": "YES",
+     "in_final_training_set": false
+    }
+   ],
+   "seed_of_classifier_case": "E1: TamAB",
+   "seed_case_confirmed": false,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:labels89/Pertactin→EspP,silver91/Pertactin→EspP,train557/Pertactin→EspP",
+    "seed_of_classifier_case:E1"
+   ]
+  },
+  {
+   "id": 2,
+   "title": "PIP2 modulates TRPC3 activity via TRP helix and S4-S5 linker",
+   "year": 2024,
+   "domain": "membrane",
+   "doi": "10.1038/s41467-024-49396-6",
+   "openalex_id": "W4399765826",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 905,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2024,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 971
+  },
+  {
+   "id": 3,
+   "title": "SND3 is the membrane insertase within a distinct SEC61 translocon complex",
+   "year": 2025,
+   "domain": "membrane",
+   "doi": "10.1038/s41467-025-65357-z",
+   "openalex_id": "W4415660355",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1114,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2025,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1114
+  },
+  {
+   "id": 4,
+   "title": "Structural basis for lipid-mediated activation of G protein-coupled receptor GPR55",
+   "year": 2025,
+   "domain": "membrane",
+   "doi": "10.1038/s41467-025-57204-y",
+   "openalex_id": "W4407929746",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1137,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2025,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1129
+  },
+  {
+   "id": 5,
+   "title": "Cardiolipin dynamics promote membrane remodeling by mitochondrial OPA1",
+   "year": 2025,
+   "domain": "membrane",
+   "doi": "10.1038/s41467-025-63813-4",
+   "openalex_id": "W4414630281",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1436,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2025,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1412
+  },
+  {
+   "id": 6,
+   "title": "Synthesis of lipid-linked precursors of the bacterial cell wall is governed by a feedback control mechanism in Pseudomonas aeruginosa",
+   "year": 2024,
+   "domain": "membrane",
+   "doi": "10.1038/s41564-024-01603-2",
+   "openalex_id": "W4391681169",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 972,
+   "venue": "Nature Microbiology",
+   "oa_type": "article",
+   "found_year": 2024,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 972
+  },
+  {
+   "id": 7,
+   "title": "Single-molecule tweezers decode hidden dimerization patterns of membrane proteins within lipid bilayers",
+   "year": 2025,
+   "domain": "membrane",
+   "doi": "10.1038/s41467-025-62852-1",
+   "openalex_id": "W4413094337",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1307,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2025,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1260
+  },
+  {
+   "id": 8,
+   "title": "A two-step clockwork mechanism opens a proteo-lipidic pore in PIEZO2",
+   "year": 2026,
+   "domain": "membrane",
+   "doi": "10.1038/s41589-026-02147-8",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "train557",
+     "case": "T7: PIEZO2 gating",
+     "label": "YES",
+     "in_final_training_set": true
+    },
+    {
+     "file": "train557",
+     "case": "T7: PIEZO2 gating",
+     "label": "YES",
+     "in_final_training_set": true
+    }
+   ],
+   "seed_of_classifier_case": "T7: PIEZO2 gating",
+   "seed_case_confirmed": true,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:train557/T7",
+    "seed_of_classifier_case:T7"
+   ]
+  },
+  {
+   "id": 9,
+   "title": "Conformational dynamics and membrane insertion mechanism of B4GALNT1 in ganglioside synthesis",
+   "year": 2025,
+   "domain": "membrane",
+   "doi": "10.1038/s41467-025-60593-9",
+   "openalex_id": "W4411895408",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1143,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2025,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1143
+  },
+  {
+   "id": 10,
+   "title": "TMEM63 proteins act as mechanically activated cholesterol modulated lipid scramblases contributing to membrane mechano-resilience",
+   "year": 2026,
+   "domain": "membrane",
+   "doi": "10.1038/s41467-026-68919-x",
+   "openalex_id": "W7126198019",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1332,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2026,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1332
+  },
+  {
+   "id": 11,
+   "title": "Viral fusion proteins of classes II and III recognize and reorganize complex biological membranes",
+   "year": 2025,
+   "domain": "membrane",
+   "doi": "10.1038/s42003-025-08040-9",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "test519",
+     "case": "E10: viral fusion proteins",
+     "label": "YES",
+     "in_final_training_set": false
+    },
+    {
+     "file": "test519",
+     "case": "E10: viral fusion proteins",
+     "label": "YES",
+     "in_final_training_set": false
+    }
+   ],
+   "seed_of_classifier_case": "E10: viral fusion proteins",
+   "seed_case_confirmed": true,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:test519/E10",
+    "seed_of_classifier_case:E10"
+   ]
+  },
+  {
+   "id": 12,
+   "title": "Human class B1 GPCR modulation by plasma membrane lipids",
+   "year": 2026,
+   "domain": "membrane",
+   "doi": "10.1038/s42003-025-09445-2",
+   "openalex_id": "W7118628808",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1095,
+   "venue": "Communications Biology",
+   "oa_type": "article",
+   "found_year": 2026,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1086
+  },
+  {
+   "id": 13,
+   "title": "Membrane lipids drive formation of KRAS4b-RAF1 RBDCRD nanoclusters on the membrane",
+   "year": 2024,
+   "domain": "membrane",
+   "doi": "10.1038/s42003-024-05916-0",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "test519",
+     "case": "E8: KRAS–RAF nanoclusters",
+     "label": "YES",
+     "in_final_training_set": false
+    }
+   ],
+   "seed_of_classifier_case": "E8: KRAS-RAF nanoclusters",
+   "seed_case_confirmed": false,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:test519/E8",
+    "seed_of_classifier_case:E8"
+   ]
+  },
+  {
+   "id": 14,
+   "title": "Polymyxins slow down lateral diffusion of proteins and lipopolysaccharide in the E. coli outer membrane",
+   "year": 2025,
+   "domain": "membrane",
+   "doi": "10.1038/s42003-025-09161-x",
+   "openalex_id": "W4417036702",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1148,
+   "venue": "Communications Biology",
+   "oa_type": "article",
+   "found_year": 2025,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1148
+  },
+  {
+   "id": 15,
+   "title": "Modulation of alpha-synuclein aggregation amid diverse environmental perturbation",
+   "year": 2024,
+   "domain": "idp_condensate",
+   "doi": "10.7554/elife.95180",
+   "openalex_id": "W4393375940",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1426,
+   "venue": "eLife",
+   "oa_type": "article",
+   "found_year": 2024,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1426
+  },
+  {
+   "id": 16,
+   "title": "Molecular simulations of enzymatic phosphorylation of disordered proteins and their condensates",
+   "year": 2025,
+   "domain": "idp_condensate",
+   "doi": "10.1038/s41467-025-59676-4",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "test519",
+     "case": "E3: CK1δ + TDP-43 phosphorylation",
+     "label": "YES",
+     "in_final_training_set": false
+    }
+   ],
+   "seed_of_classifier_case": "E3: CK1d + TDP-43 phosphorylation",
+   "seed_case_confirmed": false,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:test519/E3",
+    "seed_of_classifier_case:E3"
+   ]
+  },
+  {
+   "id": 17,
+   "title": "Interplay between charge distribution and DNA in shaping HP1 paralog phase separation and localization",
+   "year": 2024,
+   "domain": "idp_condensate",
+   "doi": "10.7554/elife.90820.2",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "test519",
+     "case": "E4: HP1 + DNA LLPS",
+     "label": "YES",
+     "in_final_training_set": false
+    }
+   ],
+   "seed_of_classifier_case": "E4: HP1 + DNA LLPS",
+   "seed_case_confirmed": true,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:test519/E4",
+    "seed_of_classifier_case:E4"
+   ]
+  },
+  {
+   "id": 18,
+   "title": "Simulations show increased lipid interdigitation in transmembrane coupling of protein condensates",
+   "year": 2026,
+   "domain": "idp_condensate",
+   "doi": "10.64898/2026.07.06.735898",
+   "openalex_id": "W7167911151",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1773,
+   "venue": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "oa_type": "preprint",
+   "found_year": 2026,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1773
+  },
+  {
+   "id": 19,
+   "title": "Spermine modulation of Alzheimer's Tau and Parkinson's alpha-synuclein: implications for biomolecular condensation and neurodegeneration",
+   "year": 2025,
+   "domain": "idp_condensate",
+   "doi": "10.1038/s41467-025-65426-3",
+   "openalex_id": "W4416458263",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1180,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2025,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1180
+  },
+  {
+   "id": 20,
+   "title": "Alzheimer's Abeta catalyzes Tau phase separation and aggregation via early nanocluster solubilization",
+   "year": 2026,
+   "domain": "idp_condensate",
+   "doi": "10.5281/zenodo.19124612",
+   "openalex_id": "W7164340656",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 0,
+   "venue": "Zenodo (CERN European Organization for Nuclear Research)",
+   "oa_type": "article",
+   "found_year": 2026,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 0
+  },
+  {
+   "id": 21,
+   "title": "Biomolecular condensates form spatially inhomogeneous network fluids",
+   "year": 2024,
+   "domain": "idp_condensate",
+   "doi": "10.1038/s41467-024-47602-z",
+   "openalex_id": "W4395013117",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1139,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2024,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1139
+  },
+  {
+   "id": 22,
+   "title": "Selective phase separation of transcription factors is driven by orthogonal molecular grammar",
+   "year": 2025,
+   "domain": "idp_condensate",
+   "doi": "10.1038/s41467-025-58445-7",
+   "openalex_id": "W4408999871",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1603,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2025,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 906
+  },
+  {
+   "id": 23,
+   "title": "Disordered regions of human eIF4B orchestrate a dynamic self-association landscape",
+   "year": 2024,
+   "domain": "idp_condensate",
+   "doi": "10.1038/s41467-024-53136-1",
+   "openalex_id": "W4403258930",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 1189,
+   "venue": "Nature Communications",
+   "oa_type": "article",
+   "found_year": 2024,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 1180
+  },
+  {
+   "id": 24,
+   "title": "SARS-CoV-2 membrane protein conformations induce distinct membrane curvatures",
+   "year": 2026,
+   "domain": "viral_other",
+   "doi": "10.64898/2026.07.06.736641",
+   "openalex_id": "W7167790015",
+   "resolved_by": "openalex (title ratio 1.00)",
+   "classifier_rows": [],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "abstract_chars": 2600,
+   "venue": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "oa_type": "preprint",
+   "found_year": 2026,
+   "status": "clean_for_pilot",
+   "exclusion_reasons": [],
+   "epmc_abstract_chars": 2599
+  },
+  {
+   "id": 25,
+   "title": "Structural organization of HBV pgRNA genome driven by phase separation in capsid confinement",
+   "year": 2026,
+   "domain": "viral_other",
+   "doi": "10.1038/s41467-026-69689-2",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "test519",
+     "case": "E4: HP1 + DNA LLPS",
+     "label": "YES",
+     "in_final_training_set": false
+    }
+   ],
+   "seed_of_classifier_case": "T5: HBV capsid + pgRNA",
+   "seed_case_confirmed": false,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:test519/E4",
+    "seed_of_classifier_case:T5"
+   ]
+  },
+  {
+   "id": 26,
+   "title": "Transient non-local interactions dominate the dynamics of measles virus NTAIL",
+   "year": 2025,
+   "domain": "viral_other",
+   "doi": "10.1038/s42004-025-01682-0",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "test519",
+     "case": "E9: measles NTAIL",
+     "label": "YES",
+     "in_final_training_set": false
+    },
+    {
+     "file": "test519",
+     "case": "E9: measles NTAIL",
+     "label": "YES",
+     "in_final_training_set": false
+    }
+   ],
+   "seed_of_classifier_case": "E9: measles NTAIL",
+   "seed_case_confirmed": true,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:test519/E9",
+    "seed_of_classifier_case:E9"
+   ]
+  },
+  {
+   "id": 27,
+   "title": "Molecular mechanism of parental H3/H4 recycling at a replication fork",
+   "year": 2024,
+   "domain": "viral_other",
+   "doi": "10.1038/s41467-024-53187-4",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "train557",
+     "case": "T6: H3/H4 recycling at replication fork",
+     "label": "YES",
+     "in_final_training_set": true
+    }
+   ],
+   "seed_of_classifier_case": "T6: H3/H4 recycling at replication fork",
+   "seed_case_confirmed": true,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:train557/T6",
+    "seed_of_classifier_case:T6"
+   ]
+  },
+  {
+   "id": 28,
+   "title": "Evolution of the conformational dynamics of the molecular chaperone Hsp90",
+   "year": 2024,
+   "domain": "viral_other",
+   "doi": "10.1038/s41467-024-52995-y",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "test519",
+     "case": "E2: Hsp90 dynamics",
+     "label": "YES",
+     "in_final_training_set": false
+    }
+   ],
+   "seed_of_classifier_case": "E2: Hsp90 dynamics",
+   "seed_case_confirmed": true,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:test519/E2",
+    "seed_of_classifier_case:E2"
+   ]
+  },
+  {
+   "id": 29,
+   "title": "Complete enzyme clustering enhances coenzyme Q biosynthesis via substrate channeling",
+   "year": 2026,
+   "domain": "viral_other",
+   "doi": "10.1038/s41467-026-74806-2",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "train557",
+     "case": "T8: enzyme clustering / substrate channeling",
+     "label": "YES",
+     "in_final_training_set": true
+    }
+   ],
+   "seed_of_classifier_case": "T8: enzyme clustering / substrate channeling",
+   "seed_case_confirmed": true,
+   "dev13": true,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "dev13_target",
+    "row_in_classifier_data:train557/T8",
+    "seed_of_classifier_case:T8"
+   ]
+  },
+  {
+   "id": 30,
+   "title": "Mechanistic models of asymmetric hand-over-hand translocation and nucleosome navigation by CMG helicase",
+   "year": 2025,
+   "domain": "viral_other",
+   "doi": "10.1038/s41467-025-65232-x",
+   "openalex_id": null,
+   "resolved_by": "classifier csv (title ratio 1.00)",
+   "classifier_rows": [
+    {
+     "file": "train557",
+     "case": "T6: H3/H4 recycling at replication fork",
+     "label": "YES",
+     "in_final_training_set": true
+    }
+   ],
+   "seed_of_classifier_case": null,
+   "seed_case_confirmed": null,
+   "dev13": false,
+   "status": "excluded",
+   "exclusion_reasons": [
+    "row_in_classifier_data:train557/T6"
+   ]
+  }
+ ]
+}

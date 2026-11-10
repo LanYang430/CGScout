@@ -1,0 +1,449 @@
+[
+ {
+  "case": "C11",
+  "kind": "regression",
+  "query": "I want to study pertactin passenger domain folding, could you recommend me some Coarse-grained model?",
+  "target_dois": [
+   "10.64898/2026.08.22.746429",
+   "10.1016/j.bpj.2020.11.1310",
+   "10.1016/j.bpj.2025.11.1743"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "pertactin passenger domain",
+   "scientific_objective": "folding",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "autotransporter passenger domains",
+    "anchors": [
+     "autotransporter passenger domains",
+     "beta-helix autotransporter",
+     "right-handed beta-helix",
+     "beta-helical passenger folding",
+     "repeat-rich beta-helix"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "autotransporter passenger domains",
+    "hop1_queries": [
+     "Identify other autotransporter passenger domains whose folding has been investigated."
+    ],
+    "hop2_queries": [
+     "EspP autotransporter passenger domains coarse-grained model",
+     "Pet autotransporter passenger domains coarse-grained model",
+     "pertactin autotransporter passenger domains coarse-grained model",
+     "EspPDelta1-851 autotransporter passenger domains coarse-grained model",
+     "Hbp autotransporter passenger domains coarse-grained model",
+     "BrkA autotransporter passenger domains coarse-grained model",
+     "EspP autotransporter passenger domains folding coarse-grained model",
+     "Pet autotransporter passenger domains folding coarse-grained model",
+     "pertactin autotransporter passenger domains folding coarse-grained model",
+     "EspPDelta1-851 autotransporter passenger domains folding coarse-grained model",
+     "Hbp autotransporter passenger domains folding coarse-grained model",
+     "BrkA autotransporter passenger domains folding coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "EspP",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "EspP autotransporter passenger domains"
+     },
+     {
+      "label": "Pet",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Pet autotransporter passenger domains"
+     },
+     {
+      "label": "pertactin",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "pertactin autotransporter passenger domains"
+     },
+     {
+      "label": "EspPDelta1-851",
+      "grounding": "grounded_full",
+      "type": "construct_or_variant",
+      "anchor": "EspPDelta1-851 autotransporter passenger domains"
+     },
+     {
+      "label": "Hbp",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Hbp autotransporter passenger domains"
+     },
+     {
+      "label": "BrkA",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "BrkA autotransporter passenger domains"
+     }
+    ],
+    "n_papers": 16,
+    "error": null
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 9,
+   "raw_unique_systems": [
+    "BrkA",
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp passenger",
+    "Pet",
+    "pertactin",
+    "the passenger domain of the Escherichia coli O157:H7 autotransporter EspP",
+    "wild-type EspP"
+   ],
+   "after_membership_validation": 8,
+   "kept_systems": [
+    "BrkA",
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp passenger",
+    "Pet",
+    "pertactin",
+    "the passenger domain of the Escherichia coli O157:H7 autotransporter EspP",
+    "wild-type EspP"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 6,
+   "identities_grounded": 6,
+   "grounded": [
+    [
+     "EspP",
+     "grounded_full"
+    ],
+    [
+     "Pet",
+     "grounded_full"
+    ],
+    [
+     "pertactin",
+     "grounded_full"
+    ],
+    [
+     "EspPDelta1-851",
+     "grounded_full"
+    ],
+    [
+     "Hbp",
+     "grounded_full"
+    ],
+    [
+     "BrkA",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "EspP autotransporter passenger domains coarse-grained model",
+    "Pet autotransporter passenger domains coarse-grained model",
+    "pertactin autotransporter passenger domains coarse-grained model",
+    "EspPDelta1-851 autotransporter passenger domains coarse-grained model",
+    "Hbp autotransporter passenger domains coarse-grained model",
+    "BrkA autotransporter passenger domains coarse-grained model",
+    "EspP autotransporter passenger domains folding coarse-grained model",
+    "Pet autotransporter passenger domains folding coarse-grained model",
+    "pertactin autotransporter passenger domains folding coarse-grained model",
+    "EspPDelta1-851 autotransporter passenger domains folding coarse-grained model",
+    "Hbp autotransporter passenger domains folding coarse-grained model",
+    "BrkA autotransporter passenger domains folding coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp passenger",
+    "Pet",
+    "pertactin",
+    "the passenger domain of the Escherichia coli O157:H7 autotransporter EspP",
+    "wild-type EspP"
+   ],
+   "after_validation": [
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp passenger",
+    "Pet",
+    "pertactin",
+    "the passenger domain of the Escherichia coli O157:H7 autotransporter EspP",
+    "wild-type EspP"
+   ],
+   "after_grounding": [
+    "EspP",
+    "Pet",
+    "pertactin",
+    "EspPDelta1-851",
+    "Hbp"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.1016/j.bpj.2020.11.1310",
+    "10.1016/j.bpj.2025.11.1743",
+    "10.64898/2026.08.22.746429"
+   ],
+   "found_by_3A": [],
+   "found_by_flat": [
+    "10.64898/2026.08.22.746429"
+   ],
+   "pool": {
+    "direct": 6,
+    "transfer": 13
+   }
+  },
+  "api_usage": {
+   "http_requests": 13,
+   "http_200": 13,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 130,
+   "credits_assumed_requests": 13,
+   "remaining_first": 8950,
+   "remaining_last": 8830,
+   "label": "routing_v2_C11_c11extra_1791829233",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 70.3
+ },
+ {
+  "case": "C11",
+  "kind": "regression",
+  "query": "I want to study pertactin passenger domain folding, could you recommend me some Coarse-grained model?",
+  "target_dois": [
+   "10.64898/2026.08.22.746429",
+   "10.1016/j.bpj.2020.11.1310",
+   "10.1016/j.bpj.2025.11.1743"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "pertactin passenger domain",
+   "scientific_objective": "folding of the pertactin passenger domain",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "bacterial autotransporter passenger domains",
+    "anchors": [
+     "bacterial autotransporter passengers",
+     "beta-helix protein folding",
+     "beta-solenoid folding",
+     "autotransporter passenger folding"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "bacterial autotransporter passenger domains",
+    "hop1_queries": [
+     "Identify bacterial autotransporter passenger domains whose folding behavior is relevant to understanding the folding of pertactin passenger domains."
+    ],
+    "hop2_queries": [
+     "pertactin bacterial autotransporter passenger domains coarse-grained model",
+     "EspP bacterial autotransporter passenger domains coarse-grained model",
+     "Hbp bacterial autotransporter passenger domains coarse-grained model",
+     "BrkA bacterial autotransporter passenger domains coarse-grained model",
+     "EspPDelta1-851 bacterial autotransporter passenger domains coarse-grained model",
+     "Pet bacterial autotransporter passenger domains coarse-grained model",
+     "pertactin bacterial autotransporter passenger domains folding coarse-grained model",
+     "EspP bacterial autotransporter passenger domains folding coarse-grained model",
+     "Hbp bacterial autotransporter passenger domains folding coarse-grained model",
+     "BrkA bacterial autotransporter passenger domains folding coarse-grained model",
+     "EspPDelta1-851 bacterial autotransporter passenger domains folding coarse-grained model",
+     "Pet bacterial autotransporter passenger domains folding coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "pertactin",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "pertactin bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "EspP",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "EspP bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "Hbp",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Hbp bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "BrkA",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "BrkA bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "EspPDelta1-851",
+      "grounding": "grounded_full",
+      "type": "construct_or_variant",
+      "anchor": "EspPDelta1-851 bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "Pet",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Pet bacterial autotransporter passenger domains"
+     }
+    ],
+    "n_papers": 13,
+    "error": null
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 12,
+   "raw_unique_systems": [
+    "BrkA",
+    "BrkA passenger",
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp",
+    "Hbp passenger",
+    "Pet",
+    "passenger domain of wild-type EspP",
+    "pertactin",
+    "pertactin passenger domain"
+   ],
+   "after_membership_validation": 10,
+   "kept_systems": [
+    "BrkA",
+    "BrkA passenger",
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp",
+    "Hbp passenger",
+    "Pet",
+    "passenger domain of wild-type EspP",
+    "pertactin",
+    "pertactin passenger domain"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 6,
+   "identities_grounded": 6,
+   "grounded": [
+    [
+     "pertactin",
+     "grounded_full"
+    ],
+    [
+     "EspP",
+     "grounded_full"
+    ],
+    [
+     "Hbp",
+     "grounded_full"
+    ],
+    [
+     "BrkA",
+     "grounded_full"
+    ],
+    [
+     "EspPDelta1-851",
+     "grounded_full"
+    ],
+    [
+     "Pet",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "pertactin bacterial autotransporter passenger domains coarse-grained model",
+    "EspP bacterial autotransporter passenger domains coarse-grained model",
+    "Hbp bacterial autotransporter passenger domains coarse-grained model",
+    "BrkA bacterial autotransporter passenger domains coarse-grained model",
+    "EspPDelta1-851 bacterial autotransporter passenger domains coarse-grained model",
+    "Pet bacterial autotransporter passenger domains coarse-grained model",
+    "pertactin bacterial autotransporter passenger domains folding coarse-grained model",
+    "EspP bacterial autotransporter passenger domains folding coarse-grained model",
+    "Hbp bacterial autotransporter passenger domains folding coarse-grained model",
+    "BrkA bacterial autotransporter passenger domains folding coarse-grained model",
+    "EspPDelta1-851 bacterial autotransporter passenger domains folding coarse-grained model",
+    "Pet bacterial autotransporter passenger domains folding coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp",
+    "Hbp passenger",
+    "Pet",
+    "passenger domain of wild-type EspP",
+    "pertactin",
+    "pertactin passenger domain"
+   ],
+   "after_validation": [
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp",
+    "Hbp passenger",
+    "Pet",
+    "passenger domain of wild-type EspP",
+    "pertactin",
+    "pertactin passenger domain"
+   ],
+   "after_grounding": [
+    "pertactin",
+    "EspP",
+    "Hbp",
+    "EspPDelta1-851",
+    "Pet"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.64898/2026.08.22.746429"
+   ],
+   "found_by_3A": [],
+   "found_by_flat": [
+    "10.64898/2026.08.22.746429"
+   ],
+   "pool": {
+    "direct": 6,
+    "transfer": 10
+   }
+  },
+  "api_usage": {
+   "http_requests": 2,
+   "http_200": 2,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 20,
+   "credits_assumed_requests": 2,
+   "remaining_first": 8820,
+   "remaining_last": 8810,
+   "label": "routing_v2_C11_c11extra_1791829304",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 62.1
+ }
+]

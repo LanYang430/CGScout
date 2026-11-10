@@ -1,17 +1,14 @@
 """Pure unit tests for related_system_discovery deterministic grounding/merge.
 No LLM, no network -- search_fn and extract_fn are fakes.
 """
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
 
-from related_system_discovery import (  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import (  # noqa: E402
     build_discovery_queries,
     discover_related_systems,
 )
-from transfer_entity_extraction import SystemExtraction, SystemMention  # noqa: E402
-from beam_agent.models import Paper  # noqa: E402
+from cgscout.retrieval.related_systems.extraction import SystemExtraction, SystemMention  # noqa: E402
+from cgscout.models import Paper  # noqa: E402
 
 
 def _paper(title, abstract="", doi=None, year=2020):

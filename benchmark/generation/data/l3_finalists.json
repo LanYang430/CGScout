@@ -1,0 +1,288 @@
+[
+ {
+  "n": "A",
+  "source_seed_X": {
+   "title": "Modeling DNA Opening in the Eukaryotic Transcription Initiation Complexes via Coarse-Grained Models",
+   "doi": "10.3389/fmolb.2021.772486",
+   "title_ratio": 1.0,
+   "found_title": "Modeling DNA Opening in the Eukaryotic Transcription Initiation Complexes via Coarse-Grained Models",
+   "doi_matches_claim": true,
+   "year": 2021,
+   "venue": "Frontiers in Molecular Biosciences",
+   "abstract_chars": 2606,
+   "overlap": []
+  },
+  "target_system_Y": "Sulfolobus RNAP",
+  "claimed_axis": "",
+  "transfer": {
+   "target_objective": "Model the structural pathway, intermediates, and sequence-dependent dynamics of promoter DNA opening in the Sulfolobus RNAP transcription-initiation complex.",
+   "transfer_axis": "close_structural_homology",
+   "transferable_feature": "Multiscale CG/all-atom modeling of RNAP–promoter complexes to characterize DNA-bubble formation, transient opening intermediates, and gating by conserved RNAP fork or clamp-like structural elements.",
+   "reason_seed_is_useful_for_Y": "Sulfolobus RNAP shares the conserved multisubunit RNAP architecture and transcription-initiation function with eukaryotic Pol II, so the seed provides a relevant strategy for building and sampling closed-to-open promoter complexes. Its identification of kinetic bottlenecks and protein–non-template-DNA contacts could motivate tests of analogous gating mechanisms in archaeal RNAP.",
+   "confidence": "medium",
+   "caveat": "The yeast Pol II initiation complex includes eukaryote-specific factors and structural elements, while Sulfolobus promoter recognition, initiation factors, RNAP subunits, and DNA sequences differ; the reported fork-loop mechanism and any CG interaction parameters therefore cannot be transferred directly without archaeal structural data and reparameterization."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained model simulation of Sulfolobus RNAP",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "Sulfolobus RNAP molecular dynamics simulation mechanism",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "Sulfolobus RNAP coarse-grained",
+    "n_results": 6
+   },
+   {
+    "mode": "semantic",
+    "query": "archaeal RNA polymerase promoter opening molecular dynamics simulation",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "archaeal RNA polymerase coarse-grained",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "Sulfolobus RNA polymerase simulation",
+    "n_results": 20
+   }
+  ],
+  "n_unique_papers_judged": 90,
+  "direct_CG_hits_for_Y": [],
+  "verified_no_direct": true,
+  "nearest_papers": [
+   [
+    2015,
+    "Structure of an RNA polymerase II preinitiation complex"
+   ],
+   [
+    2011,
+    "Clamping the clamp of RNA polymerase"
+   ],
+   [
+    2011,
+    "Mass Spectrometry Reveals Stable Modules in holo and apo RNA Polymerases I and I"
+   ],
+   [
+    2013,
+    "Multiscale Simulation of mRNA Synthesis by RNA Polymerase II"
+   ],
+   [
+    2009,
+    "Structure-Function Relationships in Miscoding by Sulfolobus solfataricus DNA Pol"
+   ],
+   [
+    2008,
+    "Versatility of Y-family Sulfolobus solfataricus DNA Polymerase Dpo4 in Translesi"
+   ],
+   [
+    2012,
+    "Structural and functional analyses of the interaction of archaeal RNA polymerase"
+   ],
+   [
+    2009,
+    "Acidianus, Sulfolobus and Metallosphaera surface layers: structure, composition "
+   ]
+  ]
+ },
+ {
+  "n": "B",
+  "source_seed_X": {
+   "title": "Validation of a Coarse-Grained Martini 3 Model for Molecular Oxygen",
+   "doi": "10.1021/acs.jctc.4c01348",
+   "title_ratio": 1.0,
+   "found_title": "Validation of a Coarse-Grained Martini 3 Model for Molecular Oxygen",
+   "doi_matches_claim": true,
+   "year": 2024,
+   "venue": "Journal of Chemical Theory and Computation",
+   "abstract_chars": 1660,
+   "overlap": []
+  },
+  "target_system_Y": "carbon monoxide",
+  "claimed_axis": "",
+  "transfer": {
+   "target_objective": "Develop and validate a coarse-grained carbon monoxide model that reproduces its diffusion in relevant phases and permeation across lipid membranes.",
+   "transfer_axis": "chemistry_representation",
+   "transferable_feature": "A neutral, small-molecule coarse-grained representation calibrated and tested against phase partitioning, diffusivity, and membrane permeability.",
+   "reason_seed_is_useful_for_Y": "The seed provides a directly relevant Martini 3 workflow for selecting and validating a CG model of a small respiratory gas, including membrane partitioning, diffusion, and permeation benchmarks. These methods and validation criteria could guide carbon monoxide modeling, although the oxygen bead parameters should not be transferred without reparameterization.",
+   "confidence": "medium",
+   "caveat": "Carbon monoxide has different size, quadrupole/dipole character, solubility, and membrane interactions from molecular oxygen; treating it as the same TC3 bead could give inaccurate diffusion and permeability, and the abstract does not establish transferability to CO."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained model simulation of carbon monoxide",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "carbon monoxide molecular dynamics simulation mechanism",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "carbon monoxide coarse-grained",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "carbon monoxide permeation through lipid membrane coarse-grained Martini",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "carbon monoxide Martini",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "carbon monoxide membrane coarse-grained",
+    "n_results": 20
+   }
+  ],
+  "n_unique_papers_judged": 117,
+  "direct_CG_hits_for_Y": [
+   {
+    "title": "Exploring gas permeability of lipid membranes using coarse-grained molecular dynamics",
+    "doi": "10.1080/08927020902763839",
+    "year": 2009,
+    "reason": "This paper explicitly uses coarse-grained molecular dynamics of a DPPC lipid bilayer to study gas permeability and thus directly models gas diffusion across a lipid membrane, including the target gas if evaluated in the reported gas set."
+   }
+  ],
+  "verified_no_direct": false,
+  "nearest_papers": [
+   [
+    2004,
+    "Polyketones as alternating copolymers of carbon monoxide"
+   ],
+   [
+    2022,
+    "Theranostic Trigger‐Responsive Carbon Monoxide‐Generating Microbubbles"
+   ],
+   [
+    2002,
+    "Carbon Monoxide in the Type Ic Supernova 2000ew"
+   ],
+   [
+    2008,
+    "Electron cooling by carbon monoxide in the atmospheres of Mars and Venus"
+   ],
+   [
+    2024,
+    "Validation of a Coarse-Grained Martini 3 Model for Molecular Oxygen"
+   ],
+   [
+    2020,
+    "Synthesis of Hopcalite catalysts by various methods for improved catalytic conve"
+   ],
+   [
+    2016,
+    "CONTRIBUTIONS TOWARDS THE THEORY OF THE BOTTOM-UP COARSE-GRAINING OF COMPLEX MOL"
+   ],
+   [
+    2013,
+    "Coarse-grained Modeling of Protein Dynamics using Elastic Network Models"
+   ]
+  ]
+ },
+ {
+  "n": "C",
+  "source_seed_X": {
+   "title": "Membrane Constriction by Dynamin through GTP-Driven Conformational Changes from Coarse-Grained Molecular Dynamics Simulations",
+   "doi": "10.1021/acs.jpclett.5c02867",
+   "title_ratio": 1.0,
+   "found_title": "Membrane Constriction by Dynamin through GTP-Driven Conformational Changes from Coarse-Grained Molecular Dynamics Simulations",
+   "doi_matches_claim": true,
+   "year": 2025,
+   "venue": "The Journal of Physical Chemistry Letters",
+   "abstract_chars": 1260,
+   "overlap": []
+  },
+  "target_system_Y": "yeast Mgm1",
+  "claimed_axis": "",
+  "transfer": {
+   "target_objective": "Determine how nucleotide-dependent assembly and conformational changes of yeast Mgm1 drive mitochondrial membrane remodeling.",
+   "transfer_axis": "family_function",
+   "transferable_feature": "Coarse-grained modeling of dynamin-family GTPase oligomers on a membrane, including nucleotide-state-dependent conformational changes coupled to membrane deformation.",
+   "reason_seed_is_useful_for_Y": "Mgm1 is a dynamin-related membrane-remodeling GTPase, so the seed provides a relevant CG framework for representing oligomeric rings or assemblies on curved membranes and linking GTP/GDP states to membrane mechanics. Its pressure-coupled tubular-membrane setup may be adaptable for testing Mgm1-driven constriction or remodeling.",
+   "confidence": "medium",
+   "caveat": "Mgm1 may differ substantially from dynamin in oligomeric architecture, membrane topology, mitochondrial localization, and the molecular mechanism of remodeling; the seed's specific dynamin conformational changes and ring behavior cannot be assumed to apply directly."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained model simulation of yeast Mgm1",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "yeast Mgm1 molecular dynamics simulation mechanism",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "yeast Mgm1 coarse-grained",
+    "n_results": 10
+   },
+   {
+    "mode": "semantic",
+    "query": "Mgm1 OPA1 mitochondrial dynamin-like GTPase molecular dynamics membrane remodeling",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "Mgm1 coarse-grained",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "Mgm1 molecular dynamics",
+    "n_results": 20
+   }
+  ],
+  "n_unique_papers_judged": 87,
+  "direct_CG_hits_for_Y": [],
+  "verified_no_direct": true,
+  "nearest_papers": [
+   [
+    2024,
+    "Lys716 in the transmembrane domain of yeast mitofusin Fzo1 modulates anchoring a"
+   ],
+   [
+    2026,
+    "Multiscale Modelling Reveals Accelerating Community Outbreak Risks of Measles in"
+   ],
+   [
+    2013,
+    "Clustering of Ras on Membrane Surfaces Independent of Lipid Anchor Effects"
+   ],
+   [
+    1974,
+    "Physico-chemical studies on pectins."
+   ],
+   [
+    2014,
+    "Understanding the Molecular Mechanism of Mgm1 Function in Mitochondrial Dynamics"
+   ],
+   [
+    2003,
+    "Processing of Mgm1 by the Rhomboid-type Protease Pcp1 Is Required for Maintenanc"
+   ],
+   [
+    2004,
+    "Loss of the Intermembrane Space Protein Mgm1/OPA1 Induces Swelling and Localized"
+   ],
+   [
+    2020,
+    "Structural analysis of a trimeric assembly of the mitochondrial dynamin-like GTP"
+   ]
+  ]
+ }
+]

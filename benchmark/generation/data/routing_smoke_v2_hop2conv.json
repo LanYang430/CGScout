@@ -1,0 +1,1480 @@
+[
+ {
+  "case": "Q15",
+  "kind": "L3",
+  "query": "I want to model Arabidopsis MSL10's tension-dependent gating and predict how bilayer stress drives nonconducting-to-conducting transitions; which CG approaches could capture this?",
+  "target_dois": [
+   "10.1021/jp9053567"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "Arabidopsis MSL10",
+   "scientific_objective": "Model tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "MscS-like mechanosensitive ion channel",
+    "anchors": [
+     "MscS-like channels",
+     "heptameric mechanosensitive channels",
+     "three-transmembrane mechanosensitive channels",
+     "cytoplasmic cage channel gating",
+     "MscS-like channel opening"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "bilayer-tension-gated mechanosensitive ion channel",
+    "anchors": [
+     "membrane-tension gating",
+     "bilayer stress mechanosensitivity",
+     "tension-driven channel opening",
+     "mechanosensitive channel transitions",
+     "force transmission channel gating"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "MscS-like mechanosensitive ion channel",
+    "hop1_queries": [
+     "Identify other MscS-like mechanosensitive ion channels whose tension-dependent gating can be modeled to predict bilayer-stress-driven transitions from nonconducting to conducting states."
+    ],
+    "hop2_queries": [
+     "mechanosensitive channel MscS tension-dependent gating coarse-grained model",
+     "mechanosensitive channel MscS small conductance coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "MscS",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "MscS MscS-like mechanosensitive ion channel"
+     }
+    ],
+    "n_papers": 22,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "MscS",
+      "search_anchor": "mechanosensitive channel MscS",
+      "core_process": "tension-dependent gating",
+      "stable_descriptor": "small conductance",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "mechanosensitive channel MscS tension-dependent gating coarse-grained model",
+        "n_results": 20,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "mechanosensitive channel MscS small conductance coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 22
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 2,
+   "raw_unique_systems": [
+    "MscS"
+   ],
+   "after_membership_validation": 1,
+   "kept_systems": [
+    "MscS"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 1,
+   "identities_grounded": 1,
+   "grounded": [
+    [
+     "MscS",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "mechanosensitive channel MscS tension-dependent gating coarse-grained model",
+    "mechanosensitive channel MscS small conductance coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "MscS"
+   ],
+   "after_validation": [
+    "MscS"
+   ],
+   "after_grounding": [
+    "MscS"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.1021/jp9053567"
+   ],
+   "found_by_3A": [
+    "10.1021/jp9053567"
+   ],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 42,
+    "transfer": 42
+   }
+  },
+  "api_usage": {
+   "http_requests": 7,
+   "http_200": 7,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 70,
+   "credits_assumed_requests": 7,
+   "remaining_first": 9980,
+   "remaining_last": 9920,
+   "label": "routing_v2_Q15_hop2conv_1791854370",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 58.2
+ },
+ {
+  "case": "Q16",
+  "kind": "L3",
+  "query": "I need a multiscale simulation of the chloroplast 70S ribosome to determine how nucleic-acid and protein interactions drive rearrangements despite large size. Which CG models or approaches could capture it?",
+  "target_dois": [
+   "10.1021/ja2028487"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "chloroplast 70S ribosome",
+   "scientific_objective": "Develop a multiscale simulation approach to determine how nucleic-acid–protein interactions drive conformational rearrangements in the large chloroplast 70S ribosome.",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "bacterial-type 70S ribosome",
+    "anchors": [
+     "bacterial-type 70S ribosome",
+     "ribosome coarse-grained model",
+     "ribosomal RNA protein contacts",
+     "ribosome conformational dynamics",
+     "ribosomal subunit motions"
+    ]
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "ribosomal RNA–protein complexes",
+    "anchors": [
+     "ribosomal RNA protein complexes",
+     "RNA protein electrostatics",
+     "rRNA protein interactions",
+     "RNA coarse-grained electrostatics",
+     "ribosome ion-mediated interactions"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "medium",
+    "scientific_class": "ribosomal conformational dynamics",
+    "anchors": [
+     "ribosomal conformational dynamics",
+     "ribosome collective motions",
+     "rRNA protein contact remodeling",
+     "ribosome large-scale rearrangements"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "bacterial-type 70S ribosome",
+    "hop1_queries": [
+     "Identify other bacterial-type 70S ribosomes in which multiscale simulations can determine how nucleic-acid–protein interactions drive conformational rearrangements."
+    ],
+    "hop2_queries": [
+     "70S Ribosome-tRNA Complex conformational rearrangements coarse-grained model",
+     "E. coli 70S Ribosome conformational rearrangements coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "70S Ribosome-tRNA Complex",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "70S Ribosome-tRNA Complex bacterial-type 70S ribosome"
+     },
+     {
+      "label": "E. coli",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "E. coli bacterial-type 70S ribosome"
+     },
+     {
+      "label": "E. coli ribosomes",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "E. coli ribosomes bacterial-type 70S ribosome"
+     },
+     {
+      "label": "Escherichia coli",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "Escherichia coli bacterial-type 70S ribosome"
+     },
+     {
+      "label": "free 70 S ribosome (tight couple)",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "free 70 S ribosome (tight couple) bacterial-type 70S ribosome"
+     }
+    ],
+    "n_papers": 40,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "70S Ribosome-tRNA Complex",
+      "search_anchor": "70S Ribosome-tRNA Complex",
+      "core_process": "conformational rearrangements",
+      "stable_descriptor": "",
+      "flags": [
+       "descriptor_redundant_with_anchor"
+      ],
+      "queries": [
+       {
+        "role": "A",
+        "query": "70S Ribosome-tRNA Complex conformational rearrangements coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 20
+     },
+     {
+      "label": "E. coli",
+      "search_anchor": "E. coli 70S Ribosome",
+      "core_process": "conformational rearrangements",
+      "stable_descriptor": "",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "E. coli 70S Ribosome conformational rearrangements coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 20
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 8,
+   "raw_unique_systems": [
+    "70S Ribosome-tRNA Complex",
+    "70S ribosome",
+    "E. coli 70S Ribosome",
+    "E. coli ribosomes",
+    "E.coli ribosome",
+    "Escherichia coli 70S ribosome",
+    "free 70 S ribosome (tight couple)"
+   ],
+   "after_membership_validation": 7,
+   "kept_systems": [
+    "70S Ribosome-tRNA Complex",
+    "70S ribosome",
+    "E. coli 70S Ribosome",
+    "E. coli ribosomes",
+    "E.coli ribosome",
+    "Escherichia coli 70S ribosome",
+    "free 70 S ribosome (tight couple)"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 5,
+   "identities_grounded": 5,
+   "grounded": [
+    [
+     "70S Ribosome-tRNA Complex",
+     "grounded_contextual"
+    ],
+    [
+     "E. coli",
+     "grounded_full"
+    ],
+    [
+     "E. coli ribosomes",
+     "grounded_contextual"
+    ],
+    [
+     "Escherichia coli",
+     "grounded_contextual"
+    ],
+    [
+     "free 70 S ribosome (tight couple)",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "70S Ribosome-tRNA Complex conformational rearrangements coarse-grained model",
+    "E. coli 70S Ribosome conformational rearrangements coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "70S Ribosome-tRNA Complex",
+    "70S ribosome",
+    "E. coli 70S Ribosome",
+    "E. coli ribosomes",
+    "E.coli ribosome",
+    "Escherichia coli 70S ribosome"
+   ],
+   "after_validation": [
+    "70S Ribosome-tRNA Complex",
+    "70S ribosome",
+    "E. coli 70S Ribosome",
+    "E. coli ribosomes",
+    "E.coli ribosome",
+    "Escherichia coli 70S ribosome"
+   ],
+   "after_grounding": [
+    "70S Ribosome-tRNA Complex",
+    "E. coli ribosomes"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [],
+   "found_by_3A": [
+    "10.1021/ja2028487"
+   ],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 20,
+    "transfer": 70
+   }
+  },
+  "api_usage": {
+   "http_requests": 12,
+   "http_200": 12,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 120,
+   "credits_assumed_requests": 12,
+   "remaining_first": 9910,
+   "remaining_last": 9800,
+   "label": "routing_v2_Q16_hop2conv_1791854428",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 85.9
+ },
+ {
+  "case": "Q18",
+  "kind": "L3",
+  "query": "I want to model the archaeal archaellum, a rotating helical motility filament, to explain torque-driven bending-twisting transitions between global conformations; which CG approaches could capture it?",
+  "target_dois": [
+   "10.1529/biophysj.106.093443"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "archaeal archaellum, specifically the rotating helical motility filament",
+   "scientific_objective": "Model torque-driven bending–twisting transitions between global conformations during rotation",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "polymorphic helical protein filament",
+    "anchors": [
+     "polymorphic helical filaments",
+     "helical filament polymorphism",
+     "protein filament torsional mechanics",
+     "helical filament bending twisting",
+     "helical polymorph transitions"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "rotary helical motility filament",
+    "anchors": [
+     "torque-driven helical filaments",
+     "rotary filament mechanics",
+     "torque-induced polymorphism",
+     "torsional loading protein filaments",
+     "rotational bending twisting"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "polymorphic helical protein filament",
+    "hop1_queries": [
+     "Identify polymorphic helical protein filaments whose structural dynamics can inform models of torque-driven bending–twisting transitions between global conformations during rotation."
+    ],
+    "hop2_queries": [
+     "bacterial flagellar filament bending–twisting transitions coarse-grained model",
+     "bacterial flagellar filament flagellin coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "bacterial flagellar filament",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "bacterial flagellar filament polymorphic helical protein filament"
+     },
+     {
+      "label": "intermediate",
+      "grounding": "insufficient",
+      "type": "protein_family_or_class",
+      "anchor": null
+     },
+     {
+      "label": "spasminlike proteins",
+      "grounding": "insufficient",
+      "type": "protein_family_or_class",
+      "anchor": null
+     }
+    ],
+    "n_papers": 35,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "bacterial flagellar filament",
+      "search_anchor": "bacterial flagellar filament",
+      "core_process": "bending–twisting transitions",
+      "stable_descriptor": "flagellin",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "bacterial flagellar filament bending–twisting transitions coarse-grained model",
+        "n_results": 19,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "bacterial flagellar filament flagellin coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 35
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 3,
+   "raw_unique_systems": [
+    "bacterial flagellar filament",
+    "intermediate filaments",
+    "spasminlike proteins"
+   ],
+   "after_membership_validation": 3,
+   "kept_systems": [
+    "bacterial flagellar filament",
+    "intermediate filaments",
+    "spasminlike proteins"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 3,
+   "identities_grounded": 1,
+   "grounded": [
+    [
+     "bacterial flagellar filament",
+     "grounded_contextual"
+    ],
+    [
+     "intermediate",
+     "insufficient"
+    ],
+    [
+     "spasminlike proteins",
+     "insufficient"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "bacterial flagellar filament bending–twisting transitions coarse-grained model",
+    "bacterial flagellar filament flagellin coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "bacterial flagellar filament"
+   ],
+   "after_validation": [
+    "bacterial flagellar filament"
+   ],
+   "after_grounding": [
+    "bacterial flagellar filament"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [],
+   "found_by_3A": [],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 29,
+    "transfer": 61
+   }
+  },
+  "api_usage": {
+   "http_requests": 10,
+   "http_200": 10,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 100,
+   "credits_assumed_requests": 10,
+   "remaining_first": 9790,
+   "remaining_last": 9700,
+   "label": "routing_v2_Q18_hop2conv_1791854514",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 55.1
+ },
+ {
+  "case": "Q19",
+  "kind": "L3",
+  "query": "I want to simulate Sulfolobus RNA polymerase with TBP- and TFB-type factors to determine how promoter DNA opening evolves while preserving sequence specificity. Which CG approaches could capture it?",
+  "target_dois": [
+   "10.3389/fmolb.2021.772486"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "Sulfolobus RNA polymerase with TBP- and TFB-type factors and promoter DNA",
+   "scientific_objective": "Determine how promoter DNA opening evolves while preserving sequence-specific recognition in the transcription initiation complex.",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "archaeal promoter-recognition transcription initiation complexes",
+    "anchors": [
+     "archaeal transcription initiation",
+     "archaeal promoter recognition",
+     "TBP promoter bending",
+     "TFB promoter opening",
+     "archaeal promoter melting"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "sequence-specific transcription initiation complexes",
+    "anchors": [
+     "promoter DNA opening",
+     "sequence-specific promoter recognition",
+     "transcription bubble formation",
+     "recognition-coupled DNA melting",
+     "transcription initiation complex dynamics"
+    ]
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "sequence-specific protein–promoter DNA recognition complexes",
+    "anchors": [
+     "sequence-dependent promoter mechanics",
+     "protein–DNA electrostatics",
+     "sequence-specific promoter binding",
+     "DNA bendability and melting",
+     "promoter base-pair opening"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "archaeal promoter-recognition transcription initiation complexes",
+    "hop1_queries": [
+     "Identify archaeal promoter-recognition transcription initiation complexes that illuminate how promoter DNA opening evolves while preserving sequence-specific recognition."
+    ],
+    "hop2_queries": [
+     "archaeal open complex promoter DNA opening coarse-grained model",
+     "TBP-TFB-DNA promoter DNA opening coarse-grained model",
+     "TBP-TFB-DNA promoter DNA coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "complete open complex (OC)",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "complete open complex (OC) archaeal promoter-recognition transcription initiation complexes"
+     },
+     {
+      "label": "TBP-TFB-DNA",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "TBP-TFB-DNA archaeal promoter-recognition transcription initiation complexes"
+     }
+    ],
+    "n_papers": 25,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "complete open complex (OC)",
+      "search_anchor": "archaeal open complex",
+      "core_process": "promoter DNA opening",
+      "stable_descriptor": "",
+      "flags": [
+       "descriptor_length"
+      ],
+      "queries": [
+       {
+        "role": "A",
+        "query": "archaeal open complex promoter DNA opening coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 20
+     },
+     {
+      "label": "TBP-TFB-DNA",
+      "search_anchor": "TBP-TFB-DNA",
+      "core_process": "promoter DNA opening",
+      "stable_descriptor": "promoter DNA",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "TBP-TFB-DNA promoter DNA opening coarse-grained model",
+        "n_results": 2,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "TBP-TFB-DNA promoter DNA coarse-grained model",
+        "n_results": 5,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 5
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 2,
+   "raw_unique_systems": [
+    "TBP-TFB-DNA",
+    "complete open complex (OC)"
+   ],
+   "after_membership_validation": 2,
+   "kept_systems": [
+    "TBP-TFB-DNA",
+    "complete open complex (OC)"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 2,
+   "identities_grounded": 2,
+   "grounded": [
+    [
+     "complete open complex (OC)",
+     "grounded_full"
+    ],
+    [
+     "TBP-TFB-DNA",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "archaeal open complex promoter DNA opening coarse-grained model",
+    "TBP-TFB-DNA promoter DNA opening coarse-grained model",
+    "TBP-TFB-DNA promoter DNA coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "TBP-TFB-DNA"
+   ],
+   "after_validation": [
+    "TBP-TFB-DNA"
+   ],
+   "after_grounding": [
+    "TBP-TFB-DNA"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [],
+   "found_by_3A": [
+    "10.3389/fmolb.2021.772486"
+   ],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 6,
+    "transfer": 63
+   }
+  },
+  "api_usage": {
+   "http_requests": 13,
+   "http_200": 13,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 130,
+   "credits_assumed_requests": 13,
+   "remaining_first": 9690,
+   "remaining_last": 9570,
+   "label": "routing_v2_Q19_hop2conv_1791854569",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 72.4
+ },
+ {
+  "case": "Q20",
+  "kind": "L3",
+  "query": "For yeast Mgm1, I need to determine how nucleotide-dependent assembly of a membrane-bound oligomer generates constriction and possible topological remodeling. Which CG models could capture this?",
+  "target_dois": [
+   "10.1021/acs.jpclett.5c02867"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "yeast Mgm1 in a membrane-bound oligomer",
+   "scientific_objective": "Determine how nucleotide-dependent oligomer assembly generates membrane constriction and possible topological remodeling, and identify coarse-grained models capable of capturing these mechanisms.",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "dynamin-related membrane-remodeling GTPase oligomers",
+    "anchors": [
+     "dynamin-related oligomers",
+     "helical membrane collars",
+     "dynamin-like spirals",
+     "membrane constriction oligomers",
+     "GTPase membrane remodeling"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "nucleotide-regulated membrane-remodeling protein assemblies",
+    "anchors": [
+     "nucleotide-dependent oligomer assembly",
+     "GTPase membrane constriction",
+     "nucleotide-regulated membrane remodeling",
+     "protein assembly membrane fission",
+     "oligomerization-driven membrane curvature"
+    ]
+   },
+   {
+    "basis": "environment_context",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "membrane-bound helical remodeling protein oligomers",
+    "anchors": [
+     "membrane-bound helical oligomers",
+     "protein-induced membrane curvature",
+     "membrane neck constriction",
+     "protein-mediated membrane remodeling",
+     "membrane topology transition"
+    ]
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "dynamin-related GTPase assemblies",
+    "anchors": [
+     "dynamin-related GTPase assembly",
+     "GTP GDP membrane remodeling",
+     "nucleotide-state-dependent oligomerization",
+     "GTPase conformational switching",
+     "nucleotide-dependent membrane binding"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "dynamin-related membrane-remodeling GTPase oligomers",
+    "hop1_queries": [
+     "Find studies of other dynamin-related membrane-remodeling GTPase oligomers in which nucleotide-dependent oligomer assembly generates membrane constriction and possible topological remodeling, including coarse-grained models capable of capturing these mechanisms."
+    ],
+    "hop2_queries": [
+     "dynamin oligomer assembly coarse-grained model",
+     "dynamin large GTPase coarse-grained model",
+     "dynamin oligomer oligomer assembly coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "dynamin",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "dynamin dynamin-related membrane-remodeling GTPase oligomers"
+     },
+     {
+      "label": "dynamin oligomer",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "dynamin oligomer dynamin-related membrane-remodeling GTPase oligomers"
+     },
+     {
+      "label": "dynamin tetramer",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "dynamin tetramer dynamin-related membrane-remodeling GTPase oligomers"
+     },
+     {
+      "label": "dynamin polymer",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "dynamin polymer dynamin-related membrane-remodeling GTPase oligomers"
+     }
+    ],
+    "n_papers": 46,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "dynamin",
+      "search_anchor": "dynamin",
+      "core_process": "oligomer assembly",
+      "stable_descriptor": "large GTPase",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "dynamin oligomer assembly coarse-grained model",
+        "n_results": 19,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "dynamin large GTPase coarse-grained model",
+        "n_results": 19,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 27
+     },
+     {
+      "label": "dynamin oligomer",
+      "search_anchor": "dynamin oligomer",
+      "core_process": "oligomer assembly",
+      "stable_descriptor": "",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "dynamin oligomer oligomer assembly coarse-grained model",
+        "n_results": 19,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 19
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 7,
+   "raw_unique_systems": [
+    "Dynamin",
+    "dynamin",
+    "dynamin oligomer",
+    "dynamin polymer",
+    "dynamin tetramer"
+   ],
+   "after_membership_validation": 5,
+   "kept_systems": [
+    "Dynamin",
+    "dynamin",
+    "dynamin oligomer",
+    "dynamin polymer",
+    "dynamin tetramer"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 4,
+   "identities_grounded": 4,
+   "grounded": [
+    [
+     "dynamin",
+     "grounded_full"
+    ],
+    [
+     "dynamin oligomer",
+     "grounded_contextual"
+    ],
+    [
+     "dynamin tetramer",
+     "grounded_contextual"
+    ],
+    [
+     "dynamin polymer",
+     "grounded_contextual"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "dynamin oligomer assembly coarse-grained model",
+    "dynamin large GTPase coarse-grained model",
+    "dynamin oligomer oligomer assembly coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "Dynamin",
+    "dynamin",
+    "dynamin oligomer",
+    "dynamin polymer",
+    "dynamin tetramer"
+   ],
+   "after_validation": [
+    "Dynamin",
+    "dynamin",
+    "dynamin oligomer",
+    "dynamin polymer",
+    "dynamin tetramer"
+   ],
+   "after_grounding": [
+    "dynamin",
+    "dynamin oligomer",
+    "dynamin tetramer",
+    "dynamin polymer"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.1021/acs.jpclett.5c02867"
+   ],
+   "found_by_3A": [],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 25,
+    "transfer": 84
+   }
+  },
+  "api_usage": {
+   "http_requests": 16,
+   "http_200": 16,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 160,
+   "credits_assumed_requests": 16,
+   "remaining_first": 9560,
+   "remaining_last": 9410,
+   "label": "routing_v2_Q20_hop2conv_1791854642",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 74.8
+ },
+ {
+  "case": "C11",
+  "kind": "regression",
+  "query": "I want to study pertactin passenger domain folding, could you recommend me some Coarse-grained model?",
+  "target_dois": [
+   "10.64898/2026.08.22.746429",
+   "10.1016/j.bpj.2020.11.1310",
+   "10.1016/j.bpj.2025.11.1743"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "pertactin passenger domain",
+   "scientific_objective": "folding",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "autotransporter passenger domains with right-handed beta-helical architecture",
+    "anchors": [
+     "autotransporter passenger domains",
+     "right-handed beta-helix",
+     "beta-helical passenger folding",
+     "repetitive beta-helix architecture",
+     "beta-helix folding landscape"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "autotransporter passenger domains with right-handed beta-helical architecture",
+    "hop1_queries": [
+     "Identify other proteins with autotransporter passenger domains featuring right-handed beta-helical architecture whose folding has been investigated."
+    ],
+    "hop2_queries": [
+     "pertactin passenger domain folding coarse-grained model",
+     "pertactin passenger domain beta-helix coarse-grained model",
+     "Pet autotransporter folding coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "pertactin",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "pertactin autotransporter passenger domains with right-handed beta-helical architecture"
+     },
+     {
+      "label": "Pet",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Pet autotransporter passenger domains with right-handed beta-helical architecture"
+     }
+    ],
+    "n_papers": 11,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "pertactin",
+      "search_anchor": "pertactin passenger domain",
+      "core_process": "folding",
+      "stable_descriptor": "beta-helix",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "pertactin passenger domain folding coarse-grained model",
+        "n_results": 6,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "pertactin passenger domain beta-helix coarse-grained model",
+        "n_results": 5,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 6
+     },
+     {
+      "label": "Pet",
+      "search_anchor": "Pet autotransporter",
+      "core_process": "folding",
+      "stable_descriptor": "",
+      "flags": [
+       "descriptor_not_grounded"
+      ],
+      "queries": [
+       {
+        "role": "A",
+        "query": "Pet autotransporter folding coarse-grained model",
+        "n_results": 5,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 5
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 2,
+   "raw_unique_systems": [
+    "Pet",
+    "pertactin"
+   ],
+   "after_membership_validation": 2,
+   "kept_systems": [
+    "Pet",
+    "pertactin"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 2,
+   "identities_grounded": 2,
+   "grounded": [
+    [
+     "pertactin",
+     "grounded_full"
+    ],
+    [
+     "Pet",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "pertactin passenger domain folding coarse-grained model",
+    "pertactin passenger domain beta-helix coarse-grained model",
+    "Pet autotransporter folding coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "Pet",
+    "pertactin"
+   ],
+   "after_validation": [
+    "Pet",
+    "pertactin"
+   ],
+   "after_grounding": [
+    "pertactin",
+    "Pet"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.64898/2026.08.22.746429"
+   ],
+   "found_by_3A": [],
+   "found_by_flat": [
+    "10.64898/2026.08.22.746429"
+   ],
+   "pool": {
+    "direct": 6,
+    "transfer": 11
+   }
+  },
+  "api_usage": {
+   "http_requests": 3,
+   "http_200": 3,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 30,
+   "credits_assumed_requests": 3,
+   "remaining_first": 9400,
+   "remaining_last": 9380,
+   "label": "routing_v2_C11_hop2conv_1791854716",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 43.7
+ },
+ {
+  "case": "C12",
+  "kind": "regression",
+  "query": "I want to study EspP passenger domain folding, could you recommend me some CG models?",
+  "target_dois": [
+   "10.1016/j.bpj.2020.11.1310",
+   "10.1016/j.bpj.2025.11.1743",
+   "10.64898/2026.08.22.746429"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "EspP passenger domain",
+   "scientific_objective": "Folding of the EspP passenger domain",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "bacterial autotransporter passenger domains",
+    "anchors": [
+     "autotransporter passenger domains",
+     "beta-helical passenger domains",
+     "autotransporter beta-helix folding",
+     "elongated beta-helix proteins",
+     "passenger-domain folding"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "bacterial autotransporter passenger domains",
+    "hop1_queries": [
+     "Identify studies examining the folding of bacterial autotransporter passenger domains in other systems."
+    ],
+    "hop2_queries": [
+     "EspP autotransporter Folding of passenger domain coarse-grained model",
+     "EspP autotransporter passenger domain coarse-grained model",
+     "Hbp autotransporter Folding of passenger domain coarse-grained model",
+     "Hbp autotransporter passenger domain coarse-grained model",
+     "Hbp autotransporter coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "EspP",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "EspP bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "pertactin",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "pertactin bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "EspPDelta1-851",
+      "grounding": "grounded_full",
+      "type": "construct_or_variant",
+      "anchor": "EspPDelta1-851 bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "BrkA",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "BrkA bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "Hbp",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Hbp bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "Escherichia coli haemoglobin protease (Hbp)",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Escherichia coli haemoglobin protease (Hbp) bacterial autotransporter passenger domains"
+     },
+     {
+      "label": "Pet",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Pet bacterial autotransporter passenger domains"
+     }
+    ],
+    "n_papers": 9,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "EspP",
+      "search_anchor": "EspP autotransporter",
+      "core_process": "Folding of passenger domain",
+      "stable_descriptor": "passenger domain",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "EspP autotransporter Folding of passenger domain coarse-grained model",
+        "n_results": 6,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "EspP autotransporter passenger domain coarse-grained model",
+        "n_results": 8,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 8
+     },
+     {
+      "label": "Hbp",
+      "search_anchor": "Hbp autotransporter",
+      "core_process": "Folding of passenger domain",
+      "stable_descriptor": "passenger domain",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "Hbp autotransporter Folding of passenger domain coarse-grained model",
+        "n_results": 0,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "Hbp autotransporter passenger domain coarse-grained model",
+        "n_results": 0,
+        "error": null
+       },
+       {
+        "role": "C",
+        "query": "Hbp autotransporter coarse-grained model",
+        "n_results": 1,
+        "error": null
+       }
+      ],
+      "fallback_used": true,
+      "n_papers": 1
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 9,
+   "raw_unique_systems": [
+    "BrkA",
+    "Escherichia coli haemoglobin protease (Hbp)",
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp passenger",
+    "Pet",
+    "passenger domain of wild-type EspP",
+    "pertactin"
+   ],
+   "after_membership_validation": 8,
+   "kept_systems": [
+    "BrkA",
+    "Escherichia coli haemoglobin protease (Hbp)",
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp passenger",
+    "Pet",
+    "passenger domain of wild-type EspP",
+    "pertactin"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 7,
+   "identities_grounded": 7,
+   "grounded": [
+    [
+     "EspP",
+     "grounded_full"
+    ],
+    [
+     "pertactin",
+     "grounded_full"
+    ],
+    [
+     "EspPDelta1-851",
+     "grounded_full"
+    ],
+    [
+     "BrkA",
+     "grounded_full"
+    ],
+    [
+     "Hbp",
+     "grounded_full"
+    ],
+    [
+     "Escherichia coli haemoglobin protease (Hbp)",
+     "grounded_full"
+    ],
+    [
+     "Pet",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "EspP autotransporter Folding of passenger domain coarse-grained model",
+    "EspP autotransporter passenger domain coarse-grained model",
+    "Hbp autotransporter Folding of passenger domain coarse-grained model",
+    "Hbp autotransporter passenger domain coarse-grained model",
+    "Hbp autotransporter coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "Escherichia coli haemoglobin protease (Hbp)",
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp passenger",
+    "Pet",
+    "passenger domain of wild-type EspP",
+    "pertactin"
+   ],
+   "after_validation": [
+    "Escherichia coli haemoglobin protease (Hbp)",
+    "EspP",
+    "EspPDelta1-851",
+    "Hbp passenger",
+    "Pet",
+    "passenger domain of wild-type EspP",
+    "pertactin"
+   ],
+   "after_grounding": [
+    "EspP",
+    "pertactin",
+    "EspPDelta1-851",
+    "Hbp",
+    "Escherichia coli haemoglobin protease (Hbp)",
+    "Pet"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.1016/j.bpj.2020.11.1310",
+    "10.1016/j.bpj.2025.11.1743",
+    "10.64898/2026.08.22.746429"
+   ],
+   "found_by_3A": [],
+   "found_by_flat": [
+    "10.1016/j.bpj.2020.11.1310",
+    "10.1016/j.bpj.2025.11.1743",
+    "10.64898/2026.08.22.746429"
+   ],
+   "pool": {
+    "direct": 8,
+    "transfer": 9
+   }
+  },
+  "api_usage": {
+   "http_requests": 6,
+   "http_200": 6,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 60,
+   "credits_assumed_requests": 6,
+   "remaining_first": 9370,
+   "remaining_last": 9320,
+   "label": "routing_v2_C12_hop2conv_1791854760",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 70.6
+ }
+]

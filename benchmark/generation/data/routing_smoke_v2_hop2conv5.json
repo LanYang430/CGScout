@@ -1,0 +1,661 @@
+[
+ {
+  "case": "Q16",
+  "kind": "L3",
+  "query": "I need a multiscale simulation of the chloroplast 70S ribosome to determine how nucleic-acid and protein interactions drive rearrangements despite large size. Which CG models or approaches could capture it?",
+  "target_dois": [
+   "10.1021/ja2028487"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "chloroplast 70S ribosome",
+   "scientific_objective": "Model large-scale ribosome rearrangements driven by nucleic-acid–protein interactions using a multiscale coarse-grained simulation approach",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "bacterial-type ribosome",
+    "anchors": [
+     "bacterial-type ribosome",
+     "ribosome intersubunit rotation",
+     "ribosomal rearrangement",
+     "RNA-rich ribosome architecture"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "translational ribonucleoprotein machines",
+    "anchors": [
+     "ribosome ratcheting",
+     "intersubunit rotation",
+     "mRNA translocation",
+     "tRNA-coupled rearrangement",
+     "nucleic-acid-driven ribosome dynamics"
+    ]
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "medium",
+    "scientific_class": "large RNA-rich ribonucleoprotein assemblies",
+    "anchors": [
+     "RNA-rich ribonucleoprotein assembly",
+     "protein–RNA electrostatics",
+     "divalent-ion RNA stabilization",
+     "RNA–protein coarse-grained interactions"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "bacterial-type ribosome",
+    "hop1_queries": [
+     "Identify bacterial-type ribosomes whose nucleic-acid–protein interactions can inform multiscale coarse-grained modeling of large-scale ribosome rearrangements."
+    ],
+    "hop2_queries": [
+     "Escherichia coli ribosome ribosome rearrangements coarse-grained model",
+     "Escherichia coli ribosome coarse-grained model",
+     "E. coli ribosome ribosome rearrangements coarse-grained model",
+     "E. coli ribosome coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "Escherichia coli ribosome",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "Escherichia coli ribosome bacterial-type ribosome"
+     },
+     {
+      "label": "E. coli",
+      "grounding": "grounded_contextual",
+      "type": "specific_protein_or_system",
+      "anchor": "E. coli bacterial-type ribosome"
+     },
+     {
+      "label": "50S eubacterial particles",
+      "grounding": "insufficient",
+      "type": "protein_family_or_class",
+      "anchor": null
+     },
+     {
+      "label": "70 S ribosome",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "70 S ribosome bacterial-type ribosome"
+     }
+    ],
+    "n_papers": 78,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "Escherichia coli ribosome",
+      "search_anchor": "Escherichia coli ribosome",
+      "core_process": "ribosome rearrangements",
+      "stable_descriptor": "",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "Escherichia coli ribosome ribosome rearrangements coarse-grained model",
+        "n_results": 20,
+        "error": null
+       },
+       {
+        "role": "C",
+        "query": "Escherichia coli ribosome coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 39
+     },
+     {
+      "label": "E. coli",
+      "search_anchor": "E. coli ribosome",
+      "core_process": "ribosome rearrangements",
+      "stable_descriptor": "",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "E. coli ribosome ribosome rearrangements coarse-grained model",
+        "n_results": 20,
+        "error": null
+       },
+       {
+        "role": "C",
+        "query": "E. coli ribosome coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 39
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 5,
+   "raw_unique_systems": [
+    "50S eubacterial particles",
+    "70 S ribosome",
+    "E. coli 70S Ribosome",
+    "Escherichia coli ribosome",
+    "bacterial ribosome"
+   ],
+   "after_membership_validation": 5,
+   "kept_systems": [
+    "50S eubacterial particles",
+    "70 S ribosome",
+    "E. coli 70S Ribosome",
+    "Escherichia coli ribosome",
+    "bacterial ribosome"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 4,
+   "identities_grounded": 3,
+   "grounded": [
+    [
+     "Escherichia coli ribosome",
+     "grounded_contextual"
+    ],
+    [
+     "E. coli",
+     "grounded_contextual"
+    ],
+    [
+     "50S eubacterial particles",
+     "insufficient"
+    ],
+    [
+     "70 S ribosome",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "Escherichia coli ribosome ribosome rearrangements coarse-grained model",
+    "Escherichia coli ribosome coarse-grained model",
+    "E. coli ribosome ribosome rearrangements coarse-grained model",
+    "E. coli ribosome coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "50S eubacterial particles",
+    "E. coli 70S Ribosome",
+    "Escherichia coli ribosome",
+    "bacterial ribosome"
+   ],
+   "after_validation": [
+    "50S eubacterial particles",
+    "E. coli 70S Ribosome",
+    "Escherichia coli ribosome",
+    "bacterial ribosome"
+   ],
+   "after_grounding": [
+    "Escherichia coli ribosome"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.1021/ja2028487"
+   ],
+   "found_by_3A": [
+    "10.1021/ja2028487"
+   ],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 20,
+    "transfer": 81
+   }
+  },
+  "api_usage": {
+   "http_requests": 13,
+   "http_200": 13,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 130,
+   "credits_assumed_requests": 13,
+   "remaining_first": 7540,
+   "remaining_last": 7420,
+   "label": "routing_v2_Q16_hop2conv5_1791904017",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 95.5
+ },
+ {
+  "case": "Q16",
+  "kind": "L3",
+  "query": "I need a multiscale simulation of the chloroplast 70S ribosome to determine how nucleic-acid and protein interactions drive rearrangements despite large size. Which CG models or approaches could capture it?",
+  "target_dois": [
+   "10.1021/ja2028487"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "chloroplast 70S ribosome",
+   "scientific_objective": "Determine how nucleic-acid–protein interactions drive large-scale conformational rearrangements in the chloroplast 70S ribosome using multiscale simulation.",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "bacterial-type ribosomal ribonucleoprotein complexes",
+    "anchors": [
+     "bacterial-type ribosome",
+     "70S ribosomal complex",
+     "ribosomal RNA protein interfaces",
+     "intersubunit conformational dynamics",
+     "large ribonucleoprotein complex"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "translation-associated ribosomal conformational dynamics",
+    "anchors": [
+     "ribosome conformational dynamics",
+     "intersubunit rotation",
+     "translation-associated motions",
+     "ribosome state transitions",
+     "coarse-grained ribosome dynamics"
+    ]
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "large ribosomal RNA–protein assemblies",
+    "anchors": [
+     "ribosomal RNA protein electrostatics",
+     "RNA protein charge interactions",
+     "ionic screening ribosome",
+     "divalent ions ribosomal RNA",
+     "RNA protein interface energetics"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "bacterial-type ribosomal ribonucleoprotein complexes",
+    "hop1_queries": [
+     "Identify bacterial-type ribosomal ribonucleoprotein complexes whose nucleic-acid–protein interactions drive large-scale conformational rearrangements, suitable for multiscale simulation studies."
+    ],
+    "hop2_queries": [
+     "30S ribosomal subunit conformational rearrangements coarse-grained model",
+     "30S ribosomal subunit coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "30S ribosomal subunit",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "30S ribosomal subunit bacterial-type ribosomal ribonucleoprotein complexes"
+     }
+    ],
+    "n_papers": 33,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "30S ribosomal subunit",
+      "search_anchor": "30S ribosomal subunit",
+      "core_process": "conformational rearrangements",
+      "stable_descriptor": "",
+      "flags": [
+       "descriptor_redundant_with_anchor"
+      ],
+      "queries": [
+       {
+        "role": "A",
+        "query": "30S ribosomal subunit conformational rearrangements coarse-grained model",
+        "n_results": 20,
+        "error": null
+       },
+       {
+        "role": "C",
+        "query": "30S ribosomal subunit coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 33
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 1,
+   "raw_unique_systems": [
+    "30S ribosomal subunit"
+   ],
+   "after_membership_validation": 1,
+   "kept_systems": [
+    "30S ribosomal subunit"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 1,
+   "identities_grounded": 1,
+   "grounded": [
+    [
+     "30S ribosomal subunit",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "30S ribosomal subunit conformational rearrangements coarse-grained model",
+    "30S ribosomal subunit coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "30S ribosomal subunit"
+   ],
+   "after_validation": [
+    "30S ribosomal subunit"
+   ],
+   "after_grounding": [
+    "30S ribosomal subunit"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [],
+   "found_by_3A": [
+    "10.1021/ja2028487"
+   ],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 20,
+    "transfer": 79
+   }
+  },
+  "api_usage": {
+   "http_requests": 12,
+   "http_200": 12,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 120,
+   "credits_assumed_requests": 12,
+   "remaining_first": 7410,
+   "remaining_last": 7300,
+   "label": "routing_v2_Q16_hop2conv5_1791904112",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 62.9
+ },
+ {
+  "case": "Q16",
+  "kind": "L3",
+  "query": "I need a multiscale simulation of the chloroplast 70S ribosome to determine how nucleic-acid and protein interactions drive rearrangements despite large size. Which CG models or approaches could capture it?",
+  "target_dois": [
+   "10.1021/ja2028487"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "chloroplast 70S ribosome",
+   "scientific_objective": "Determine how nucleic-acid–protein interactions drive large-scale conformational rearrangements in the ribosome using a multiscale coarse-grained simulation.",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "distinctive_structure",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "large ribosomal ribonucleoprotein assemblies",
+    "anchors": [
+     "large ribosomal RNP",
+     "two-subunit ribosome architecture",
+     "rRNA protein interfaces",
+     "ribosomal intersubunit bridges",
+     "collective ribosome motions"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "ribosomal intersubunit dynamics",
+    "anchors": [
+     "ribosomal intersubunit dynamics",
+     "intersubunit rotation ratcheting",
+     "rRNA protein coupled motions",
+     "ribosome global conformational changes"
+    ]
+   },
+   {
+    "basis": "chemistry_representation",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "RNA–protein interfaces in large ribonucleoprotein assemblies",
+    "anchors": [
+     "rRNA protein electrostatics",
+     "RNA protein charge patterning",
+     "ion-mediated RNA protein interactions",
+     "RNA protein contact specificity"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "distinctive_structure",
+    "class": "large ribosomal ribonucleoprotein assemblies",
+    "hop1_queries": [
+     "Identify other large ribosomal ribonucleoprotein assemblies in which nucleic-acid–protein interactions drive large-scale conformational rearrangements, suitable for investigation using multiscale coarse-grained simulation."
+    ],
+    "hop2_queries": [
+     "pre-60S ribosomal subunit conformational rearrangements coarse-grained model",
+     "pre-60S ribosomal subunit coarse-grained model",
+     "Escherichia coli 70S ribosome conformational rearrangements coarse-grained model",
+     "Escherichia coli 70S ribosome RNA and protein coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "nucleolar pre-60S ribosomal subunit",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "nucleolar pre-60S ribosomal subunit large ribosomal ribonucleoprotein assemblies"
+     },
+     {
+      "label": "Escherichia coli 70S ribosome",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Escherichia coli 70S ribosome large ribosomal ribonucleoprotein assemblies"
+     },
+     {
+      "label": "Escherichia coli 30 S ribosomal subunit",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "Escherichia coli 30 S ribosomal subunit large ribosomal ribonucleoprotein assemblies"
+     },
+     {
+      "label": "complete ribosome",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "complete ribosome large ribosomal ribonucleoprotein assemblies"
+     },
+     {
+      "label": "30S ribosomal subunit",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "30S ribosomal subunit large ribosomal ribonucleoprotein assemblies"
+     }
+    ],
+    "n_papers": 73,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "nucleolar pre-60S ribosomal subunit",
+      "search_anchor": "pre-60S ribosomal subunit",
+      "core_process": "conformational rearrangements",
+      "stable_descriptor": "",
+      "flags": [
+       "descriptor_redundant_with_anchor"
+      ],
+      "queries": [
+       {
+        "role": "A",
+        "query": "pre-60S ribosomal subunit conformational rearrangements coarse-grained model",
+        "n_results": 20,
+        "error": null
+       },
+       {
+        "role": "C",
+        "query": "pre-60S ribosomal subunit coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 35
+     },
+     {
+      "label": "Escherichia coli 70S ribosome",
+      "search_anchor": "Escherichia coli 70S ribosome",
+      "core_process": "conformational rearrangements",
+      "stable_descriptor": "RNA and protein",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "Escherichia coli 70S ribosome conformational rearrangements coarse-grained model",
+        "n_results": 20,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "Escherichia coli 70S ribosome RNA and protein coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 38
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 6,
+   "raw_unique_systems": [
+    "30S ribosomal subunit",
+    "Escherichia coli 30 S ribosomal subunit",
+    "Escherichia coli 70S ribosome",
+    "complete ribosome",
+    "nucleolar pre-60S ribosomal subunit",
+    "the ribosome"
+   ],
+   "after_membership_validation": 6,
+   "kept_systems": [
+    "30S ribosomal subunit",
+    "Escherichia coli 30 S ribosomal subunit",
+    "Escherichia coli 70S ribosome",
+    "complete ribosome",
+    "nucleolar pre-60S ribosomal subunit",
+    "the ribosome"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 5,
+   "identities_grounded": 5,
+   "grounded": [
+    [
+     "nucleolar pre-60S ribosomal subunit",
+     "grounded_full"
+    ],
+    [
+     "Escherichia coli 70S ribosome",
+     "grounded_full"
+    ],
+    [
+     "Escherichia coli 30 S ribosomal subunit",
+     "grounded_full"
+    ],
+    [
+     "complete ribosome",
+     "grounded_full"
+    ],
+    [
+     "30S ribosomal subunit",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "pre-60S ribosomal subunit conformational rearrangements coarse-grained model",
+    "pre-60S ribosomal subunit coarse-grained model",
+    "Escherichia coli 70S ribosome conformational rearrangements coarse-grained model",
+    "Escherichia coli 70S ribosome RNA and protein coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "30S ribosomal subunit",
+    "Escherichia coli 30 S ribosomal subunit",
+    "Escherichia coli 70S ribosome"
+   ],
+   "after_validation": [
+    "30S ribosomal subunit",
+    "Escherichia coli 30 S ribosomal subunit",
+    "Escherichia coli 70S ribosome"
+   ],
+   "after_grounding": [
+    "Escherichia coli 70S ribosome",
+    "Escherichia coli 30 S ribosomal subunit",
+    "30S ribosomal subunit"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.1021/ja2028487"
+   ],
+   "found_by_3A": [
+    "10.1021/ja2028487"
+   ],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 20,
+    "transfer": 116
+   }
+  },
+  "api_usage": {
+   "http_requests": 13,
+   "http_200": 12,
+   "http_429": 1,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 120,
+   "credits_assumed_requests": 12,
+   "remaining_first": 7290,
+   "remaining_last": 7180,
+   "label": "routing_v2_Q16_hop2conv5_1791904175",
+   "transient_failed_attempts": 1,
+   "failed_requests": 0
+  },
+  "seconds": 85.6
+ }
+]

@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import time
 
-from beam_agent import cache
+from cgscout import cache
 
 
 def _write_raw_entry(namespace, key, cache_dir, entry: dict) -> None:

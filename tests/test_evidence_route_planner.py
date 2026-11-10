@@ -19,16 +19,12 @@ reject (None) rather than being silently included in the extracted span.
 """
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
-
-from evidence_route_planner import (  # noqa: E402
+from cgscout.retrieval.direct.evidence_plan import (  # noqa: E402
     _EDGE_WRAPPER_TOKENS,
     extract_lexical_structural_feature,
 )
-from related_system_discovery import _CONNECTIVES  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import _CONNECTIVES  # noqa: E402
 
 
 # --- Case A: pre-existing anchored behavior, MUST be byte-identical --------

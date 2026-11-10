@@ -13,15 +13,12 @@ tests/test_related_system_discovery.py.
 from __future__ import annotations
 
 import random
-import sys
 import time
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
 
-from related_system_discovery import discover_related_systems  # noqa: E402
-from transfer_entity_extraction import SystemExtraction, SystemMention  # noqa: E402
-from beam_agent.models import Paper  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import discover_related_systems  # noqa: E402
+from cgscout.retrieval.related_systems.extraction import SystemExtraction, SystemMention  # noqa: E402
+from cgscout.models import Paper  # noqa: E402
 
 
 def _paper(title, abstract="", doi=None, year=2020):

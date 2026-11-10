@@ -1,0 +1,1004 @@
+{
+ "seeds": [
+  {
+   "domain": "dynamin_like",
+   "doi": "10.1021/acs.jpclett.5c02867",
+   "title": "Membrane Constriction by Dynamin through GTP-Driven Conformational Changes from Coarse-Grained Molecular Dynamics Simulations",
+   "year": 2025,
+   "venue": "The Journal of Physical Chemistry Letters",
+   "abstract_sha256": "98644b3ff229f62561a9da6ee852d13ac69ed3c6d74842ccd7c8ca96e74bbcff",
+   "abstract_chars": 1260,
+   "authors": [
+    "Md. Iqbal Mahmood",
+    "Shintaroh Kubo",
+    "Hiroshi Noguchi",
+    "Kei-ichi Okazaki"
+   ],
+   "system_specific": true,
+   "named_system": "Dynamin rings on a tubular lipid membrane",
+   "paper_type": "application"
+  },
+  {
+   "domain": "viral_glycoprotein",
+   "doi": "10.5281/zenodo.7786949",
+   "title": "Mechanism and energetics of lipid recognition by viral fusion proteins",
+   "year": 2023,
+   "venue": "Zenodo (CERN European Organization for Nuclear Research)",
+   "abstract_sha256": "66bb8ba0d08438e5a252b9a1d197beafba588f3d5a278048776727a4893278b2",
+   "abstract_chars": 642,
+   "authors": [
+    "Poojari, Chetan",
+    "Bommer, Tobias",
+    "Hub, Jochen"
+   ],
+   "system_specific": true,
+   "named_system": "Class I, II, and III viral fusion proteins in mammalian plasma-membrane lipid compositions",
+   "paper_type": "application"
+  },
+  {
+   "domain": "lps_membrane",
+   "doi": "10.1021/acs.jpcb.5c04855",
+   "title": "Bottom-up Coarse-Grained Models of Asymmetric Membranes",
+   "year": 2025,
+   "venue": "The Journal of Physical Chemistry B",
+   "abstract_sha256": "366dda2c889fa1c0bede2fd0c0ccf2d11a765bf79d43238c76814ed7af273e61",
+   "abstract_chars": 1873,
+   "authors": [
+    "Ayan Majumder",
+    "Patrick G. Sahrmann",
+    "Gregory A. Voth"
+   ],
+   "system_specific": true,
+   "named_system": "HIV-1 virion membrane and asymmetric lipid bilayers",
+   "paper_type": "method_or_forcefield"
+  },
+  {
+   "domain": "silk_elastin",
+   "doi": "10.1038/s41598-023-46376-6",
+   "title": "Development of mechanically-consistent coarse-grained molecular dynamics model: case study of mechanics of spider silk",
+   "year": 2023,
+   "venue": "Scientific Reports",
+   "abstract_sha256": "de12880de2d363571696bb2bc95a8a3d2f6148018ef804846754cb02709ce8fd",
+   "abstract_chars": 1418,
+   "authors": [
+    "Saeed Momeni Bashusqeh",
+    "Nicola Maria Pugno"
+   ],
+   "system_specific": true,
+   "named_system": "major ampullate silk protein (MaSp1) spider silk",
+   "paper_type": "method_or_forcefield"
+  },
+  {
+   "domain": "biomass",
+   "doi": "10.3390/molecules27030976",
+   "title": "Martini 3 Model of Cellulose Microfibrils: On the Route to Capture Large Conformational Changes of Polysaccharides",
+   "year": 2022,
+   "venue": "Molecules",
+   "abstract_sha256": "6c03424275bcd36a39d8249f0c6a3f632166777624cf8d98f3915ee04180add9",
+   "abstract_chars": 1345,
+   "authors": [
+    "Rodrigo A. Moreira",
+    "Stefan A. L. Weber",
+    "Adolfo B. Poma"
+   ],
+   "system_specific": true,
+   "named_system": "Cellulose I allomorphs and cellulose type-II fibrils",
+   "paper_type": "method_or_forcefield"
+  },
+  {
+   "domain": "cell_wall",
+   "doi": "10.1021/acs.jctc.0c00539",
+   "title": "Developing a Coarse-Grained Model for Bacterial Cell Walls: Evaluating Mechanical Properties and Free Energy Barriers",
+   "year": 2020,
+   "venue": "Journal of Chemical Theory and Computation",
+   "abstract_sha256": "80b41912d0aa4f1a4a49b67cd006122cb8574694b32d0c94810842410a9e4484",
+   "abstract_chars": 2170,
+   "authors": [
+    "Rakesh Vaiwala",
+    "Pradyumn Sharma",
+    "Mrinalini Puranik",
+    "K. G. Ayappa"
+   ],
+   "system_specific": true,
+   "named_system": "Gram-negative bacterial peptidoglycan cell wall",
+   "paper_type": "method_or_forcefield"
+  },
+  {
+   "domain": "immune_recognition",
+   "doi": "10.1021/acs.jpclett.0c00750",
+   "title": "Arbitrary Resolution with Two Bead Types Coarse-Grained Strategy and Applications to Protein Recognition",
+   "year": 2020,
+   "venue": "The Journal of Physical Chemistry Letters",
+   "abstract_sha256": "e7170dd751c22f7d832c27b85dfc55061025d8db371bde603765444503086e61",
+   "abstract_chars": 1156,
+   "authors": [
+    "Qinglu Zhong",
+    "Guohui Li"
+   ],
+   "system_specific": true,
+   "named_system": "HLA–HIV epitope, barnase–barstar, and trimeric TRAF2",
+   "paper_type": "method_or_forcefield"
+  }
+ ],
+ "pairs": [
+  {
+   "n": "dynamin_like:yeast Mgm1",
+   "source_seed_X": {
+    "title": "Membrane Constriction by Dynamin through GTP-Driven Conformational Changes from Coarse-Grained Molecular Dynamics Simulations",
+    "doi": "10.1021/acs.jpclett.5c02867",
+    "title_ratio": 1.0,
+    "found_title": "Membrane Constriction by Dynamin through GTP-Driven Conformational Changes from Coarse-Grained Molecular Dynamics Simulations",
+    "doi_matches_claim": true,
+    "year": 2025,
+    "venue": "The Journal of Physical Chemistry Letters",
+    "abstract_chars": 1260,
+    "overlap": []
+   },
+   "target_system_Y": "yeast Mgm1",
+   "claimed_axis": "Dynamin-family GTPases use assembly-dependent conformational changes to couple nucleotide state to membrane remodeling.",
+   "transfer": {
+    "target_objective": "Determine how nucleotide-state-dependent conformational changes and assembly of yeast Mgm1 couple GTP hydrolysis to mitochondrial membrane remodeling.",
+    "transfer_axis": "family_function",
+    "transferable_feature": "Assembly-dependent conformational changes in a dynamin-family GTPase that generate mechanical forces on a lipid membrane.",
+    "reason_seed_is_useful_for_Y": "The seed provides a directly relevant CG-MD framework for representing dynamin-family oligomeric assemblies on membranes and linking nucleotide-state changes to membrane deformation. Its ring-on-tubular-membrane setup and pressure-coupling strategy could inform simulations of Mgm1 assemblies and their chemo-mechanical effects.",
+    "confidence": "high",
+    "caveat": "Mgm1 operates at mitochondrial inner membranes and is associated with membrane fusion, distinct membrane topology, and isoform- and partner-dependent organization, so dynamin ring geometry, conformational transitions, and the inferred constriction mechanism may not transfer directly."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of yeast Mgm1",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "yeast Mgm1 molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "yeast Mgm1 coarse-grained",
+     "n_results": 10
+    }
+   ],
+   "n_unique_papers_judged": 48,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "dynamin_like",
+   "Y_proposal": {
+    "system_name": "yeast Mgm1",
+    "description": "Mgm1 is a mitochondrial dynamin-related GTPase that oligomerizes on the inner membrane, and CG simulations could test how nucleotide-dependent rearrangements drive mitochondrial membrane fusion.",
+    "shared_feature": "Dynamin-family GTPases use assembly-dependent conformational changes to couple nucleotide state to membrane remodeling.",
+    "key_difference": "Mgm1 acts at mitochondrial inner membranes to promote fusion, whereas the seed system uses cytosolic dynamin rings for endocytic fission."
+   }
+  },
+  {
+   "n": "dynamin_like:Bacillus DynA",
+   "source_seed_X": {
+    "title": "Membrane Constriction by Dynamin through GTP-Driven Conformational Changes from Coarse-Grained Molecular Dynamics Simulations",
+    "doi": "10.1021/acs.jpclett.5c02867",
+    "title_ratio": 1.0,
+    "found_title": "Membrane Constriction by Dynamin through GTP-Driven Conformational Changes from Coarse-Grained Molecular Dynamics Simulations",
+    "doi_matches_claim": true,
+    "year": 2025,
+    "venue": "The Journal of Physical Chemistry Letters",
+    "abstract_chars": 1260,
+    "overlap": []
+   },
+   "target_system_Y": "Bacillus DynA",
+   "claimed_axis": "Dynamin-like proteins form membrane-bound oligomers whose collective mechanics can couple GTPase activity to membrane curvature and fission.",
+   "transfer": {
+    "target_objective": "Determine how Bacillus DynA oligomerization and GTPase-state-dependent conformational changes generate membrane curvature, constriction, and potentially fission.",
+    "transfer_axis": "family_function",
+    "transferable_feature": "Chemo-mechanical coupling between nucleotide-dependent conformational changes in a dynamin-like GTPase assembly and membrane remodeling.",
+    "reason_seed_is_useful_for_Y": "The seed provides a directly relevant CG-MD strategy for simulating membrane-bound dynamin-like oligomers on tubular membranes and relating GDP/GTP-state structural changes to collective membrane constriction. This framework could guide modeling how DynA assembly mechanics couple to membrane curvature and fission.",
+    "confidence": "medium",
+    "caveat": "Bacillus DynA may differ substantially from eukaryotic dynamin in domain architecture, oligomeric organization, membrane-binding mode, and lipid specificity, so the seed's structures, force-field parameters, and nucleotide-state conformational changes cannot be transferred without system-specific validation."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Bacillus DynA",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Bacillus DynA molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Bacillus DynA coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 59,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "dynamin_like",
+   "Y_proposal": {
+    "system_name": "Bacillus DynA",
+    "description": "DynA is a bacterial dynamin-like protein that assembles on cell membranes, and CG simulations could determine how its oligomers deform or sever membranes during envelope remodeling.",
+    "shared_feature": "Dynamin-like proteins form membrane-bound oligomers whose collective mechanics can couple GTPase activity to membrane curvature and fission.",
+    "key_difference": "DynA is a bacterial dynamin-like protein with a distinct architecture and cellular envelope context rather than eukaryotic endocytic dynamin."
+   }
+  },
+  {
+   "n": "viral_glycoprotein:human mitofusin 2",
+   "source_seed_X": {
+    "title": "Mechanism and energetics of lipid recognition by viral fusion proteins",
+    "doi": "10.5281/zenodo.7786949",
+    "title_ratio": 0.45,
+    "found_title": "Viral membrane fusion: is glycoprotein G of rhabdoviruses a representative of a new class of viral fusion proteins?",
+    "doi_matches_claim": false,
+    "year": 2005,
+    "venue": "Brazilian Journal of Medical and Biological Research",
+    "abstract_chars": 1669,
+    "overlap": []
+   },
+   "target_system_Y": "human mitofusin 2",
+   "claimed_axis": "Both systems use membrane-associated proteins to drive lipid-bilayer fusion, so protein–membrane interactions and lipid composition are transferable CG modeling concerns.",
+   "transfer": {
+    "target_objective": "Use coarse-grained simulations to characterize how human mitofusin 2 couples protein conformational changes, membrane interactions, and lipid composition to mitochondrial membrane tethering and fusion.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Protein-mediated fusion of lipid bilayers, including the roles of protein–membrane electrostatics, lipid composition, and conformational rearrangements.",
+    "reason_seed_is_useful_for_Y": "The seed highlights general physical questions relevant to any membrane-fusion system, such as how membrane charge and lipid composition modulate protein binding and fusion and how conformational changes couple to bilayer remodeling. These concepts could help formulate CG observables and interaction hypotheses for mitofusin 2.",
+    "confidence": "low",
+    "caveat": "Rhabdovirus G is a pH-triggered viral fusion protein, whereas mitofusin 2 is a dynamin-like GTPase involved in mitochondrial tethering and fusion; their architectures, activation mechanisms, membrane topology, and relevant lipids differ substantially. The abstract is also a review and provides no demonstrated CG methodology or transferable parameterization."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of human mitofusin 2",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "human mitofusin 2 molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "human mitofusin 2 coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 54,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "viral_glycoprotein",
+   "Y_proposal": {
+    "system_name": "human mitofusin 2",
+    "description": "Mitofusin 2 is a mitochondrial outer-membrane GTPase that mediates mitochondrial tethering and fusion, making it a target for CG studies of protein-driven membrane remodeling and lipid dependence.",
+    "shared_feature": "Both systems use membrane-associated proteins to drive lipid-bilayer fusion, so protein–membrane interactions and lipid composition are transferable CG modeling concerns.",
+    "key_difference": "Mitofusin 2 is a eukaryotic dynamin-like GTPase that acts in organelle fusion and oligomerization, rather than a viral fusion protein that initiates entry into a host membrane."
+   }
+  },
+  {
+   "n": "viral_glycoprotein:yeast vacuolar SNAREs",
+   "source_seed_X": {
+    "title": "Mechanism and energetics of lipid recognition by viral fusion proteins",
+    "doi": "10.5281/zenodo.7786949",
+    "title_ratio": 0.45,
+    "found_title": "Viral membrane fusion: is glycoprotein G of rhabdoviruses a representative of a new class of viral fusion proteins?",
+    "doi_matches_claim": false,
+    "year": 2005,
+    "venue": "Brazilian Journal of Medical and Biological Research",
+    "abstract_chars": 1669,
+    "overlap": []
+   },
+   "target_system_Y": "yeast vacuolar SNAREs",
+   "claimed_axis": "Both systems undergo protein-catalyzed membrane fusion whose efficiency and pathway depend on membrane lipid composition.",
+   "transfer": {
+    "target_objective": "Develop a coarse-grained model of yeast vacuolar SNARE-mediated membrane fusion and determine how SNARE conformational dynamics and lipid composition regulate fusion efficiency and pathway.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Protein-catalyzed membrane fusion coupled to membrane electrostatics, lipid composition, and protein conformational rearrangements.",
+    "reason_seed_is_useful_for_Y": "The seed highlights CG-relevant physical mechanisms by which a fusion protein remodels membranes and how charged lipids can influence membrane binding and fusion intermediates. These concepts could motivate modeling lipid-dependent fusion energetics and protein–membrane interactions in the yeast vacuolar system.",
+    "confidence": "low",
+    "caveat": "Rhabdovirus G proteins are pH-triggered viral fusion proteins with reversible conformational transitions, whereas vacuolar SNAREs fuse membranes through zippering, assembly, and cooperation with tethering and regulatory factors; the abstract provides no transferable CG parameterization or SNARE-specific methodology."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of yeast vacuolar SNAREs",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "yeast vacuolar SNAREs molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "yeast vacuolar SNAREs coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 47,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "viral_glycoprotein",
+   "Y_proposal": {
+    "system_name": "yeast vacuolar SNAREs",
+    "description": "The yeast vacuolar SNARE machinery mediates homotypic vacuole fusion and could be simulated to resolve how a multisubunit fusion complex reorganizes surrounding lipids.",
+    "shared_feature": "Both systems undergo protein-catalyzed membrane fusion whose efficiency and pathway depend on membrane lipid composition.",
+    "key_difference": "Vacuolar fusion uses trans-SNARE complex assembly together with tethering and regulatory proteins, whereas the seed systems focus on individual viral fusion proteins spanning distinct viral fusion classes."
+   }
+  },
+  {
+   "n": "lps_membrane:Nipah virion membrane",
+   "source_seed_X": {
+    "title": "Bottom-up Coarse-Grained Models of Asymmetric Membranes",
+    "doi": "10.1021/acs.jpcb.5c04855",
+    "title_ratio": 1.0,
+    "found_title": "Bottom-up Coarse-Grained Models of Asymmetric Membranes",
+    "doi_matches_claim": true,
+    "year": 2025,
+    "venue": "The Journal of Physical Chemistry B",
+    "abstract_chars": 1873,
+    "overlap": []
+   },
+   "target_system_Y": "Nipah virion membrane",
+   "claimed_axis": "Same physical process: composition-dependent lipid packing and stress relaxation in an asymmetric, heterogeneous enveloped-virus membrane.",
+   "transfer": {
+    "target_objective": "Model composition-dependent lipid packing, interleaflet cholesterol redistribution, and membrane-stress relaxation in the asymmetric Nipah virion membrane.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "A bottom-up coarse-grained representation of asymmetric, multicomponent bilayers that captures lipid ordering, leaflet-dependent packing, and cholesterol-driven stress relaxation.",
+    "reason_seed_is_useful_for_Y": "Nipah, like HIV, is an enveloped virion whose membrane can exhibit leaflet asymmetry and heterogeneous lipid composition. The seed provides a relevant statistical-mechanical framework and analysis strategy for studying cholesterol partitioning and interleaflet movement under composition-dependent membrane stress.",
+    "confidence": "medium",
+    "caveat": "The model was constructed and validated for HIV-like compositions, so lipid species, cholesterol content, membrane proteins, curvature, and leaflet asymmetry in Nipah may require substantial reparameterization; the reported transferability across compositions does not guarantee transfer to Nipah-specific chemistry or virion organization."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Nipah virion membrane",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Nipah virion membrane molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Nipah virion membrane coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 50,
+   "direct_CG_hits_for_Y": [],
+   "verified_no_direct": true,
+   "seed_domain": "lps_membrane",
+   "Y_proposal": {
+    "system_name": "Nipah virion membrane",
+    "description": "The lipid envelope of Nipah virus could be simulated to determine how membrane composition and fusion-protein organization control viral entry.",
+    "shared_feature": "Same physical process: composition-dependent lipid packing and stress relaxation in an asymmetric, heterogeneous enveloped-virus membrane.",
+    "key_difference": "Nipah is a pleomorphic paramyxovirus with fusion and attachment glycoproteins, rather than the retroviral particle architecture and Env organization of HIV-1."
+   }
+  },
+  {
+   "n": "lps_membrane:Ebola virion membrane",
+   "source_seed_X": {
+    "title": "Bottom-up Coarse-Grained Models of Asymmetric Membranes",
+    "doi": "10.1021/acs.jpcb.5c04855",
+    "title_ratio": 1.0,
+    "found_title": "Bottom-up Coarse-Grained Models of Asymmetric Membranes",
+    "doi_matches_claim": true,
+    "year": 2025,
+    "venue": "The Journal of Physical Chemistry B",
+    "abstract_chars": 1873,
+    "overlap": []
+   },
+   "target_system_Y": "Ebola virion membrane",
+   "claimed_axis": "Same physical process: leaflet-specific lipid organization and membrane-stress redistribution in a heterogeneous enveloped-virus membrane.",
+   "transfer": {
+    "target_objective": "Model leaflet-specific lipid organization and membrane-stress redistribution, including cholesterol translocation, in the heterogeneous asymmetric Ebola virion membrane.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Bottom-up coarse-grained representation of asymmetric multicomponent bilayers that captures lipid ordering, leaflet-dependent interactions, and stress-driven interleaflet cholesterol redistribution.",
+    "reason_seed_is_useful_for_Y": "Ebola, like HIV, is an enveloped virion whose membrane asymmetry and heterogeneous lipid composition can generate leaflet stress and composition-dependent cholesterol stability. The seed provides a statistically grounded modeling strategy and analysis framework for investigating these processes in an Ebola-like membrane.",
+    "confidence": "medium",
+    "caveat": "The model was constructed for an HIV-1-like membrane, and Ebola may differ substantially in lipid composition, leaflet asymmetry, cholesterol content, and associated viral proteins; accurate transfer would require reparameterization or validation against Ebola-specific membrane properties."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Ebola virion membrane",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Ebola virion membrane molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Ebola virion membrane coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 51,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "The Ebola virus protein VP40 hexamer enhances the clustering of PI(4,5)P 2 lipids in the plasma membrane",
+     "doi": "10.1039/c6cp03776c",
+     "year": 2016,
+     "reason": "The computational study directly models Ebola VP40 interacting with a plasma membrane and its lipid clustering and curvature effects, consistent with CG membrane modeling."
+    },
+    {
+     "title": "Interaction of monomeric Ebola VP40 protein with a plasma membrane: A coarse-grained molecular dynamics (CGMD) simulation study",
+     "doi": "10.1016/j.jmgm.2018.04.010",
+     "year": 2018,
+     "reason": "It explicitly uses CG molecular dynamics to model Ebola VP40 interacting with a plasma membrane."
+    },
+    {
+     "title": "Structure and dynamics of Ebola virus matrix protein VP40 by a coarse-grained Monte Carlo simulation",
+     "doi": null,
+     "year": 2016,
+     "reason": "It explicitly uses a coarse-grained Monte Carlo model of the Ebola virus matrix protein, directly relevant to Ebola membrane-associated assembly."
+    },
+    {
+     "title": "Mechanisms of phosphatidylserine influence on viral production: A computational model of Ebola virus matrix protein assembly",
+     "doi": "10.1016/j.jbc.2022.102025",
+     "year": 2022,
+     "reason": "It presents a computational coarse-grained-style model of Ebola VP40 assembly and its interaction with phosphatidylserine membranes."
+    },
+    {
+     "title": "Molecular Mechanism of Externalization of Phosphatidylserine on the Surface of Ebola Virus Particles",
+     "doi": "10.1089/dna.2018.4485",
+     "year": 2019,
+     "reason": "The paper directly investigates phosphatidylserine leaflet externalization on Ebola particles, matching leaflet-specific lipid organization in the target virion membrane through molecular modeling."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "lps_membrane",
+   "Y_proposal": {
+    "system_name": "Ebola virion membrane",
+    "description": "The membrane of filamentous Ebola virions could be simulated to connect lipid organization with matrix assembly, budding, and envelope stability.",
+    "shared_feature": "Same physical process: leaflet-specific lipid organization and membrane-stress redistribution in a heterogeneous enveloped-virus membrane.",
+    "key_difference": "Ebola forms elongated filamentous particles dominated by VP40 matrix interactions, unlike the roughly spherical HIV-1 particle and its Gag-driven assembly."
+   }
+  },
+  {
+   "n": "silk_elastin:Nephila clavipes MaSp2",
+   "source_seed_X": {
+    "title": "Development of mechanically-consistent coarse-grained molecular dynamics model: case study of mechanics of spider silk",
+    "doi": "10.1038/s41598-023-46376-6",
+    "title_ratio": 1.0,
+    "found_title": "Development of mechanically-consistent coarse-grained molecular dynamics model: case study of mechanics of spider silk",
+    "doi_matches_claim": true,
+    "year": 2023,
+    "venue": "Scientific Reports",
+    "abstract_chars": 1418,
+    "overlap": []
+   },
+   "target_system_Y": "Nephila clavipes MaSp2",
+   "claimed_axis": "It belongs to the same spidroin family and forms protein fibers whose chain alignment and ordered nanodomains control macroscopic mechanics.",
+   "transfer": {
+    "target_objective": "Model how chain alignment, ordered nanodomains, and bundle-scale organization in Nephila clavipes MaSp2 determine tensile mechanical properties under uniaxial loading.",
+    "transfer_axis": "family_function",
+    "transferable_feature": "Coarse-grained representation of spidroin protein chains and bundles, including ordered, randomly oriented, and partially aligned initial structures subjected to tensile deformation.",
+    "reason_seed_is_useful_for_Y": "The seed study provides a directly relevant framework for testing how mesoscale chain alignment and structural order affect the mechanical response of a silk fiber, which is also central to MaSp2 mechanics. Its comparisons of single-chain and bundle stretching, including disordered and partially oriented bundles, could guide simulation design and validation for MaSp2.",
+    "confidence": "medium",
+    "caveat": "MaSp2 differs substantially from MaSp1 in sequence composition, repeat motifs, secondary-structure propensity, and likely interchain interactions; the MaSp1-specific CG parametrization and predicted mechanical properties cannot be transferred without reparameterization and validation against MaSp2 data."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Nephila clavipes MaSp2",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Nephila clavipes MaSp2 molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Nephila clavipes MaSp2 coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 57,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Sequence-encoded tubular architectures in disordered spider silk proteins revealed by multiscale simulations and NMR",
+     "doi": "10.1093/pnasnexus/pgaf378",
+     "year": 2025,
+     "reason": "The study uses multiscale simulations to model major ampullate spidroins, a close variant of the target MaSp2 system, and directly addresses spidroin-chain organization."
+    },
+    {
+     "title": "Molecular and nanostructural mechanisms of deformation, strength and toughness of spider silk fibrils",
+     "doi": "10.1038/npre.2010.4336.1",
+     "year": 2010,
+     "reason": "The paper explicitly develops a bottom-up molecular-based mesoscale model of spider-silk fibrils, directly modeling the nanostructure and mechanics of a close dragline-silk variant of the MaSp2 system."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "silk_elastin",
+   "Y_proposal": {
+    "system_name": "Nephila clavipes MaSp2",
+    "description": "This major ampullate spidroin from the golden orb-weaver forms dragline fibers whose sequence-dependent elasticity and strength could be investigated under tensile loading.",
+    "shared_feature": "It belongs to the same spidroin family and forms protein fibers whose chain alignment and ordered nanodomains control macroscopic mechanics.",
+    "key_difference": "Unlike MaSp1, MaSp2 contains proline-rich and glycine-rich motifs that produce substantially greater extensibility and different secondary-structure organization."
+   }
+  },
+  {
+   "n": "silk_elastin:Spider flagelliform silk",
+   "source_seed_X": {
+    "title": "Development of mechanically-consistent coarse-grained molecular dynamics model: case study of mechanics of spider silk",
+    "doi": "10.1038/s41598-023-46376-6",
+    "title_ratio": 1.0,
+    "found_title": "Development of mechanically-consistent coarse-grained molecular dynamics model: case study of mechanics of spider silk",
+    "doi_matches_claim": true,
+    "year": 2023,
+    "venue": "Scientific Reports",
+    "abstract_chars": 1418,
+    "overlap": []
+   },
+   "target_system_Y": "Spider flagelliform silk",
+   "claimed_axis": "It is a spider-silk protein fiber whose nanoscale sequence organization and chain alignment govern deformation and mechanical response.",
+   "transfer": {
+    "target_objective": "Model how nanoscale sequence organization, chain alignment, and bundle-level ordering in spider flagelliform silk govern its deformation and tensile mechanical response.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Coarse-grained representation of silk-protein chains and bundles under uniaxial loading, including the effects of chain alignment, ordered versus disordered packing, and initial structural organization.",
+    "reason_seed_is_useful_for_Y": "The seed study provides a relevant multiscale simulation strategy for connecting silk-fiber nanoscale organization and bundle morphology to macroscopic tensile mechanics. Its comparisons of ordered, randomly arranged, and partially oriented bundles could guide analogous tests of alignment and structural heterogeneity in flagelliform silk.",
+    "confidence": "medium",
+    "caveat": "The CG parameters and conformational assumptions were developed for MaSp1, whereas flagelliform silk has distinct sequence motifs, secondary structure, and elasticity; the model would require substantial reparameterization and validation before quantitative transfer."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Spider flagelliform silk",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Spider flagelliform silk molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Spider flagelliform silk coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 48,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Hierarchical Chain Model of Spider Capture Silk Elasticity",
+     "doi": "10.1103/physrevlett.94.028104",
+     "year": 2005,
+     "reason": "It proposes a hierarchical chain model for spider capture silk elasticity, a close flagelliform-silk fiber system, directly modeling its force-extension behavior."
+    },
+    {
+     "title": "Molecular Dynamics of Synthetic Flagelliform Silk Fiber Assembly",
+     "doi": "10.1002/mame.202000530",
+     "year": 2020,
+     "reason": "It directly models assembly of a synthetic flagelliform spidroin fiber, a close variant of the target system, using molecular simulation approaches aimed at its nanoscale organization."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "silk_elastin",
+   "Y_proposal": {
+    "system_name": "Spider flagelliform silk",
+    "description": "Flagelliform capture-spiral silk could be simulated to determine how its highly extensible molecular architecture sustains large tensile strains.",
+    "shared_feature": "It is a spider-silk protein fiber whose nanoscale sequence organization and chain alignment govern deformation and mechanical response.",
+    "key_difference": "Unlike MaSp1 dragline silk, flagelliform silk has few or no large polyalanine crystalline blocks and is specialized for extreme extensibility rather than high strength."
+   }
+  },
+  {
+   "n": "biomass:Chitin microfibrils",
+   "source_seed_X": {
+    "title": "Martini 3 Model of Cellulose Microfibrils: On the Route to Capture Large Conformational Changes of Polysaccharides",
+    "doi": "10.3390/molecules27030976",
+    "title_ratio": 1.0,
+    "found_title": "Martini 3 Model of Cellulose Microfibrils: On the Route to Capture Large Conformational Changes of Polysaccharides",
+    "doi_matches_claim": true,
+    "year": 2022,
+    "venue": "Molecules",
+    "abstract_chars": 1345,
+    "overlap": []
+   },
+   "target_system_Y": "Chitin microfibrils",
+   "claimed_axis": "Both systems are crystalline, hydrogen-bonded polysaccharide fibrils whose mesoscale morphology includes chain packing and fibril twisting.",
+   "transfer": {
+    "target_objective": "Develop a coarse-grained model of chitin microfibrils that preserves crystalline chain packing and hydrogen-bonding-related structure while reproducing fibril morphology, twist, and potentially self-assembly in aqueous or thermal environments.",
+    "transfer_axis": "close_structural_homology",
+    "transferable_feature": "A crystalline, hydrogen-bonded polysaccharide-fibril architecture requiring intrachain elastic restraints and calibrated nonbonded interactions to retain chain packing and reproduce fibril twisting.",
+    "reason_seed_is_useful_for_Y": "The cellulose model provides a relevant strategy for representing extended polysaccharide chains with a small number of beads, combining Martini interactions with elastic potentials to preserve ribbon-like crystalline fibrils. Its validation against fibril twist and conformational stability offers a useful methodological template for chitin microfibrils, including how to calibrate interactions against atomistic data.",
+    "confidence": "medium",
+    "caveat": "Chitin differs chemically from cellulose through N-acetyl groups, altered hydrogen-bonding patterns, and distinct crystal allomorphs and packing, so the cellulose bead mapping, interaction parameters, and elastic terms cannot be transferred directly and would require substantial reparameterization and validation."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Chitin microfibrils",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Chitin microfibrils molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Chitin microfibrils coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 50,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Development of a coarse-grained α-chitin model on the basis of MARTINI forcefield",
+     "doi": "10.1007/s00894-015-2670-9",
+     "year": 2015,
+     "reason": "The title explicitly reports development of a MARTINI-based coarse-grained model for α-chitin."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "biomass",
+   "Y_proposal": {
+    "system_name": "Chitin microfibrils",
+    "description": "Crystalline chitin fibrils are simulated to study their hydration, mechanical behavior, and self-assembly into hierarchical fungal or arthropod structural materials.",
+    "shared_feature": "Both systems are crystalline, hydrogen-bonded polysaccharide fibrils whose mesoscale morphology includes chain packing and fibril twisting.",
+    "key_difference": "Chitin is composed of N-acetylglucosamine rather than glucose and forms a distinct polymer crystal with different hydrogen-bonding and packing patterns."
+   }
+  },
+  {
+   "n": "biomass:Peptidoglycan sacculus",
+   "source_seed_X": {
+    "title": "Martini 3 Model of Cellulose Microfibrils: On the Route to Capture Large Conformational Changes of Polysaccharides",
+    "doi": "10.3390/molecules27030976",
+    "title_ratio": 1.0,
+    "found_title": "Martini 3 Model of Cellulose Microfibrils: On the Route to Capture Large Conformational Changes of Polysaccharides",
+    "doi_matches_claim": true,
+    "year": 2022,
+    "venue": "Molecules",
+    "abstract_chars": 1345,
+    "overlap": []
+   },
+   "target_system_Y": "Peptidoglycan sacculus",
+   "claimed_axis": "Both systems form extended polysaccharide-based fibrillar networks whose elasticity and supramolecular organization control large-scale mechanical behavior.",
+   "transfer": {
+    "target_objective": "Develop a coarse-grained model of the peptidoglycan sacculus that captures polysaccharide-fibril organization, crosslinking, elasticity, and large-scale mechanical deformation.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "A coarse-graining strategy for extended polysaccharide fibrils that combines structure-based bead representations with elastic potentials to preserve local chain architecture while allowing large-scale conformational changes and emergent network mechanics.",
+    "reason_seed_is_useful_for_Y": "The cellulose study demonstrates how elastic restraints and tuned nonbonded interactions can preserve native-like polysaccharide fibril structure while reproducing supramolecular organization and mechanical-relevant deformations. These modeling principles could inform representation and parameterization of glycan strands within a peptidoglycan mesh.",
+    "confidence": "medium",
+    "caveat": "Peptidoglycan is a chemically heterogeneous, covalently crosslinked glycan-peptide network rather than a largely crystalline cellulose fibril; its peptide stems, crosslinks, defects, hydration, and remodeling dynamics require substantial new parameterization, so the cellulose model is not directly transferable."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Peptidoglycan sacculus",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Peptidoglycan sacculus molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Peptidoglycan sacculus coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 50,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Developing a Coarse-Grained Model for Bacterial Cell Walls: Evaluating Mechanical Properties and Free Energy Barriers",
+     "doi": "10.1021/acs.jctc.0c00539",
+     "year": 2020,
+     "reason": "The paper explicitly develops and evaluates a coarse-grained model for bacterial cell walls containing a peptidoglycan layer."
+    },
+    {
+     "title": "PEPpy: A tool to generate bacterial peptidoglycan scaffolds for coarse-grained simulations",
+     "doi": null,
+     "year": 2019,
+     "reason": "PEPpy explicitly generates solvated peptidoglycan scaffolds at the coarse-grained level for simulations."
+    },
+    {
+     "title": "Coarse-Grained Simulations Reveal Mechanisms of Bacterial Morphogenesis",
+     "doi": "10.1016/j.bpj.2015.11.2505",
+     "year": 2016,
+     "reason": "The paper explicitly uses coarse-grained simulations to study bacterial morphogenesis involving the peptidoglycan cell wall."
+    },
+    {
+     "title": "Coarse-Grained Molecular Dynamics Simulations of the Bacterial Cell Wall",
+     "doi": "10.1007/978-1-4939-3676-2_18",
+     "year": 2016,
+     "reason": "The title explicitly identifies coarse-grained molecular dynamics simulations of the bacterial cell wall, including the peptidoglycan sacculus."
+    },
+    {
+     "title": "Thickness and Elasticity of Gram-Negative Murein Sacculi Measured by Atomic Force Microscopy",
+     "doi": "10.1128/jb.181.22.6865-6875.1999",
+     "year": 1999,
+     "reason": "The paper simulates a model single-layer peptidoglycan network to assess sacculus thickness and elasticity, providing direct network-level CG-like modeling of the target."
+    },
+    {
+     "title": "On the Architecture of the Gram-Negative Bacterial Murein Sacculus",
+     "doi": "10.1128/jb.182.20.5925-5930.2000",
+     "year": 2000,
+     "reason": "Computer simulations model the peptidoglycan network architecture and hole-size distribution of Gram-negative murein sacculi, directly addressing the target system."
+    },
+    {
+     "title": "Modeling heterogeneities in the crosslinked bacterial sacculus",
+     "doi": "10.1103/physrevresearch.2.013090",
+     "year": 2020,
+     "reason": "It uses a spring-network model and computer simulations to represent heterogeneity and mechanical response in the crosslinked bacterial peptidoglycan sacculus."
+    },
+    {
+     "title": "Modelling heterogeneities in the cross-linked bacterial sacculus",
+     "doi": "10.1101/867176",
+     "year": 2019,
+     "reason": "The paper models the bacterial cell-wall structure with a spring system to study how cross-linker heterogeneity affects bulk sacculus mechanics, constituting direct CG-like modeling."
+    },
+    {
+     "title": "Validation of the 3-under-2 principle of cell wall growth in Gram-positive bacteria by simulation of a simple coarse-grained model",
+     "doi": "10.48550/arxiv.1702.02747",
+     "year": 2017,
+     "reason": "It explicitly develops and simulates a coarse-grained multilayer peptidoglycan cell-wall model for Bacillus subtilis."
+    },
+    {
+     "title": "Multi-scale Modeling and Experimental Data Enable Structural Models of the Escherichia Coli Peptidoglycan to be Constructed on the Whole-Cell Scale",
+     "doi": "10.1101/2023.06.04.543634",
+     "year": 2023,
+     "reason": "The paper explicitly constructs a multiscale, whole-cell computational model of the Escherichia coli peptidoglycan layer, including its compositional heterogeneity and organization."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "biomass",
+   "Y_proposal": {
+    "system_name": "Peptidoglycan sacculus",
+    "description": "The bacterial peptidoglycan sacculus is modeled to investigate cell-envelope mechanics, remodeling, and deformation under osmotic or mechanical stress.",
+    "shared_feature": "Both systems form extended polysaccharide-based fibrillar networks whose elasticity and supramolecular organization control large-scale mechanical behavior.",
+    "key_difference": "Peptidoglycan is a covalently crosslinked mesh of alternating sugars and short peptides surrounding a cell, rather than a crystalline cellulose fibril."
+   }
+  },
+  {
+   "n": "cell_wall:Mycobacterium tuberculosis envelope",
+   "source_seed_X": {
+    "title": "Developing a Coarse-Grained Model for Bacterial Cell Walls: Evaluating Mechanical Properties and Free Energy Barriers",
+    "doi": "10.1021/acs.jctc.0c00539",
+    "title_ratio": 1.0,
+    "found_title": "Developing a Coarse-Grained Model for Bacterial Cell Walls: Evaluating Mechanical Properties and Free Energy Barriers",
+    "doi_matches_claim": true,
+    "year": 2020,
+    "venue": "Journal of Chemical Theory and Computation",
+    "abstract_chars": 2170,
+    "overlap": []
+   },
+   "target_system_Y": "Mycobacterium tuberculosis envelope",
+   "claimed_axis": "A peptidoglycan-based load-bearing cell-wall network that controls envelope mechanics and solute permeation.",
+   "transfer": {
+    "target_objective": "Model how the Mycobacterium tuberculosis envelope’s peptidoglycan-based load-bearing network determines cell-wall mechanics and solute permeation at coarse-grained resolution.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "A coarse-grained representation of a crosslinked peptidoglycan network calibrated against glycan-chain structure, network mechanical properties, and solute insertion or translocation behavior.",
+    "reason_seed_is_useful_for_Y": "The seed provides a relevant strategy for constructing and validating a CG peptidoglycan network, including matching structural observables, compressibility, bending rigidity, and permeation free energies. These methods could guide analysis of load-bearing and barrier properties in the mycobacterial envelope.",
+    "confidence": "medium",
+    "caveat": "Mycobacterial peptidoglycan is chemically and architecturally distinct from the Gram-negative network and is covalently integrated with arabinogalactan and the mycolic-acid-rich outer membrane. The seed parameters and permeability results therefore cannot be transferred directly and would require substantial reparameterization and modeling of the surrounding envelope layers."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Mycobacterium tuberculosis envelope",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Mycobacterium tuberculosis envelope molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Mycobacterium tuberculosis envelope coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 48,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Coarse-grained simulations: Unraveling the complex structure and dynamics of the mycobacterial outer membrane",
+     "doi": "10.1016/j.bpj.2023.11.686",
+     "year": 2024,
+     "reason": "The title explicitly identifies coarse-grained simulations of the mycobacterial outer membrane, a direct component of the target envelope system."
+    },
+    {
+     "title": "BPS2025 - Martini-3-based coarse-grained molecular modeling of mycobacterial cell envelope",
+     "doi": "10.1016/j.bpj.2024.11.1419",
+     "year": 2025,
+     "reason": "The title explicitly reports Martini-3-based coarse-grained molecular modeling of the mycobacterial cell envelope."
+    },
+    {
+     "title": "How PGL finds a sweet spot in phospholipid membranes: A combined multiscale MD and NMR study",
+     "doi": "10.1016/j.bpj.2025.07.040",
+     "year": 2025,
+     "reason": "The title explicitly reports a combined multiscale molecular-dynamics study of PGL in phospholipid membranes, directly modeling a mycobacterial envelope lipid system."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "cell_wall",
+   "Y_proposal": {
+    "system_name": "Mycobacterium tuberculosis envelope",
+    "description": "The multilayered envelope of M. tuberculosis could be simulated to quantify how antibiotics and other small molecules penetrate its exceptionally resistant cell barrier.",
+    "shared_feature": "A peptidoglycan-based load-bearing cell-wall network that controls envelope mechanics and solute permeation.",
+    "key_difference": "Unlike the seed system's Gram-negative envelope, this envelope contains a thin peptidoglycan layer covalently linked to arabinogalactan and covered by a mycolic-acid-rich outer membrane."
+   }
+  },
+  {
+   "n": "cell_wall:Bacillus subtilis cell wall",
+   "source_seed_X": {
+    "title": "Developing a Coarse-Grained Model for Bacterial Cell Walls: Evaluating Mechanical Properties and Free Energy Barriers",
+    "doi": "10.1021/acs.jctc.0c00539",
+    "title_ratio": 1.0,
+    "found_title": "Developing a Coarse-Grained Model for Bacterial Cell Walls: Evaluating Mechanical Properties and Free Energy Barriers",
+    "doi_matches_claim": true,
+    "year": 2020,
+    "venue": "Journal of Chemical Theory and Computation",
+    "abstract_chars": 2170,
+    "overlap": []
+   },
+   "target_system_Y": "Bacillus subtilis cell wall",
+   "claimed_axis": "A cross-linked peptidoglycan mesh acting as a mechanically resilient barrier to molecular transport.",
+   "transfer": {
+    "target_objective": "Develop a coarse-grained model of the Bacillus subtilis peptidoglycan cell wall to characterize its mechanical resilience and its barrier properties for molecular transport.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Coarse-grained representation and validation of a cross-linked peptidoglycan network through structural metrics, elastic properties, and solute insertion or translocation free energies.",
+    "reason_seed_is_useful_for_Y": "The seed provides a directly relevant modeling strategy for representing peptidoglycan at larger length and time scales and for testing molecular permeability with umbrella sampling. Its validation workflow—matching network structure and mechanics before evaluating transport—could be adapted to the B. subtilis wall.",
+    "confidence": "medium",
+    "caveat": "The reported model is developed for Gram-negative peptidoglycan and may encode different glycan organization, peptide cross-linking, wall thickness, and associated components than B. subtilis. The methodology is transferable, but the CG parameters and architecture should not be reused without reparameterization and validation."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Bacillus subtilis cell wall",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Bacillus subtilis cell wall molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Bacillus subtilis cell wall coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 49,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Validation of the 3-under-2 principle of cell wall growth in Gram-positive bacteria by simulation of a simple coarse-grained model",
+     "doi": "10.48550/arxiv.1702.02747",
+     "year": 2017,
+     "reason": "The paper explicitly constructs and simulates a coarse-grained model of the multilayered Bacillus subtilis cell wall."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "cell_wall",
+   "Y_proposal": {
+    "system_name": "Bacillus subtilis cell wall",
+    "description": "The thick cell wall of B. subtilis could be modeled to study mechanical deformation and antibiotic or antimicrobial-peptide transport through a Gram-positive envelope.",
+    "shared_feature": "A cross-linked peptidoglycan mesh acting as a mechanically resilient barrier to molecular transport.",
+    "key_difference": "Unlike the seed system's thin periplasmic peptidoglycan layer between two membranes, this wall is much thicker, lacks an outer membrane, and is decorated with teichoic acids."
+   }
+  },
+  {
+   "n": "immune_recognition:PD-1–PD-L1 complex",
+   "source_seed_X": {
+    "title": "Arbitrary Resolution with Two Bead Types Coarse-Grained Strategy and Applications to Protein Recognition",
+    "doi": "10.1021/acs.jpclett.0c00750",
+    "title_ratio": 1.0,
+    "found_title": "Arbitrary Resolution with Two Bead Types Coarse-Grained Strategy and Applications to Protein Recognition",
+    "doi_matches_claim": true,
+    "year": 2020,
+    "venue": "The Journal of Physical Chemistry Letters",
+    "abstract_chars": 1156,
+    "overlap": []
+   },
+   "target_system_Y": "PD-1–PD-L1 complex",
+   "claimed_axis": "Reversible protein–protein molecular recognition whose kinetics and binding pathways can be sampled efficiently with coarse-grained enhanced-sampling simulations.",
+   "transfer": {
+    "target_objective": "Model reversible PD-1–PD-L1 molecular recognition, including association and dissociation kinetics, binding pathways, and potentially encounter-complex formation without requiring a pre-existing bound structure.",
+    "transfer_axis": "family_function",
+    "transferable_feature": "Coarse-grained representation and enhanced-sampling treatment of protein–protein recognition and binding/unbinding kinetics, including systems where association pathways and nonspecific encounter states must be resolved.",
+    "reason_seed_is_useful_for_Y": "The seed explicitly validates its ART coarse-grained strategy on protein–protein recognition, association, dissociation, and recognition without a prior bound structure, which are directly relevant to PD-1–PD-L1. Its implicit-solvent implementation and compatibility with enhanced sampling could help access the large spatial and temporal scales of PD-1–PD-L1 binding and unbinding.",
+    "confidence": "high",
+    "caveat": "The abstract does not establish that ART accurately represents the highly specific hydrogen-bonding, electrostatic, glycosylation, and conformational effects relevant to PD-1–PD-L1, nor that it reproduces experimentally measured kinetics; system-specific parameterization and validation would be essential."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of PD-1–PD-L1 complex",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "PD-1–PD-L1 complex molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "PD-1–PD-L1 complex coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 49,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "A computational study of co-inhibitory immune complex assembly at the interface between T cells and antigen presenting cells",
+     "doi": "10.1371/journal.pcbi.1008825",
+     "year": 2021,
+     "reason": "This computational study addresses assembly of the PD-1–PD-L1 checkpoint interaction at the cell interface using a coarse-grained or multiscale complex-assembly framework."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "immune_recognition",
+   "Y_proposal": {
+    "system_name": "PD-1–PD-L1 complex",
+    "description": "This immunoregulatory receptor–ligand pair would be simulated to characterize membrane-proximal association, dissociation, and encounter orientations that regulate T-cell inhibition.",
+    "shared_feature": "Reversible protein–protein molecular recognition whose kinetics and binding pathways can be sampled efficiently with coarse-grained enhanced-sampling simulations.",
+    "key_difference": "Unlike the soluble HLA–epitope and barnase–barstar examples and the TRAF2 assembly system, both partners are membrane-tethered immunoregulatory proteins with heavily glycosylated extracellular domains."
+   }
+  },
+  {
+   "n": "immune_recognition:Cadherin-23 adhesion",
+   "source_seed_X": {
+    "title": "Arbitrary Resolution with Two Bead Types Coarse-Grained Strategy and Applications to Protein Recognition",
+    "doi": "10.1021/acs.jpclett.0c00750",
+    "title_ratio": 1.0,
+    "found_title": "Arbitrary Resolution with Two Bead Types Coarse-Grained Strategy and Applications to Protein Recognition",
+    "doi_matches_claim": true,
+    "year": 2020,
+    "venue": "The Journal of Physical Chemistry Letters",
+    "abstract_chars": 1156,
+    "overlap": []
+   },
+   "target_system_Y": "Cadherin-23 adhesion",
+   "claimed_axis": "Protein self-recognition through specific, reversible intermolecular association, including alternative encounter geometries and dissociation routes.",
+   "transfer": {
+    "target_objective": "Model cadherin-23 self-recognition and reversible intermolecular adhesion, including alternative encounter geometries, association kinetics, and dissociation pathways.",
+    "transfer_axis": "physical_process",
+    "transferable_feature": "Coarse-grained sampling of protein-protein recognition, association, and dissociation over large spatial and temporal scales, with system-specific resolution and compatibility with enhanced-sampling methods.",
+    "reason_seed_is_useful_for_Y": "The seed directly addresses protein recognition kinetics and demonstrates that CG simulations can recover association or self-assembly without requiring a pre-existing bound structure, which is relevant to exploring alternative cadherin-23 encounter complexes and unbinding routes. Its customizable resolution could help balance the large size of cadherin-23 with detailed representation of adhesion interfaces.",
+    "confidence": "medium",
+    "caveat": "Cadherin-23 adhesion may depend critically on calcium coordination, glycosylation, long multidomain architecture, and force-dependent mechanics; the abstract does not show that ART accurately represents these features or validates adhesion-specific kinetics."
+   },
+   "direct_CG_search_queries": [
+    {
+     "mode": "semantic",
+     "query": "coarse-grained model simulation of Cadherin-23 adhesion",
+     "n_results": 20
+    },
+    {
+     "mode": "semantic",
+     "query": "Cadherin-23 adhesion molecular dynamics simulation mechanism",
+     "n_results": 20
+    },
+    {
+     "mode": "lexical",
+     "query": "Cadherin-23 adhesion coarse-grained",
+     "n_results": 20
+    }
+   ],
+   "n_unique_papers_judged": 51,
+   "direct_CG_hits_for_Y": [
+    {
+     "title": "Cis-Clustering of Cadherin-23 Controls the Kinetics of Cell-Cell Adhesion",
+     "doi": "10.2139/ssrn.3896631",
+     "year": 2021,
+     "reason": "This paper directly studies Cadherin-23 cis-clustering and its effect on cell-cell adhesion kinetics, matching the target system's intermolecular association and clustering behavior."
+    }
+   ],
+   "verified_no_direct": false,
+   "seed_domain": "immune_recognition",
+   "Y_proposal": {
+    "system_name": "Cadherin-23 adhesion",
+    "description": "Cadherin-23 would be simulated to resolve the molecular pathways and force dependence of homophilic adhesion between long extracellular cadherin ectodomains.",
+    "shared_feature": "Protein self-recognition through specific, reversible intermolecular association, including alternative encounter geometries and dissociation routes.",
+    "key_difference": "Unlike the compact protein complexes and trimeric TRAF2 assembly in the seed applications, this is a very large, calcium-dependent, homophilic adhesion system with repeated extracellular domains and membrane anchoring."
+   }
+  }
+ ]
+}

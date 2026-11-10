@@ -1,0 +1,1278 @@
+{
+ "morphemes_used_by_gate": [
+  "adhesin",
+  "alpha",
+  "amyloid",
+  "antiparallel",
+  "autotransporter",
+  "barrel",
+  "beta",
+  "bundle",
+  "coil",
+  "cross-beta",
+  "disordered",
+  "double-stranded",
+  "fibril",
+  "fold",
+  "globular",
+  "hairpin",
+  "helic",
+  "helix",
+  "ladder",
+  "lectin",
+  "left-handed",
+  "parallel",
+  "passenger",
+  "prism",
+  "propeller",
+  "repeat",
+  "right-handed",
+  "roll",
+  "sandwich",
+  "sheet",
+  "single-stranded",
+  "solenoid",
+  "spiral",
+  "strand",
+  "supercoil",
+  "transporter",
+  "triple"
+ ],
+ "cases": [
+  {
+   "case": "Q15",
+   "expected_X": "MscS (and other MscS-family channels)",
+   "seed_doi": "10.1021/jp9053567",
+   "class": "MscS-related mechanosensitive ion channels",
+   "basis": "family_homology",
+   "objective": "Model tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states",
+   "hop1_sentence": "Identify other MscS-related mechanosensitive ion channels relevant to modeling tension-dependent gating and predicting bilayer-stress-driven transitions from nonconducting to conducting states.",
+   "n_retrieved": 15,
+   "n_extraction_rows_matched": 15,
+   "n_empty_extractions": 10,
+   "n_nonempty_unmapped": 0,
+   "papers": [
+    {
+     "rank": 1,
+     "year": 1999,
+     "title": "Energetic and Spatial Parameters for Gating of the Bacterial Large Conductance Mechanosensitive Channel, MscL",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 2,
+     "year": 2021,
+     "title": "Visualization of the mechanosensitive ion channel MscS under membrane tension",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "MscS",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 3,
+     "year": 2004,
+     "title": "Analytic models for mechanotransduction: Gating a mechanosensitive channel",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 4,
+     "year": 2002,
+     "title": "A large iris-like expansion of a mechanosensitive channel protein induced by membrane tension",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 5,
+     "year": 2008,
+     "title": "A Structural Mechanism for MscS Gating in Lipid Bilayers",
+     "has_abstract": true,
+     "extracted": [
+      {
+       "name": "MscS",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 6,
+     "year": 2016,
+     "title": "The role of MscL amphipathic N terminus indicates a blueprint for bilayer-mediated gating of mechanosensitive channels",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 7,
+     "year": 2004,
+     "title": "Mechanosensitive channels: what can we learn from ?simple? model systems?",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 8,
+     "year": 2010,
+     "title": "The tension-transmitting 'clutch' in the mechanosensitive channel MscS",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "MscS",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 9,
+     "year": 1999,
+     "title": "Mechanosensitive channels in bacteria as membrane tension reporters",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 10,
+     "year": 2007,
+     "title": "Voltage-induced gating of the mechanosensitive MscL ion channel reconstituted in a tethered lipid bilayer membrane",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 11,
+     "year": 2018,
+     "title": "Tuning ion channel mechanosensitivity by asymmetry of the transbilayer pressure profile",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 12,
+     "year": 2012,
+     "title": "The gating mechanism of the bacterial mechanosensitive channel MscL revealed by molecular dynamics simulations",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 13,
+     "year": 2013,
+     "title": "Connection between Oligomeric State and Gating Characteristics of Mechanosensitive Ion Channels",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 14,
+     "year": 2016,
+     "title": "From membrane tension to channel gating: A principal energy transfer mechanism for mechanosensitive channels",
+     "has_abstract": true,
+     "extracted": [
+      {
+       "name": "MscS",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 15,
+     "year": 2023,
+     "title": "State-specific morphological deformations of the lipid bilayer explain mechanosensitive gating of MscS ion channels",
+     "has_abstract": true,
+     "extracted": [
+      {
+       "name": "MscS",
+       "type": "specific_protein_or_system"
+      },
+      {
+       "name": "MSL1",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    }
+   ],
+   "stage_counts": {
+    "papers_retrieved": 15,
+    "raw_candidate_mentions": 6,
+    "after_relationship_gate": 6,
+    "after_grounding_discovered_systems": 0,
+    "after_cleanup": 0,
+    "identities_grounded": 0,
+    "identities_total": 0
+   },
+   "gate_rows": [
+    {
+     "paper": "Visualization of the mechanosensitive ion channel MscS under membrane tension",
+     "name": "MscS",
+     "entity_type": "specific_protein_or_system",
+     "quote": "mechanosensitive ion channel MscS",
+     "structural_term_matched": "",
+     "gate_kept": true,
+     "gate_reason": "basis is not distinctive_structure: gate not applied"
+    },
+    {
+     "paper": "A Structural Mechanism for MscS Gating in Lipid Bilayers",
+     "name": "MscS",
+     "entity_type": "specific_protein_or_system",
+     "quote": "The mechanosensitive channel of small conductance (MscS)",
+     "structural_term_matched": "mechanosensitive channel of small conductance",
+     "gate_kept": true,
+     "gate_reason": "basis is not distinctive_structure: gate not applied"
+    },
+    {
+     "paper": "The tension-transmitting 'clutch' in the mechanosensitive channel MscS",
+     "name": "MscS",
+     "entity_type": "specific_protein_or_system",
+     "quote": "mechanosensitive channel MscS",
+     "structural_term_matched": "",
+     "gate_kept": true,
+     "gate_reason": "basis is not distinctive_structure: gate not applied"
+    },
+    {
+     "paper": "From membrane tension to channel gating: A principal energy transfer mechanism for mechanosensitive channels",
+     "name": "MscS",
+     "entity_type": "specific_protein_or_system",
+     "quote": "MscS are two prototypes of MS channels",
+     "structural_term_matched": "",
+     "gate_kept": true,
+     "gate_reason": "basis is not distinctive_structure: gate not applied"
+    },
+    {
+     "paper": "State-specific morphological deformations of the lipid bilayer explain mechanosensitive gating of MscS ion channels",
+     "name": "MscS",
+     "entity_type": "specific_protein_or_system",
+     "quote": "the mechanosensitive ion channel MscS from Escherichia coli",
+     "structural_term_matched": "",
+     "gate_kept": true,
+     "gate_reason": "basis is not distinctive_structure: gate not applied"
+    },
+    {
+     "paper": "State-specific morphological deformations of the lipid bilayer explain mechanosensitive gating of MscS ion channels",
+     "name": "MSL1",
+     "entity_type": "specific_protein_or_system",
+     "quote": "its eukaryotic homolog MSL1 from Arabidopsis thaliana",
+     "structural_term_matched": "",
+     "gate_kept": true,
+     "gate_reason": "basis is not distinctive_structure: gate not applied"
+    }
+   ],
+   "grounding_dropped": [
+    {
+     "name": "MscS",
+     "cleaned": "",
+     "reason": "name is only structural-class wording once the class modifier is stripped",
+     "quote": "mechanosensitive ion channel MscS"
+    },
+    {
+     "name": "MscS",
+     "cleaned": "",
+     "reason": "name is only structural-class wording once the class modifier is stripped",
+     "quote": "The mechanosensitive channel of small conductance (MscS)"
+    },
+    {
+     "name": "MscS",
+     "cleaned": "",
+     "reason": "name is only structural-class wording once the class modifier is stripped",
+     "quote": "mechanosensitive channel MscS"
+    },
+    {
+     "name": "MscS",
+     "cleaned": "",
+     "reason": "name is only structural-class wording once the class modifier is stripped",
+     "quote": "MscS are two prototypes of MS channels"
+    },
+    {
+     "name": "MscS",
+     "cleaned": "",
+     "reason": "name is only structural-class wording once the class modifier is stripped",
+     "quote": "the mechanosensitive ion channel MscS from Escherichia coli"
+    },
+    {
+     "name": "MSL1",
+     "cleaned": "MSL1",
+     "reason": "evidence quote no longer ties the system to the structural class",
+     "quote": "its eukaryotic homolog MSL1 from Arabidopsis thaliana"
+    }
+   ],
+   "discovered": [],
+   "identities": [],
+   "X_in_hop1_papers": [
+    {
+     "rank": 1,
+     "title": "Energetic and Spatial Parameters for Gating of the Bacterial Large Conductance Mechanosensitive Channel, MscL",
+     "year": 1999,
+     "hits": [
+      "MscL"
+     ]
+    },
+    {
+     "rank": 2,
+     "title": "Visualization of the mechanosensitive ion channel MscS under membrane tension",
+     "year": 2021,
+     "hits": [
+      "MscS"
+     ]
+    },
+    {
+     "rank": 3,
+     "title": "Analytic models for mechanotransduction: Gating a mechanosensitive channel",
+     "year": 2004,
+     "hits": [
+      "MscL"
+     ]
+    },
+    {
+     "rank": 5,
+     "title": "A Structural Mechanism for MscS Gating in Lipid Bilayers",
+     "year": 2008,
+     "hits": [
+      "MscS",
+      "small conductance"
+     ]
+    },
+    {
+     "rank": 6,
+     "title": "The role of MscL amphipathic N terminus indicates a blueprint for bilayer-mediated gating of mechanosensitive channels",
+     "year": 2016,
+     "hits": [
+      "MscL"
+     ]
+    },
+    {
+     "rank": 8,
+     "title": "The tension-transmitting 'clutch' in the mechanosensitive channel MscS",
+     "year": 2010,
+     "hits": [
+      "MscS"
+     ]
+    },
+    {
+     "rank": 9,
+     "title": "Mechanosensitive channels in bacteria as membrane tension reporters",
+     "year": 1999,
+     "hits": [
+      "MscL"
+     ]
+    },
+    {
+     "rank": 10,
+     "title": "Voltage-induced gating of the mechanosensitive MscL ion channel reconstituted in a tethered lipid bilayer membrane",
+     "year": 2007,
+     "hits": [
+      "MscL"
+     ]
+    },
+    {
+     "rank": 12,
+     "title": "The gating mechanism of the bacterial mechanosensitive channel MscL revealed by molecular dynamics simulations",
+     "year": 2012,
+     "hits": [
+      "MscL"
+     ]
+    },
+    {
+     "rank": 13,
+     "title": "Connection between Oligomeric State and Gating Characteristics of Mechanosensitive Ion Channels",
+     "year": 2013,
+     "hits": [
+      "MscL"
+     ]
+    },
+    {
+     "rank": 14,
+     "title": "From membrane tension to channel gating: A principal energy transfer mechanism for mechanosensitive channels",
+     "year": 2016,
+     "hits": [
+      "MscL",
+      "MscS"
+     ]
+    },
+    {
+     "rank": 15,
+     "title": "State-specific morphological deformations of the lipid bilayer explain mechanosensitive gating of MscS ion channels",
+     "year": 2023,
+     "hits": [
+      "MSL1",
+      "MscS"
+     ]
+    }
+   ],
+   "X_in_raw_extraction": [
+    {
+     "name": "MscS",
+     "gate_kept": true
+    },
+    {
+     "name": "MscS",
+     "gate_kept": true
+    },
+    {
+     "name": "MscS",
+     "gate_kept": true
+    },
+    {
+     "name": "MscS",
+     "gate_kept": true
+    },
+    {
+     "name": "MscS",
+     "gate_kept": true
+    },
+    {
+     "name": "MSL1",
+     "gate_kept": true
+    }
+   ],
+   "X_in_discovered": [],
+   "seed_in_hop1_top15_rank": []
+  },
+  {
+   "case": "Q16",
+   "expected_X": "bacterial / E. coli 70S ribosome",
+   "seed_doi": "10.1021/ja2028487",
+   "class": "bacterial-type ribosomal ribonucleoprotein complexes",
+   "basis": "distinctive_structure",
+   "objective": "Determine how nucleic-acid–protein interactions drive conformational rearrangements in the large ribosome complex using multiscale simulation.",
+   "hop1_sentence": "Identify bacterial-type ribosomal ribonucleoprotein complexes in which nucleic-acid–protein interactions drive conformational rearrangements, particularly systems amenable to multiscale simulation.",
+   "n_retrieved": 15,
+   "n_extraction_rows_matched": 15,
+   "n_empty_extractions": 12,
+   "n_nonempty_unmapped": 0,
+   "papers": [
+    {
+     "rank": 1,
+     "year": 2000,
+     "title": "Induced fit in RNA-protein recognition.",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 2,
+     "year": 1967,
+     "title": "Ribonucleoprotein complexes formed between bacteriophage MS2 RNA and MS2 Protein in vitro",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 3,
+     "year": 2015,
+     "title": "Can We Execute Stable Microsecond-Scale Atomistic Simulations of Protein–RNA Complexes?",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 4,
+     "year": 2018,
+     "title": "Structural Changes of RNA in Complex with Proteins in the SRP",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 5,
+     "year": 2018,
+     "title": "Sampling Native-like Structures of RNA-Protein Complexes through Rosetta Folding and Docking",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 6,
+     "year": 2019,
+     "title": "Large-scale simulations of nucleoprotein complexes: ribosomes, nucleosomes, chromatin, chromosomes and CRISPR",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "ribosomes",
+       "type": "protein_family_or_class"
+      },
+      {
+       "name": "ribosomes",
+       "type": "protein_family_or_class"
+      }
+     ]
+    },
+    {
+     "rank": 7,
+     "year": 2020,
+     "title": "Investigating the mechanism of recognition and structural dynamics of nucleoprotein-RNA complex from Peste des petits ruminants virus via Gaussian accelerated molecular dynamics simulations",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 8,
+     "year": 2006,
+     "title": "Low‐Resolution Molecular Dynamics Simulations of the 30S Ribosomal Subunit",
+     "has_abstract": true,
+     "extracted": [
+      {
+       "name": "30S ribosomal subunit",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 9,
+     "year": 2010,
+     "title": "Nonhierarchical Ribonucleoprotein Assembly Suggests a Strain-Propagation Model for Protein-Facilitated RNA Folding",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 10,
+     "year": 1982,
+     "title": "Comparison of ribonucleic acid-protein interactions in messenger ribonucleoproteins, ribosomes, MS2 virus, and Q.beta. virus examined via phosphorus-31 nuclear magnetic resonance relaxation",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 11,
+     "year": 2007,
+     "title": "A Threefold RNA–Protein Interface in the Signal Recognition Particle Gates Native Complex Assembly",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 12,
+     "year": 2024,
+     "title": "Dynamics of Protein–RNA Interfaces Using All-Atom Molecular Dynamics Simulations",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 13,
+     "year": 2007,
+     "title": "Temperature-dependent RNP Conformational Rearrangements: Analysis of Binary Complexes of Primary Binding Proteins with 16 S rRNA",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 14,
+     "year": 2009,
+     "title": "An Efficient Strategy for the Determination of the Three-Dimensional Architecture of Ribonucleoprotein Complexes by the Combination of a Few Easily Accessible NMR and Biochemical Data: Intermolecular Recognition in a U4 Spliceosomal Complex",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 15,
+     "year": 1995,
+     "title": "Protein-nucleic acid interactions",
+     "has_abstract": false,
+     "extracted": []
+    }
+   ],
+   "stage_counts": {
+    "papers_retrieved": 15,
+    "raw_candidate_mentions": 3,
+    "after_relationship_gate": 2,
+    "after_grounding_discovered_systems": 1,
+    "after_cleanup": 1,
+    "identities_grounded": 0,
+    "identities_total": 1
+   },
+   "gate_rows": [
+    {
+     "paper": "Large-scale simulations of nucleoprotein complexes: ribosomes, nucleosomes, chromatin, chromosomes and CRISPR",
+     "name": "ribosomes",
+     "entity_type": "protein_family_or_class",
+     "quote": "ribosomes",
+     "structural_term_matched": "ribosome",
+     "gate_kept": true,
+     "gate_reason": "kept: class term in quote"
+    },
+    {
+     "paper": "Large-scale simulations of nucleoprotein complexes: ribosomes, nucleosomes, chromatin, chromosomes and CRISPR",
+     "name": "ribosomes",
+     "entity_type": "protein_family_or_class",
+     "quote": "ribosomes",
+     "structural_term_matched": "ribosome",
+     "gate_kept": true,
+     "gate_reason": "kept: class term in quote"
+    },
+    {
+     "paper": "Low‐Resolution Molecular Dynamics Simulations of the 30S Ribosomal Subunit",
+     "name": "30S ribosomal subunit",
+     "entity_type": "specific_protein_or_system",
+     "quote": "30S ribosomal subunit from Thermus thermophilus",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    }
+   ],
+   "grounding_dropped": [],
+   "discovered": [
+    "ribosomes"
+   ],
+   "identities": [
+    {
+     "label": "ribosomes",
+     "grounding": "insufficient",
+     "query_anchor": null
+    }
+   ],
+   "X_in_hop1_papers": [],
+   "X_in_raw_extraction": [],
+   "X_in_discovered": [],
+   "seed_in_hop1_top15_rank": []
+  },
+  {
+   "case": "Q19",
+   "expected_X": "Pol II / bacterial-type / homologous RNAP",
+   "seed_doi": "10.3389/fmolb.2021.772486",
+   "class": "archaeal promoter-recognition transcription initiation complexes",
+   "basis": "distinctive_structure",
+   "objective": "Model the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity",
+   "hop1_sentence": "Find other archaeal promoter-recognition transcription initiation complexes that can illuminate the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity.",
+   "n_retrieved": 15,
+   "n_extraction_rows_matched": 15,
+   "n_empty_extractions": 15,
+   "n_nonempty_unmapped": 0,
+   "papers": [
+    {
+     "rank": 1,
+     "year": 2015,
+     "title": "Structural basis of transcription initiation by RNA polymerase II",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 2,
+     "year": 2008,
+     "title": "Advances in bacterial promoter recognition and its control by factors that do not bind DNA",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 3,
+     "year": 2015,
+     "title": "Initial Events in Bacterial Transcription Initiation",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 4,
+     "year": 1999,
+     "title": "Transcription initiation in Archaea: facts, factors and future aspects",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 5,
+     "year": 1991,
+     "title": "Control regions of an archaeal gene",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 6,
+     "year": 1995,
+     "title": "In vivo definition of an archaeal promoter",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 7,
+     "year": 1976,
+     "title": "Starting and Stopping Sequences for the RNA Polymerase",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 8,
+     "year": 1998,
+     "title": "Promoter opening via a DNA fork junction binding activity",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 9,
+     "year": 2000,
+     "title": "The Role of Transcription Factor B in Transcription Initiation and Promoter Clearance in the Archaeon Sulfolobus acidocaldarius",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 10,
+     "year": 2021,
+     "title": "Structure of RNA polymerase II pre-initiation complex at 2.9 Å defines initial DNA opening",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 11,
+     "year": 1987,
+     "title": "Structure and Function ofE. ColiPromoter DN",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 12,
+     "year": 2004,
+     "title": "Transcription Factor B Contacts Promoter DNA Near the Transcription Start Site of the Archaeal Transcription Initiation Complex",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 13,
+     "year": 1997,
+     "title": "A mutant RNA polymerase that forms unusual open promoter complexes",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 14,
+     "year": 2008,
+     "title": "Analysis of RNA polymerase-promoter complex formation",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 15,
+     "year": 2016,
+     "title": "Open complex scrunching before nucleotide addition accounts for the unusual transcription start site of E. coli ribosomal RNA promoters",
+     "has_abstract": true,
+     "extracted": []
+    }
+   ],
+   "stage_counts": {
+    "papers_retrieved": 15,
+    "raw_candidate_mentions": 0,
+    "after_relationship_gate": 0,
+    "after_grounding_discovered_systems": 0,
+    "after_cleanup": 0,
+    "identities_grounded": 0,
+    "identities_total": 0
+   },
+   "gate_rows": [],
+   "grounding_dropped": [],
+   "discovered": [],
+   "identities": [],
+   "X_in_hop1_papers": [
+    {
+     "rank": 1,
+     "title": "Structural basis of transcription initiation by RNA polymerase II",
+     "year": 2015,
+     "hits": [
+      "RNA polymerase II"
+     ]
+    },
+    {
+     "rank": 3,
+     "title": "Initial Events in Bacterial Transcription Initiation",
+     "year": 2015,
+     "hits": [
+      "RNAP",
+      "bacterial RNA polymerase"
+     ]
+    },
+    {
+     "rank": 9,
+     "title": "The Role of Transcription Factor B in Transcription Initiation and Promoter Clearance in the Archaeon Sulfolobus acidocaldarius",
+     "year": 2000,
+     "hits": [
+      "RNAP",
+      "archaeal RNA polymerase"
+     ]
+    },
+    {
+     "rank": 10,
+     "title": "Structure of RNA polymerase II pre-initiation complex at 2.9 Å defines initial DNA opening",
+     "year": 2021,
+     "hits": [
+      "RNA polymerase II"
+     ]
+    },
+    {
+     "rank": 12,
+     "title": "Transcription Factor B Contacts Promoter DNA Near the Transcription Start Site of the Archaeal Transcription Initiation Complex",
+     "year": 2004,
+     "hits": [
+      "RNAP",
+      "TBP",
+      "TFB",
+      "TFIIB"
+     ]
+    },
+    {
+     "rank": 13,
+     "title": "A mutant RNA polymerase that forms unusual open promoter complexes",
+     "year": 1997,
+     "hits": [
+      "RNAP"
+     ]
+    }
+   ],
+   "X_in_raw_extraction": [],
+   "X_in_discovered": [],
+   "seed_in_hop1_top15_rank": []
+  },
+  {
+   "case": "Q20",
+   "expected_X": "dynamin (and dynamin-family GTPases)",
+   "seed_doi": "10.1021/acs.jpclett.5c02867",
+   "class": "dynamin-family membrane fission GTPase assemblies",
+   "basis": "distinctive_structure",
+   "objective": "Determine how nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling.",
+   "hop1_sentence": "Find other dynamin-family membrane fission GTPase assemblies in which nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling.",
+   "n_retrieved": 15,
+   "n_extraction_rows_matched": 15,
+   "n_empty_extractions": 6,
+   "n_nonempty_unmapped": 0,
+   "papers": [
+    {
+     "rank": 1,
+     "year": 2016,
+     "title": "Membrane fission by dynamin: what we know and what we need to know",
+     "has_abstract": true,
+     "extracted": [
+      {
+       "name": "dynamin",
+       "type": "specific_protein_or_system"
+      },
+      {
+       "name": "dynamin oligomer",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 2,
+     "year": 2001,
+     "title": "Three-dimensional reconstruction of dynamin in the constricted state",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "dynamin",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 3,
+     "year": 1998,
+     "title": "Dynamin Undergoes a GTP-Dependent Conformational Change Causing Vesiculation",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 4,
+     "year": 2008,
+     "title": "GTPase Cycle of Dynamin Is Coupled to Membrane Squeeze and Release, Leading to Spontaneous Fission",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "Dynamin",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 5,
+     "year": 2008,
+     "title": "Real-Time Visualization of Dynamin-Catalyzed Membrane Fission and Vesicle Release",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "Dynamin",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 6,
+     "year": 2006,
+     "title": "GTP-dependent twisting of dynamin implicates constriction and tension in membrane fission",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "dynamin",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 7,
+     "year": 2011,
+     "title": "Dynamin: Functional Design of a Membrane Fission Catalyst",
+     "has_abstract": true,
+     "extracted": []
+    },
+    {
+     "rank": 8,
+     "year": 2011,
+     "title": "The crystal structure of dynamin",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 9,
+     "year": 2013,
+     "title": "Geometric Catalysis of Membrane Fission Driven by Flexible Dynamin Rings",
+     "has_abstract": true,
+     "extracted": [
+      {
+       "name": "dynamin",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 10,
+     "year": 2014,
+     "title": "BAR Domain Scaffolds in Dynamin-Mediated Membrane Fission",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 11,
+     "year": 2004,
+     "title": "Rapid constriction of lipid bilayers by the mechanochemical enzyme dynamin",
+     "has_abstract": false,
+     "extracted": []
+    },
+    {
+     "rank": 12,
+     "year": 2018,
+     "title": "Cryo-EM of the dynamin polymer assembled on lipid membrane",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "dynamin polymer",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 13,
+     "year": 2015,
+     "title": "Crystal structure of the dynamin tetramer",
+     "has_abstract": false,
+     "extracted": [
+      {
+       "name": "dynamin tetramer",
+       "type": "specific_protein_or_system"
+      }
+     ]
+    },
+    {
+     "rank": 14,
+     "year": 2015,
+     "title": "The Mechanoenzymatic Core of Dynamin-related Protein 1 Comprises the Minimal Machinery Required for Membrane Constriction",
+     "has_abstract": true,
+     "extracted": [
+      {
+       "name": "Dynamin-related protein 1 (Drp1)",
+       "type": "specific_protein_or_system"
+      },
+      {
+       "name": "the mechanochemical core of Drp1",
+       "type": "construct_or_variant"
+      }
+     ]
+    },
+    {
+     "rank": 15,
+     "year": 2007,
+     "title": "A Corkscrew Model for Dynamin Constriction",
+     "has_abstract": false,
+     "extracted": []
+    }
+   ],
+   "stage_counts": {
+    "papers_retrieved": 15,
+    "raw_candidate_mentions": 11,
+    "after_relationship_gate": 2,
+    "after_grounding_discovered_systems": 0,
+    "after_cleanup": 0,
+    "identities_grounded": 0,
+    "identities_total": 0
+   },
+   "gate_rows": [
+    {
+     "paper": "Three-dimensional reconstruction of dynamin in the constricted state",
+     "name": "dynamin",
+     "entity_type": "specific_protein_or_system",
+     "quote": "dynamin in the constricted state",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    },
+    {
+     "paper": "Membrane fission by dynamin: what we know and what we need to know",
+     "name": "dynamin",
+     "entity_type": "specific_protein_or_system",
+     "quote": "dynamin oligomerizes into a helical polymer",
+     "structural_term_matched": "",
+     "gate_kept": true,
+     "gate_reason": "kept: shape morpheme in quote"
+    },
+    {
+     "paper": "Membrane fission by dynamin: what we know and what we need to know",
+     "name": "dynamin oligomer",
+     "entity_type": "specific_protein_or_system",
+     "quote": "dynamin oligomer constricts in the presence of GTP",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    },
+    {
+     "paper": "GTPase Cycle of Dynamin Is Coupled to Membrane Squeeze and Release, Leading to Spontaneous Fission",
+     "name": "Dynamin",
+     "entity_type": "specific_protein_or_system",
+     "quote": "GTPase Cycle of Dynamin Is Coupled to Membrane Squeeze and Release, Leading to Spontaneous Fission",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    },
+    {
+     "paper": "Real-Time Visualization of Dynamin-Catalyzed Membrane Fission and Vesicle Release",
+     "name": "Dynamin",
+     "entity_type": "specific_protein_or_system",
+     "quote": "Dynamin-Catalyzed Membrane Fission",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    },
+    {
+     "paper": "GTP-dependent twisting of dynamin implicates constriction and tension in membrane fission",
+     "name": "dynamin",
+     "entity_type": "specific_protein_or_system",
+     "quote": "GTP-dependent twisting of dynamin implicates constriction and tension in membrane fission",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    },
+    {
+     "paper": "Geometric Catalysis of Membrane Fission Driven by Flexible Dynamin Rings",
+     "name": "dynamin",
+     "entity_type": "specific_protein_or_system",
+     "quote": "the guanosine triphosphatase (GTPase) dynamin builds up membrane stress by polymerizing into a helical collar",
+     "structural_term_matched": "",
+     "gate_kept": true,
+     "gate_reason": "kept: shape morpheme in quote"
+    },
+    {
+     "paper": "Cryo-EM of the dynamin polymer assembled on lipid membrane",
+     "name": "dynamin polymer",
+     "entity_type": "specific_protein_or_system",
+     "quote": "dynamin polymer assembled on lipid membrane",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    },
+    {
+     "paper": "Crystal structure of the dynamin tetramer",
+     "name": "dynamin tetramer",
+     "entity_type": "specific_protein_or_system",
+     "quote": "dynamin tetramer",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    },
+    {
+     "paper": "The Mechanoenzymatic Core of Dynamin-related Protein 1 Comprises the Minimal Machinery Required for Membrane Constriction",
+     "name": "Dynamin-related protein 1 (Drp1)",
+     "entity_type": "specific_protein_or_system",
+     "quote": "Dynamin-related protein 1 (Drp1), a large GTPase of the dynamin superfamily",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    },
+    {
+     "paper": "The Mechanoenzymatic Core of Dynamin-related Protein 1 Comprises the Minimal Machinery Required for Membrane Constriction",
+     "name": "the mechanochemical core of Drp1",
+     "entity_type": "construct_or_variant",
+     "quote": "the mechanochemical core of Drp1, absent of the variable domain, is sufficient to mediate GTP hydrolysis-dependent membrane constriction",
+     "structural_term_matched": "",
+     "gate_kept": false,
+     "gate_reason": "DROPPED: quote has neither the class/alias phrase nor a shape-specific morpheme"
+    }
+   ],
+   "grounding_dropped": [
+    {
+     "name": "dynamin",
+     "cleaned": "",
+     "reason": "name is only structural-class wording once the class modifier is stripped",
+     "quote": "dynamin oligomerizes into a helical polymer"
+    },
+    {
+     "name": "dynamin",
+     "cleaned": "",
+     "reason": "name is only structural-class wording once the class modifier is stripped",
+     "quote": "the guanosine triphosphatase (GTPase) dynamin builds up membrane stress by polymerizing into a helical collar"
+    }
+   ],
+   "discovered": [],
+   "identities": [],
+   "X_in_hop1_papers": [
+    {
+     "rank": 1,
+     "title": "Membrane fission by dynamin: what we know and what we need to know",
+     "year": 2016,
+     "hits": [
+      "Dynamin",
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 2,
+     "title": "Three-dimensional reconstruction of dynamin in the constricted state",
+     "year": 2001,
+     "hits": [
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 3,
+     "title": "Dynamin Undergoes a GTP-Dependent Conformational Change Causing Vesiculation",
+     "year": 1998,
+     "hits": [
+      "Dynamin"
+     ]
+    },
+    {
+     "rank": 4,
+     "title": "GTPase Cycle of Dynamin Is Coupled to Membrane Squeeze and Release, Leading to Spontaneous Fission",
+     "year": 2008,
+     "hits": [
+      "Dynamin"
+     ]
+    },
+    {
+     "rank": 5,
+     "title": "Real-Time Visualization of Dynamin-Catalyzed Membrane Fission and Vesicle Release",
+     "year": 2008,
+     "hits": [
+      "Dynamin"
+     ]
+    },
+    {
+     "rank": 6,
+     "title": "GTP-dependent twisting of dynamin implicates constriction and tension in membrane fission",
+     "year": 2006,
+     "hits": [
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 7,
+     "title": "Dynamin: Functional Design of a Membrane Fission Catalyst",
+     "year": 2011,
+     "hits": [
+      "Dynamin",
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 8,
+     "title": "The crystal structure of dynamin",
+     "year": 2011,
+     "hits": [
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 9,
+     "title": "Geometric Catalysis of Membrane Fission Driven by Flexible Dynamin Rings",
+     "year": 2013,
+     "hits": [
+      "Dynamin",
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 10,
+     "title": "BAR Domain Scaffolds in Dynamin-Mediated Membrane Fission",
+     "year": 2014,
+     "hits": [
+      "Dynamin"
+     ]
+    },
+    {
+     "rank": 11,
+     "title": "Rapid constriction of lipid bilayers by the mechanochemical enzyme dynamin",
+     "year": 2004,
+     "hits": [
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 12,
+     "title": "Cryo-EM of the dynamin polymer assembled on lipid membrane",
+     "year": 2018,
+     "hits": [
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 13,
+     "title": "Crystal structure of the dynamin tetramer",
+     "year": 2015,
+     "hits": [
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 14,
+     "title": "The Mechanoenzymatic Core of Dynamin-related Protein 1 Comprises the Minimal Machinery Required for Membrane Constriction",
+     "year": 2015,
+     "hits": [
+      "Drp1",
+      "Dynamin",
+      "dynamin"
+     ]
+    },
+    {
+     "rank": 15,
+     "title": "A Corkscrew Model for Dynamin Constriction",
+     "year": 2007,
+     "hits": [
+      "Dynamin"
+     ]
+    }
+   ],
+   "X_in_raw_extraction": [
+    {
+     "name": "dynamin",
+     "gate_kept": false
+    },
+    {
+     "name": "dynamin",
+     "gate_kept": true
+    },
+    {
+     "name": "dynamin oligomer",
+     "gate_kept": false
+    },
+    {
+     "name": "Dynamin",
+     "gate_kept": false
+    },
+    {
+     "name": "Dynamin",
+     "gate_kept": false
+    },
+    {
+     "name": "dynamin",
+     "gate_kept": false
+    },
+    {
+     "name": "dynamin",
+     "gate_kept": true
+    },
+    {
+     "name": "dynamin polymer",
+     "gate_kept": false
+    },
+    {
+     "name": "dynamin tetramer",
+     "gate_kept": false
+    },
+    {
+     "name": "Dynamin-related protein 1 (Drp1)",
+     "gate_kept": false
+    },
+    {
+     "name": "the mechanochemical core of Drp1",
+     "gate_kept": false
+    }
+   ],
+   "X_in_discovered": [],
+   "seed_in_hop1_top15_rank": []
+  }
+ ]
+}

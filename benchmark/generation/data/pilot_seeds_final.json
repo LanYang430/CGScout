@@ -1,0 +1,503 @@
+[
+ {
+  "case_id": "Q01",
+  "case_type": "L1",
+  "doi": "10.1038/s41467-024-49396-6",
+  "title": "PIP2 modulates TRPC3 activity via TRP helix and S4-S5 linker",
+  "year": 2024,
+  "venue": "Nature Communications",
+  "authors": [
+   "Amy Clarke",
+   "Julia Skerjanz",
+   "Matthias A. F. Gsell",
+   "Patrick Wiedner",
+   "Hazel Erkan‐Candag",
+   "Klaus Groschner",
+   "Thomas Stockner",
+   "Oleksandra Tiapko"
+  ],
+  "abstract_sha256": "3b1883904d5a7c546231771c5816fb9dce08a714e130d8ae9595cdf32c4d19e8",
+  "abstract_chars": 905,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "membrane",
+  "source": "curated"
+ },
+ {
+  "case_id": "Q02",
+  "case_type": "L1",
+  "doi": "10.1038/s42003-025-09161-x",
+  "title": "Polymyxins slow down lateral diffusion of proteins and lipopolysaccharide in the E. coli outer membrane",
+  "year": 2025,
+  "venue": "Communications Biology",
+  "authors": [
+   "Dheeraj Prakaash",
+   "Syma Khalid"
+  ],
+  "abstract_sha256": "0925fdafa26c566e8e491d345fbb895e5dc5ccd6a4d2ecd0913b8d5b67428155",
+  "abstract_chars": 1148,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "membrane",
+  "source": "curated"
+ },
+ {
+  "case_id": "Q03",
+  "case_type": "L1",
+  "doi": "10.1038/s41467-024-53136-1",
+  "title": "Disordered regions of human eIF4B orchestrate a dynamic self-association landscape",
+  "year": 2024,
+  "venue": "Nature Communications",
+  "authors": [
+   "Bikash Chandra Swain",
+   "Pascale Sarkis",
+   "Vanessa Ung",
+   "Sabrina Rousseau",
+   "Laurent Fernandez",
+   "Ani Meltonyan",
+   "V. Esperance Aho",
+   "Davide Mercadante",
+   "Cameron D. Mackereth",
+   "Mikayel G. Aznauryan"
+  ],
+  "abstract_sha256": "6cf74b727977c0025267a75618dd0ffc57d7527b100e2b8d6c43d7671ca051ea",
+  "abstract_chars": 1189,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "idp_condensate",
+  "source": "curated"
+ },
+ {
+  "case_id": "Q04",
+  "case_type": "L1",
+  "doi": "10.52396/justc-2023-0064",
+  "title": "Dynamics in the assembly of the 30S ribosomal subunit investigated by coarse-grained simulations",
+  "year": 2023,
+  "venue": "JUSTC",
+  "authors": [
+   "Xin Liu",
+   "Zhiyong Zhang"
+  ],
+  "abstract_sha256": "4cc5e3711dd6c8a99c7ab52688918716ac7402a2a955904229c63f253fc6126d",
+  "abstract_chars": 1348,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "molecular_machine",
+  "source": "new_search"
+ },
+ {
+  "case_id": "Q05",
+  "case_type": "L1",
+  "doi": "10.1039/c4cp06100d",
+  "title": "Cofilin reduces the mechanical properties of actin filaments: approach with coarse-grained methods",
+  "year": 2015,
+  "venue": "Physical Chemistry Chemical Physics",
+  "authors": [
+   "Jae‐In Kim",
+   "Junpyo Kwon",
+   "Inchul Baek",
+   "Harold S. Park",
+   "Sungsoo Na"
+  ],
+  "abstract_sha256": "623ac1991a8d8a3a03dd3caec596ab3080cc84d211e8b7c104c7d57478395291",
+  "abstract_chars": 1061,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "cytoskeleton",
+  "source": "new_search"
+ },
+ {
+  "case_id": "Q06",
+  "case_type": "L1",
+  "doi": "10.1063/1.4954992",
+  "title": "Approach to the unfolding and folding dynamics of add A-riboswitch upon adenine dissociation using a coarse-grained elastic network model",
+  "year": 2016,
+  "venue": "The Journal of Chemical Physics",
+  "authors": [
+   "Chunhua Li",
+   "Dashuai Lv",
+   "Lei Zhang",
+   "Feng Yang",
+   "Cunxin Wang",
+   "Jiguo Su",
+   "Yang Zhang"
+  ],
+  "abstract_sha256": "87c3a635634699dfd5d9c7e9a724f80cfeb5418732b58a78775179cb11b2b8af",
+  "abstract_chars": 1463,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "rna",
+  "source": "new_search"
+ },
+ {
+  "case_id": "Q07",
+  "case_type": "L2",
+  "doi": "10.1038/s41467-025-60593-9",
+  "title": "Conformational dynamics and membrane insertion mechanism of B4GALNT1 in ganglioside synthesis",
+  "year": 2025,
+  "venue": "Nature Communications",
+  "authors": [
+   "Jack W.J. Welland",
+   "Henry G. Barrow",
+   "Phillip James Stansfeld",
+   "Janet Elwyn Deane"
+  ],
+  "abstract_sha256": "4701c82aabd538dc0a01b8eb22ad176aaec459ca953d14c1eb5324168a5144d6",
+  "abstract_chars": 1143,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "membrane",
+  "source": "curated"
+ },
+ {
+  "case_id": "Q08",
+  "case_type": "L2",
+  "doi": "10.1038/s41467-024-47602-z",
+  "title": "Biomolecular condensates form spatially inhomogeneous network fluids",
+  "year": 2024,
+  "venue": "Nature Communications",
+  "authors": [
+   "Furqan Dar",
+   "Samuel R. Cohen",
+   "Diana M. Mitrea",
+   "Aaron H. Phillips",
+   "Gergely Nagy",
+   "Wellington Claiton Leite",
+   "Christopher B. Stanley",
+   "Jeong‐Mo Choi",
+   "Richard W. Kriwacki",
+   "Rohit V. Pappu"
+  ],
+  "abstract_sha256": "cf2670b7d57f05524dd17542673a15f205c4487da5a68cb32431e96933d7d49c",
+  "abstract_chars": 1139,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "idp_condensate",
+  "source": "curated"
+ },
+ {
+  "case_id": "Q09",
+  "case_type": "L2",
+  "doi": "10.1038/s41467-025-58445-7",
+  "title": "Selective phase separation of transcription factors is driven by orthogonal molecular grammar",
+  "year": 2025,
+  "venue": "Nature Communications",
+  "authors": [
+   "Mark D. Driver",
+   "Patrick R. Onck"
+  ],
+  "abstract_sha256": "d9fef06cac29de3b99ef121f6da619070c272430e203bd51df165bda015b5847",
+  "abstract_chars": 1603,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "idp_condensate",
+  "source": "curated"
+ },
+ {
+  "case_id": "Q10",
+  "case_type": "L2",
+  "doi": "10.1063/5.0246977",
+  "title": "Unveiling nucleosome dynamics: A comparative study using all-atom and coarse-grained simulations enhanced by principal component analysis",
+  "year": 2025,
+  "venue": "The Journal of Chemical Physics",
+  "authors": [
+   "Abhik Ghosh Moulick",
+   "Rutika Patel",
+   "Augustine C. Onyema",
+   "Sharon M. Loverde"
+  ],
+  "abstract_sha256": "b70e1b2ebb4b1d4b8cee2e733f2e85d4f27dfc5f12a6c9ab52c6a426402c2a68",
+  "abstract_chars": 1054,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "chromatin_dna",
+  "source": "new_search"
+ },
+ {
+  "case_id": "Q11",
+  "case_type": "L2",
+  "doi": "10.3390/v15081672",
+  "title": "Molecular Dynamics Simulations of Deformable Viral Capsomers",
+  "year": 2023,
+  "venue": "Viruses",
+  "authors": [
+   "Lauren Nilsson",
+   "Fanbo Sun",
+   "JCS Kadupitiya",
+   "Vikram Jadhao"
+  ],
+  "abstract_sha256": "a347ee0ccffedbfb8aee5e563d59fed8a3bc352c0e70fc5fd46658b45648df3b",
+  "abstract_chars": 1317,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "virus_capsid",
+  "source": "new_search"
+ },
+ {
+  "case_id": "Q12",
+  "case_type": "L2",
+  "doi": "10.1093/nar/gkx378",
+  "title": "Structure and conformational dynamics of scaffolded DNA origami nanoparticles",
+  "year": 2017,
+  "venue": "Nucleic Acids Research",
+  "authors": [
+   "Keyao Pan",
+   "William P. Bricker",
+   "Sakul Ratanalert",
+   "Mark Bathe"
+  ],
+  "abstract_sha256": "b9769d64706671a4921ec597b77164bd142aafc143c163f4a7b4a70f75022b37",
+  "abstract_chars": 1526,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "dna_nanotech",
+  "source": "new_search"
+ },
+ {
+  "case_id": "Q13",
+  "case_type": "L2",
+  "doi": "10.3389/fpls.2013.00555",
+  "title": "Coarse-grained computer simulation of dynamics in thylakoid membranes: methods and opportunities",
+  "year": 2014,
+  "venue": "Frontiers in Plant Science",
+  "authors": [
+   "Anna R. Schneider",
+   "Phillip L. Geissler"
+  ],
+  "abstract_sha256": "425903c01df663d3304ccf26018ed95c74b84b88f58678422d19de04d07be735",
+  "abstract_chars": 698,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "membrane",
+  "source": "new_search"
+ },
+ {
+  "case_id": "Q14",
+  "case_type": "L2",
+  "doi": "10.1021/jp409326f",
+  "title": "Mesoscopic Coarse-Grained Simulations of Lysozyme Adsorption",
+  "year": 2014,
+  "venue": "The Journal of Physical Chemistry B",
+  "authors": [
+   "Gaobo Yu",
+   "Jie Liu",
+   "Jian Wei Zhou"
+  ],
+  "abstract_sha256": "58c0bdc41306fbaa2be9b19e59bb71ffcabf36a958ef5ab40a9b0cc006f35ad0",
+  "abstract_chars": 1619,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "protein_surface",
+  "source": "new_search"
+ },
+ {
+  "case_id": "Q15",
+  "case_type": "L3",
+  "doi": "10.1021/jp9053567",
+  "title": "Coarse-Grained Model for Mechanosensitive Ion Channels",
+  "year": 2009,
+  "venue": "The Journal of Physical Chemistry B",
+  "authors": [
+   "Shuangyang Li",
+   "Xianren Zhang",
+   "Wenchuan Wang"
+  ],
+  "abstract_sha256": "f474cf4b010da47d47ce7233ef0ebb2f89bd35e27d3f5400f90e6905757d40ca",
+  "abstract_chars": 712,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "ion_channel",
+  "named_system": "MscS",
+  "l3_target": {
+   "system_name": "Arabidopsis MSL10",
+   "description": "a plant ion channel that opens when the membrane is stretched",
+   "shared_feature": "tension-dependent gating of a mechanosensitive channel",
+   "source_system": "MscS",
+   "verified_no_direct": true,
+   "evidence": {
+    "n_queries": 3,
+    "n_unique_papers_judged": 46,
+    "direct_hits": [],
+    "transfer_axis": "family_function",
+    "confidence": "high",
+    "caveat": "MSL10 may differ substantially from bacterial MscS in oligomeric organization, transmembrane topology, cytoplasmic domains, lipid interactions, and gating mechanism; the seed model and parameters would therefore require substantial reparameterization and validation rather than direct reuse."
+   }
+  }
+ },
+ {
+  "case_id": "Q16",
+  "case_type": "L3",
+  "doi": "10.1021/ja2028487",
+  "title": "Key Intermolecular Interactions in the E. coli 70S Ribosome Revealed by Coarse-Grained Analysis",
+  "year": 2011,
+  "venue": "Journal of the American Chemical Society",
+  "authors": [
+   "Zhiyong Zhang",
+   "Karissa Y. Sanbonmatsu",
+   "Gregory A. Voth"
+  ],
+  "abstract_sha256": "be1d2407be2bd1bf3772bf45a83d8b3e79e67b3c470410188751f3822ef3b7ee",
+  "abstract_chars": 1653,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "ribonucleoprotein",
+  "named_system": "E. coli 70S ribosome",
+  "l3_target": {
+   "system_name": "chloroplast 70S ribosome",
+   "description": "the plastid ribosome, a two-subunit bacterial-type ribosome with plastid-specific additions",
+   "shared_feature": "inter-subunit contacts and collective motions of a two-subunit ribosome",
+   "source_system": "E. coli 70S ribosome",
+   "verified_no_direct": true,
+   "evidence": {
+    "n_queries": 3,
+    "n_unique_papers_judged": 59,
+    "direct_hits": [],
+    "transfer_axis": "family_function",
+    "confidence": "high",
+    "caveat": "E. coli-derived interaction strengths and domain definitions should not be transferred unchanged: chloroplast ribosomes contain lineage-specific RNAs and proteins, and a chloroplast-specific all-atom reference structure or experimental data would be needed for calibration and validation."
+   }
+  }
+ },
+ {
+  "case_id": "Q17",
+  "case_type": "L3",
+  "doi": "10.1038/s41467-021-27315-3",
+  "title": "Monitoring the binding and insertion of a single transmembrane protein by an insertase",
+  "year": 2021,
+  "venue": "Nature Communications",
+  "authors": [
+   "P. Laskowski",
+   "Kristýna Pluháčková",
+   "Maximilian Haase",
+   "Brian Matthew Lang",
+   "Gisela Nagler",
+   "Andreas Kühn",
+   "Daniel J. Müller"
+  ],
+  "abstract_sha256": "8953cace0d50bea445c4e6c7cd8987061836fce7c4fb255a4e5605bfc26baba8",
+  "abstract_chars": 1073,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "membrane_insertion",
+  "named_system": "YidC",
+  "l3_target": {
+   "system_name": "chloroplast Alb3 insertase",
+   "description": "a thylakoid-membrane insertase that inserts transmembrane proteins into the membrane",
+   "shared_feature": "binding and insertion of a single transmembrane protein by an insertase",
+   "source_system": "YidC",
+   "verified_no_direct": true,
+   "evidence": {
+    "n_queries": 3,
+    "n_unique_papers_judged": 42,
+    "direct_hits": [],
+    "transfer_axis": "family_function",
+    "confidence": "high",
+    "caveat": "Alb3 may differ from bacterial YidC in domain architecture, topology, stromal targeting context, membrane composition, and substrate specificity; therefore the detailed role of the YidC cytoplasmic hairpin and the reported millisecond kinetics may not transfer directly."
+   }
+  }
+ },
+ {
+  "case_id": "Q18",
+  "case_type": "L3",
+  "doi": "10.1529/biophysj.106.093443",
+  "title": "Coarse-Grained Molecular Dynamics Simulations of a Rotating Bacterial Flagellum",
+  "year": 2006,
+  "venue": "Biophysical Journal",
+  "authors": [
+   "Anton S. Arkhipov",
+   "Lydia Freddolino",
+   "Katsumi Imada",
+   "Keiichi Namba",
+   "Klaus Schulten"
+  ],
+  "abstract_sha256": "74a394875bea238568a73c35684aa75202db41d1a4b70469ab13fd0a92ca284b",
+  "abstract_chars": 1018,
+  "abstract_source": "europepmc",
+  "oa_type": "article",
+  "domain": "motility_filament",
+  "named_system": "bacterial flagellum",
+  "l3_target": {
+   "system_name": "archaeal archaellum",
+   "description": "the rotating helical motility filament of archaea",
+   "shared_feature": "rotation and torque transmission of a long helical protein filament",
+   "source_system": "bacterial flagellum",
+   "verified_no_direct": true,
+   "evidence": {
+    "n_queries": 3,
+    "n_unique_papers_judged": 38,
+    "direct_hits": [],
+    "transfer_axis": "physical_process",
+    "confidence": "medium",
+    "caveat": "Bacterial flagellar filaments and archaella are not homologous and differ substantially in subunit architecture, filament mechanics, motor coupling, and torque generation; the seed force field and structural model would therefore require substantial reparameterization, and its treatment of motor-driven torque may not directly transfer."
+   }
+  }
+ },
+ {
+  "case_id": "Q19",
+  "case_type": "L3",
+  "doi": "10.3389/fmolb.2021.772486",
+  "title": "Modeling DNA Opening in the Eukaryotic Transcription Initiation Complexes via Coarse-Grained Models",
+  "year": 2021,
+  "venue": "Frontiers in Molecular Biosciences",
+  "authors": [
+   "Genki Shino",
+   "Shoji Takada"
+  ],
+  "abstract_sha256": "91cfb90a733d7574d078bdf019b8a12b4cbcee63fe260561f6eebbea172915d6",
+  "abstract_chars": 2606,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "transcription",
+  "named_system": "RNA polymerase II transcription initiation complex",
+  "l3_target": {
+   "system_name": "Sulfolobus RNA polymerase",
+   "description": "the archaeal RNA polymerase, which initiates transcription with TBP- and TFB-type factors",
+   "shared_feature": "promoter DNA opening during transcription initiation",
+   "source_system": "RNA polymerase II transcription initiation complex",
+   "verified_no_direct": true,
+   "evidence": {
+    "n_queries": 6,
+    "n_unique_papers_judged": 90,
+    "direct_hits": [],
+    "transfer_axis": "close_structural_homology",
+    "confidence": "medium",
+    "caveat": "The yeast Pol II initiation complex includes eukaryote-specific factors and structural elements, while Sulfolobus promoter recognition, initiation factors, RNAP subunits, and DNA sequences differ; the reported fork-loop mechanism and any CG interaction parameters therefore cannot be transferred directly without archaeal structural data and reparameterization."
+   }
+  }
+ },
+ {
+  "case_id": "Q20",
+  "case_type": "L3",
+  "doi": "10.1021/acs.jpclett.5c02867",
+  "title": "Membrane Constriction by Dynamin through GTP-Driven Conformational Changes from Coarse-Grained Molecular Dynamics Simulations",
+  "year": 2025,
+  "venue": "The Journal of Physical Chemistry Letters",
+  "authors": [
+   "Md. Iqbal Mahmood",
+   "Shintaroh Kubo",
+   "Hiroshi Noguchi",
+   "Kei-ichi Okazaki"
+  ],
+  "abstract_sha256": "98644b3ff229f62561a9da6ee852d13ac69ed3c6d74842ccd7c8ca96e74bbcff",
+  "abstract_chars": 1260,
+  "abstract_source": "openalex",
+  "oa_type": "article",
+  "domain": "membrane_remodeling",
+  "named_system": "dynamin",
+  "l3_target": {
+   "system_name": "yeast Mgm1",
+   "description": "a yeast mitochondrial GTPase that assembles on the inner membrane and remodels it",
+   "shared_feature": "nucleotide-dependent assembly that constricts a membrane",
+   "source_system": "dynamin",
+   "verified_no_direct": true,
+   "evidence": {
+    "n_queries": 6,
+    "n_unique_papers_judged": 87,
+    "direct_hits": [],
+    "transfer_axis": "family_function",
+    "confidence": "medium",
+    "caveat": "Mgm1 may differ substantially from dynamin in oligomeric architecture, membrane topology, mitochondrial localization, and the molecular mechanism of remodeling; the seed's specific dynamin conformational changes and ring behavior cannot be assumed to apply directly."
+   }
+  }
+ }
+]

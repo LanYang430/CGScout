@@ -9,17 +9,13 @@ tests/test_hop2_simplification.py's accumulator tests.
 """
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
-
-from route_retrieval_plan import (  # noqa: E402
+from cgscout.retrieval.direct.route_plan import (  # noqa: E402
     RouteProvenanceEntry,
     RouteRetrievalBudgets,
     _Accumulator,
 )
-from related_system_hop2 import Hop1Provenance  # noqa: E402
+from cgscout.retrieval.types import Hop1Provenance  # noqa: E402
 
 
 def _prov(system: str) -> Hop1Provenance:

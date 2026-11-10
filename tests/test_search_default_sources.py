@@ -10,8 +10,8 @@ No real network -- same monkeypatch convention as test_search_cache.py.
 """
 from __future__ import annotations
 
-import beam_agent.search as search
-from beam_agent.models import Paper
+import cgscout.retrieval.search as search
+from cgscout.models import Paper
 
 
 def _fake_source(papers_by_query: dict, calls: list):

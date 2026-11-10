@@ -1,78 +1,105 @@
-"""Guards the phase-1 import decoupling: the CGScout (BEAM) path must not drag the v1 pipeline or the old ConceptResolverSession stack into memory.
+"""Guards the package's import structure: the CGScout path must not drag legacy code, the optional local-model stack, or any path patch into memory.
 
-Why it matters: before this change, `import beam_agent` loaded nine v1 modules, `search.py` loaded `pipeline`/`query_planner`, `relevance_filter_handoff`
-loaded the v1 `concept_resolver`, and `route_retrieval_live_adapter` loaded `mellea_adapter` (which hard-imports the `mellea` package) -- none of which the
-retrieval -> Stage 3 -> Stage 4 path uses.  The closure checks run in a fresh interpreter, because other tests import these modules in-process.
+Background: before the cleanup, `import beam_agent` loaded nine v1 modules, `search.py` loaded `pipeline`/`query_planner`, the Stage 3 filter loaded the v1
+`concept_resolver`, and the live search adapter loaded `mellea_adapter` (which hard-imports the `mellea` package) -- none of which the
+retrieval -> Stage 3 -> Stage 4 path uses.  That code is now historical (git tag `legacy-pre-cgscout`); these tests keep it from creeping back.
+The closure checks run in a fresh interpreter, because other tests import these modules in-process.
 """
+import ast
 import json
 import os
 import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
-CR = ROOT / "benchmarks" / "concept_resolver_reasoning"
-MI = CR / "mellea_integration"
+SRC = ROOT / "src"
+PKG = SRC / "cgscout"
 
-V1_MODULES = [
-    "beam_agent.pipeline", "beam_agent.query_planner", "beam_agent.concept_resolver",
-    "beam_agent.evidence_matching", "beam_agent.relevance_filter", "beam_agent.snapshot",
-]
-SESSION_STACK = ["concept_resolver_session", "intake_readiness_gate"]
-# the optional local-model stack was dropped from the project: neither package may be needed (or even loaded) by the CGScout path
-LOCAL_MODEL_STACK = ["mellea", "ollama", "mellea_adapter"]
-
-_PRELUDE = f"""
-import sys, json
-sys.dont_write_bytecode = True
-for p in ({str(ROOT)!r}, {str(CR)!r}, {str(MI)!r}, {str(ROOT / "benchmarks" / "regression_13")!r}):
-    sys.path.insert(0, p)
-"""
+# Names that must never be loaded by the CGScout path: the old package, the v1 / old-session modules, and the local-model stack that was dropped from the project.
+LEGACY = ["beam_agent", "concept_resolver_session", "intake_readiness_gate", "mellea", "ollama", "mellea_adapter"]
 
 
 def _loaded(code: str, watch: list[str]) -> dict:
-    """Run `code` in a fresh interpreter and report which of `watch` ended up in sys.modules (and whether the run itself succeeded)."""
-    src = _PRELUDE + code + f"\nprint('@@' + json.dumps({{m: (m in sys.modules and sys.modules[m] is not None) for m in {watch!r}}}))\n"
-    proc = subprocess.run([sys.executable, "-c", src], capture_output=True, text=True, cwd=str(ROOT),
-                          env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
+    """Run `code` in a fresh interpreter (with src/ importable) and report which names of `watch` -- or submodules of them -- ended up in sys.modules."""
+    src = ("import sys, json\nsys.dont_write_bytecode = True\n" + code +
+           f"\nprint('@@' + json.dumps({{w: sorted(m for m in sys.modules if sys.modules[m] is not None and (m == w or m.startswith(w + '.'))) for w in {watch!r}}}))\n")
+    env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": os.pathsep.join([str(SRC)] + ([os.environ["PYTHONPATH"]] if os.environ.get("PYTHONPATH") else []))}
+    proc = subprocess.run([sys.executable, "-c", src], capture_output=True, text=True, cwd=str(ROOT), env=env)
     assert proc.returncode == 0, proc.stderr[-2000:]
     return json.loads(proc.stdout.rsplit("@@", 1)[1])
 
 
-def test_importing_the_package_loads_no_v1_module():
-    loaded = _loaded("import beam_agent", V1_MODULES)
-    assert not [m for m, v in loaded.items() if v], loaded
+def test_importing_the_package_loads_no_submodule_and_no_legacy_code():
+    loaded = _loaded("import cgscout", LEGACY + ["cgscout"])
+    assert loaded["cgscout"] == ["cgscout"], loaded          # the bare package imports none of its submodules
+    assert not [w for w in LEGACY if loaded[w]], loaded
 
 
-def test_search_module_does_not_load_the_v1_pipeline():
-    loaded = _loaded("import beam_agent.search", V1_MODULES)
-    assert not [m for m, v in loaded.items() if v], loaded
+def test_search_module_loads_no_legacy_code():
+    loaded = _loaded("import cgscout.retrieval.search", LEGACY)
+    assert not [w for w in LEGACY if loaded[w]], loaded
 
 
-def test_cgscout_path_loads_no_v1_or_session_stack_and_needs_no_local_model_packages():
+def test_cgscout_path_loads_no_legacy_code_and_needs_no_local_model_packages():
     # `sys.modules[name] = None` makes `import name` raise ImportError: the path must work on an install without these packages.
-    code = "sys.modules['mellea'] = None\nsys.modules['ollama'] = None\nimport transfer_retrieval_bridge, stage4_v2, regression_lib\n"
-    loaded = _loaded(code, V1_MODULES + SESSION_STACK + LOCAL_MODEL_STACK)
-    assert not [m for m, v in loaded.items() if v], loaded
+    code = ("sys.modules['mellea'] = None\nsys.modules['ollama'] = None\n"
+            "import cgscout.retrieval.orchestrator, cgscout.assessment.stage4, cgscout.cli\n")
+    loaded = _loaded(code, LEGACY)
+    assert not [w for w in LEGACY if loaded[w]], loaded
 
 
 def test_search_adapters_keep_the_module_level_names_the_harness_uses():
     """The two bridges and the benchmark recorders access these as attributes of the module (the recorder wraps `search_and_dedupe` in it and
     classifies requests by the closure names inside `_make_capturing_search_fns`); they must keep existing under the same names."""
-    import route_retrieval_live_adapter as adapter  # noqa: E402 -- sys.path is set up by the module itself, like every other test of this directory
+    import cgscout.retrieval.search_adapters as adapter
     for name in ("search_and_dedupe", "STRUCTURAL_HOP1_SEARCH_LIMIT", "STRUCTURAL_HOP2_SEARCH_LIMIT", "STRUCTURAL_SEARCH_SOURCES",
                  "_make_capturing_search_fns", "make_need_semantic_search_fn", "papers_for_stage3", "provenance_index"):
         assert hasattr(adapter, name), name
 
 
 def test_methodology_table_has_a_single_definition():
-    from beam_agent import text_utils
-    import relevance_filter_handoff as handoff
-    assert handoff._METHODOLOGY_TERM_CLUSTERS is text_utils.METHODOLOGY_TERM_CLUSTERS
+    from cgscout import text
+    import cgscout.screening.filter as handoff
+    assert handoff._METHODOLOGY_TERM_CLUSTERS is text.METHODOLOGY_TERM_CLUSTERS
 
 
 def test_hop1_extraction_constants_are_unchanged():
-    import transfer_entity_extraction as tee
+    import cgscout.retrieval.related_systems.extraction as tee
     assert tee._MAX_ABSTRACT_CHARS_FOR_EXTRACTION == 4000
     assert tee._EXTRACTION_TIMEOUT_SECONDS == 20
+
+
+def _source_files():
+    return sorted(PKG.rglob("*.py"))
+
+
+def test_source_has_no_mellea_or_ollama_import_and_no_mellea_adapter_name():
+    """AST scan of src/cgscout: no import of mellea / ollama, no `mellea_adapter` identifier or string."""
+    offenders = []
+    for path in _source_files():
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            mods = []
+            if isinstance(node, ast.Import):
+                mods = [a.name for a in node.names]
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                mods = [node.module]
+            if any(m.split(".")[0] in ("mellea", "ollama") for m in mods):
+                offenders.append(f"{path.relative_to(ROOT)}:{node.lineno} imports {mods}")
+            if isinstance(node, ast.Name) and "mellea_adapter" in node.id:
+                offenders.append(f"{path.relative_to(ROOT)}:{node.lineno} name {node.id}")
+            if isinstance(node, ast.Constant) and isinstance(node.value, str) and "mellea_adapter" in node.value:
+                offenders.append(f"{path.relative_to(ROOT)}:{node.lineno} string mentions mellea_adapter")
+    assert not offenders, offenders
+
+
+def test_source_does_not_patch_sys_path():
+    """The package is imported as `cgscout.*` -- no module may rely on (or add to) sys.path."""
+    offenders = []
+    for path in _source_files():
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            if (isinstance(node, ast.Attribute) and node.attr == "path" and isinstance(node.value, ast.Name) and node.value.id == "sys"):
+                offenders.append(f"{path.relative_to(ROOT)}:{node.lineno}")
+    assert not offenders, offenders

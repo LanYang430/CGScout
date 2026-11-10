@@ -21,12 +21,9 @@ over-clarification the target_component rule's missing contrastive
 example (fixed this round) was meant to prevent.
 """
 import os
-import sys
-from pathlib import Path
 
 import pytest
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning" / "mellea_integration"))
 
 pytestmark = pytest.mark.skipif(
     os.environ.get("BEAM_RUN_LIVE_PLANNER_TESTS") != "1",
@@ -35,8 +32,8 @@ pytestmark = pytest.mark.skipif(
 
 
 def test_eif4b_idr_query_does_not_trigger_clarification():
-    from llm_backend import get_backend
-    from planner_session import PlannerSession
+    from cgscout.llm import get_backend
+    from cgscout.planning.session import PlannerSession
 
     session = PlannerSession(backend=get_backend(), case_id="test_eif4b_no_clarify")
     turn = session.submit_user_message(

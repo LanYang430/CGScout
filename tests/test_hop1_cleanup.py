@@ -13,13 +13,9 @@ observed case, not just synthetic examples.
 """
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
-
-from related_system_discovery import DiscoveredSystem, SupportingPaper  # noqa: E402
-from hop1_cleanup import cleanup_discovered_systems  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import DiscoveredSystem, SupportingPaper  # noqa: E402
+from cgscout.retrieval.related_systems.cleanup import cleanup_discovered_systems  # noqa: E402
 
 
 def _sys(name, rank=0, n_support=1, quote=None):

@@ -7,14 +7,10 @@ hand, exactly as transfer_entity_extraction.py's real extraction ->
 related_system_discovery._ground_mention()'s pass-through would produce
 them.
 """
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning" / "mellea_integration"))
 
-from related_system_discovery import DiscoveredSystem, SupportingPaper  # noqa: E402
-from related_system_identity import build_related_system_identity  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import DiscoveredSystem, SupportingPaper  # noqa: E402
+from cgscout.retrieval.related_systems.identity import build_related_system_identity  # noqa: E402
 
 
 def _ds(name, entity_type=None, identity_context=None, n_support=1, rank=0,

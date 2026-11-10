@@ -1,0 +1,121 @@
+morphemes: ['adhesin', 'alpha', 'amyloid', 'antiparallel', 'autotransporter', 'barrel', 'beta', 'bundle', 'coil', 'cross-beta', 'disordered', 'double-stranded', 'fibril', 'fold', 'globular', 'hairpin', 'helic', 'helix', 'ladder', 'lectin', 'left-handed', 'parallel', 'passenger', 'prism', 'propeller', 'repeat', 'right-handed', 'roll', 'sandwich', 'sheet', 'single-stranded', 'solenoid', 'spiral', 'strand', 'supercoil', 'transporter', 'triple']
+
+====================================================================================================
+Q15 | basis: family_homology | class: MscS-related mechanosensitive ion channels
+  Hop-1 sentence: Identify other MscS-related mechanosensitive ion channels relevant to modeling tension-dependent gating and predicting bilayer-stress-driven transitions from nonconducting to conducting states.
+  stage counts: {'papers_retrieved': 15, 'raw_candidate_mentions': 6, 'after_relationship_gate': 6, 'after_grounding_discovered_systems': 0, 'after_cleanup': 0, 'identities_grounded': 0, 'identities_total': 0} | extraction rows matched: 15 | empty: 10 | nonempty-unmapped: 0
+   [ 1] 1999 Energetic and Spatial Parameters for Gating of the Bacterial Large Conductance Mechanose  ->  -
+   [ 2] 2021 Visualization of the mechanosensitive ion channel MscS under membrane tension  ->  ['MscS']
+   [ 3] 2004 Analytic models for mechanotransduction: Gating a mechanosensitive channel  ->  -
+   [ 4] 2002 A large iris-like expansion of a mechanosensitive channel protein induced by membrane te  ->  -
+   [ 5] 2008 A Structural Mechanism for MscS Gating in Lipid Bilayers  ->  ['MscS']
+   [ 6] 2016 The role of MscL amphipathic N terminus indicates a blueprint for bilayer-mediated gatin  ->  -
+   [ 7] 2004 Mechanosensitive channels: what can we learn from ?simple? model systems?  ->  -
+   [ 8] 2010 The tension-transmitting 'clutch' in the mechanosensitive channel MscS  ->  ['MscS']
+   [ 9] 1999 Mechanosensitive channels in bacteria as membrane tension reporters  ->  -
+   [10] 2007 Voltage-induced gating of the mechanosensitive MscL ion channel reconstituted in a tethe  ->  -
+   [11] 2018 Tuning ion channel mechanosensitivity by asymmetry of the transbilayer pressure profile  ->  -
+   [12] 2012 The gating mechanism of the bacterial mechanosensitive channel MscL revealed by molecula  ->  -
+   [13] 2013 Connection between Oligomeric State and Gating Characteristics of Mechanosensitive Ion C  ->  -
+   [14] 2016 From membrane tension to channel gating: A principal energy transfer mechanism for mecha  ->  ['MscS']
+   [15] 2023 State-specific morphological deformations of the lipid bilayer explain mechanosensitive   ->  ['MscS', 'MSL1']
+  X present in retrieved papers: [(1, ['MscL']), (2, ['MscS']), (3, ['MscL']), (5, ['MscS', 'small conductance']), (6, ['MscL']), (8, ['MscS']), (9, ['MscL']), (10, ['MscL']), (12, ['MscL']), (13, ['MscL']), (14, ['MscL', 'MscS']), (15, ['MSL1', 'MscS'])]
+  X in raw extraction: [{'name': 'MscS', 'gate_kept': True}, {'name': 'MscS', 'gate_kept': True}, {'name': 'MscS', 'gate_kept': True}, {'name': 'MscS', 'gate_kept': True}, {'name': 'MscS', 'gate_kept': True}, {'name': 'MSL1', 'gate_kept': True}] | X in discovered: none | seed in Hop-1 top15: no
+   GATE KEPT    MscS                                     [specific_protein_or_sy] basis is not distinctive_structure: gate not applied
+   GATE KEPT    MscS                                     [specific_protein_or_sy] basis is not distinctive_structure: gate not applied
+   GATE KEPT    MscS                                     [specific_protein_or_sy] basis is not distinctive_structure: gate not applied
+   GATE KEPT    MscS                                     [specific_protein_or_sy] basis is not distinctive_structure: gate not applied
+   GATE KEPT    MscS                                     [specific_protein_or_sy] basis is not distinctive_structure: gate not applied
+   GATE KEPT    MSL1                                     [specific_protein_or_sy] basis is not distinctive_structure: gate not applied
+   GROUNDING-DROP MscS                                     :: name is only structural-class wording once the class modifier is stripped
+   GROUNDING-DROP MscS                                     :: name is only structural-class wording once the class modifier is stripped
+   GROUNDING-DROP MscS                                     :: name is only structural-class wording once the class modifier is stripped
+   GROUNDING-DROP MscS                                     :: name is only structural-class wording once the class modifier is stripped
+   GROUNDING-DROP MscS                                     :: name is only structural-class wording once the class modifier is stripped
+   GROUNDING-DROP MSL1                                     :: evidence quote no longer ties the system to the structural class
+  discovered: [] | identities: []
+
+====================================================================================================
+Q16 | basis: distinctive_structure | class: bacterial-type ribosomal ribonucleoprotein complexes
+  Hop-1 sentence: Identify bacterial-type ribosomal ribonucleoprotein complexes in which nucleic-acid–protein interactions drive conformational rearrangements, particularly systems amenable to multiscale simulation.
+  stage counts: {'papers_retrieved': 15, 'raw_candidate_mentions': 3, 'after_relationship_gate': 2, 'after_grounding_discovered_systems': 1, 'after_cleanup': 1, 'identities_grounded': 0, 'identities_total': 1} | extraction rows matched: 15 | empty: 12 | nonempty-unmapped: 0
+   [ 1] 2000 Induced fit in RNA-protein recognition.  ->  -
+   [ 2] 1967 Ribonucleoprotein complexes formed between bacteriophage MS2 RNA and MS2 Protein in vitr  ->  -
+   [ 3] 2015 Can We Execute Stable Microsecond-Scale Atomistic Simulations of Protein–RNA Complexes?  ->  -
+   [ 4] 2018 Structural Changes of RNA in Complex with Proteins in the SRP  ->  -
+   [ 5] 2018 Sampling Native-like Structures of RNA-Protein Complexes through Rosetta Folding and Doc  ->  -
+   [ 6] 2019 Large-scale simulations of nucleoprotein complexes: ribosomes, nucleosomes, chromatin, c  ->  ['ribosomes', 'ribosomes']
+   [ 7] 2020 Investigating the mechanism of recognition and structural dynamics of nucleoprotein-RNA   ->  -
+   [ 8] 2006 Low‐Resolution Molecular Dynamics Simulations of the 30S Ribosomal Subunit  ->  ['30S ribosomal subunit']
+   [ 9] 2010 Nonhierarchical Ribonucleoprotein Assembly Suggests a Strain-Propagation Model for Prote  ->  -
+   [10] 1982 Comparison of ribonucleic acid-protein interactions in messenger ribonucleoproteins, rib  ->  -
+   [11] 2007 A Threefold RNA–Protein Interface in the Signal Recognition Particle Gates Native Comple  ->  -
+   [12] 2024 Dynamics of Protein–RNA Interfaces Using All-Atom Molecular Dynamics Simulations  ->  -
+   [13] 2007 Temperature-dependent RNP Conformational Rearrangements: Analysis of Binary Complexes of  ->  -
+   [14] 2009 An Efficient Strategy for the Determination of the Three-Dimensional Architecture of Rib  ->  -
+   [15] 1995 Protein-nucleic acid interactions  ->  -
+  X present in retrieved papers: NONE
+  X in raw extraction: none | X in discovered: none | seed in Hop-1 top15: no
+   GATE KEPT    ribosomes                                [protein_family_or_clas] kept: class term in quote
+   GATE KEPT    ribosomes                                [protein_family_or_clas] kept: class term in quote
+   GATE DROPPED 30S ribosomal subunit                    [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+  discovered: ['ribosomes'] | identities: [{'label': 'ribosomes', 'grounding': 'insufficient', 'query_anchor': None}]
+
+====================================================================================================
+Q19 | basis: distinctive_structure | class: archaeal promoter-recognition transcription initiation complexes
+  Hop-1 sentence: Find other archaeal promoter-recognition transcription initiation complexes that can illuminate the evolution of promoter DNA opening during transcription initiation while preserving promoter-sequence specificity.
+  stage counts: {'papers_retrieved': 15, 'raw_candidate_mentions': 0, 'after_relationship_gate': 0, 'after_grounding_discovered_systems': 0, 'after_cleanup': 0, 'identities_grounded': 0, 'identities_total': 0} | extraction rows matched: 15 | empty: 15 | nonempty-unmapped: 0
+   [ 1] 2015 Structural basis of transcription initiation by RNA polymerase II  ->  -
+   [ 2] 2008 Advances in bacterial promoter recognition and its control by factors that do not bind D  ->  -
+   [ 3] 2015 Initial Events in Bacterial Transcription Initiation  ->  -
+   [ 4] 1999 Transcription initiation in Archaea: facts, factors and future aspects  ->  -
+   [ 5] 1991 Control regions of an archaeal gene  ->  -
+   [ 6] 1995 In vivo definition of an archaeal promoter  ->  -
+   [ 7] 1976 Starting and Stopping Sequences for the RNA Polymerase  ->  -
+   [ 8] 1998 Promoter opening via a DNA fork junction binding activity  ->  -
+   [ 9] 2000 The Role of Transcription Factor B in Transcription Initiation and Promoter Clearance in  ->  -
+   [10] 2021 Structure of RNA polymerase II pre-initiation complex at 2.9 Å defines initial DNA openi  ->  -
+   [11] 1987 Structure and Function ofE. ColiPromoter DN  ->  -
+   [12] 2004 Transcription Factor B Contacts Promoter DNA Near the Transcription Start Site of the Ar  ->  -
+   [13] 1997 A mutant RNA polymerase that forms unusual open promoter complexes  ->  -
+   [14] 2008 Analysis of RNA polymerase-promoter complex formation  ->  -
+   [15] 2016 Open complex scrunching before nucleotide addition accounts for the unusual transcriptio  ->  -
+  X present in retrieved papers: [(1, ['RNA polymerase II']), (3, ['RNAP', 'bacterial RNA polymerase']), (9, ['RNAP', 'archaeal RNA polymerase']), (10, ['RNA polymerase II']), (12, ['RNAP', 'TBP', 'TFB', 'TFIIB']), (13, ['RNAP'])]
+  X in raw extraction: none | X in discovered: none | seed in Hop-1 top15: no
+  discovered: [] | identities: []
+
+====================================================================================================
+Q20 | basis: distinctive_structure | class: dynamin-family membrane fission GTPase assemblies
+  Hop-1 sentence: Find other dynamin-family membrane fission GTPase assemblies in which nucleotide-dependent oligomer assembly generates membrane constriction and potentially drives topological remodeling.
+  stage counts: {'papers_retrieved': 15, 'raw_candidate_mentions': 11, 'after_relationship_gate': 2, 'after_grounding_discovered_systems': 0, 'after_cleanup': 0, 'identities_grounded': 0, 'identities_total': 0} | extraction rows matched: 15 | empty: 6 | nonempty-unmapped: 0
+   [ 1] 2016 Membrane fission by dynamin: what we know and what we need to know  ->  ['dynamin', 'dynamin oligomer']
+   [ 2] 2001 Three-dimensional reconstruction of dynamin in the constricted state  ->  ['dynamin']
+   [ 3] 1998 Dynamin Undergoes a GTP-Dependent Conformational Change Causing Vesiculation  ->  -
+   [ 4] 2008 GTPase Cycle of Dynamin Is Coupled to Membrane Squeeze and Release, Leading to Spontaneo  ->  ['Dynamin']
+   [ 5] 2008 Real-Time Visualization of Dynamin-Catalyzed Membrane Fission and Vesicle Release  ->  ['Dynamin']
+   [ 6] 2006 GTP-dependent twisting of dynamin implicates constriction and tension in membrane fissio  ->  ['dynamin']
+   [ 7] 2011 Dynamin: Functional Design of a Membrane Fission Catalyst  ->  -
+   [ 8] 2011 The crystal structure of dynamin  ->  -
+   [ 9] 2013 Geometric Catalysis of Membrane Fission Driven by Flexible Dynamin Rings  ->  ['dynamin']
+   [10] 2014 BAR Domain Scaffolds in Dynamin-Mediated Membrane Fission  ->  -
+   [11] 2004 Rapid constriction of lipid bilayers by the mechanochemical enzyme dynamin  ->  -
+   [12] 2018 Cryo-EM of the dynamin polymer assembled on lipid membrane  ->  ['dynamin polymer']
+   [13] 2015 Crystal structure of the dynamin tetramer  ->  ['dynamin tetramer']
+   [14] 2015 The Mechanoenzymatic Core of Dynamin-related Protein 1 Comprises the Minimal Machinery R  ->  ['Dynamin-related protein 1 (Drp', 'the mechanochemical core of Dr']
+   [15] 2007 A Corkscrew Model for Dynamin Constriction  ->  -
+  X present in retrieved papers: [(1, ['Dynamin', 'dynamin']), (2, ['dynamin']), (3, ['Dynamin']), (4, ['Dynamin']), (5, ['Dynamin']), (6, ['dynamin']), (7, ['Dynamin', 'dynamin']), (8, ['dynamin']), (9, ['Dynamin', 'dynamin']), (10, ['Dynamin']), (11, ['dynamin']), (12, ['dynamin']), (13, ['dynamin']), (14, ['Drp1', 'Dynamin', 'dynamin']), (15, ['Dynamin'])]
+  X in raw extraction: [{'name': 'dynamin', 'gate_kept': False}, {'name': 'dynamin', 'gate_kept': True}, {'name': 'dynamin oligomer', 'gate_kept': False}, {'name': 'Dynamin', 'gate_kept': False}, {'name': 'Dynamin', 'gate_kept': False}, {'name': 'dynamin', 'gate_kept': False}, {'name': 'dynamin', 'gate_kept': True}, {'name': 'dynamin polymer', 'gate_kept': False}, {'name': 'dynamin tetramer', 'gate_kept': False}, {'name': 'Dynamin-related protein 1 (Drp1)', 'gate_kept': False}, {'name': 'the mechanochemical core of Drp1', 'gate_kept': False}] | X in discovered: none | seed in Hop-1 top15: no
+   GATE DROPPED dynamin                                  [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GATE KEPT    dynamin                                  [specific_protein_or_sy] kept: shape morpheme in quote
+   GATE DROPPED dynamin oligomer                         [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GATE DROPPED Dynamin                                  [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GATE DROPPED Dynamin                                  [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GATE DROPPED dynamin                                  [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GATE KEPT    dynamin                                  [specific_protein_or_sy] kept: shape morpheme in quote
+   GATE DROPPED dynamin polymer                          [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GATE DROPPED dynamin tetramer                         [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GATE DROPPED Dynamin-related protein 1 (Drp1)         [specific_protein_or_sy] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GATE DROPPED the mechanochemical core of Drp1         [construct_or_variant] DROPPED: quote has neither the class/alias phrase nor a shape-specific
+   GROUNDING-DROP dynamin                                  :: name is only structural-class wording once the class modifier is stripped
+   GROUNDING-DROP dynamin                                  :: name is only structural-class wording once the class modifier is stripped
+  discovered: [] | identities: []

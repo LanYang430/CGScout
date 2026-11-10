@@ -1,0 +1,273 @@
+[
+ {
+  "n": 1,
+  "source_seed_X": {
+   "title": "Coarse-Grained Model for Mechanosensitive Ion Channels",
+   "doi": "10.1021/jp9053567",
+   "title_ratio": 1.0,
+   "found_title": "Coarse-Grained Model for Mechanosensitive Ion Channels",
+   "doi_matches_claim": true,
+   "year": 2009,
+   "venue": "The Journal of Physical Chemistry B",
+   "abstract_chars": 712,
+   "overlap": []
+  },
+  "target_system_Y": "Arabidopsis MSL10 (MscS-like mechanosensitive channel)",
+  "claimed_axis": "family/function transfer",
+  "transfer": {
+   "target_objective": "Develop a coarse-grained model of Arabidopsis MSL10 to determine how membrane tension drives its closed-to-open gating transition and how structural parameters control its tension sensitivity.",
+   "transfer_axis": "family_function",
+   "transferable_feature": "Mechanosensitive-channel architecture and tension-dependent gating, including the influence of transmembrane helix geometry and protein size on the gating threshold.",
+   "reason_seed_is_useful_for_Y": "The seed study directly models an MscS-family channel and relates membrane-tension gating to coarse-grained transmembrane-helix structure, making its modeling strategy and physical interpretation relevant to MSL10. It can provide a starting framework for representing MSL10's closed/open states and testing how its distinct architecture shifts the tension threshold.",
+   "confidence": "high",
+   "caveat": "MSL10 may differ substantially from bacterial MscS in oligomeric organization, transmembrane topology, cytoplasmic domains, lipid interactions, and gating mechanism; the seed model and parameters would therefore require substantial reparameterization and validation rather than direct reuse."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained simulation of the plant mechanosensitive channel MSL10",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "MscS-like mechanosensitive channel membrane tension gating molecular dynamics simulation",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "MSL10 coarse-grained simulation",
+    "n_results": 8
+   }
+  ],
+  "n_unique_papers_judged": 46,
+  "direct_CG_hits_for_Y": [],
+  "verified_no_direct": true
+ },
+ {
+  "n": 2,
+  "source_seed_X": {
+   "title": "Key Intermolecular Interactions in the E. coli 70S Ribosome Revealed by Coarse-Grained Analysis",
+   "doi": "10.1021/ja2028487",
+   "title_ratio": 1.0,
+   "found_title": "Key Intermolecular Interactions in the E. coli 70S Ribosome Revealed by Coarse-Grained Analysis",
+   "doi_matches_claim": true,
+   "year": 2011,
+   "venue": "Journal of the American Chemical Society",
+   "abstract_chars": 1653,
+   "overlap": []
+  },
+  "target_system_Y": "chloroplast (plastid) 70S ribosome",
+  "claimed_axis": "close structural homology",
+  "transfer": {
+   "target_objective": "Model inter-subunit interactions and collective functional motions in the chloroplast 70S ribosome using a coarse-grained representation.",
+   "transfer_axis": "family_function",
+   "transferable_feature": "A domain-based coarse-grained model with harmonic interaction springs whose strengths are calibrated against all-atom fluctuations, allowing inter-subunit bridges and mobile functional domains to be identified.",
+   "reason_seed_is_useful_for_Y": "The chloroplast 70S ribosome shares the bacterial-type two-subunit architecture and translation function of the E. coli 70S ribosome, so the same strategy is directly relevant for analyzing its inter-subunit contacts and collective motions. The approach is especially useful for resolving interaction networks in a very large RNA–protein complex where atomistic simulations are impractical.",
+   "confidence": "high",
+   "caveat": "E. coli-derived interaction strengths and domain definitions should not be transferred unchanged: chloroplast ribosomes contain lineage-specific RNAs and proteins, and a chloroplast-specific all-atom reference structure or experimental data would be needed for calibration and validation."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained model of the chloroplast ribosome intersubunit interactions and collective motions",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "plastid 70S ribosome conformational dynamics molecular dynamics simulation",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "chloroplast ribosome coarse-grained",
+    "n_results": 20
+   }
+  ],
+  "n_unique_papers_judged": 59,
+  "direct_CG_hits_for_Y": [],
+  "verified_no_direct": true
+ },
+ {
+  "n": 3,
+  "source_seed_X": {
+   "title": "Monitoring the binding and insertion of a single transmembrane protein by an insertase",
+   "doi": "10.1038/s41467-021-27315-3",
+   "title_ratio": 1.0,
+   "found_title": "Monitoring the binding and insertion of a single transmembrane protein by an insertase",
+   "doi_matches_claim": true,
+   "year": 2021,
+   "venue": "Nature Communications",
+   "abstract_chars": 1073,
+   "overlap": []
+  },
+  "target_system_Y": "chloroplast Alb3 insertase (YidC/Oxa1 family)",
+  "claimed_axis": "family/function transfer",
+  "transfer": {
+   "target_objective": "Understand how the chloroplast Alb3 insertase binds a transmembrane-protein substrate and facilitates its insertion and folding into the membrane.",
+   "transfer_axis": "family_function",
+   "transferable_feature": "Insertase-mediated recognition, stabilization, and transfer of a nascent transmembrane polypeptide into a folded membrane-inserted state, potentially involving a cytoplasmic-facing helical region and hydrophilic substrate-binding groove.",
+   "reason_seed_is_useful_for_Y": "Alb3 belongs to the YidC/Oxa1 insertase family, so the YidC study provides a directly relevant mechanistic framework for analyzing transient substrate binding, conformational stabilization, and membrane insertion. Its combined force-spectroscopy, fluorescence, and molecular-dynamics strategy could be adapted to test whether analogous kinetic steps occur in Alb3.",
+   "confidence": "high",
+   "caveat": "Alb3 may differ from bacterial YidC in domain architecture, topology, stromal targeting context, membrane composition, and substrate specificity; therefore the detailed role of the YidC cytoplasmic hairpin and the reported millisecond kinetics may not transfer directly."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained simulation of Alb3 insertase binding and insertion of a transmembrane protein",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "YidC Oxa1 Alb3 insertase membrane protein insertion molecular dynamics",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "Alb3 insertase coarse-grained simulation",
+    "n_results": 8
+   }
+  ],
+  "n_unique_papers_judged": 42,
+  "direct_CG_hits_for_Y": [],
+  "verified_no_direct": true
+ },
+ {
+  "n": 4,
+  "source_seed_X": {
+   "title": "Coarse-Grained Molecular Dynamics Simulations of a Rotating Bacterial Flagellum",
+   "doi": "10.1529/biophysj.106.093443",
+   "title_ratio": 1.0,
+   "found_title": "Coarse-Grained Molecular Dynamics Simulations of a Rotating Bacterial Flagellum",
+   "doi_matches_claim": true,
+   "year": 2006,
+   "venue": "Biophysical Journal",
+   "abstract_chars": 1018,
+   "overlap": []
+  },
+  "target_system_Y": "archaeal archaellum (rotating helical filament)",
+  "claimed_axis": "physical-process transfer",
+  "transfer": {
+   "target_objective": "Model rotation, torque transmission, and helical polymorphism of the archaeal archaellum using coarse-grained simulations.",
+   "transfer_axis": "physical_process",
+   "transferable_feature": "Coarse-grained representation of a rotating, solvent-coupled helical protein filament whose mechanics depend on monomer packing, torsional deformation, and rotation direction.",
+   "reason_seed_is_useful_for_Y": "The seed study provides a relevant framework for simulating long rotating filaments and connecting rotation direction and solvent–protein interactions to changes in helical shape. These physical mechanisms can inform modeling of archaellum polymorphism and torque transmission even though the underlying proteins differ.",
+   "confidence": "medium",
+   "caveat": "Bacterial flagellar filaments and archaella are not homologous and differ substantially in subunit architecture, filament mechanics, motor coupling, and torque generation; the seed force field and structural model would therefore require substantial reparameterization, and its treatment of motor-driven torque may not directly transfer."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained simulation of the archaellum rotating helical filament",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "archaellum filament rotation torque mechanics molecular dynamics",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "archaellum coarse-grained simulation",
+    "n_results": 3
+   }
+  ],
+  "n_unique_papers_judged": 38,
+  "direct_CG_hits_for_Y": [],
+  "verified_no_direct": true
+ },
+ {
+  "n": 5,
+  "source_seed_X": {
+   "title": "The kinetic landscape of nucleosome assembly: A coarse-grained molecular dynamics study",
+   "doi": "10.1371/journal.pcbi.1009253",
+   "title_ratio": 1.0,
+   "found_title": "The kinetic landscape of nucleosome assembly: A coarse-grained molecular dynamics study",
+   "doi_matches_claim": true,
+   "year": 2021,
+   "venue": "PLoS Computational Biology",
+   "abstract_chars": 1112,
+   "overlap": []
+  },
+  "target_system_Y": "archaeal histone-DNA complex (hypernucleosome)",
+  "claimed_axis": "close structural homology",
+  "transfer": {
+   "target_objective": "Model histone-DNA wrapping and the assembly kinetics of archaeal histone complexes into hypernucleosome structures, including partially wrapped and off-pathway intermediates.",
+   "transfer_axis": "physical_process",
+   "transferable_feature": "Coarse-grained description of DNA bending, histone association, salt-dependent stability, and transitions among partially assembled and fully wrapped histone-DNA states.",
+   "reason_seed_is_useful_for_Y": "The seed provides a directly relevant framework for studying histone-DNA assembly as a rugged conformational landscape with competing intermediates, and its Markov state modeling approach could characterize wrapping and assembly kinetics in archaeal complexes. The coupling between DNA deformation and histone binding is likely a transferable physical mechanism.",
+   "confidence": "medium",
+   "caveat": "The seed concerns eukaryotic nucleosomes on 601 DNA, with tetramere, hexasome, and octamer-specific states; archaeal hypernucleosomes may have different histone sequences, stoichiometry, repeat architecture, and inter-complex contacts, so the force field and state definitions would require substantial reparameterization and validation."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained simulation of archaeal histone DNA wrapping and hypernucleosome assembly",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "archaeal chromatin histone DNA assembly molecular dynamics",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "archaeal histone hypernucleosome coarse-grained",
+    "n_results": 2
+   }
+  ],
+  "n_unique_papers_judged": 35,
+  "direct_CG_hits_for_Y": [
+   {
+    "title": "Archaeal chromatin ‘slinkies’ are inherently dynamic complexes with deflected DNA wrapping pathways",
+    "doi": "10.7554/elife.65587",
+    "year": 2021,
+    "reason": "The paper directly studies archaeal histone-DNA archaeasomes and uses molecular-dynamics modeling to investigate their large-scale wrapping and dynamics."
+   }
+  ],
+  "verified_no_direct": false
+ },
+ {
+  "n": 6,
+  "source_seed_X": {
+   "title": "Clathrin Assembly Regulated by Adaptor Proteins in Coarse-Grained Models",
+   "doi": "10.1016/j.bpj.2016.06.003",
+   "title_ratio": 1.0,
+   "found_title": "Clathrin Assembly Regulated by Adaptor Proteins in Coarse-Grained Models",
+   "doi_matches_claim": true,
+   "year": 2016,
+   "venue": "Biophysical Journal",
+   "abstract_chars": 744,
+   "overlap": []
+  },
+  "target_system_Y": "COPI coatomer coat",
+  "claimed_axis": "physical-process / mesoscale transfer",
+  "transfer": {
+   "target_objective": "Model COPI coatomer self-assembly and determine how coat formation generates or regulates membrane curvature.",
+   "transfer_axis": "physical_process",
+   "transferable_feature": "Cooperative assembly of multicomponent coat proteins, including how flexible disordered linkers and interaction strengths regulate aggregation, cage formation, and suppression of assembly.",
+   "reason_seed_is_useful_for_Y": "The clathrin study provides a coarse-grained framework for relating coat-protein interactions and linker mechanics to collective coat assembly, phase behavior, and assembly conditions. These concepts may help formulate analogous models of COPI coatomer oligomerization, although the curvature component would require explicit membrane coupling.",
+   "confidence": "medium",
+   "caveat": "Clathrin cages and COPI coats have substantially different architectures, stoichiometries, and membrane-binding mechanisms, and the abstract does not indicate that the seed model includes an explicit membrane or coat-induced curvature, limiting direct transfer to the curvature objective."
+  },
+  "direct_CG_search_queries": [
+   {
+    "mode": "semantic",
+    "query": "coarse-grained simulation of COPI coatomer coat assembly on a membrane",
+    "n_results": 20
+   },
+   {
+    "mode": "semantic",
+    "query": "COPI coat self-assembly membrane curvature mesoscale model",
+    "n_results": 20
+   },
+   {
+    "mode": "lexical",
+    "query": "COPI coatomer coarse-grained",
+    "n_results": 17
+   }
+  ],
+  "n_unique_papers_judged": 50,
+  "direct_CG_hits_for_Y": [],
+  "verified_no_direct": true
+ }
+]

@@ -7,8 +7,8 @@ import time
 import pytest
 import requests
 
-from beam_agent.sources import openalex
-from beam_agent.sources import openalex_usage as usage
+from cgscout.sources import openalex
+from cgscout.sources import openalex_usage as usage
 
 _REAL_SLEEP = time.sleep
 KEY = "test-secret-key-123"

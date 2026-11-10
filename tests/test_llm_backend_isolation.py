@@ -12,16 +12,12 @@ counting stub. This proves the ISOLATION property itself (which backend's
 transport got touched), not any particular model's output.
 """
 import os
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning" / "mellea_integration"))
 
 import pytest  # noqa: E402
 
-from llm_backend import get_backend, OpenAILunaBackend  # noqa: E402
-from transfer_entity_extraction import extract_related_systems_rich, RichSystemExtractionLLM  # noqa: E402
+from cgscout.llm import get_backend, OpenAILunaBackend  # noqa: E402
+from cgscout.retrieval.related_systems.extraction import extract_related_systems_rich, RichSystemExtractionLLM  # noqa: E402
 
 
 class _CountingBackend:

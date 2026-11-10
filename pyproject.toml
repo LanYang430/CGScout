@@ -3,18 +3,35 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "beam-agent"
+name = "cgscout"
 version = "0.1.0"
-description = "AI-assisted pre-simulation literature + evidence layer for BEAM (rule-based resolve/plan/search/filter through Stage 3; single-pass LLM-backed evidence extraction at Stage 4a; deterministic System/Process/Method matching and ranking at Stage 4b/5)"
-requires-python = ">=3.10"
+description = "CGScout: a literature-retrieval agent that recommends coarse-grained modeling papers (planning -> retrieval -> Stage 3 screening -> Stage 4 assessment)"
+readme = "README.md"
+# numpy>=2.5 (the verified version) needs Python >=3.12; only 3.14 has been tested so far.
+requires-python = ">=3.12"
 dependencies = [
-    "requests>=2.31",
     "pydantic>=2.0",
+    "requests>=2.31",
+    "openai>=3.5",
+    "numpy>=2.5",
+    "joblib>=1.5",
+    # scikit-learn is not imported by the code, but joblib.load() of screening/sim_classifier_model.joblib (a scikit-learn Pipeline saved
+    # with 1.9.1) needs it; pickles are not guaranteed to load across scikit-learn minor versions, hence the pin.
+    "scikit-learn>=1.9.1,<1.10",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest>=9.0"]
+
+[project.scripts]
+cgscout = "cgscout.cli:main"
+
 [tool.setuptools.packages.find]
-include = ["beam_agent*"]
+where = ["src"]
+
+[tool.setuptools.package-data]
+cgscout = ["screening/sim_classifier_model.joblib"]
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
-testpaths = ["tests"]
+pythonpath = ["src"]
+testpaths = ["tests", "benchmark/generation/tests"]

@@ -1,0 +1,203 @@
+[
+ {
+  "case": "Q15",
+  "kind": "L3",
+  "query": "I want to model Arabidopsis MSL10's tension-dependent gating and predict how bilayer stress drives nonconducting-to-conducting transitions; which CG approaches could capture this?",
+  "target_dois": [
+   "10.1021/jp9053567"
+  ],
+  "planner": {
+   "status": "ready",
+   "system": "Arabidopsis MSL10",
+   "scientific_objective": "Model tension-dependent gating and predict bilayer-stress-driven transitions between nonconducting and conducting states.",
+   "clarification_question": null
+  },
+  "expert_prior_axes": [
+   {
+    "basis": "family_homology",
+    "mode": "related_system_discovery",
+    "confidence": "high",
+    "scientific_class": "MscS-like mechanosensitive ion channels",
+    "anchors": [
+     "MscS-like mechanosensitive channels",
+     "MscS family gating",
+     "mechanosensitive channel pore opening",
+     "MscS-like channel coarse-grained model"
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "mode": "direct_concept_search",
+    "confidence": "high",
+    "scientific_class": "tension-gated mechanosensitive ion channels",
+    "anchors": [
+     "tension-gated ion channels",
+     "mechanically induced channel gating",
+     "bilayer deformation channel opening",
+     "membrane tension gating transitions",
+     "mechanosensitive channel coarse-grained model"
+    ]
+   }
+  ],
+  "three_b_triggered": true,
+  "axis_logs_3b": [
+   {
+    "basis": "family_homology",
+    "class": "MscS-like mechanosensitive ion channels",
+    "hop1_queries": [
+     "Find other MscS-like mechanosensitive ion channels whose tension-dependent gating can be modeled in terms of bilayer-stress-driven transitions between nonconducting and conducting states."
+    ],
+    "hop2_queries": [
+     "mechanosensitive ion channel MscS tension-dependent gating coarse-grained model",
+     "mechanosensitive ion channel MscS small conductance coarse-grained model",
+     "MSL1 eukaryotic homolog tension-dependent gating coarse-grained model",
+     "MSL1 eukaryotic homolog coarse-grained model"
+    ],
+    "identities": [
+     {
+      "label": "MscS",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "MscS mechanosensitive ion channel"
+     },
+     {
+      "label": "MSL1",
+      "grounding": "grounded_full",
+      "type": "specific_protein_or_system",
+      "anchor": "MSL1 eukaryotic homolog"
+     }
+    ],
+    "n_papers": 31,
+    "error": null,
+    "hop2_plan": [
+     {
+      "label": "MscS",
+      "search_anchor": "mechanosensitive ion channel MscS",
+      "core_process": "tension-dependent gating",
+      "stable_descriptor": "small conductance",
+      "flags": [],
+      "queries": [
+       {
+        "role": "A",
+        "query": "mechanosensitive ion channel MscS tension-dependent gating coarse-grained model",
+        "n_results": 20,
+        "error": null
+       },
+       {
+        "role": "B",
+        "query": "mechanosensitive ion channel MscS small conductance coarse-grained model",
+        "n_results": 20,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 24
+     },
+     {
+      "label": "MSL1",
+      "search_anchor": "MSL1 eukaryotic homolog",
+      "core_process": "tension-dependent gating",
+      "stable_descriptor": "",
+      "flags": [
+       "anchor_not_grounded_in_hop1_evidence",
+       "anchor_fallback_to_label",
+       "descriptor_redundant_with_anchor"
+      ],
+      "queries": [
+       {
+        "role": "A",
+        "query": "MSL1 eukaryotic homolog tension-dependent gating coarse-grained model",
+        "n_results": 7,
+        "error": null
+       },
+       {
+        "role": "C",
+        "query": "MSL1 eukaryotic homolog coarse-grained model",
+        "n_results": 7,
+        "error": null
+       }
+      ],
+      "fallback_used": false,
+      "n_papers": 7
+     }
+    ]
+   }
+  ],
+  "layer1_discovery": {
+   "raw_mentions": 4,
+   "raw_unique_systems": [
+    "MSL1",
+    "MscS"
+   ],
+   "after_membership_validation": 2,
+   "kept_systems": [
+    "MSL1",
+    "MscS"
+   ],
+   "dropped_by_validation": []
+  },
+  "layer2_grounding": {
+   "identities_total": 2,
+   "identities_grounded": 2,
+   "grounded": [
+    [
+     "MscS",
+     "grounded_full"
+    ],
+    [
+     "MSL1",
+     "grounded_full"
+    ]
+   ],
+   "hop2_ran": true,
+   "hop2_queries": [
+    "mechanosensitive ion channel MscS tension-dependent gating coarse-grained model",
+    "mechanosensitive ion channel MscS small conductance coarse-grained model",
+    "MSL1 eukaryotic homolog tension-dependent gating coarse-grained model",
+    "MSL1 eukaryotic homolog coarse-grained model"
+   ]
+  },
+  "acceptable_X": {
+   "raw": [
+    "MSL1",
+    "MscS"
+   ],
+   "after_validation": [
+    "MSL1",
+    "MscS"
+   ],
+   "after_grounding": [
+    "MscS",
+    "MSL1"
+   ]
+  },
+  "layer3_seed": {
+   "found_by_3B": [
+    "10.1021/jp9053567"
+   ],
+   "found_by_3A": [
+    "10.1021/jp9053567"
+   ],
+   "found_by_flat": [],
+   "pool": {
+    "direct": 41,
+    "transfer": 44
+   }
+  },
+  "api_usage": {
+   "http_requests": 10,
+   "http_200": 10,
+   "http_429": 0,
+   "http_other_failures": 0,
+   "cache_hits": 0,
+   "credits_charged": 100,
+   "credits_assumed_requests": 10,
+   "remaining_first": 8700,
+   "remaining_last": 8610,
+   "label": "routing_v2_Q15_1791899944",
+   "transient_failed_attempts": 0,
+   "failed_requests": 0
+  },
+  "seconds": 65.3
+ }
+]

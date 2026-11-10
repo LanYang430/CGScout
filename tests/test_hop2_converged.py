@@ -7,14 +7,10 @@
   * nothing in the module is special-cased to a particular system.
 """
 import itertools
-import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "mellea_integration"))
 
-import hop2_converged as H  # noqa: E402
+import cgscout.retrieval.related_systems.hop2 as H  # noqa: E402
 
 OBJ = "Model tension-dependent gating and predict bilayer-stress-driven transitions from nonconducting to conducting states"
 
@@ -194,7 +190,7 @@ def test_found_by_queries_provenance_is_kept_per_paper():
 
 # --------------------------------------------------------------------- no name-level hardcoding
 def test_module_has_no_system_specific_strings():
-    src = (ROOT / "mellea_integration" / "hop2_converged.py").read_text().lower()
+    src = Path(H.__file__).read_text().lower()
     for name in ("dynamin", "mscs", "espp", "pertactin", "ribosome", "polymerase", "pol ii", "mgm1", "msl10", "flagell", "archaell", "autotransporter"):
         assert name not in src.replace("ribosomal", ""), name         # (the prompt text mentions none of these either)
 

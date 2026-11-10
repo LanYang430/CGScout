@@ -4,8 +4,8 @@ No network calls: builds Paper objects by hand to simulate "same paper, returned
 both sources, with slightly different metadata completeness."
 """
 
-from beam_agent.dedupe import dedupe_papers
-from beam_agent.models import ExternalIds, Paper
+from cgscout.retrieval.dedupe import dedupe_papers
+from cgscout.models import ExternalIds, Paper
 
 
 def _paper(**kwargs) -> Paper:

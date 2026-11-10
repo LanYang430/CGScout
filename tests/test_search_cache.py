@@ -7,9 +7,9 @@ from __future__ import annotations
 
 import time
 
-from beam_agent import cache
-import beam_agent.search as search
-from beam_agent.models import Paper
+from cgscout import cache
+import cgscout.retrieval.search as search
+from cgscout.models import Paper
 
 
 def _fake_source(papers_by_query: dict, calls: list):

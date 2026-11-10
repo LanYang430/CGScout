@@ -8,19 +8,14 @@ What these pin down (general behaviour, no system names are special-cased anywhe
   3. the older (non-concrete / old-pipeline) behaviour is unchanged;
   4. the ExpertPrior prompt asks related-system-discovery classes to be abstract enough to cross species/domains.
 """
-import sys
-from pathlib import Path
 from types import SimpleNamespace
 
-ROOT = Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "mellea_integration"))
 
 import pytest  # noqa: E402
 
-import transfer_entity_extraction as TE  # noqa: E402
-from related_system_discovery import discover_related_systems  # noqa: E402
-from beam_agent.models import Paper  # noqa: E402
+import cgscout.retrieval.related_systems.extraction as TE  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import discover_related_systems  # noqa: E402
+from cgscout.models import Paper  # noqa: E402
 
 TITLE = "Membrane fission by a GTPase"
 ABSTRACT = ("Dynamin-related protein 1 (Drp1), a large GTPase of the dynamin superfamily, constricts membranes after "
@@ -152,7 +147,7 @@ def test_concrete_entity_still_has_a_class_modifier_peeled_off_its_name():
 
 # ------------------------------------------------------------------ 3. ExpertPrior: transferable class abstraction
 def test_expert_prior_prompt_requires_classes_one_level_above_the_target():
-    import expert_prior_planner as EP
+    import cgscout.planning.expert_prior_planner as EP
     p = EP.EXPERT_PRIOR_SYSTEM_PROMPT.replace("\\\n", " ").replace("\n", " ")
     assert "abstraction ABOVE the target itself" in p
     assert "species, organism, taxonomic domain" in p and "too narrow" in p

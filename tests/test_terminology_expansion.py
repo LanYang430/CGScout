@@ -1,10 +1,7 @@
 """Pure unit tests for terminology_expansion deterministic helpers. No LLM."""
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
 
-from terminology_expansion import filter_instance_terms, strip_size_qualifiers  # noqa: E402
+from cgscout.retrieval.related_systems.terminology import filter_instance_terms, strip_size_qualifiers  # noqa: E402
 
 
 def test_strip_size_qualifiers():

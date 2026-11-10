@@ -1,17 +1,13 @@
-"""Unit tests for Query Construction v2 (benchmarks/concept_resolver_reasoning/query_construction_v2.py).  No LLM, no network.
+"""Unit tests for Query Construction v2 (cgscout/retrieval/direct/query_construction_v2.py).  No LLM, no network.
 The fixtures are generic planner-style objectives; nothing here (or in the module) is specific to one system or benchmark case."""
 from __future__ import annotations
 
 import re
-import sys
-from pathlib import Path
 
-BENCH = Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"
-sys.path.insert(0, str(BENCH))
 
-import query_construction_v2 as QC  # noqa: E402
-from evidence_route_planner import EvidenceRoutePlan, RouteTerm  # noqa: E402
-from route_retrieval_plan import RouteRetrievalBudgets, build_route_retrieval_plan  # noqa: E402
+import cgscout.retrieval.direct.query_construction_v2 as QC  # noqa: E402
+from cgscout.retrieval.direct.evidence_plan import EvidenceRoutePlan, RouteTerm  # noqa: E402
+from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets, build_route_retrieval_plan  # noqa: E402
 
 _LEGACY = RouteRetrievalBudgets(flat_anchor_short_context=True, flat_query_hygiene=True, need_semantic_enabled=True)
 _V2 = RouteRetrievalBudgets(flat_anchor_short_context=True, flat_query_hygiene=True, need_semantic_enabled=True, query_construction_v2=True)

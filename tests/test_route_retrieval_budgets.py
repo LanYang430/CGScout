@@ -12,22 +12,18 @@ convention already used in tests/test_related_system_discovery.py
 touch TerminologyExpander, Hop-1 extraction prompt, grounding logic, Hop-2
 query construction, Stage 3/4, MethodologyEligibility, or adaptive retrieval.
 """
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning"))
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "benchmarks" / "concept_resolver_reasoning" / "mellea_integration"))
 
-from related_system_discovery import discover_related_systems  # noqa: E402
-from route_retrieval_plan import (  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import discover_related_systems  # noqa: E402
+from cgscout.retrieval.direct.route_plan import (  # noqa: E402
     FLAT_ROUTES,
     RouteProvenanceEntry,
     RouteRetrievalBudgets,
     _Accumulator,
     resolve_structural_and_safety_budgets,
 )
-from transfer_entity_extraction import SystemExtraction, SystemMention  # noqa: E402
-from beam_agent.models import Paper  # noqa: E402
+from cgscout.retrieval.related_systems.extraction import SystemExtraction, SystemMention  # noqa: E402
+from cgscout.models import Paper  # noqa: E402
 
 
 def _paper(title, abstract="", doi=None, year=2020):

@@ -15,18 +15,13 @@ What these tests pin down (the design requirements, not implementation details):
   * an LLM failure is status="error" -- never a silent 0 and never counted as 'not relevant'.
 """
 import json
-import sys
-from pathlib import Path
 
 import pytest
 
-MI = Path(__file__).resolve().parents[1] / "benchmarks" / "concept_resolver_reasoning" / "mellea_integration"
-sys.path.insert(0, str(MI))
-sys.path.insert(0, str(MI.parent))
 
-from beam_agent.models import Paper  # noqa: E402
-import stage4_v2 as s4  # noqa: E402
-from stage4_v2 import ExtractedFacts, Judgment, ScreenBatch, ScreenItem, Stage4Config, run_stage4_v2  # noqa: E402
+from cgscout.models import Paper  # noqa: E402
+import cgscout.assessment.stage4 as s4  # noqa: E402
+from cgscout.assessment.stage4 import ExtractedFacts, Judgment, ScreenBatch, ScreenItem, Stage4Config, run_stage4_v2  # noqa: E402
 
 
 class Plan:
@@ -366,7 +361,7 @@ def test_europepmc_falls_back_to_pmid_and_does_nothing_without_any_identifier(mo
     urls = []
     monkeypatch.setattr(s4.urllib.request, "urlopen",
                         lambda req, timeout=None: (urls.append(req.full_url), _Resp(_epmc([{"abstractText": "Abstract text " * 5}])))[1])
-    from beam_agent.models import ExternalIds
+    from cgscout.models import ExternalIds
     out = s4.europepmc_abstract(Paper(title="T", external_ids=ExternalIds(pmid="12345")))
     assert out["via"] == "pmid" and out["abstract"] and "EXT_ID" in urllib_unquote(urls[0])
     assert s4.europepmc_abstract(Paper(title="no ids")) is None and len(urls) == 1
