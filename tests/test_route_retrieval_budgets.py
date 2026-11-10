@@ -24,7 +24,13 @@ from related_system_discovery import (  # noqa: E402
     discover_related_systems,
 )
 from related_system_hop2 import select_systems_for_hop2  # noqa: E402
-from route_retrieval_plan import RouteRetrievalBudgets  # noqa: E402
+from route_retrieval_plan import (  # noqa: E402
+    FLAT_ROUTES,
+    RouteProvenanceEntry,
+    RouteRetrievalBudgets,
+    _Accumulator,
+    resolve_structural_and_safety_budgets,
+)
 from intake_contract import SystemExtraction, SystemMention  # noqa: E402
 from beam_agent.models import Paper  # noqa: E402
 
@@ -226,3 +232,78 @@ def test_extraction_cap_is_still_a_real_cap_not_unlimited():
 # retrieval depth unchanged at 8) is not part of this suite; it was done once
 # with a one-off script (run_live_adapter_search_limit_check.py, kept in the
 # git tag `legacy-pre-cgscout`).
+
+
+# ---------------------------------------------------------------------------
+# Moved here from the (now removed) test_structural_budget_alignment.py / test_hop2_simplification.py: the tests that do not need the old
+# structural branch -- resolve_structural_and_safety_budgets() is called by the live planner bridge, _Accumulator by every flat route.
+# The tests of the removed `_run_structural_branch` itself stay only in the git tag `legacy-pre-cgscout`.
+# ---------------------------------------------------------------------------
+
+# --- resolve_structural_and_safety_budgets(), pure-function behavior -------
+
+def test_computes_structural_total_budget_from_max_systems_and_search_limit():
+    b = RouteRetrievalBudgets(structural_hop2_max_systems=30)
+    resolved = resolve_structural_and_safety_budgets(b, structural_hop2_search_limit=20)
+    assert resolved.structural_total_budget == 600
+
+
+def test_raises_global_cap_to_sum_of_every_route_own_cap():
+    b = RouteRetrievalBudgets(max_papers_per_route=20, structural_hop2_max_systems=30,
+                              max_total_unique_papers=120)
+    resolved = resolve_structural_and_safety_budgets(b, structural_hop2_search_limit=20)
+    expected_floor = len(FLAT_ROUTES) * 20 + 600  # 4*20 + 600 = 680
+    assert resolved.max_total_unique_papers == expected_floor
+    assert resolved.max_total_unique_papers > 120  # strictly raised from the old default
+
+
+def test_never_lowers_an_already_higher_global_cap():
+    b = RouteRetrievalBudgets(max_total_unique_papers=10_000)
+    resolved = resolve_structural_and_safety_budgets(b, structural_hop2_search_limit=20)
+    assert resolved.max_total_unique_papers == 10_000
+
+
+def test_does_not_override_an_explicitly_set_structural_total_budget():
+    b = RouteRetrievalBudgets(structural_total_budget=42)
+    resolved = resolve_structural_and_safety_budgets(b, structural_hop2_search_limit=20)
+    assert resolved.structural_total_budget == 42
+
+
+def test_is_a_pure_function_original_budgets_untouched():
+    b = RouteRetrievalBudgets()
+    resolve_structural_and_safety_budgets(b, structural_hop2_search_limit=20)
+    assert b.structural_total_budget is None
+    assert b.max_total_unique_papers == 120
+
+
+# --- _Accumulator.add: per-route cap (None = no per-route cap) -------------
+
+def test_accumulator_add_with_route_cap_none_ignores_the_route_cap():
+    budgets = RouteRetrievalBudgets(max_papers_per_route=5, max_total_unique_papers=100)
+    acc = _Accumulator(budgets)
+    e = RouteProvenanceEntry(route="structural", route_term="x", query="q",
+                             query_role="structural", retrieval_rank=0)
+    accepted_count = 0
+    for i in range(10):  # well past max_papers_per_route=5
+        accepted, was_new = acc.add(f"paper-{i}", f"Paper {i}", 2020, e, None, accepted_count, None)
+        assert accepted and was_new, f"paper-{i} should be accepted -- route_cap=None means no per-route limit"
+        accepted_count += 1
+    assert len(acc.papers) == 10
+
+
+def test_accumulator_add_still_respects_the_route_cap_when_given():
+    """Flat routes are UNCHANGED -- passing a real route_cap still gates them
+    exactly as before."""
+    budgets = RouteRetrievalBudgets(max_papers_per_route=5, max_total_unique_papers=100)
+    acc = _Accumulator(budgets)
+    e = RouteProvenanceEntry(route="process", route_term="x", query="q",
+                             query_role="process_cg_evidence", retrieval_rank=0)
+    accepted_count = 0
+    results = []
+    for i in range(10):
+        accepted, was_new = acc.add(f"paper-{i}", f"Paper {i}", 2020, e, None, accepted_count, budgets.max_papers_per_route)
+        results.append(accepted)
+        if accepted and was_new:
+            accepted_count += 1
+    assert results == [True] * 5 + [False] * 5
+    assert len(acc.papers) == 5
