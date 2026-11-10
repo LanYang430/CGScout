@@ -8,7 +8,7 @@ CGScout turns a modeling question into a ranked, explained list of papers. Promp
 |---|---|---|---|
 | planning | decompose the request: system, target component, objective, search context/axes; ask a clarifying question only when the ambiguity changes what to search | `planning/scientific_planner.py`, `planning/session.py` | P1 |
 | expert prior | propose related systems/classes ("transfer axes") worth searching, each with confidence and execution mode | `planning/expert_prior_planner.py` | P2 |
-| Direct route | deterministic flat queries (system-specific CG, process, context; optional semantic query) from the plan | `retrieval/direct/from_planner.py`, `evidence_plan.py`, `route_plan.py`, `query_construction_v2.py` (experimental, off) | — |
+| Direct route | deterministic flat queries (system-specific CG, process, context; optional semantic query) from the plan; `evidence_plan.py` fills the process and context terms | `retrieval/direct/from_planner.py`, `evidence_plan.py`, `route_plan.py`, `query_construction_v2.py` (experimental, off) | — |
 | 3A (concept queries) | fixed template queries per high/medium-confidence axis | `retrieval/concept_3a.py`, `retrieval/orchestrator.py` | — |
 | 3B Hop-1 | find concrete related systems in the literature | `retrieval/related_systems/{terminology,semantic_intent,extraction,discovery,identity,cleanup}.py` | P3 terminology, P4 semantic intent, P5 per-paper extraction |
 | 3B Hop-2 | search each discovered system's own CG literature | `retrieval/related_systems/hop2.py` | P6 search-anchor normalization |
@@ -32,3 +32,8 @@ Shared: `llm.py` (backend protocol, OpenAI backend, usage log), `cache.py`, `mod
 The code was reorganized without changing behaviour, so these stay as they were: the P3 expansion list is overridden by P4's sentence in Hop-1 queries; `transfer_needed` does not gate the routes;
 `structural_hop2_max_systems` (30) is not the number of systems Hop-2 actually takes (2 per axis); P4/P7/P9 cache keys do not contain the prompt/model;
 the `modeling_requirement` route name is kept in `FLAT_ROUTES` although no queries are built for it; the library default has `need_semantic_enabled=False` while the paper profile turns it on.
+
+Removed in the Phase 3 cleanup because nothing read their output (verified by a reader trace and by an old-vs-new differential of the direct route): the analysers that filled
+`EvidenceRoutePlan.direct_system_terms`, `modeling_requirement_terms` and the lexically derived `structural_terms`. The fields stay in the models (schemas unchanged), as do the explicit-input
+handling of `plan_evidence_routes` (grounded structural feature, literature mentions), `select_primary_structural_term` and the `NotImplementedError` guard in `run_route_retrieval`.
+So `empty_routes` / `route_justification` now report the modeling-requirement route as always empty, and the structural route as empty unless a structural term is passed in explicitly (no code reads those two fields).

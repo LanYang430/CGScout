@@ -1,11 +1,13 @@
 """Named run configurations -- pure data, no code and no imports of the pipeline.
 
-PAPER        the configuration the paper evaluation runs with ("CUR" arm of benchmark/evaluation): every switch passed explicitly, nothing left to defaults.
-INTERACTIVE  the library / CLI defaults, unchanged (empty overrides): what `cgscout` does when no configuration is given.
+PAPER        the configuration the paper evaluation runs with ("CUR" arm of benchmark/evaluation).  It names the five retrieval switches below, the Stage-4 efforts / deep_cap /
+             screen abstract length, the LLM model and effort, and the Stage-3 classifier.  Every setting it does NOT name (e.g. max_papers_per_query, the Stage-4 worker counts)
+             is the library default; benchmark/evaluation/run_benchmark.py records ALL effective values in run_config_<arm>.json and tests/test_run_benchmark.py pins them.
+INTERACTIVE  the library defaults, unchanged (empty overrides).  The `cgscout` command line does not read profiles: it runs with the library defaults, which is what this profile describes.
 
 A profile is a dict of overrides for the pieces that take configuration: `budgets` -> retrieval.direct.route_plan.RouteRetrievalBudgets(**budgets),
 `stage4` -> assessment.stage4.Stage4Config (+ the abstract length shown to the tier-1 screen), `llm` -> model / reasoning effort (the evaluation harness
-additionally lifts any explicit effort="low" request to "medium" for this profile).  The default entry point stays INTERACTIVE; selecting PAPER is an explicit choice.
+additionally lifts any explicit effort="low" request to "medium" for this profile).  PAPER is selected only by the evaluation runner (benchmark/evaluation/arms.py).
 """
 
 PAPER = {
