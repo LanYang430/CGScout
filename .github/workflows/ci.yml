@@ -1,0 +1,22 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: pip install ".[dev]"
+      - name: tests (golden replay is skipped without a fixture)
+        run: pytest -q
+      - name: installed-package smoke test (no checkout on the path)
+        run: |
+          cd "$(mktemp -d)"
+          python -I -c "import cgscout, cgscout.cli, cgscout.retrieval.orchestrator, cgscout.assessment.stage4; print(cgscout.__version__)"
+          cgscout --help
