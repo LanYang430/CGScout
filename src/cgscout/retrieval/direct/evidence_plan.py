@@ -5,7 +5,7 @@ would make prior CG work informative. Routes are independent:
   1. direct_system: (no longer filled here; the system-specific CG queries are built from system_description by route_plan.py)
   2. process: the scientific process/property being studied
   3. context: grounded physical context (membrane, environment, etc.)
-  4. modeling_requirement: what simulation capability would be needed
+  4. modeling_requirement: what simulation capability would be needed (route disabled: never filled)
   5. structural: meaningful fold classes (can be empty!)
 
 Structural terms: USER_GROUNDED or LITERATURE_GROUNDED only. No LLM inference
@@ -452,104 +452,8 @@ def _extract_context_terms(
     return terms, justification
 
 
-# --- Modeling requirements: PLANNER_DERIVED only, with strict justification ---
-
-def _infer_modeling_requirements(
-    objective: str,
-    system_description: str,
-    confidence_threshold: Literal["high", "exploratory"] = "high"
-) -> tuple[list[RouteTerm], Optional[str]]:
-    """Infer modeling requirements as planning hypotheses.
-
-    RULE: Always PLANNER_DERIVED.
-          Must include explicit justification.
-          Never represented as extracted literature evidence.
-
-    Well-justified cases:
-      - "binding" / "interface" / "interaction" objective
-        → interface preservation (key CG modeling challenge for binding)
-      - "folding" objective
-        → folding landscape sampling (multi-state sampling is core to folding CG)
-      - "conformational change" objective + recognized system patterns
-        → conformational flexibility (dynamic rearrangement in CG)
-      - otherwise: empty
-
-    Args:
-        objective: the normalized scientific objective
-        system_description: the normalized system description
-        confidence_threshold: only return terms meeting this confidence bar
-
-    Returns:
-        (modeling_requirement_terms, justification_for_empty)
-    """
-    terms: list[RouteTerm] = []
-    justification: Optional[str] = None
-
-    obj_lower = (objective or "").lower()
-    sys_lower = (system_description or "").lower()
-
-    # Rule 1: binding / interface / interaction → interface preservation
-    # These are fundamental CG challenges for accurate binding representation
-    if any(kw in obj_lower for kw in ["binding", "interface", "interaction", "dock"]):
-        terms.append(RouteTerm(
-            term="interface preservation",
-            route_type="modeling_requirement",
-            source="PLANNER_DERIVED",
-            confidence="high",
-            justification=(
-                "Protein-protein binding and complexes require precise geometric preservation "
-                "of interaction interfaces in CG models to maintain binding specificity and modes. "
-                "Interface fidelity is a standard CG modeling concern. "
-                "(CG model design principle)"
-            ),
-            provenance={"source": "planner", "reasoning": "binding/interface objective → interface preservation"}
-        ))
-
-    # Rule 2: folding objective → folding landscape sampling
-    # Folding is fundamentally about multi-state sampling and pathway exploration
-    if "folding" in obj_lower:
-        terms.append(RouteTerm(
-            term="folding landscape sampling",
-            route_type="modeling_requirement",
-            source="PLANNER_DERIVED",
-            confidence="high",
-            justification=(
-                "Protein folding requires CG models to sample multiple conformational states and "
-                "pathways. Capturing the folding landscape—including transition states and "
-                "intermediates—is a core objective of CG folding studies. "
-                "(standard CG methodology)"
-            ),
-            provenance={"source": "planner", "reasoning": "folding objective → landscape sampling"}
-        ))
-
-    # Rule 3: conformational change objective → conformational flexibility
-    # Conformational dynamics inherently requires modeling flexibility
-    if "conformational" in obj_lower and "change" in obj_lower:
-        terms.append(RouteTerm(
-            term="conformational flexibility",
-            route_type="modeling_requirement",
-            source="PLANNER_DERIVED",
-            confidence="high",
-            justification=(
-                "Systems undergoing conformational changes require explicit modeling of domain and "
-                "inter-domain flexibility in CG models. Multi-state dynamics and rearrangement "
-                "pathways are central to conformational-change studies. "
-                "(standard CG modeling practice)"
-            ),
-            provenance={"source": "planner", "reasoning": "conformational change objective → flexibility"}
-        ))
-
-    if not terms:
-        justification = (
-            f"Objective '{objective}' does not match any well-justified modeling requirement. "
-            "Modeling requirements remain empty."
-        )
-
-    return terms, justification
-
-
-# (The narrow LLM modeling-requirement planner that used to live here -- prompt, schema, deterministic gate -- is historical code,
-# kept in the git tag `legacy-pre-cgscout`; only the rule-based _infer_modeling_requirements above is active.)
+# (The modeling-requirement planners that used to live here -- the LLM planner and the rule-based keyword prototype -- are historical code,
+# kept in the git tag `legacy-pre-cgscout`; the modeling_requirement route is disabled: no terms are derived and no queries are built for it.)
 
 CallFn = Callable[[str, str, dict], str]   # (system_prompt, user_message, schema) -> raw JSON content
 
@@ -578,10 +482,10 @@ def plan_evidence_routes(
         literature_context_mentions: context clues from retrieved papers
         call: accepted for signature compatibility; not used (there is no LLM
             modeling-requirement planner any more).
-        modeling_requirement_mode: only "rule" is supported (the keyword
-            prototype _infer_modeling_requirements); any other value raises
-            ValueError. The LLM mode was removed -- historical code, git tag
-            `legacy-pre-cgscout`.
+        modeling_requirement_mode: only "rule" is accepted (kept so existing
+            calls keep working); any other value raises ValueError. Neither
+            the LLM mode nor the keyword prototype exists any more -- historical
+            code, git tag `legacy-pre-cgscout`; modeling_requirement_terms stays empty.
 
     Returns:
         Complete EvidenceRoutePlan with all five routes
@@ -614,20 +518,12 @@ def plan_evidence_routes(
     if ctx_just:
         plan.route_justification["context"] = ctx_just
 
-    # Modeling requirements: rule prototype only (the LLM mode was removed).
+    # Modeling requirements: the route is disabled (nothing is derived); only the historical argument value is accepted.
     if modeling_requirement_mode != "rule":
         raise ValueError(
             f"plan_evidence_routes() supports only modeling_requirement_mode='rule' (got {modeling_requirement_mode!r}); "
             "the LLM modeling-requirement mode was removed."
         )
-    req_terms, req_just = _infer_modeling_requirements(
-        scientific_objective,
-        system_description
-    )
-    plan.modeling_requirement_terms = req_terms
-    if req_just:
-        plan.route_justification["modeling_requirement"] = req_just
-
     # Track empty routes
     if not plan.structural_terms:
         plan.empty_routes.append("structural")
