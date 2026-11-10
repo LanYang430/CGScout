@@ -23,17 +23,6 @@ import re
 from typing import Optional, Literal, Dict, Any, Callable
 from pydantic import BaseModel, Field
 
-# Reused, NOT duplicated: the same closed, morphology-based structural
-# vocabulary and generic-head/connective word sets Hop-1's class-modifier
-# stripping already uses (discovery._strip_class_modifier is
-# the inverse operation of the lexical extraction below -- that peels a
-# structural modifier OFF a name; this recovers the modifier ITSELF from
-# grounded system text). Importing these rather than re-declaring a second,
-# possibly-drifting copy is the point: one structural vocabulary for the
-# whole codebase, not a growing biology ontology invented here.
-from cgscout.retrieval.related_systems.terminology import _STRUCTURAL_MORPHEMES  # noqa: E402
-from cgscout.retrieval.related_systems.discovery import _CLASS_HEAD_WORDS, _CONNECTIVES  # noqa: E402
-
 _WS = re.compile(r"\s+")
 
 
@@ -107,160 +96,6 @@ def _extract_process_terms_primary(objective: str) -> list[RouteTerm]:
 
 # --- Structural: USER_GROUNDED or LITERATURE_GROUNDED only ----------------
 
-_MAX_MODIFIER_WORDS = 3  # bounds a runaway leftward walk; "left-handed beta-helix"-scale phrases fit
-
-# Case B's edge-trimming set (see extract_lexical_structural_feature below):
-# a deliberately NARROWER subset of _CONNECTIVES, not the whole set reused
-# mechanically. _CONNECTIVES mixes two different jobs today: a pure empty
-# wrapper (an article/determiner/example-marker -- stripping it changes
-# nothing about what's left) and a word that, at the EDGE of a span with
-# nothing on the other side, would silently change the claim if stripped
-# rather than merely trim it. Case A only ever uses _CONNECTIVES as a STOP
-# boundary during its backward walk (never crosses one, never removes one),
-# so this distinction never mattered there -- Case B is different: it
-# actively deletes edge tokens, so it needs the narrower list.
-#
-# Excluded, and why (never edge-trimmed by Case B):
-#   "and", "or"      -- coordinating conjunctions; a dangling one at an edge
-#                        signals an incomplete/conjoined fragment ("beta
-#                        helix and ...", "... and beta helix"), not a clean
-#                        wrapper -- silently dropping it could as easily
-#                        paper over a genuinely truncated span as trim a
-#                        harmless one.
-#   "of", "with", "in" -- relational prepositions connecting two distinct
-#                        things ("domain OF X", "protein WITH X"); stripping
-#                        one at an edge risks discarding the very relation
-#                        the text was expressing, not just filler.
-#   "like", "based"   -- similarity/derivation markers ("beta-helix-LIKE",
-#                        "beta-helix-BASED fold") -- these change the CLAIM
-#                        itself (resembles X / built on X) rather than just
-#                        decorating it; stripping one would turn "resembles
-#                        a beta-helix" into "IS a beta-helix", a real
-#                        semantic change, not a trim.
-#   "containing"      -- same relational-gerund concern as "of"/"with".
-#   "type", "types", "class" -- classifier suffixes ("beta-helix TYPE",
-#                        "beta-helix CLASS") that mean "a kind of X", not X
-#                        itself -- same derivation concern as "based".
-# Kept (pure empty wrapper, safe to delete): "the"/"a"/"an" (articles),
-# "other"/"others" (quantifier, doesn't relate two things), "such"/"as"/"eg"
-# (example-introducing markers with no relational content of their own).
-_EDGE_WRAPPER_TOKENS = _CONNECTIVES - {
-    "and", "or", "of", "with", "in", "like", "based", "containing",
-    "type", "types", "class",
-}
-
-
-def extract_lexical_structural_feature(text: str) -> Optional[str]:
-    """Narrow deterministic EXTRACTION (never inference) of an explicit
-    structural-class phrase already present verbatim in grounded text.
-
-    Hard invariant: explicit structural wording present in the grounded text
-    -> may extract. A structural feature known only from biology/domain
-    knowledge (e.g. "Pertactin" IS a beta-helix protein, "GPCR"s ARE membrane
-    receptors) -> must NOT extract, because that knowledge is not lexically
-    present in the text itself.
-
-    Algorithm: find a generic class-head word (_CLASS_HEAD_WORDS -- "protein",
-    "enzyme", "domain", "fold", ...) and walk backward from it collecting
-    words, stopping at the first connective/article (_CONNECTIVES -- "a",
-    "the", "and", "of", ...) or after _MAX_MODIFIER_WORDS. If at least one
-    collected word contains a structural morpheme (_STRUCTURAL_MORPHEMES --
-    "helix", "barrel", "coil", "sheet", ...), the collected run IS the
-    structural feature -- returned as a VERBATIM substring of `text`
-    (original casing/hyphenation preserved), not reconstructed.
-
-    "beta-helix protein" -> "beta-helix" (helix is a morpheme)
-    "TIM barrel enzyme" -> "TIM barrel" (barrel is a morpheme; TIM rides
-      along because it's contiguous with barrel and not a connective)
-    "coiled-coil protein" -> "coiled-coil" (coil is a morpheme)
-    "I have a beta-helix protein and want to study folding" -> "beta-helix"
-      (the walk stops at "a", so filler words never enter the run)
-    "Pertactin" / "Wnt-Wntless" / "GPCR" / "lysozyme" -> None (no
-      _CLASS_HEAD_WORDS token present at all -- nothing to anchor a walk on)
-
-    Case B (fallback, only tried when Case A above finds nothing at all):
-    the grounded text has no class-head word to anchor on, but IS ITSELF,
-    once a purely-empty leading/trailing wrapper token (_EDGE_WRAPPER_TOKENS
-    -- a narrower, explicitly curated subset of _CONNECTIVES; see that
-    constant's own comment for exactly which words were excluded and why)
-    is trimmed off both ends, a short (<= _MAX_MODIFIER_WORDS) span
-    containing a structural morpheme. Handles the case where the grounded
-    system span (e.g. session.system_span from a message like "I want to
-    study folding of beta helix") IS the bare structural-class name itself,
-    with no "protein"/"fold"/... noun for Case A to anchor on.
-
-    "beta helix" -> "beta helix" (Case B: no class-head word at all, but
-      the whole (already short) span contains the morpheme "helix")
-    "a beta helix" -> "beta helix" (leading article trimmed first)
-    "coiled coil" / "TIM barrel" -> extracted the same way
-    "beta helix and coiled coil" -> None (Case B does NOT split on a
-      mid-span conjunction; "and" is never at an edge here, so nothing is
-      trimmed, the core stays 4 tokens > _MAX_MODIFIER_WORDS, too long to
-      trust)
-    "Pertactin" / "EspP" -> still None (no morpheme anywhere, Case B can't
-      manufacture one either)
-
-    This function is NEVER handed a raw, un-grounded user sentence -- only
-    an already-grounded span (session.system_span, an A-extracted
-    SYSTEM_IDENTITY/STRUCTURAL_DESCRIPTION source_span, or similar). Case B
-    does not attempt to parse a full sentence for a structural mention
-    buried inside it; a long, un-anchored span still correctly returns None.
-
-    This function has NO knowledge of what any named protein's fold is. It
-    only ever returns a substring that was already, lexically, sitting next
-    to a generic class-head word (Case A) or that the ENTIRE (wrapper-
-    trimmed) grounded text already collapses to (Case B) in the given text.
-    """
-    if not text:
-        return None
-    # tokens: (lowercased_word, start_offset, end_offset) preserving original
-    # text for the final verbatim substring
-    tokens = [(m.group(0).lower(), m.start(), m.end())
-              for m in re.finditer(r"[A-Za-z][A-Za-z0-9-]*", text)]
-    for i, (word, _, _) in enumerate(tokens):
-        if word not in _CLASS_HEAD_WORDS:
-            continue
-        run_start_idx = i
-        j = i - 1
-        found_morpheme = False
-        collected = 0
-        while j >= 0 and collected < _MAX_MODIFIER_WORDS:
-            w = tokens[j][0]
-            if w in _CONNECTIVES:
-                break
-            if any(m in w for m in _STRUCTURAL_MORPHEMES):
-                found_morpheme = True
-            run_start_idx = j
-            collected += 1
-            j -= 1
-        if found_morpheme and run_start_idx < i:
-            start = tokens[run_start_idx][1]
-            end = tokens[i - 1][2]
-            return text[start:end]
-
-    # Case B: no class-head word anywhere to anchor Case A on -- try the
-    # whole (edge-trimmed) grounded span as a bare structural-class mention.
-    lo, hi = 0, len(tokens)
-    while lo < hi and tokens[lo][0] in _EDGE_WRAPPER_TOKENS:
-        lo += 1
-    while hi > lo and tokens[hi - 1][0] in _EDGE_WRAPPER_TOKENS:
-        hi -= 1
-    core = tokens[lo:hi]
-    # A _CONNECTIVES member (including one of the relational/derivational
-    # words deliberately excluded from _EDGE_WRAPPER_TOKENS above -- "of",
-    # "with", "like", "based", ...) surviving INSIDE the trimmed core --
-    # not just at an edge -- means edge-trimming alone couldn't clean this
-    # span: something in it is still relationally incomplete ("beta helix
-    # of", "beta helix like", "beta helix and"). Reject rather than return
-    # a span carrying an unresolved relation as if it were a clean name.
-    core_has_stray_connective = any(w in _CONNECTIVES for w, _, _ in core)
-    if (core and len(core) <= _MAX_MODIFIER_WORDS and not core_has_stray_connective
-            and any(any(m in w for m in _STRUCTURAL_MORPHEMES) for w, _, _ in core)):
-        start, end = core[0][1], core[-1][2]
-        return text[start:end]
-    return None
-
-
 def _extract_structural_terms(
     system_description: str,
     grounded_structural_feature: Optional[str] = None,
@@ -307,22 +142,6 @@ def _extract_structural_terms(
                     provenance={"source": "literature_structural_mention"}
                 ))
         if terms:
-            return terms, None
-
-    # Case 3: no explicit fact/literature grounding yet -- try narrow lexical
-    # extraction directly from the grounded system_description text itself.
-    # Still USER_GROUNDED (it's a verbatim substring of the user's own
-    # grounded system text), never inferred.
-    if system_description:
-        lexical = extract_lexical_structural_feature(system_description)
-        if lexical:
-            terms.append(RouteTerm(
-                term=lexical,
-                route_type="structural",
-                source="USER_GROUNDED",
-                supporting_span=lexical,
-                provenance={"source": "lexical_extraction_from_system_description"}
-            ))
             return terms, None
 
     # Case 4: Named system (e.g., "Wnt-Wntless") without any grounded structural feature

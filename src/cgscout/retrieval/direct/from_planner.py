@@ -59,17 +59,10 @@ def evidence_plan_from_planner_output(plan: PlannerOutput) -> EvidenceRoutePlan:
         call=None,
         modeling_requirement_mode="rule",  # no modeling_requirement LLM call -- route is disabled
     )
-    # Hard guarantee, independent of grounded_structural_feature above:
-    # plan_evidence_routes() ALSO derives structural_terms lexically from
-    # system_description itself (extract_lexical_structural_feature(),
-    # evidence_plan.py -- unmodified, unrelated to this branch's
-    # work). Diagnosed live: "EspP passenger domain" -> structural_terms=
-    # ['EspP passenger'], because "passenger" is itself in
-    # _STRUCTURAL_MORPHEMES (added for the earlier EspP/pertactin case) --
-    # correct behavior of that OLD, untouched code, but this bridge must
-    # not let it silently turn the structural branch on. Force-cleared
-    # here rather than upstream, so the old lexical extractor's behavior
-    # stays exactly as it is for whoever else relies on it.
+    # Hard guarantee, independent of grounded_structural_feature above: this bridge never lets the structural branch turn on.
+    # (Before Phase 3, plan_evidence_routes() also derived structural_terms lexically from system_description -- e.g.
+    # "EspP passenger domain" -> ['EspP passenger'] -- and this line discarded them; that lexical extractor was removed because its
+    # output was always discarded here. The line stays as the explicit safeguard.)
     evidence_plan.structural_terms = []
     evidence_plan.search_axes = [a for a in (getattr(plan, "search_axes", None) or []) if a and a.strip()]     # used only when budgets.query_construction_v2 is set
     # Flat lexical retrieval needs SHORT queries. plan_evidence_routes() takes user_stated_context as ONE string, so the
