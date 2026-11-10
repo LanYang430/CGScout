@@ -9,16 +9,11 @@ rank against.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from beam_agent import cache
 from beam_agent.dedupe import dedupe_papers
 from beam_agent.models import Paper
 from beam_agent.sources.openalex import search_openalex
 from beam_agent.sources.semantic_scholar import search_semantic_scholar
-
-if TYPE_CHECKING:  # only a type annotation of execute_query_plan(); not needed at import time
-    from beam_agent.query_planner import QueryPlan
 
 _SEARCH_CACHE_NAMESPACE = "search_and_dedupe"
 # v1: 24h, simple and fixed -- OpenAlex/Semantic Scholar indexing and ranking
@@ -106,80 +101,3 @@ def search_and_dedupe(
 
 
 search_and_dedupe.last_errors = []  # type: ignore[attr-defined]
-
-
-# Was 5. Raised to 20 (CG-model-recommendation retrieval-tightening,
-# concept_resolver_reasoning session): this is the actual live default
-# chat_with_beam.py's --per-source-limit flag and RouteRetrievalBudgets.
-# max_papers_per_query both trace back to -- diagnosed live that a query
-# genuinely returning the target paper at rank 13 was silently cut off by
-# a top-5 fetch. execute_query_plan() below (legacy/unused in the live
-# chat_with_beam.py path) inherits this too, but its own default was
-# already confirmed a no-op there.
-DEFAULT_PER_SOURCE_LIMIT_PER_QUERY = 20
-
-
-def execute_query_plan(
-    plan: QueryPlan,
-    per_source_limit: int = DEFAULT_PER_SOURCE_LIMIT_PER_QUERY,
-    *,
-    sources: tuple[str, ...] = ("semantic_scholar", "openalex"),
-) -> list[Paper]:
-    """Execute every PlannedQuery in a QueryPlan (e.g. from
-    query_planner_handoff.plan_from_retrieval_intent(), or from a plain
-    BaselineQueryPlanner.plan()) against the given sources, stamp
-    provenance, dedupe, and return one combined list of Papers.
-
-    Reuses group_queries_by_normalized_key()/stamp_provenance() from
-    pipeline.py -- the exact same helpers run_pipeline()'s own per-query
-    loop already uses -- rather than duplicating that logic. This function
-    differs from run_pipeline() only in starting from an already-built
-    QueryPlan instead of running a ConceptResolver+QueryPlanner pass
-    itself, and in defaulting to a much smaller per-query limit (5, not
-    15) suited to an interactive first-round search rather than the heavy
-    batch pipeline.
-
-    Each source fails independently -- a failure in one never prevents
-    results from the other, matching search_and_dedupe()'s behavior above.
-    Failures are collected in `execute_query_plan.last_errors` (same
-    pattern) rather than raised. `execute_query_plan.last_raw_papers`
-    additionally exposes the pre-dedup list, so a caller can report
-    accurate per-source hit counts (dedupe merges make post-dedup counts
-    misleading for that purpose). If every source x query combination
-    fails, this returns an empty list -- never raises -- so the caller is
-    responsible for turning "no results and errors present" into a clear
-    user-facing failure message rather than a silent empty result.
-    """
-    # Imported here, not at module top: pipeline.py pulls in the whole v1 pipeline (concept resolver, extractor, matcher, ...), and only this
-    # legacy function needs its two helpers.  search_and_dedupe() -- the one function the CGScout path uses -- must not load all that.
-    from beam_agent.pipeline import group_queries_by_normalized_key, stamp_provenance
-
-    grouped_queries = group_queries_by_normalized_key(plan.queries)
-
-    raw: list[Paper] = []
-    errors: list[str] = []
-
-    for query, categories in grouped_queries.values():
-        if "semantic_scholar" in sources:
-            try:
-                papers = search_semantic_scholar(query, limit=per_source_limit)
-                stamp_provenance(papers, query=query, categories=categories)
-                raw.extend(papers)
-            except Exception as exc:  # noqa: BLE001
-                errors.append(f"semantic_scholar[{query!r}]: {exc}")
-        if "openalex" in sources:
-            try:
-                papers = search_openalex(query, limit=per_source_limit)
-                stamp_provenance(papers, query=query, categories=categories)
-                raw.extend(papers)
-            except Exception as exc:  # noqa: BLE001
-                errors.append(f"openalex[{query!r}]: {exc}")
-
-    execute_query_plan.last_errors = errors  # type: ignore[attr-defined]
-    execute_query_plan.last_raw_papers = raw  # type: ignore[attr-defined]
-
-    return dedupe_papers(raw)
-
-
-execute_query_plan.last_errors = []  # type: ignore[attr-defined]
-execute_query_plan.last_raw_papers = []  # type: ignore[attr-defined]
