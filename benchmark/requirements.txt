@@ -1,0 +1,5 @@
+# Extra dependencies of the evaluation / baseline scripts under benchmark/ (not needed by the cgscout package itself).
+# Install the package first (pip install .), then: pip install -r benchmark/requirements.txt
+pandas
+openpyxl
+# A future Claude / Gemini web-search baseline would add its SDK (anthropic / google-genai) here, never to the package's dependencies.
