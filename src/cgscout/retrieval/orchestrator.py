@@ -34,7 +34,7 @@ specifically "only USER_GROUNDED / LITERATURE_GROUNDED, no LLM inference
 about what fold a system belongs to" (evidence_plan.py's own
 docstring) -- exactly what a transfer_axes hypothesis intentionally IS.
 Routing it through that contract would both mislabel provenance and risk
-tripping evidence_plan.validate_hard_stops. Calling the two Hop
+breaking that grounding rule. Calling the two Hop
 functions directly reuses the actual, already-validated retrieval
 machinery without stretching a different module's contract to cover a
 case it was not designed for -- exactly the old lexical structural

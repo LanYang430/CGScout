@@ -71,22 +71,6 @@ def stemmed_keywords(text: str, *, min_len: int = 3) -> set[str]:
     return {stem(t) for t in keywords(text, min_len=min_len)}
 
 
-def core_keyword_string(text: str) -> str:
-    """Rebuild a shorter query string keeping only non-stopword tokens, in order.
-
-    Preserves each surviving word's original surface form (case, attached
-    punctuation) rather than the normalized token -- this is meant to feed
-    back into a search API, not to be a canonical key.
-    """
-    kw = keywords(text)
-    kept = []
-    for raw_word in re.findall(r"\S+", text):
-        normalized = re.sub(r"[^A-Za-z\-]", "", raw_word).lower()
-        if normalized in kw:
-            kept.append(raw_word)
-    return " ".join(kept)
-
-
 # Methodology synonym clusters (canonical term, [synonyms]) -- vocabulary, not protein names.  Lives here (not in concept_resolver.py, where it
 # was first defined) so that the Stage-3 filter (filter.py) can read it without importing the v1 concept resolver.
 # concept_resolver.py imports it back under its old private name.

@@ -80,15 +80,8 @@ search_openalex_last_calls: list[dict[str, Any]] = []
 # GTE-Large-EN, cosine-similarity retrieval, max 50 results, hard-limited
 # to 1 request/second by OpenAlex itself -- unlike lexical `search=`, which
 # has no such per-second cap (only the usage-based credit budget above).
-# Enforced here with a simple last-call-timestamp throttle -- correct for
-# this codebase's actual concurrency (every real caller of search_openalex
-# in the semantic-mode call sites runs its retrieval loop on the main
-# thread, sequentially; Hop-1's ThreadPoolExecutor -- see related_system_
-# discovery.py -- parallelizes the LLM extraction step, never the search
-# calls). A module-level global is sufficient; this is not meant to be
-# thread-safe beyond that.
+# Enforced by _throttle_semantic() below (openalex_usage.throttle_semantic, shared across processes).
 _SEMANTIC_MIN_INTERVAL_S = 1.05
-_last_semantic_call_ts = 0.0
 
 
 def _throttle_semantic() -> None:

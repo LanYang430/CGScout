@@ -23,7 +23,6 @@ requested.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 from cgscout.models import Paper
 
@@ -91,14 +90,6 @@ def classify_papers(papers: list[Paper]) -> list[float]:
     model = _load_model()
     X = embed_texts([_paper_text(p) for p in papers])
     return model.predict_proba(X)[:, 1].tolist()
-
-
-def classify_paper(paper: Paper) -> float:
-    """Single-paper convenience wrapper around classify_papers()."""
-    return classify_papers([paper])[0]
-
-
-ClassifyFn = "Callable[[list[Paper]], list[float]]"
 
 
 def default_classify_fn(papers: list[Paper]) -> list[float]:

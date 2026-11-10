@@ -699,8 +699,7 @@ def select_primary_structural_term(structural_terms: list[RouteTerm]) -> tuple[O
     EvidenceRoutePlan order (as the tiebreak within a tier). Returns
     (primary, secondary_terms_for_audit). structural_terms is guaranteed by
     evidence_plan's own contract to contain only USER_GROUNDED /
-    LITERATURE_GROUNDED terms (never PLANNER_DERIVED) -- see
-    evidence_plan.validate_hard_stops.
+    LITERATURE_GROUNDED terms (never PLANNER_DERIVED).
     Hop-1 is run ONCE from the primary term only; TerminologyExpander is
     already responsible for widening structural terminology, so secondary
     terms are preserved for audit, never re-run through Hop-1 separately."""

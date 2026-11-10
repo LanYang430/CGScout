@@ -41,7 +41,3 @@ def review_filter_detail(paper: Paper) -> dict:
         "type_hit": type_hit,
         "matched_phrase": m.group(0) if m else "",
     }
-
-
-def is_high_confidence_review(paper: Paper) -> bool:
-    return review_filter_detail(paper)["flagged"]
