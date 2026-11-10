@@ -1,22 +1,31 @@
 """Paper evaluation run of CGScout, full pipeline (ScientificPlanner + ExpertPrior replayed from plans_frozen/ -> retrieval -> Stage 3 -> Stage 4 v2).
 Port of the held-out (NEW37) runner (same flow, same checkpoint / retry / budget rules); the run's data directory is a parameter, nothing is hard-coded.
-usage:  CGSCOUT_BENCH_DIR=<run dir> python run_benchmark.py CUR [--pids a,b] [--expect-rows N]
+usage:  CGSCOUT_BENCH_DIR=<run dir> CGSCOUT_STOP_USD=<usd> python run_benchmark.py CUR --expect-rows N          (full run: every row of queries.csv)
+        CGSCOUT_BENCH_DIR=<run dir> python run_benchmark.py CUR --pids a,b [--expect-rows N]                       (subset, e.g. a smoke test)
 Run directory contents:  queries.csv (Paper ID, Latest query (v2), DOI, OpenAlex ID), plans_frozen/ (freeze_plans.py), cache_work/ (created), results/CUR/ (created).
+Exit code:  0 every selected query has a final result | 2 not started (bad command line / input / plans; nothing spent) | 3 OpenAlex budget (run_guarded)
+            | 4 STARTED BUT INCOMPLETE: spend ceiling reached, or queries still ERROR / DEGRADED after 3 passes -- never reported as success.
 Pre-specified rules (fixed before the run; nothing is changed after seeing results):
   INPUT     only the frozen query text reaches CGScout; seed title/DOI/OpenAlex ID are used ONLY after retrieval to locate the seed.
-  CONFIG    model gpt-5.6-luna, effort medium in every stage (harness wrapper lifts explicit 'low' to 'medium', counted); deep_cap 500; switches explicit (arms.py).
-  CLARIFY   one fixed generic reply, max 2 rounds (done in freeze_plans.py); if the planner still does not proceed the query is NOT_RUN_CLARIFICATION.
+  SELECT    a full run needs --expect-rows (queries.csv must have exactly that many rows) and an explicit CGSCOUT_STOP_USD; --pids must be non-empty and all known.
+  CONFIG    every setting comes from cgscout.profiles.PAPER (model, effort, Stage-4 settings, retrieval switches; harness wrapper lifts explicit 'low' to the profile effort, counted);
+            run_config_<arm>.json records the full effective values; each start is appended to run_starts_<arm>.jsonl.
+  PLANS     plans_frozen/<pid>.json must carry the provenance of the P1/P2 code that is running (provenance.py); stale, foreign or missing plans stop the run before any spend.
+  CLARIFY   one fixed generic reply, max 2 rounds (done in freeze_plans.py); if the planner still does not proceed the query is NOT_RUN_CLARIFICATION (a final result).
   RETRY     only infrastructure failures (degraded OpenAlex run, transient errors), max 3 passes; LLM 4xx refusals are recorded REFUSED, never retried.
   OPENALEX  strict budget mode; sleeps to 00:00 UTC when the daily credits run out; an interrupted query is discarded and re-run.
-  COST      LLM cost from the usage log per query window; hard stop when the batch total reaches CGSCOUT_STOP_USD (default 5.0; legacy name NEW37_STOP_USD also read).
-  CACHE     fresh cache_work/ inside the run directory.   CHECKPOINT  results/CUR/{PID}.json = finished query (never re-run).
+  COST      LLM cost from the usage log per query window; no new query starts once the arm's total reaches CGSCOUT_STOP_USD (legacy name NEW37_STOP_USD also read;
+            default 5.0 applies to --pids runs only).  A run cut short by the ceiling exits with code 4; raise the ceiling and start again to resume.
+  CACHE     fresh cache_work/ inside the run directory.   CHECKPOINT  results/CUR/{PID}.json with status OK / REFUSED / NOT_RUN_CLARIFICATION = finished query (never re-run).
 """
 from __future__ import annotations
 
-import csv, hashlib, json, os, subprocess, sys, time, traceback
+import argparse, collections, dataclasses, hashlib, inspect, json, os, sys, time, traceback
 from pathlib import Path
 
 import arms as AR
+import provenance as PV
+from arms import PreflightError
 from recorder import Recorder
 
 # --- run configuration (set by configure(); module-level so that run_query() and the offline verification can reuse it) ----------------------------------
@@ -24,6 +33,10 @@ ARM_NAME = None
 ROOT = RES = INPUT = USAGE_LOG = LOG = None
 BUDGETS = None
 STOP_USD = DAILY_CREDITS = MIN_CREDITS = DEEP_CAP = None
+STOP_EXPLICIT = False        # True when CGSCOUT_STOP_USD (or the legacy NEW37_STOP_USD) is set in the environment
+PROFILE = None               # the cgscout.profiles entry of the arm: the single source of every setting below
+EXIT_OK, EXIT_NOT_STARTED, EXIT_INCOMPLETE = 0, 2, 4          # (3 = OpenAlex budget, exit code of RL.run_guarded)
+DONE_STATUSES = ("OK", "REFUSED", "NOT_RUN_CLARIFICATION")   # a checkpoint with one of these is a final result; DEGRADED / ERROR are retried
 CLARIFY_REPLY = "I have no further details beyond my question as written; please proceed with your best reasonable interpretation."
 # `harness` (and with it cgscout.llm, which reads CGSCOUT_USAGE_LOG_PATH at import time) is imported inside configure(), AFTER the environment is set.
 RL = U = None
@@ -32,14 +45,15 @@ RP = TB = TerminologyExpansion = get_backend = backend_label = read_usage_log = 
 
 def configure(arm_name):
     """Environment + imports that must be in place before any pipeline module reads them (cache dir, usage log, model, effort)."""
-    global ARM_NAME, ROOT, RES, INPUT, USAGE_LOG, LOG, BUDGETS, STOP_USD, DAILY_CREDITS, MIN_CREDITS, DEEP_CAP
+    global ARM_NAME, ROOT, RES, INPUT, USAGE_LOG, LOG, BUDGETS, STOP_USD, DAILY_CREDITS, MIN_CREDITS, DEEP_CAP, STOP_EXPLICIT, PROFILE
     global RL, U, RP, TB, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config
     ARM_NAME, ROOT, INPUT = arm_name, AR.ROOT, AR.INPUT
+    PROFILE = AR.profile_for(arm_name)
     os.environ["CGSCOUT_CACHE_DIR"] = str(AR.SHARED_CACHE)           # shared by every arm: identical queries are fetched once
     os.environ["CGSCOUT_USAGE_LOG_PATH"] = str(ROOT / f"llm_usage_full_{ARM_NAME}.jsonl")
     os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
-    os.environ["CGSCOUT_LLM_MODEL"] = "gpt-5.6-luna"
-    os.environ["CGSCOUT_LLM_EFFORT"] = "medium"
+    os.environ["CGSCOUT_LLM_MODEL"] = PROFILE["llm"]["model"]
+    os.environ["CGSCOUT_LLM_EFFORT"] = PROFILE["llm"]["effort"]
     os.environ.setdefault("OPENALEX_STRICT_BUDGET", "1")
     import harness as _RL
     import cgscout.retrieval.direct.route_plan as _RP
@@ -66,10 +80,11 @@ def configure(arm_name):
 
     TB.expand_terminology = _memo_expand
     RES = ROOT / "results" / ARM_NAME
-    STOP_USD = float(os.environ.get("CGSCOUT_STOP_USD", os.environ.get("NEW37_STOP_USD", "5.0")))     # hard LLM-spend ceiling per arm (approved value is set at launch)
+    STOP_EXPLICIT = "CGSCOUT_STOP_USD" in os.environ or "NEW37_STOP_USD" in os.environ
+    STOP_USD = float(os.environ.get("CGSCOUT_STOP_USD", os.environ.get("NEW37_STOP_USD", "5.0")))     # hard LLM-spend ceiling per arm; a full run requires it to be set explicitly
     DAILY_CREDITS = 10000
     MIN_CREDITS = int(os.environ.get("CGSCOUT_MIN_CREDITS", os.environ.get("NEW37_MIN_CREDITS", "400")))            # do not START a query with less than this left (a query uses ~150)
-    DEEP_CAP = 500
+    DEEP_CAP = PROFILE["stage4"]["deep_cap"]
     USAGE_LOG = Path(os.environ["CGSCOUT_USAGE_LOG_PATH"])
     LOG = ROOT / f"run_log_full_{ARM_NAME}.txt"
 
@@ -82,13 +97,13 @@ def log(msg):
 
 
 class EffortUnifiedBackend:
-    """Harness wrapper: lifts every explicit effort='low' request to 'medium' (config unification requested by the user)."""
-    def __init__(self, inner):
-        self._inner = inner; self.overrides = 0; self.calls = 0
+    """Harness wrapper: lifts every explicit effort='low' request to the profile effort ('medium' for PAPER; config unification requested by the user)."""
+    def __init__(self, inner, lift_to="medium", enabled=True):
+        self._inner = inner; self.overrides = 0; self.calls = 0; self._lift_to = lift_to; self._enabled = enabled
     def structured(self, *, effort=None, **kw):
         self.calls += 1
-        if effort == "low":
-            effort = "medium"; self.overrides += 1
+        if self._enabled and effort == "low":
+            effort = self._lift_to; self.overrides += 1
         return self._inner.structured(effort=effort, **kw)
     def __getattr__(self, k):
         return getattr(self._inner, k)
@@ -299,45 +314,127 @@ def run_query(row, backend_w, s4cfg):
     return rec
 
 
-def _git_commit():
-    try:
-        return subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=Path(__file__).resolve().parent, check=True).stdout.strip()
-    except Exception:   # noqa: BLE001 -- not a checkout / git missing: provenance is simply absent
-        return None
+def effective_config(backend, s4cfg):
+    """Every setting that determines what this run does, with the values actually in force: profile values plus the library defaults the profile does not name."""
+    from cgscout.screening import sim_classifier as SC
+    import cgscout.assessment.stage4 as S4M
+
+    def entry_defaults(fn):
+        return {n: p.default for n, p in inspect.signature(fn).parameters.items()
+                if p.default is not inspect.Parameter.empty and isinstance(p.default, (bool, int, float, str, type(None)))}
+    retrieval_defaults = entry_defaults(TB.run_expert_prior_retrieval)
+    return {
+        "profile": AR.ARMS[ARM_NAME]["profile"], "profile_label": PROFILE["label"],
+        "llm": {"model": backend.model, "default_effort": backend.default_effort, "lift_explicit_low_effort": PROFILE["llm"]["lift_low_effort_to_medium"],
+                "lift_target_effort": PROFILE["llm"]["effort"]},
+        "budgets": BUDGETS.model_dump() if BUDGETS is not None else None,
+        "stage4": dataclasses.asdict(s4cfg),
+        "stage3_classifier": {"profile": PROFILE["stage3_classifier"], "file": SC.MODEL_PATH.name, "sha256": PV.sha256_file(SC.MODEL_PATH),
+                              "threshold": retrieval_defaults.get("stage3_classifier_threshold")},
+        "entry_defaults": {"run_expert_prior_retrieval": retrieval_defaults, "run_stage4_v2": entry_defaults(S4M.run_stage4_v2)},
+        "openalex": {"strict_budget": os.environ.get("OPENALEX_STRICT_BUDGET"), "min_credits_to_start_a_query": MIN_CREDITS, "daily_credits": DAILY_CREDITS},
+    }
 
 
-def main():
-    arm = sys.argv[1]
-    configure(arm)
-    rows = list(csv.DictReader(open(INPUT, encoding="utf-8-sig")))
-    expect = int(sys.argv[sys.argv.index("--expect-rows") + 1]) if "--expect-rows" in sys.argv else None
-    assert len({r["Paper ID"] for r in rows}) == len(rows) and (expect is None or len(rows) == expect), (len(rows), expect)
-    hits_, misses_ = AR.case_ids(); only = set(hits_ + misses_)
-    if "--pids" in sys.argv: only &= set(sys.argv[sys.argv.index("--pids") + 1].split(","))
-    RES.mkdir(parents=True, exist_ok=True)
-    RL.harness_guard(len(rows) * 16, what="cgscout_benchmark", check_budget=False)
-    backend = get_backend(); bw = EffortUnifiedBackend(backend)
-    s4cfg = Stage4Config(screen_effort="medium", extract_effort="medium", judge_effort="medium", deep_cap=DEEP_CAP, screen_abstract_chars=AR.ARMS[ARM_NAME]["screen_chars"])
+def differs_from_library_defaults(s4cfg):
+    out = {}
+    if BUDGETS is not None:
+        d = RP.RouteRetrievalBudgets()
+        out["budgets"] = {k: {"default": getattr(d, k), "effective": getattr(BUDGETS, k)} for k in type(d).model_fields if getattr(d, k) != getattr(BUDGETS, k)}
+    d4 = Stage4Config()
+    out["stage4"] = {f.name: {"default": getattr(d4, f.name), "effective": getattr(s4cfg, f.name)} for f in dataclasses.fields(d4) if getattr(d4, f.name) != getattr(s4cfg, f.name)}
+    return out
+
+
+def verify_plans(rows, selected):
+    """Every selected case needs a frozen plan made by the P1/P2 code that is about to run (provenance.py); otherwise nothing is started."""
+    res = PV.check_plans(AR.PLANS, {r["Paper ID"]: r for r in rows}, selected, model=PROFILE["llm"]["model"], effort=PROFILE["llm"]["effort"])
+    if res["missing"] or res["problems"]:
+        raise PreflightError(PV.format_plan_problems(res, AR.PLANS))
+    return res
+
+
+def write_run_config(backend, s4cfg, rows, selected, full, expect_rows, plans):
     import cgscout
+    eff = effective_config(backend, s4cfg)
+    eff_sha = hashlib.sha256(json.dumps(eff, sort_keys=True, default=str).encode()).hexdigest()
+    g = PV.git_state()
     cfg = {"model": backend.model, "default_effort": backend.default_effort, "stage4_config": {k: getattr(s4cfg, k) for k in ("screen_effort", "extract_effort", "judge_effort", "deep_cap", "screen_batch_size", "reject_min_confidence", "workers")},
            "changes_vs_production_defaults": {"stage4.screen_effort": "low->medium", "stage4.extract_effort": "low->medium", "hop2_search_anchor effort": "low->medium (harness backend wrapper)",
                                               "stage4.deep_cap": "80->500 (safety valve disabled in practice)", "CGSCOUT_CACHE_DIR": "fresh cache_work/ for this run"},
-           "clarify_reply": CLARIFY_REPLY, "stop_usd": STOP_USD, "input_sha256": hashlib.sha256(INPUT.read_bytes()).hexdigest(),
+           "clarify_reply": CLARIFY_REPLY, "stop_usd": STOP_USD, "stop_usd_explicit": STOP_EXPLICIT, "input_sha256": hashlib.sha256(INPUT.read_bytes()).hexdigest(),
            "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "started": time.strftime("%Y-%m-%d %H:%M:%S"),
-           "cgscout_version": cgscout.__version__, "git_commit": _git_commit()}
-    cfg.update({"arm": ARM_NAME, "arm_label": AR.ARMS[ARM_NAME]["label"], "budgets": AR.ARMS[ARM_NAME]["budgets"], "classifier": AR.ARMS[ARM_NAME].get("classifier")})
-    (ROOT / f"run_config_{ARM_NAME}.json").write_text(json.dumps(cfg, indent=1))
-    log(f"LLM backend: {backend_label(backend)}; efforts unified to medium; deep_cap={DEEP_CAP}; stop at ${STOP_USD}")
+           "cgscout_version": cgscout.__version__, "git_commit": g["commit"], "git_dirty": g["dirty"], "code_sha256": PV.package_sha256(), "argv": sys.argv[1:]}
+    cfg.update({"arm": ARM_NAME, "arm_label": AR.ARMS[ARM_NAME]["label"], "profile": AR.ARMS[ARM_NAME]["profile"], "budgets": PROFILE["budgets"], "classifier": PROFILE["stage3_classifier"],
+                "effective_config": eff, "effective_config_sha256": eff_sha, "differs_from_library_defaults": differs_from_library_defaults(s4cfg),
+                "selection": {"full_run": full, "n_rows": len(rows), "n_selected": len(selected), "expect_rows": expect_rows, "pids": None if full else selected},
+                "plans_frozen": {"dir": str(AR.PLANS), **{k: plans[k] for k in ("checked", "usable", "p1p2_source_sha256", "git_commits", "git_dirty", "created_range")}}})
+    (ROOT / f"run_config_{ARM_NAME}.json").write_text(json.dumps(cfg, indent=1, default=str))
+    # run_config_<arm>.json is overwritten by every (re)start; the start log keeps one line per start, so a resumed run shows whether code / configuration / plans changed in between
+    starts = ROOT / f"run_starts_{ARM_NAME}.jsonl"
+    prev = None
+    if starts.exists():
+        lines = [ln for ln in starts.read_text().splitlines() if ln.strip()]
+        prev = json.loads(lines[-1]) if lines else None
+    entry = {"started": cfg["started"], "effective_config_sha256": eff_sha, "code_sha256": cfg["code_sha256"], "git_commit": g["commit"], "git_dirty": g["dirty"],
+             "script_sha256": cfg["script_sha256"], "plans_p1p2_source_sha256": plans["p1p2_source_sha256"], "selection": cfg["selection"], "stop_usd": STOP_USD, "argv": sys.argv[1:]}
+    with starts.open("a") as f:
+        f.write(json.dumps(entry, ensure_ascii=False, default=str) + "\n")
+    if prev:
+        for key in ("effective_config_sha256", "code_sha256"):
+            if prev.get(key) != entry[key]:
+                log(f"WARNING: {key} differs from the previous start of this run ({prev.get('started')}): results of this arm now mix settings/code -- see {starts.name}")
+    return cfg
+
+
+def _run(args):
+    rows = AR.read_rows()
+    selected, full = AR.select_pids([r["Paper ID"] for r in rows], args.pids, args.expect_rows)
+    if STOP_USD <= 0:
+        raise PreflightError(f"spend ceiling must be positive (CGSCOUT_STOP_USD={STOP_USD})")
+    if full and not STOP_EXPLICIT:
+        raise PreflightError("a full run needs an explicit spend ceiling: set CGSCOUT_STOP_USD=<usd>.  The built-in default of $5 is only meant for --pids smoke tests and would stop a full run early "
+                             "(NEW37 averaged about $0.09 per case).")
+    plans = verify_plans(rows, selected)
+    only = set(selected)
+    RES.mkdir(parents=True, exist_ok=True)
+    RL.harness_guard(len(rows) * 16, what="cgscout_benchmark", check_budget=False)
+    backend = get_backend(); bw = EffortUnifiedBackend(backend, lift_to=PROFILE["llm"]["effort"], enabled=PROFILE["llm"]["lift_low_effort_to_medium"])
+    s4cfg = Stage4Config(**PROFILE["stage4"])
+    write_run_config(backend, s4cfg, rows, selected, full, args.expect_rows, plans)
+    log(f"LLM backend: {backend_label(backend)}; efforts unified to {PROFILE['llm']['effort']}; deep_cap={DEEP_CAP}; stop at ${STOP_USD}")
+    log(f"selected {len(selected)} of {len(rows)} cases ({'full run' if full else '--pids'}); {plans['usable']} plans verified against the P1/P2 code in use")
+
+    def done(pid):
+        f = RES / f"{pid}.json"
+        if not f.exists():
+            return False
+        try:
+            return json.loads(f.read_text())["status"] in DONE_STATUSES
+        except (ValueError, KeyError):
+            return False
+
+    def finish(reason):
+        left = [p for p in selected if not done(p)]
+        counts = collections.Counter(json.loads((RES / f"{p}.json").read_text()).get("status") for p in selected if (RES / f"{p}.json").exists())
+        log(f"SUMMARY: {len(selected) - len(left)} of {len(selected)} selected cases have a final result; statuses {dict(counts)}; spent ${total_spent():.2f}")
+        if left:
+            msg = f"INCOMPLETE: {len(left)} of {len(selected)} selected cases have no final result ({reason}): {', '.join(left[:20])}{' ...' if len(left) > 20 else ''}"
+            log(msg); print(f"run_benchmark.py: {msg}", file=sys.stderr)
+            return EXIT_INCOMPLETE
+        log("DONE")
+        return EXIT_OK
+
     for pass_no in range(1, 4):
-        todo = [r for r in rows if (not only or r["Paper ID"] in only)
-                and not ((RES / f"{r['Paper ID']}.json").exists() and json.loads((RES / f"{r['Paper ID']}.json").read_text())["status"] in ("OK", "REFUSED", "NOT_RUN_CLARIFICATION"))]
+        todo = [r for r in rows if r["Paper ID"] in only and not done(r["Paper ID"])]
         if not todo:
             break
         log(f"=== pass {pass_no}: {len(todo)} queries to run ===")
         for r in todo:
             pid = r["Paper ID"]
             if total_spent() >= STOP_USD:
-                log(f"STOP: spend ${total_spent():.2f} >= ${STOP_USD}; no new query started"); return
+                log(f"STOP: spend ${total_spent():.2f} >= ${STOP_USD}; no new query started")
+                return finish(f"spend ceiling ${STOP_USD} reached")
             while True:
                 rem = wait_for_budget()
                 try:
@@ -353,8 +450,28 @@ def main():
             log(f"{pid} {rec['status']} {rec['seconds']}s ${rec['llm']['cost_usd']:.3f} oa_req={(rec.get('api_usage') or {}).get('http_requests')} "
                 f"pool={(rec.get('counts') or {}).get('pool_unique')} kept={(rec.get('counts') or {}).get('stage3_retained')} seed(in_pool={s.get('in_pool')},kept={s.get('stage3_kept')},rank={s.get('rank')}) "
                 f"| total ${total_spent():.2f}")
-    log("DONE")
+    return finish("queries still ERROR / DEGRADED after 3 passes")
+
+
+def parse_args(argv):
+    ap = argparse.ArgumentParser(prog="run_benchmark.py", allow_abbrev=False, description="CGScout paper evaluation run; the rules are listed at the top of this file.")
+    ap.add_argument("arm", choices=sorted(AR.ARMS), help="evaluation arm (profile)")
+    ap.add_argument("--pids", default=None, help="comma-separated Paper IDs to run (all must exist in queries.csv); omit for a full run")
+    ap.add_argument("--expect-rows", type=int, default=None, help="number of cases queries.csv must contain; required for a full run (e.g. 200)")
+    return ap.parse_args(argv)
+
+
+def main(argv=None):
+    """Returns the process exit code (see the module docstring); configure() runs first because it sets the environment the pipeline modules read at import."""
+    args = parse_args(sys.argv[1:] if argv is None else argv)
+    try:
+        configure(args.arm)
+        rc = RL.run_guarded(_run, args)
+    except PreflightError as e:
+        print(f"run_benchmark.py: not started: {e}", file=sys.stderr)
+        return EXIT_NOT_STARTED
+    return EXIT_OK if rc is None else rc
 
 
 if __name__ == "__main__":
-    RL.run_guarded(main)
+    sys.exit(main())

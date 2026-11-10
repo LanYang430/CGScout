@@ -51,15 +51,14 @@ import cgscout.retrieval.direct.route_plan as RP         # noqa: E402
 import cgscout.retrieval.orchestrator as TB              # noqa: E402
 from cgscout.retrieval.related_systems.terminology import TerminologyExpansion   # noqa: E402
 from cgscout.planning.expert_prior_planner import ExpertPriorOutput    # noqa: E402
-from cgscout.assessment.stage4 import Stage4Config   # noqa: E402
 from cgscout.retrieval.direct.from_planner import evidence_plan_from_planner_output   # noqa: E402
 from cgscout.planning.scientific_planner import PlannerOutput     # noqa: E402
 from recorder import Recorder                        # noqa: E402  (benchmark/evaluation/recorder.py)
 import arms as AR                                  # noqa: E402  (benchmark/evaluation/arms.py)
 U = RL.U
 
-BUDGETS = RP.RouteRetrievalBudgets(**AR.ARMS["CUR"]["budgets"])
-S4CFG = Stage4Config(screen_effort="medium", extract_effort="medium", judge_effort="medium", deep_cap=500, screen_abstract_chars=AR.ARMS["CUR"]["screen_chars"])
+BUDGETS = AR.budgets_for("CUR", RP)          # both from cgscout.profiles.PAPER, like run_benchmark.py
+S4CFG = AR.stage4_config("CUR")
 
 
 def norm_doi(d):

@@ -10,16 +10,33 @@
 ## Run directory (not in the repository)
 
 `CGSCOUT_BENCH_DIR=<run dir>` holds `queries.csv` (columns `Paper ID`, `Latest query (v2)`, `DOI`, `OpenAlex ID`) and everything a run writes.
-The paper configuration is `cgscout.profiles.PAPER`; `benchmark/evaluation/arms.py` builds the evaluation arm from it.
+Use a **new, empty directory** for the final run. Every evaluation setting comes from one place, `cgscout.profiles.PAPER`; `benchmark/evaluation/arms.py` and the runner read it.
 
 ```bash
 export CGSCOUT_BENCH_DIR=/path/to/run
-python benchmark/evaluation/freeze_plans.py            # P1 + P2 once per case -> plans_frozen/ (LLM only, no OpenAlex)
-python benchmark/evaluation/run_benchmark.py CUR       # retrieval -> Stage 3 -> Stage 4 per case -> results/CUR/<id>.json (resumable)
+python benchmark/evaluation/freeze_plans.py --expect-rows 200      # P1 + P2 once per case -> plans_frozen/ (LLM only, no OpenAlex); add --dry-run to see the state first
+export CGSCOUT_STOP_USD=40                                         # spend ceiling for the arm; a full run refuses to start without it
+python benchmark/evaluation/run_benchmark.py CUR --expect-rows 200 # retrieval -> Stage 3 -> Stage 4 per case -> results/CUR/<id>.json (resumable)
+python benchmark/evaluation/run_benchmark.py CUR --pids B001,B002  # a subset (smoke test); the ceiling then defaults to $5
 ```
 
-`run_benchmark.py` records, in `run_config_CUR.json`, the model, efforts, Stage 4 settings, input hash, script hash, `cgscout` version and git commit.
-Rules (checkpointing, retries, OpenAlex budget handling, spend ceiling `CGSCOUT_STOP_USD`) are listed at the top of the script.
+**Selection.** Without `--pids` the run is *full*: it needs `--expect-rows N` (queries.csv must have exactly N rows) and an explicit `CGSCOUT_STOP_USD`. `--pids` must name at least one
+case and every name must exist; an empty value or a typo is an error, never "run everything" and never silently dropped. `freeze_plans.py` follows the same rules.
+
+**Exit codes of `run_benchmark.py`.** `0` every selected case has a final result (`OK`, `REFUSED`, `NOT_RUN_CLARIFICATION`) · `2` not started (bad command line, input or plans; nothing spent) ·
+`3` OpenAlex budget · `4` started but **incomplete**: the spend ceiling stopped it, or cases are still `ERROR`/`DEGRADED` after 3 passes. The last lines of the log (and stderr) list the unfinished cases.
+Raise the ceiling (or fix the cause) and run the same command again: finished cases are never re-run; only unfinished ones are.
+
+**Frozen plans and versions.** Each `plans_frozen/<id>.json` carries a `provenance` block: sha256 of the three modules that define P1 and P2
+(`cgscout/planning/{scientific_planner,expert_prior_planner,session}.py`), the model and effort, `cgscout` version, git commit. `run_benchmark.py` refuses to start when a selected case has no plan,
+a plan without provenance (older `freeze_plans.py`, or copied from another run), a plan made with different P1/P2 source, another model/effort, or for another query text;
+`freeze_plans.py` refuses to add plans next to plans of a different version. Consequences: (1) freeze **after** the last edit of those three modules (prompt wording included), in a fresh directory;
+(2) any later edit of them, even a comment, invalidates the plans on purpose; (3) resuming under the same code works normally. P3-P9 are not frozen; they run live with the code of the current checkout.
+
+**What a run records.** `run_config_CUR.json` (rewritten at every start): the profile, the **full effective configuration** (all retrieval budgets, all Stage-4 settings, model and effort,
+Stage-3 classifier file hash and threshold, the signature defaults of the retrieval/Stage-4 entry points), which of those differ from the library defaults, input / script / package hashes, git commit and dirty flag,
+the selection, the spend ceiling and a summary of the plans' provenance. `run_starts_CUR.jsonl` appends one line per start, and a restart whose configuration or code differs from the previous start logs a warning.
+`tests/test_run_benchmark.py` pins the effective values of the evaluated CUR configuration, so a changed library default (e.g. `max_papers_per_query`) or PAPER value fails a test instead of silently changing the run.
 
 ## Regression check without LLM or network
 

@@ -28,7 +28,7 @@ def test_evaluation_arm_is_built_from_the_paper_profile():
     finally:
         sys.path.remove(str(EVAL))
     cur = arms.ARMS["CUR"]
-    assert cur["budgets"] == ORIGINAL_CUR_BUDGETS and cur["screen_chars"] == ORIGINAL_CUR_SCREEN_CHARS and cur["classifier"] == "old"
+    assert cur["budgets"] == ORIGINAL_CUR_BUDGETS and cur["screen_chars"] == ORIGINAL_CUR_SCREEN_CHARS and cur["classifier"] == PAPER["stage3_classifier"] == "shipped"
 
 
 def test_profile_budgets_are_valid_budget_fields():
