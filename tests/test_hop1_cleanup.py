@@ -1,7 +1,7 @@
 """Unit tests for hop1_cleanup.py -- the conservative Hop-1 post-processing
 layer (suffix duplicate merge / exact fragment blocklist / objective-aware
 interaction-duplicate merge) added this session. Runs strictly between
-discover_related_systems() and discover_hop2() -- does NOT touch either;
+discover_related_systems() and the Hop-2 query building -- does NOT touch either;
 these tests exercise cleanup_discovered_systems() directly against
 DiscoveredSystem fixtures, following the same _sys()-helper convention
 already used in tests/test_route_retrieval_budgets.py.
