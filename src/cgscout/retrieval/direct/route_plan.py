@@ -724,11 +724,10 @@ def build_route_retrieval_plan(
     #   - system_specific_cg  "{system} coarse-grained model" -- replaced
     #     the old direct_system route, which is DELETED (its builder
     #     build_direct_system_queries() and its "direct_system" FlatRoute
-    #     literal are gone). Only _extract_direct_system_terms() /
-    #     EvidenceRoutePlan.direct_system_terms remain in
-    #     evidence_plan.py -- untouched because ~6 standalone
-    #     diagnostic scripts still read that field; it is now simply unused
-    #     by the route system.
+    #     literal are gone). Only the field
+    #     EvidenceRoutePlan.direct_system_terms remains in
+    #     evidence_plan.py (kept so the plan schema is unchanged); nothing
+    #     fills or reads it any more.
     #   - process             "{system} {process} coarse-grained model"
     #   - context             unchanged grounded-context logic
     #   - modeling_requirement STILL disabled (no queries are built; the

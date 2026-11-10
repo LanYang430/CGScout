@@ -2,7 +2,7 @@
 
 Given grounded system + objective from intake, identify which evidence dimensions
 would make prior CG work informative. Routes are independent:
-  1. direct_system: what the user explicitly named
+  1. direct_system: (no longer filled here; the system-specific CG queries are built from system_description by route_plan.py)
   2. process: the scientific process/property being studied
   3. context: grounded physical context (membrane, environment, etc.)
   4. modeling_requirement: what simulation capability would be needed
@@ -84,26 +84,7 @@ class EvidenceRoutePlan(BaseModel):
     search_axes: list[str] = Field(default_factory=list)
 
 
-# --- Deterministic extraction: direct_system and process ------------------
-
-def _extract_direct_system_terms(system_description: str) -> list[RouteTerm]:
-    """Direct system: what the user explicitly said.
-
-    In full pipeline, this comes from A's FactType.SYSTEM_IDENTITY.
-    Here (standalone), we take the user input as-is.
-    """
-    if not system_description or not system_description.strip():
-        return []
-    return [
-        RouteTerm(
-            term=system_description.strip(),
-            route_type="direct_system",
-            source="USER_GROUNDED",
-            supporting_span=system_description.strip(),
-            provenance={"source": "user_input"}
-        )
-    ]
-
+# --- Deterministic extraction: process -------------------------------------
 
 def _extract_process_terms_primary(objective: str) -> list[RouteTerm]:
     """Primary process term: the normalized scientific objective (deterministic).
@@ -609,9 +590,6 @@ def plan_evidence_routes(
         system_description=system_description,
         scientific_objective=scientific_objective
     )
-
-    # Direct system (deterministic)
-    plan.direct_system_terms = _extract_direct_system_terms(system_description)
 
     # Process (deterministic primary)
     plan.process_terms = _extract_process_terms_primary(scientific_objective)
