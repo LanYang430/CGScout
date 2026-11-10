@@ -223,10 +223,6 @@ def test_extraction_cap_is_still_a_real_cap_not_unlimited():
 
 
 # NOTE: the live-adapter check (Hop-1 per-query depth == 15, Hop-2's own
-# retrieval depth unchanged at 8) is NOT here -- route_retrieval_live_adapter
-# imports mellea_adapter, which imports the real `mellea` package, only
-# present in .venv-mellea (not the plain .venv this tests/ suite runs under,
-# per pyproject.toml testpaths). See
-# benchmarks/concept_resolver_reasoning/mellea_integration/
-# run_live_adapter_search_limit_check.py instead, run with
-# .venv-mellea/bin/python -- keeps this file importable in the plain venv.
+# retrieval depth unchanged at 8) is not part of this suite; it was done once
+# with a one-off script (run_live_adapter_search_limit_check.py, kept in the
+# git tag `legacy-pre-cgscout`).

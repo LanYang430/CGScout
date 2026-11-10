@@ -1,13 +1,10 @@
-"""beam_agent: BEAM's pre-simulation literature + evidence layer.
+"""beam_agent: CGScout's (BEAM's) pre-simulation literature + evidence layer.
 
-Implements the full pipeline through single-pass evidence extraction plus
-deterministic matching/ranking: concept resolution, query planning,
-multi-source search, dedupe, cheap keyword-overlap filtering, structured
-query-independent evidence extraction via a local model through Ollama
-(default) or the honest no-LLM baseline stub, and deterministic
-System/Process/Method matching against a user's profile and configurable
-per-dimension criteria. See README.md for the full pipeline this is meant to
-grow into (Crossref validation, full-text retrieval).
+Shared building blocks of the retrieval -> Stage 3 -> Stage 4 path: models,
+cache, multi-source search (OpenAlex, Europe PMC, optional Semantic Scholar),
+dedupe and text utilities. The earlier v1 pipeline modules in this package
+(concept resolution, query planning, keyword matching, snapshots) are historical
+code, kept in the git tag `legacy-pre-cgscout`.
 """
 
 # Kept in sync with pyproject.toml's [project].version by hand -- this package

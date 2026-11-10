@@ -10,7 +10,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 CR = ROOT / "benchmarks" / "concept_resolver_reasoning"
@@ -20,7 +19,9 @@ V1_MODULES = [
     "beam_agent.pipeline", "beam_agent.query_planner", "beam_agent.concept_resolver",
     "beam_agent.evidence_matching", "beam_agent.relevance_filter", "beam_agent.snapshot",
 ]
-SESSION_STACK = ["concept_resolver_session", "intake_readiness_gate", "mellea_adapter"]
+SESSION_STACK = ["concept_resolver_session", "intake_readiness_gate"]
+# the optional local-model stack was dropped from the project: neither package may be needed (or even loaded) by the CGScout path
+LOCAL_MODEL_STACK = ["mellea", "ollama", "mellea_adapter"]
 
 _PRELUDE = f"""
 import sys, json
@@ -49,10 +50,10 @@ def test_search_module_does_not_load_the_v1_pipeline():
     assert not [m for m, v in loaded.items() if v], loaded
 
 
-def test_cgscout_path_loads_no_v1_or_session_stack_and_needs_no_mellea():
-    # `sys.modules['mellea'] = None` makes `import mellea` raise ImportError: the path must work on an install without that package.
-    code = "sys.modules['mellea'] = None\nimport transfer_retrieval_bridge, stage4_v2, regression_lib\n"
-    loaded = _loaded(code, V1_MODULES + SESSION_STACK + ["mellea"])
+def test_cgscout_path_loads_no_v1_or_session_stack_and_needs_no_local_model_packages():
+    # `sys.modules[name] = None` makes `import name` raise ImportError: the path must work on an install without these packages.
+    code = "sys.modules['mellea'] = None\nsys.modules['ollama'] = None\nimport transfer_retrieval_bridge, stage4_v2, regression_lib\n"
+    loaded = _loaded(code, V1_MODULES + SESSION_STACK + LOCAL_MODEL_STACK)
     assert not [m for m, v in loaded.items() if v], loaded
 
 
@@ -72,10 +73,7 @@ def test_methodology_table_has_a_single_definition():
     assert handoff._METHODOLOGY_TERM_CLUSTERS is text_utils.METHODOLOGY_TERM_CLUSTERS
 
 
-def test_hop1_helpers_have_a_single_definition():
-    pytest.importorskip("mellea")   # mellea_adapter hard-imports it (legacy Ollama/Mellea path)
-    import mellea_adapter
+def test_hop1_extraction_constants_are_unchanged():
     import transfer_entity_extraction as tee
-    assert mellea_adapter._find_structural_term_matched is tee._find_structural_term_matched
-    assert mellea_adapter._MAX_ABSTRACT_CHARS_FOR_EXTRACTION == tee._MAX_ABSTRACT_CHARS_FOR_EXTRACTION == 4000
-    assert mellea_adapter._EXTRACTION_TIMEOUT_SECONDS == tee._EXTRACTION_TIMEOUT_SECONDS == 20
+    assert tee._MAX_ABSTRACT_CHARS_FOR_EXTRACTION == 4000
+    assert tee._EXTRACTION_TIMEOUT_SECONDS == 20

@@ -3,7 +3,7 @@ artifact (sim_classifier_model.joblib, loaded at runtime by
 sim_classifier.py). NOT imported by production code -- run manually
 whenever the training CSV/label corrections below change:
 
-    .venv-mellea/bin/python benchmarks/concept_resolver_reasoning/mellea_integration/sim_classifier_train.py
+    .venv/bin/python benchmarks/concept_resolver_reasoning/mellea_integration/sim_classifier_train.py
 
 Ports the exact cleaning logic (DOI-keyed relabel/exclude sets, review-note
 exclusion) and model architecture validated in this session's standalone
