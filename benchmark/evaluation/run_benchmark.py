@@ -25,7 +25,7 @@ ROOT = RES = INPUT = USAGE_LOG = LOG = None
 BUDGETS = None
 STOP_USD = DAILY_CREDITS = MIN_CREDITS = DEEP_CAP = None
 CLARIFY_REPLY = "I have no further details beyond my question as written; please proceed with your best reasonable interpretation."
-# `harness` (and with it cgscout.llm, which reads BEAM_USAGE_LOG_PATH at import time) is imported inside configure(), AFTER the environment is set.
+# `harness` (and with it cgscout.llm, which reads CGSCOUT_USAGE_LOG_PATH at import time) is imported inside configure(), AFTER the environment is set.
 RL = U = None
 RP = TB = TerminologyExpansion = get_backend = backend_label = read_usage_log = Stage4Config = None
 
@@ -35,11 +35,11 @@ def configure(arm_name):
     global ARM_NAME, ROOT, RES, INPUT, USAGE_LOG, LOG, BUDGETS, STOP_USD, DAILY_CREDITS, MIN_CREDITS, DEEP_CAP
     global RL, U, RP, TB, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config
     ARM_NAME, ROOT, INPUT = arm_name, AR.ROOT, AR.INPUT
-    os.environ["BEAM_CACHE_DIR"] = str(AR.SHARED_CACHE)           # shared by every arm: identical queries are fetched once
-    os.environ["BEAM_USAGE_LOG_PATH"] = str(ROOT / f"llm_usage_full_{ARM_NAME}.jsonl")
+    os.environ["CGSCOUT_CACHE_DIR"] = str(AR.SHARED_CACHE)           # shared by every arm: identical queries are fetched once
+    os.environ["CGSCOUT_USAGE_LOG_PATH"] = str(ROOT / f"llm_usage_full_{ARM_NAME}.jsonl")
     os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
-    os.environ["BEAM_LLM_MODEL"] = "gpt-5.6-luna"
-    os.environ["BEAM_LLM_EFFORT"] = "medium"
+    os.environ["CGSCOUT_LLM_MODEL"] = "gpt-5.6-luna"
+    os.environ["CGSCOUT_LLM_EFFORT"] = "medium"
     os.environ.setdefault("OPENALEX_STRICT_BUDGET", "1")
     import harness as _RL
     import cgscout.retrieval.direct.route_plan as _RP
@@ -70,7 +70,7 @@ def configure(arm_name):
     DAILY_CREDITS = 10000
     MIN_CREDITS = int(os.environ.get("CGSCOUT_MIN_CREDITS", os.environ.get("NEW37_MIN_CREDITS", "400")))            # do not START a query with less than this left (a query uses ~150)
     DEEP_CAP = 500
-    USAGE_LOG = Path(os.environ["BEAM_USAGE_LOG_PATH"])
+    USAGE_LOG = Path(os.environ["CGSCOUT_USAGE_LOG_PATH"])
     LOG = ROOT / f"run_log_full_{ARM_NAME}.txt"
 
 
@@ -321,7 +321,7 @@ def main():
     import cgscout
     cfg = {"model": backend.model, "default_effort": backend.default_effort, "stage4_config": {k: getattr(s4cfg, k) for k in ("screen_effort", "extract_effort", "judge_effort", "deep_cap", "screen_batch_size", "reject_min_confidence", "workers")},
            "changes_vs_production_defaults": {"stage4.screen_effort": "low->medium", "stage4.extract_effort": "low->medium", "hop2_search_anchor effort": "low->medium (harness backend wrapper)",
-                                              "stage4.deep_cap": "80->500 (safety valve disabled in practice)", "BEAM_CACHE_DIR": "fresh cache_work/ for this run"},
+                                              "stage4.deep_cap": "80->500 (safety valve disabled in practice)", "CGSCOUT_CACHE_DIR": "fresh cache_work/ for this run"},
            "clarify_reply": CLARIFY_REPLY, "stop_usd": STOP_USD, "input_sha256": hashlib.sha256(INPUT.read_bytes()).hexdigest(),
            "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "started": time.strftime("%Y-%m-%d %H:%M:%S"),
            "cgscout_version": cgscout.__version__, "git_commit": _git_commit()}

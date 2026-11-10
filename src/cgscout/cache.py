@@ -1,7 +1,7 @@
 """Minimal, dependency-free, file-based cache for dev/test iteration speed.
 
 Persists across PROCESSES (not just within one run) under a `.cache/`
-directory at the repo root, or `BEAM_CACHE_DIR` if set. This is a dev-speed
+directory at the repo root, or `CGSCOUT_CACHE_DIR` (legacy: `BEAM_CACHE_DIR`) if set. This is a dev-speed
 cache, not a correctness/production cache: it has no opinion about what is
 "safe" to store -- every call site decides that for itself (e.g. "only cache
 a search result with zero source errors", "only cache a successfully-parsed
@@ -42,6 +42,8 @@ import time
 from pathlib import Path
 from typing import Any, Optional
 
+from cgscout import _env
+
 def _source_checkout_root() -> Optional[Path]:
     """The repository root when running from a source checkout (src/cgscout/cache.py -> <root>/pyproject.toml), else None
     (an installed package: its files are not inside a repository)."""
@@ -50,12 +52,12 @@ def _source_checkout_root() -> Optional[Path]:
 
 
 def _default_cache_dir() -> Path:
-    """Re-reads BEAM_CACHE_DIR every call (not cached at import time) so
+    """Re-reads CGSCOUT_CACHE_DIR (legacy name BEAM_CACHE_DIR) every call (not cached at import time) so
     tests can point this at a tmp directory via monkeypatch/env without
     needing to change any call site's signature.  Default: `<repo root>/.cache`
     in a source checkout (unchanged from before the package layout), else
     `~/.cache/cgscout` for an installed package."""
-    override = os.environ.get("BEAM_CACHE_DIR")
+    override = _env.get("CACHE_DIR")
     if override:
         return Path(override)
     root = _source_checkout_root()

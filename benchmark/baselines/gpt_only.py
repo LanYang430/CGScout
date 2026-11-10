@@ -39,7 +39,7 @@ import requests
 from pydantic import BaseModel
 
 ROOT = Path(os.environ.get("CGSCOUT_BENCH_DIR", ".")).resolve()           # run directory: outputs, caches and (by default) the input workbook live here
-os.environ["BEAM_USAGE_LOG_PATH"] = str(ROOT / "llm_usage_gpt_only.jsonl")   # absolute: the backend default is cwd-relative
+os.environ["CGSCOUT_USAGE_LOG_PATH"] = str(ROOT / "llm_usage_gpt_only.jsonl")   # absolute: the backend default is cwd-relative
 from cgscout.llm import OpenAILunaBackend  # noqa: E402
 
 INPUT = Path(os.environ.get("CGSCOUT_QUERIES_FILE", ROOT / "BEAM_200_queries_and_papers_latest.xlsx"))   # frozen query workbook (sheet "Latest 200")

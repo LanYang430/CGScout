@@ -1,7 +1,7 @@
 """Unit tests for search_and_dedupe()'s dev-speed retrieval cache
 (beam_agent/search.py). No real network -- search_openalex/
 search_semantic_scholar are monkeypatched with call-counting fakes.
-tests/conftest.py isolates BEAM_CACHE_DIR per test automatically.
+tests/conftest.py isolates CGSCOUT_CACHE_DIR per test automatically.
 """
 from __future__ import annotations
 
@@ -104,7 +104,7 @@ def test_expired_entry_is_re_fetched_not_reused(monkeypatch):
     # uses) for the exact key this call will compute -- simulates
     # yesterday's cache, without needing to actually wait 25 hours.
     key = cache.content_hash("q", "5", "openalex")
-    path = cache._path_for("search_and_dedupe", key, None)  # default cache dir -- BEAM_CACHE_DIR from conftest
+    path = cache._path_for("search_and_dedupe", key, None)  # default cache dir -- CGSCOUT_CACHE_DIR from conftest
     path.parent.mkdir(parents=True, exist_ok=True)
     stale_cached_at = time.time() - (25 * 60 * 60)  # 25h ago
     path.write_text(json.dumps({

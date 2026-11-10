@@ -16,8 +16,8 @@ if DRY:
     for pid in PIDS:
         print(pid, "exists" if (AR.PLANS / f"{pid}.json").exists() else "TO DO", "|", rows[pid]["Latest query (v2)"][:110])
     print("planned LLM calls: per case 1-3 ScientificPlanner conversations (1-3 turns each) + 1 ExpertPrior; OpenAlex requests: 0"); sys.exit(0)
-os.environ.update({"BEAM_LLM_MODEL": "gpt-5.6-luna", "BEAM_LLM_EFFORT": "medium", "BEAM_CACHE_DIR": str(AR.ROOT / "cache_phase0"),
-                   "BEAM_USAGE_LOG_PATH": str(AR.ROOT / "llm_usage_phase0.jsonl"), "PYTHONDONTWRITEBYTECODE": "1"})
+os.environ.update({"CGSCOUT_LLM_MODEL": "gpt-5.6-luna", "CGSCOUT_LLM_EFFORT": "medium", "CGSCOUT_CACHE_DIR": str(AR.ROOT / "cache_phase0"),
+                   "CGSCOUT_USAGE_LOG_PATH": str(AR.ROOT / "llm_usage_phase0.jsonl"), "PYTHONDONTWRITEBYTECODE": "1"})
 import harness as RL
 from cgscout.llm import get_backend, backend_label, read_usage_log
 from cgscout.planning.session import PlannerSession

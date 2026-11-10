@@ -36,7 +36,7 @@ class _CountingBackend:
 
 
 def test_get_backend_openai_env_returns_openai_backend(monkeypatch):
-    monkeypatch.setenv("BEAM_LLM_BACKEND", "openai")
+    monkeypatch.setenv("CGSCOUT_LLM_BACKEND", "openai")
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test-not-a-real-key")  # __init__ only builds a lazy client
     backend = get_backend()
     assert isinstance(backend, OpenAILunaBackend)
@@ -44,7 +44,7 @@ def test_get_backend_openai_env_returns_openai_backend(monkeypatch):
 
 
 def test_get_backend_unset_env_defaults_to_openai(monkeypatch):
-    monkeypatch.delenv("BEAM_LLM_BACKEND", raising=False)
+    monkeypatch.delenv("CGSCOUT_LLM_BACKEND", raising=False)
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test-not-a-real-key")
     backend = get_backend()
     assert isinstance(backend, OpenAILunaBackend)
@@ -54,7 +54,7 @@ def test_get_backend_unset_env_defaults_to_openai(monkeypatch):
 @pytest.mark.parametrize("name", ["qwen", "claude", "gemini"])
 def test_get_backend_rejects_any_non_openai_backend(monkeypatch, name):
     """Only 'openai' is supported: another value is a hard ValueError, never a silent fallback to openai."""
-    monkeypatch.setenv("BEAM_LLM_BACKEND", name)
+    monkeypatch.setenv("CGSCOUT_LLM_BACKEND", name)
     with pytest.raises(ValueError, match="openai"):
         get_backend()
 
@@ -96,7 +96,7 @@ def test_cache_key_is_backend_specific(monkeypatch, tmp_path):
     both get a real .structured() call for the identical (title, abstract,
     structural_class), i.e. neither one's result was served from a cache
     entry the other backend wrote."""
-    monkeypatch.setenv("BEAM_CACHE_DIR", str(tmp_path / "cache"))
+    monkeypatch.setenv("CGSCOUT_CACHE_DIR", str(tmp_path / "cache"))
 
     gpt = _CountingBackend("openai", "gpt-5.6-luna")
     other = _CountingBackend("other-backend", "other-model")

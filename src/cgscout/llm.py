@@ -14,7 +14,7 @@ other backend is part of this project (the earlier optional local Qwen/Mellea
 backend is historical code, kept only in the git tag `legacy-pre-cgscout`).
 
 Usage logging: every .structured() call appends ONE line to
-BEAM_USAGE_LOG_PATH (default .cache/llm_usage.jsonl -- .cache/ is already
+CGSCOUT_USAGE_LOG_PATH (default .cache/llm_usage.jsonl -- .cache/ is already
 gitignored) before returning. Fields: ts, backend, model, effort, label,
 purpose, case_id, input_tokens, cached_input_tokens, output_tokens,
 latency_s, estimated_cost_usd. This is the ONLY source of truth for real
@@ -36,6 +36,8 @@ from pathlib import Path
 from typing import Callable, Optional, Protocol, TypeVar
 
 from pydantic import BaseModel
+
+from cgscout import _env
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -98,7 +100,7 @@ def make_call_fn(
 # usage logging -- shared by every backend, one JSONL row per call
 # ---------------------------------------------------------------------------
 
-_USAGE_LOG_PATH = Path(os.environ.get("BEAM_USAGE_LOG_PATH") or ".cache/llm_usage.jsonl")
+_USAGE_LOG_PATH = Path(_env.get("USAGE_LOG_PATH") or ".cache/llm_usage.jsonl")
 
 
 @dataclass
@@ -143,7 +145,7 @@ def read_usage_log(path: Optional[Path] = None) -> list[dict]:
 LUNA_PRICE_PER_1M_USD = {"input": 0.20, "cached_input": 0.02, "output": 1.20}
 
 DEFAULT_MODEL = "gpt-5.6-luna"
-DEFAULT_EFFORT = "medium"  # configurable -- see get_backend() / BEAM_LLM_EFFORT
+DEFAULT_EFFORT = "medium"  # configurable -- see get_backend() / CGSCOUT_LLM_EFFORT
 
 
 class OpenAILunaBackend:
@@ -199,9 +201,10 @@ class OpenAILunaBackend:
 
 
 def get_backend() -> LLMBackend:
-    """BEAM_LLM_BACKEND=openai (default; the only supported value -- anything
-    else raises ValueError). BEAM_LLM_MODEL / BEAM_LLM_EFFORT override the
-    openai backend's model / default reasoning effort.
+    """CGSCOUT_LLM_BACKEND=openai (default; the only supported value -- anything
+    else raises ValueError). CGSCOUT_LLM_MODEL / CGSCOUT_LLM_EFFORT override the
+    openai backend's model / default reasoning effort.  (Every CGSCOUT_* name
+    also reads the legacy BEAM_* spelling -- see cgscout._env.)
 
     Global invariant (one BEAM run uses exactly one LLM backend, no mixed
     execution): call this ONCE per run/session and thread the SAME instance
@@ -212,12 +215,12 @@ def get_backend() -> LLMBackend:
     backend on their own; they take `backend` as an explicit, required
     argument. Any future module that needs an LLM call should follow the
     same pattern -- take `backend`, don't resolve it internally."""
-    name = os.environ.get("BEAM_LLM_BACKEND", "openai").strip().lower()
+    name = _env.get("LLM_BACKEND", "openai").strip().lower()
     if name == "openai":
-        model = os.environ.get("BEAM_LLM_MODEL", DEFAULT_MODEL)
-        effort = os.environ.get("BEAM_LLM_EFFORT", DEFAULT_EFFORT)
+        model = _env.get("LLM_MODEL", DEFAULT_MODEL)
+        effort = _env.get("LLM_EFFORT", DEFAULT_EFFORT)
         return OpenAILunaBackend(model=model, default_effort=effort)
-    raise ValueError(f"Unsupported BEAM_LLM_BACKEND={name!r} (only 'openai' is supported)")
+    raise ValueError(f"Unsupported CGSCOUT_LLM_BACKEND={name!r} (only 'openai' is supported)")
 
 
 def backend_label(backend: LLMBackend) -> str:

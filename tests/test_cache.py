@@ -1,7 +1,7 @@
 """Unit tests for beam_agent/cache.py -- the generic file-based dev-speed
 cache. Pure filesystem behavior, no network, no LLM. Each test passes its
 own tmp_path as cache_dir explicitly (in addition to tests/conftest.py's
-autouse BEAM_CACHE_DIR isolation) so this file's assertions don't depend on
+autouse CGSCOUT_CACHE_DIR isolation) so this file's assertions don't depend on
 that fixture existing.
 """
 from __future__ import annotations
@@ -54,7 +54,7 @@ def test_set_writes_atomically_no_leftover_tmp_file(tmp_path):
 
 def test_default_cache_dir_honors_beam_cache_dir_env_var(tmp_path, monkeypatch):
     override = tmp_path / "wherever"
-    monkeypatch.setenv("BEAM_CACHE_DIR", str(override))
+    monkeypatch.setenv("CGSCOUT_CACHE_DIR", str(override))
     cache.set("ns", "k", {"v": 1})  # no explicit cache_dir -- must use the env var
     assert (override / "ns" / "k.json").exists()
     assert cache.get("ns", "k") == {"v": 1}

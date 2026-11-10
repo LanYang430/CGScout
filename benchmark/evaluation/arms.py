@@ -9,13 +9,15 @@ at it (default: the current directory).  CGSCOUT_PLANS_DIR (legacy name NEW37_PL
 from pathlib import Path
 import csv, json, os
 
+from cgscout.profiles import PAPER
+
 ROOT = Path(os.environ.get("CGSCOUT_BENCH_DIR", ".")).resolve()
 SHARED_CACHE = ROOT / "cache_work"          # fresh cache dir: no reuse of any earlier dev-run cache
 INPUT = ROOT / "queries.csv"                # columns: Paper ID, Latest query (v2), DOI, OpenAlex ID
 
+# single source of truth: cgscout.profiles.PAPER (pinned value-by-value in tests/test_profiles.py)
 ARMS = {
-    "CUR": dict(label="current CGScout: P1+P2+P3 on, abstract recovery on, QC v2 off, tier-1 4000 chars", classifier="old", screen_chars=4000,
-                budgets=dict(flat_anchor_short_context=True, flat_query_hygiene=True, need_semantic_enabled=True, stage3_recover_abstracts=True, query_construction_v2=False)),
+    "CUR": dict(label=PAPER["label"], classifier="old", screen_chars=PAPER["stage4"]["screen_abstract_chars"], budgets=dict(PAPER["budgets"])),
 }
 
 

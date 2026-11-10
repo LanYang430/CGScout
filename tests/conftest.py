@@ -1,7 +1,7 @@
 """Shared pytest fixtures for tests/.
 
 Every test gets its own fresh, isolated cache directory (beam_agent.cache
-reads BEAM_CACHE_DIR fresh on every call, never at import time -- see
+reads CGSCOUT_CACHE_DIR fresh on every call, never at import time -- see
 beam_agent/cache.py) -- this is required, not just convenient: several
 existing extractor tests intentionally reuse the same default paper/prompt
 fixture across different success/failure scenarios in the same file, and
@@ -14,4 +14,4 @@ import pytest
 
 @pytest.fixture(autouse=True)
 def _isolated_cache_dir(tmp_path, monkeypatch):
-    monkeypatch.setenv("BEAM_CACHE_DIR", str(tmp_path / "test-cache"))
+    monkeypatch.setenv("CGSCOUT_CACHE_DIR", str(tmp_path / "test-cache"))
