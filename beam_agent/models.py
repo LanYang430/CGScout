@@ -1,23 +1,16 @@
 """Structured schema for a search result (`Paper`) and its extracted evidence.
 
-`Paper` is the normalized-across-sources search result schema (Phase 1). The
-`PaperEvidence` types below it are the single-pass, query-independent
-evidence-extraction schema (Stage 4a, see evidence_extraction.py) -- they live
-here rather than in evidence_extraction.py specifically because `Paper.evidence`
-needs to reference `PaperEvidence` as a field type, and evidence_extraction.py
-already imports `Paper` from this module; putting the schema on the other side
-of that edge would be a circular import.
+`Paper` is the normalized-across-sources search result schema. The
+`PaperEvidence` types below it (MethodEvidence / SystemEvidence /
+ProcessEvidenceItem / PaperEvidence) are the query-independent evidence schema;
+they live here because `Paper.evidence` references `PaperEvidence` as a field
+type, so they are part of the Paper schema (and of its cached/serialized shape).
+Stage 4 (stage4_v2.py) reuses ProcessEvidenceItem. The earlier v1 evidence
+extractor and matcher that produced/consumed PaperEvidence are historical code,
+kept in the git tag `legacy-pre-cgscout`.
 
-Design note: earlier iterations of this stage had the LLM itself produce a
-relevant/not_relevant-style verdict (`Stage4Assessment`/`CGEligibility`/
-`TaskMatch`/etc., and a later two-call split of the same idea across
-`PaperEvidenceExtraction`/`QueryMatchResult`). Both were replaced by the
-`PaperEvidence` schema below: the LLM now only extracts objective,
-query-independent facts (once per paper, cacheable), and *all* comparison
-against a user's `ScientificConceptProfile` -- including any eventual
-relevant/not_relevant-style call -- is deterministic Python in
-evidence_matching.py. See `benchmarks/stage4_design_experiments/` for the
-single-call vs two-call experiments that motivated this.
+NOTE: class docstrings and Field descriptions in this module enter the pydantic
+JSON schema (and so the schema fingerprints) -- do not reword them.
 """
 
 from __future__ import annotations

@@ -13,7 +13,6 @@ code, kept in the git tag `legacy-pre-cgscout`.
 # snapshot.py's run_metadata.json for reproducibility.
 __version__ = "0.1.0"
 
-# The v1 pipeline names (run_pipeline, ConceptResolver, QueryPlanner, ...) are NOT re-exported here any more: importing this package used to load
-# nine v1 modules (pipeline, query_planner, concept_resolver, evidence_matching, relevance_filter, snapshot, ...) that the CGScout / BEAM
-# path never uses.  Import what you need from its own submodule, e.g. `from beam_agent.pipeline import run_pipeline`.
+# The v1 pipeline (run_pipeline, ConceptResolver, QueryPlanner, ...) is no longer part of this package (historical code, git tag
+# `legacy-pre-cgscout`); importing this package loads none of it.  Import what you need from its own submodule, e.g. `from beam_agent.cache import ...`.
 __all__ = ["__version__"]

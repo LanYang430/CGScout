@@ -67,9 +67,8 @@ def test_search_adapters_keep_the_module_level_names_the_harness_uses():
 
 
 def test_methodology_table_has_a_single_definition():
-    from beam_agent import concept_resolver, text_utils
+    from beam_agent import text_utils
     import relevance_filter_handoff as handoff
-    assert concept_resolver._METHODOLOGY_TERM_CLUSTERS is text_utils.METHODOLOGY_TERM_CLUSTERS
     assert handoff._METHODOLOGY_TERM_CLUSTERS is text_utils.METHODOLOGY_TERM_CLUSTERS
 
 
