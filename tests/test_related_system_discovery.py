@@ -10,7 +10,7 @@ from related_system_discovery import (  # noqa: E402
     build_discovery_queries,
     discover_related_systems,
 )
-from intake_contract import SystemExtraction, SystemMention  # noqa: E402
+from transfer_entity_extraction import SystemExtraction, SystemMention  # noqa: E402
 from beam_agent.models import Paper  # noqa: E402
 
 

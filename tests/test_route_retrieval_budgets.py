@@ -26,7 +26,7 @@ from route_retrieval_plan import (  # noqa: E402
     _Accumulator,
     resolve_structural_and_safety_budgets,
 )
-from intake_contract import SystemExtraction, SystemMention  # noqa: E402
+from transfer_entity_extraction import SystemExtraction, SystemMention  # noqa: E402
 from beam_agent.models import Paper  # noqa: E402
 
 
