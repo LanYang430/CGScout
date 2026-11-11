@@ -127,10 +127,53 @@ from cgscout.text import keywords, stem, stemmed_keywords  # noqa: E402
 
 from cgscout.retrieval.types import _CG_MARKERS  # noqa: E402 -- read-only reuse, same markers Hop2Paper.mentions_cg already uses
 
-from cgscout.screening.review_filter import review_filter_detail  # noqa: E402
 from cgscout.screening.sim_classifier import SIM_CLASSIFIER_THRESHOLD, default_classify_fn  # noqa: E402
 
 from pydantic import BaseModel, Field  # noqa: E402
+
+# ===== merged from `screening/review_filter.py` (moved verbatim; its docstring is this comment) ============================
+# Stage 3 high-confidence review/perspective filter -- production version
+# of the standalone `cheap_review_filter_v2.py` diagnostic (validated this
+# session against a combined ~1076-paper labeled population: 20/444 training
+# rows and 84/511 test rows flagged this narrow version alone).
+#
+# Deliberately narrow -- ONLY the two highest-confidence signal categories,
+# per explicit instruction, everything else (venue-name regex, "recent
+# advances in"/"we summarize"/"an overview of" phrasing, the eLife peer-
+# review-artifact title pattern) left out as too prone to false positives:
+#
+#   1. OpenAlex's own `type` field says "review" (Paper.oa_type -- see
+#      beam_agent/sources/openalex.py's `_SELECT`/`_to_paper()`). OpenAlex
+#      normalizes publisher-level sub-types ("Review", "Mini Review",
+#      "Advanced Review", ...) into this one coarse category; there is no
+#      more granular field to check beyond it. None for any non-OpenAlex
+#      source, or if OpenAlex omitted it -- never treated as a match.
+#   2. The abstract explicitly self-declares with one of exactly these four
+#      phrasings: "in this review", "this review", "here we review",
+#      "we review".
+#
+# Runs BEFORE the classifier in filter.filter_papers() --
+# a flagged paper is dropped without ever spending an embedding call.
+# ===========================================================================================================================
+
+REVIEW_PHRASE_RE = re.compile(
+    r"\bin this review\b|\bthis review\b|\bhere,? we review\b|\bwe review\b",
+    re.IGNORECASE,
+)
+
+
+def review_filter_detail(paper: Paper) -> dict:
+    type_hit = paper.oa_type == "review"
+    m = REVIEW_PHRASE_RE.search(paper.abstract or "")
+    return {
+        "flagged": type_hit or bool(m),
+        "type_hit": type_hit,
+        "matched_phrase": m.group(0) if m else "",
+    }
+
+
+# ===== end of the code merged from `screening/review_filter.py` ============================================================
+
 
 # Same defaults as the existing (unmodified) RuleBasedRelevanceFilter --
 # deliberately not re-tuned, to isolate "does provenance-scoped vocabulary
