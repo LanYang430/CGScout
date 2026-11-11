@@ -119,8 +119,8 @@ genuinely CONSTRAINS the search space for related evidence -- e.g. a named \
 structural/functional class, not a bare fold word and not the system's own \
 proper name. This is the field that keeps retrieval anchored: it must be \
 specific enough that literature search on it alone already returns a \
-meaningfully narrower population than "protein" -- e.g. "autotransporter \
-passenger domain" narrows the search space; "beta-helix" alone, detached \
+meaningfully narrower population than "protein" -- e.g. "immunoglobulin-like \
+domain" narrows the search space; "beta-sandwich" alone, detached \
 from what KIND of thing has that fold, does not carry the same constraint \
 and must not be used as the scientific_class by itself when a narrower \
 class is available.
