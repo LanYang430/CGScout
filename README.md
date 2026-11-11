@@ -50,7 +50,7 @@ Settings (the legacy `BEAM_*` spellings of these are still read, with a one-time
 src/cgscout/          the package: planning/ retrieval/ sources/ screening/ assessment/ + llm, cache, models, text, profiles, cli
 tests/                unit and structure tests (pytest); test_golden_replay.py is skipped unless a replay fixture is configured
 benchmark/            not installed: evaluation/ (freeze_plans, run_benchmark, arms, provenance, harness, recorder, replay), baselines/, generation/ (benchmark construction), training/
-docs/                 architecture.md, reproduce.md
+docs/                 architecture.md, reproduce.md, phase3_cleanup_record.md (what the Phase 3 cleanup removed or moved, and how to undo it)
 ```
 
 ## Tests
