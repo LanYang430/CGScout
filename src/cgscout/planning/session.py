@@ -48,7 +48,7 @@ class PlannerSession:
         self.last_plan = plan
 
         if plan.clarification_needed and plan.clarification_question:
-            self._history.append(f"BEAM (asked): {plan.clarification_question}")
+            self._history.append(f"Assistant (asked): {plan.clarification_question}")
             return PlannerTurnResult(
                 status="awaiting_user",
                 display_question_to_user=plan.clarification_question,

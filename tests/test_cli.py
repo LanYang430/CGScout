@@ -132,7 +132,7 @@ def test_a_clarifying_question_is_shown_and_the_answer_continues_the_same_conver
     assert "BEAM: Which helix protein?" in out
     assert len(r.retrieval_calls) == 1                # retrieval only after the second turn
     second_user_message = r.backend.calls[1]["user"]
-    assert "[1] user: I study a helix" in second_user_message and "[2] BEAM (asked): Which helix protein?" in second_user_message and "[3] user: the folding of it" in second_user_message
+    assert "[1] user: I study a helix" in second_user_message and "[2] Assistant (asked): Which helix protein?" in second_user_message and "[3] user: the folding of it" in second_user_message
 
 
 def test_new_starts_an_empty_conversation(rig):
