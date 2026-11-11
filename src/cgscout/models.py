@@ -229,7 +229,7 @@ class Paper(BaseModel):
     relevance_score: Optional[float] = None
     matched_keywords: list[str] = Field(default_factory=list)
 
-    # Populated by a PaperEvidenceExtractor (see evidence_extraction.py;
+    # Populated by a PaperEvidenceExtractor (see the P8 extraction code in assessment/stage4.py;
     # Stage 4a, single-pass query-independent extraction). None means "never
     # extracted" -- distinct from an extracted-but-empty PaperEvidence, which
     # means the extractor ran and the paper's own text just didn't state
