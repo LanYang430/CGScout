@@ -166,7 +166,7 @@ class Paper(BaseModel):
     # duplicated. Stamped by the orchestrator (pipeline.py), right after each
     # search call -- search_openalex()/search_semantic_scholar() never see or
     # set these; they only know a bare query string, not a PlannedQuery's
-    # category. See dedupe.py's _merge() for how these union across a merge,
+    # category. See _merge() in retrieval/search.py for how these union across a merge,
     # same pattern already used for `sources`.
     found_by_queries: list[str] = Field(
         default_factory=list,

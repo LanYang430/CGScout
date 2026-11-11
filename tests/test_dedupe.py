@@ -4,7 +4,7 @@ No network calls: builds Paper objects by hand to simulate "same paper, returned
 both sources, with slightly different metadata completeness."
 """
 
-from cgscout.retrieval.dedupe import dedupe_papers
+from cgscout.retrieval.search import dedupe_papers
 from cgscout.models import ExternalIds, Paper
 
 
