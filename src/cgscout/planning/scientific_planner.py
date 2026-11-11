@@ -132,15 +132,11 @@ question, phrased the way a domain expert studying this system would ask \
 it -- not a generic "could you clarify?". null when clarification_needed \
 is false.
 
-- search_context: any environmental or methodological context explicitly \
-stated or directly entailed by the user's wording that should narrow the \
-search -- e.g. membrane-embedded, a crowded/cellular environment, a \
-specific post-translational modification, a bound binding partner, a named \
-construct or mutant. Scientifically equivalent paraphrases of the user's \
-stated context are allowed, but do not add constraints based solely on \
-plausible domain assumptions, unstated simulation preferences, or \
-missing-information notes. Return an empty list if no such context was \
-provided.
+- search_context: any stated or clearly implied environmental/ \
+methodological context that should narrow the search -- e.g. membrane- \
+embedded, a crowded/cellular environment, a specific post-translational \
+modification, a bound binding partner, a named construct or mutant. Empty \
+list if nothing was actually stated -- do not invent context.
 
 - search_axes: short phrases naming what KIND of literature would answer \
 this request (e.g. "system-specific CG model", "process-specific CG \
