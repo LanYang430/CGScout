@@ -1,6 +1,6 @@
 # Prompt audit: P2 (`EXPERT_PRIOR_SYSTEM_PROMPT`)
 
-Status: **edits applied and committed (2026-11-11); live P2 comparison done; owner decision on E2 pending.** Next prompt: P3 (not started).
+Status: **CLOSED (2026-11-11). Final P2 = E1-E5, E2 included (owner decision after the ID1 / ID21 science analysis); all other original scientific rules unchanged.** One watch item (ID1) is recorded below and is NOT verified by real retrieval. Next prompt: P3 (audit started, read-only).
 
 Owner's rule for this prompt: keep the debugged original as far as possible (sentence structure, concrete examples, long explanations); change only project / case-specific wording, clear typos, and descriptions that contradict the code; no prompt optimisation, no new rules.
 
@@ -41,9 +41,30 @@ Design: 20 inputs, fixed (frozen P1 output reused; the P1 plan of B122 was gener
 **Two shifts that are NOT run-to-run noise** (both reproduce inside each case and are attributed to E2 by the A-only arm):
 
 1. **Plural -> singular class names.** Share of scientific_class strings ending in a plural noun: old 78% (83/106), new 41% (46/112); the stored older plans give 82% (31/38 on the same cases). Six cases flipped completely (ID1 13/15 -> 0/13, ID21 12/12 -> 0/11, B071 3/4 -> 0/4, B055 4/4 -> 0/4, C9 3/3 -> 0/2, ...), the rest are unchanged. On the seven attribution cases: old 94% (44/47), A-only (E1, E3, E4, E5 applied, E2 not) 91% (31/34), new 11% (5/44). The scientific content of the classes is the same ("multiphase biomolecular condensates" -> "multiphase biomolecular condensate"). The effect on retrieval was not measured: the 3A templates insert the string verbatim, and query-text changes can move a paper across the rank-20 cutoff in either direction.
-2. **Fewer related_system_discovery axes in two cases.** ID1: 2 discovery axes in 4/4 old runs and 2/2 A-only runs, 1 in 4/4 new runs (the "bacterial autotransporter ... biogenesis/adhesin" axis is no longer a discovery axis; it becomes a direct axis or disappears). ID21: discovery axis present in 4/4 old and 2/2 A-only runs, in 1/4 new runs (the "multiphase biomolecular condensate" axis moves from distinctive_structure/discovery to environment_context/direct). Excluding ID1, ID21 (and M01) the discovery share is 25% vs 24%. Reading: the ID1 change is the removal of the autotransporter prior (the intended effect of E2); the ID21 change has no such explanation and is not understood. Whether either is better or worse for retrieval is unknown.
+2. **Fewer related_system_discovery axes in two cases.** ID1: 2 discovery axes in 4/4 old runs and 2/2 A-only runs, 1 in 4/4 new runs (the "bacterial autotransporter ... biogenesis/adhesin" axis is no longer a discovery axis; it becomes a direct axis or disappears). ID21: discovery axis present in 4/4 old and 2/2 A-only runs, in 1/4 new runs (the "multiphase biomolecular condensate" axis moves from distinctive_structure/discovery to environment_context/direct). Excluding ID1, ID21 (and M01) the discovery share is 25% vs 24%. Reading: the ID1 change is the removal of the autotransporter prior (the intended effect of E2); the ID21 change has no such explanation and its mechanism is not understood (analysed from existing data in the next section). Whether either is better or worse for retrieval is unknown.
 
 E1, E3, E4, E5 together (A-only arm) kept the old behaviour in the cases tested (plural share 91% vs 94%, discovery counts unchanged), so E2 is the only edit with a measurable behavioural effect.
+
+## Owner decision (2026-11-11): E2 kept, P2 closed
+
+Decision: keep E2 ("immunoglobulin-like domain" / "beta-sandwich"); P2 is final as E1-E5; the WD40 / beta-propeller alternative pair is NOT tested. Reasons given: (1) the main scientific constraint on `scientific_class` did not degrade; (2) the ID21 route change is scientifically acceptable and the old discovery axis has no known retrieval output; (3) the ID1 risk below has no direct recall-degradation evidence and the seed's Hit@20 does not depend on that axis; (4) the plural -> singular change is wording; (5) this audit round is conservative maintenance, not a re-optimisation of P2, so the example is not swapped repeatedly to chase identical output.
+
+Science analysis behind the decision (existing data only, no new LLM call, no new retrieval): full side-by-side axes of ID1 and ID21 (old / E1+E3+E4+E5 / +E2) with every field are in `archived-audit-data/P2/E2_analysis_ID1_ID21.md` (Appendix A, B). Summary:
+
+| change | classification |
+|---|---|
+| `scientific_class` plural -> singular (ID1 14/15 -> 0/13 plural; ID21 12/12 -> 0/11; mean words 4.47 -> 4.31 and 3.17 -> 3.18; same modifiers, head nouns and abstraction level, no fold-only or generic class) | 1. pure wording |
+| ID21 multiphase axis: discovery in old 4/4 and A-only 2/2, in new 1/4 (the other 3: `environment_context` + direct) | 2. route changed, scientifically reasonable: same concept; in the stored retrieval record this discovery axis produced 0 systems, 0 Hop-2 queries, 0 pool papers; the direct network/viscoelastic axis (kept 4/4) carried the 29 transfer papers and the 5 grade-2 papers, and the seed ranked 3-5 in its 3A queries |
+| ID1 autotransporter axis: discovery in old 4/4 and A-only 2/2, in new 0/4 (3 direct, 1 axis absent) | 3. route changed, possible loss of valuable evidence (inference, **unverified**) |
+| ID1 new run 4: class raised to "bacterial outer-membrane protein assembly system" | 2. closer to BAM/TAM level, still specific |
+
+Attribution to E2 is solid (A-only arm = old behaviour); the mechanism is not (old-example priming vs a new-example effect: not separable with existing data; autotransporter-as-system cases B034E, I11 keep their discovery axis 8/8 old and 8/8 new, and ID21 is unrelated to autotransporters). Not global: excluding ID1 and ID21 the discovery share is 25% vs 24% and distinctive_structure axes per run 0.28 vs 0.35; the five panel cases that belong to the 200 (B071, B055, B204, B190, B122) show no route change; ID1 and ID21 are not in the 200.
+
+**Watch item W-1 (ID1): possible loss of BAM-complex evidence. NOT verified by real retrieval.**
+- Basis: in the one stored retrieval record of ID1 (2026-11-02, a frozen plan from an older P2 version, a single run), the autotransporter discovery axis (Hop-1 -> Bam complex, SurA -> Hop-2) was the only source of two grade-2 BAM simulation papers (final ranks 8 and 11). Under the final P2 that axis is direct (3/4 runs) or absent (1/4).
+- Against a loss: the seed and the other BAM/TamA papers (ranks 12-14) came through the flat route; ID1's Hit@20 does not depend on this axis; the BAM route of the old axis is not guaranteed on every old run (old run 1 used the class "bacterial autotransporter adhesins"); the new run 4 class is closer to BAM level.
+- Not measured: the recall of ID1's final-P2 plan. By owner decision no replay is run now.
+- Where to look later: in a formal benchmark or regression check, cases whose objective embeds a sub-topic that belongs to another named class (here Ag43 insertion inside a TamA-TamB request), compared with a pre-E2 plan, for discovery-sourced grade >= 2 papers that disappear. ID1 is not in the 200-query set.
 
 ## Known limitations
 - Small sample (20 inputs; 2-4 runs per case per arm); no statistical test; the old arm is the pre-edit prompt run now, not the stored plans (those come from several earlier prompt versions: 2.5 axes per plan, 97.6% transfer_needed true, versus 1.96-2.07 axes and 87-89% transfer_needed true now).
