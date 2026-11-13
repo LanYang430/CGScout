@@ -1,6 +1,6 @@
 # Prompt audit: P2 (`EXPERT_PRIOR_SYSTEM_PROMPT`)
 
-Status: **CLOSED (2026-11-11). Final P2 = E1-E5, E2 included (owner decision after the ID1 / ID21 science analysis); all other original scientific rules unchanged.** One watch item (ID1) is recorded below and is NOT verified by real retrieval. Next prompt: P3 (audit started, read-only).
+Status: **CLOSED (2026-11-11). Final P2 = E1-E5, E2 included (owner decision after the ID1 / ID21 science analysis); all other original scientific rules unchanged.** One watch item (ID1) is recorded below and is NOT verified by real retrieval. Next prompt: P3 (done, see `docs/prompt_audit_p3.md`).
 
 Owner's rule for this prompt: keep the debugged original as far as possible (sentence structure, concrete examples, long explanations); change only project / case-specific wording, clear typos, and descriptions that contradict the code; no prompt optimisation, no new rules.
 
