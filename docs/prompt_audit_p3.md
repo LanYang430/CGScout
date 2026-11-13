@@ -1,6 +1,6 @@
 # Prompt audit: P3 (`TERMINOLOGY_EXPANDER_SYSTEM_PROMPT`)
 
-Status: **edit applied and committed (2026-11-13, commit `40dd17c`): the tested "G3" text.** Regression gate passed (below). **Not every pre-set evaluation criterion passed:** the count-based flag (b) was tripped, and one systematic over-expansion (sensor histidine kinases) is open; the owner accepted this trade-off. Next prompt: P4 (not started).
+Status: **CLOSED (2026-11-13). Edit applied and committed (commit `40dd17c`): the tested "G3" text.** Regression gate passed (below). **Not every pre-set evaluation criterion passed:** the count-based flag (b) was tripped, and one systematic over-expansion (sensor histidine kinases) is open; the owner accepted this trade-off. Next prompt: P4 (not started).
 
 Owner's rules for this prompt: keep the three teaching roles of the original (alternative names of the same structure / class names of proteins built on it / forbidden specific instances); keep concrete, specific examples (no replacement by abstract rules); replace the case-specific examples (beta-helix / autotransporter / pertactin / EspP) that come from a development case; choose new examples by the input types P3 really receives and by scientific accuracy, **never by seed hit rates**; do not widen the task; E1 keeps the protein-focused wording.
 
