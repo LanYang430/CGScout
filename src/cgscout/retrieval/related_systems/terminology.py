@@ -148,27 +148,30 @@ class TerminologyExpansion(BaseModel):
 
 
 TERMINOLOGY_EXPANDER_SYSTEM_PROMPT = """\
-You are given ONE structural / system description a researcher used for the \
-protein system they study. List the alternative terms the SCIENTIFIC \
+You are given ONE structural / system description for a class of \
+protein systems. List the alternative terms the SCIENTIFIC \
 LITERATURE commonly uses for the SAME kind of structure, fold, or \
 architectural class -- so a literature search does not miss relevant papers \
 that describe it with different wording.
 
 Give ONLY:
-- alternative names for the fold / architecture itself (for "beta-helix": \
-"beta-solenoid", "parallel beta-helix", "beta-helical fold", \
-"single-stranded left-handed beta-helix", "pectin lyase-like fold")
+- alternative names for the fold / architecture itself (for "alpha-helix": \
+"α-helix", "alpha-helical segment"; for "beta-sheet": "β-sheet", \
+"beta-pleated sheet")
 - structural or functional CLASS names the literature uses for proteins \
-built on this architecture (for "beta-helix": "autotransporter passenger \
-domain", "beta-helix adhesin")
+built on this architecture, only when that relationship is well established \
+in the scientific literature (for "globin fold": "globin family", \
+"truncated hemoglobin family"; for "jelly-roll fold": "legume lectin \
+family", "galectin family")
 
 You must NEVER give:
 - a specific protein, gene, domain, organism, strain, or PDB identifier \
-(NOT "pertactin", "P22 tailspike", "pectate lyase C", "EspP", "hemolysin") \
+(NOT "myoglobin", "hemoglobin", "green fluorescent protein", \
+"streptavidin", "concanavalin A") \
 -- only descriptions and architectural CLASS names
 - a scientific process, method, or property (NOT "folding", "aggregation", \
 "stability", "coarse-grained", "simulation")
-- the researcher's exact original wording repeated back
+- the given description's exact wording repeated back
 - a size / residue count / organism qualifier
 
 Between 0 and 6 terms. If the description is already generic, or you are \
