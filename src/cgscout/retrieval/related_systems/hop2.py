@@ -119,8 +119,8 @@ noun that identifies it: a bare organism name is NOT a system, so combine it wit
 or evidence). Drop words that only describe a construct, state or experimental form (for example "complex", "polymer", \
 "truncation", "cocrystal", "pre-initiation") when the system name stays clear without them. If the label is one organism's \
 instance of a more general named system and the evidence shows that, you may give the more general system-level name.
-- core_process: ONE short phrase (at most 4 words) naming the core scientific process of the objective, copied or lightly \
-inflected from the objective's own words. Add no new mechanism, model requirement or conclusion.
+- core_process: ONE short phrase (at most 4 words) naming the core scientific process of the objective, preferably expressed as a noun phrase rather than an instruction and copied or lightly \
+inflected from the objective's own words. When a distinct scientific process is stated, prefer it over modelling or simulation method terms (for example "coarse-grained", "simulation", "model") already supplied by the search query. Do not invent a process, mechanism, model requirement or conclusion.
 - stable_descriptor: ONE short phrase (at most 3 words) that describes the WHOLE system's stable identity or class \
 characteristic -- what kind of thing the system as a whole is, or a defining feature that every instance of that system has. It \
 must NOT describe only a part of the system: not a subunit or subcomponent, binding partner, ligand or cofactor, local \
