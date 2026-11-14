@@ -104,10 +104,10 @@ def system_extraction_user_message(title: str, abstract: str, structural_class: 
                                    also_known_as: "list[str] | None" = None) -> str:
     aka = ""
     if also_known_as:
-        aka = "\nThe same structural class is also written in the literature as: " + \
+        aka = "\nRelated terms and constructed search phrases for this class: " + \
               ", ".join(f'"{t}"' for t in also_known_as) + "."
     return (
-        f'STRUCTURAL CLASS: "{structural_class}"{aka}\n\n'
+        f'CLASS: "{structural_class}"{aka}\n\n'
         f'TITLE: {title}\n\n'
         f'ABSTRACT: {abstract or "(no abstract available)"}'
     )
@@ -261,7 +261,7 @@ class RichSystemExtraction(BaseModel):
 
 RICH_SYSTEM_EXTRACTION_SYSTEM_PROMPT = """\
 You are given the TITLE and ABSTRACT of ONE scientific paper, a CLASS \
-(a structural class such as "beta-helix", a molecular family, a physical \
+(a structural class such as "ankyrin-repeat domain", a molecular family, a physical \
 process, a chemistry or an environment), and a RELATIONSHIP CRITERION that \
 says what kind of relationship to that class counts for this search.
 
@@ -279,7 +279,7 @@ that BOTH names the system AND ties it to the class
 - entity_type: classify what KIND of thing `name` refers to, using ONLY \
 what this text states:
   - "specific_protein_or_system": a specific, individually-named protein, \
-protein complex, or protein domain (e.g. a named toxin, adhesin, or domain \
+protein complex, or protein domain (e.g. a named enzyme, receptor, or domain \
 construct).
   - "protein_family_or_class": a family or class name covering multiple \
 members, not one specific individuated system.
@@ -297,8 +297,8 @@ may be the same span as evidence_quote). If the text contains no such span \
 for this entity, do NOT list the entity at all.
 - identity_context: ONLY when entity_type is "specific_protein_or_system" \
 or "construct_or_variant", AND this SAME text states what broader \
-class/context this entity belongs to (e.g. calling it "the autotransporter \
-X" states "autotransporter" as X's context) -- copy that context phrase \
+class/context this entity belongs to (e.g. calling it "the ankyrin-repeat protein \
+X" states "ankyrin-repeat protein" as X's context) -- copy that context phrase \
 VERBATIM from the text. Leave this null if entity_type doesn't call for it, \
 or if the text simply does not state a broader context for this entity. \
 Never infer or supply a context from your own outside knowledge -- only \
@@ -318,8 +318,8 @@ with this structure does not make an entity an example of it.
 - A generic phrase with no specific name ("the protein", "this enzyme", "a \
 bacterial adhesin", "many virulence factors", "several proteins") is NOT a \
 specific system -- skip it.
-- The class itself ("beta-helix protein", "beta-solenoid", "a \
-beta-helical fold", "dynamin-family GTPases") is NOT a system name -- skip \
+- The class itself ("ankyrin-repeat proteins", "an alpha-solenoid fold", "a \
+beta-sandwich architecture", "serpin-family protease inhibitors") is NOT a system name -- skip \
 it. A specific, individually-named member of the class (e.g. one named \
 protein) IS a system name, even when its name also appears inside the \
 class label.
