@@ -57,7 +57,7 @@ from cgscout import cache
 from cgscout.llm import LLMBackend
 
 _CACHE_NAMESPACE = "hop1_semantic_intent"
-_PROMPT_VERSION = "v1"  # bump to invalidate every cached entry if the prompt below changes meaning
+_PROMPT_VERSION = "v2"  # bump to invalidate every cached entry if the prompt below changes meaning
 
 _SYSTEM_PROMPT = """\
 You turn two short structured fields from a literature-search planning \
@@ -68,14 +68,14 @@ read like something a scientist would actually write, not two fragments \
 glued together with a fixed connector.
 
 You will be given:
-- STRUCTURAL CLASS: a structural or mechanistic class of protein/ \
-biomolecular system (e.g. "autotransporter passenger domain", "beta-helix \
+- STRUCTURAL CLASS: a structural or mechanistic class of protein/\
+biomolecular system (e.g. "ankyrin-repeat domain", "alpha-solenoid \
 fold"). The search should find OTHER systems that share this class -- \
 systems not yet named, being discovered BECAUSE they share this \
 structural or mechanistic property.
 - OBJECTIVE: the scientific process/question the ORIGINAL system (not \
 named here, and not to be named in your output) is being studied for \
-(e.g. "Folding of the pertactin passenger domain").
+(e.g. "Folding of the Notch ankyrin-repeat domain").
 
 Write one sentence that asks a literature search engine to find OTHER \
 proteins or biomolecular systems sharing the given structural class, in a \
