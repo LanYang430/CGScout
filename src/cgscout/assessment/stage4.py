@@ -174,7 +174,7 @@ _build_extraction_message = _build_user_message
 
 
 SCREEN_PROMPT_VERSION = "s4v2-screen-3"   # v3: prompt no longer names the project (P7 audit); v2: reject/pass/insufficient_evidence (v1 graded 0-3)
-JUDGE_PROMPT_VERSION = "s4v2-judge-2"   # v2: adds the verdict field (graded | insufficient_evidence)
+JUDGE_PROMPT_VERSION = "s4v2-judge-3"   # v3: prompt no longer names the project (P9 audit); v2: adds the verdict field (graded | insufficient_evidence)
 _NS_SCREEN, _NS_EXTRACT, _NS_JUDGE = "stage4_v2_screen", "stage4_v2_extract", "stage4_v2_judge"
 _NS_EPMC = "stage4_epmc_abstract"
 
@@ -345,7 +345,7 @@ Return exactly one item per paper, carrying the same index as the input. Respond
 
 
 _JUDGE_SYSTEM = """\
-You are the evidence evaluator (BEAM Stage 4, tier 2). You receive the USER'S PROBLEM, one paper's title and abstract, and objective facts already extracted from that paper by an earlier, query-independent extraction step (method class, studied systems, processes). Decide how well THIS paper's evidence supports the user's problem.
+You are the evidence evaluator. You receive the USER'S PROBLEM, one paper's title and abstract, and objective facts already extracted from that paper by an earlier, query-independent extraction step (method class, studied systems, processes). Decide how well THIS paper's evidence supports the user's problem.
 
 """ + _RUBRIC + """
 
