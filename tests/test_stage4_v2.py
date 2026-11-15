@@ -248,7 +248,7 @@ def test_tier1_prompt_is_reject_only_and_versioned():
     sysmsg = s4._SCREEN_SYSTEM
     assert "WHEN IN DOUBT, PASS" in sysmsg and "insufficient_evidence" in sysmsg and "positively" in sysmsg.lower()
     assert "3 = DIRECT" not in sysmsg                      # Tier 1 no longer grades 0-3
-    assert s4.SCREEN_PROMPT_VERSION.endswith("-2")
+    assert s4.SCREEN_PROMPT_VERSION.endswith("-3")
 
 
 def test_second_run_is_served_entirely_from_cache():

@@ -174,7 +174,7 @@ _build_extraction_message = _build_user_message
 # ===== end of the code merged from `assessment/evidence_extraction.py` =====================================================
 
 
-SCREEN_PROMPT_VERSION = "s4v2-screen-2"   # v2: reject/pass/insufficient_evidence (v1 graded 0-3)
+SCREEN_PROMPT_VERSION = "s4v2-screen-3"   # v3: prompt no longer names the project (P7 audit); v2: reject/pass/insufficient_evidence (v1 graded 0-3)
 JUDGE_PROMPT_VERSION = "s4v2-judge-2"   # v2: adds the verdict field (graded | insufficient_evidence)
 _NS_SCREEN, _NS_EXTRACT, _NS_JUDGE = "stage4_v2_screen", "stage4_v2_extract", "stage4_v2_judge"
 _NS_EPMC = "stage4_epmc_abstract"
@@ -325,7 +325,7 @@ Hard caps: purely experimental -> 0. Review/perspective -> at most 1. Computatio
 A paper about a DIFFERENT system is grade 2 only when its text shows a shared property that matters for the user's problem (see the transfer hypotheses); sharing only generic words ("protein", "folding", "simulation") is grade 0-1."""
 
 _SCREEN_SYSTEM = """\
-You are the relevance screener (BEAM Stage 4, tier 1) of a literature agent that recommends coarse-grained (CG) and related computational modeling literature to computational biophysicists.
+You are the relevance screener of a literature agent that recommends coarse-grained (CG) and related computational modeling literature to computational biophysicists.
 
 You receive the USER'S PROBLEM and a numbered list of candidate papers (title + abstract only). They came from an automated search followed by a cheap keyword/simulation filter. Your job is ONLY to remove papers that are POSITIVELY shown to be irrelevant. You do not rank and you do not pick the best: a later stage reads every paper you pass in depth. Missing information is NOT evidence of irrelevance.
 
