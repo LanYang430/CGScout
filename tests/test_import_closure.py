@@ -49,13 +49,16 @@ def test_cgscout_path_loads_no_legacy_code_and_needs_no_local_model_packages():
     assert not [w for w in LEGACY if loaded[w]], loaded
 
 
-def test_search_adapters_keep_the_module_level_names_the_harness_uses():
-    """The two bridges and the benchmark recorders access these as attributes of the module (the recorder wraps `search_and_dedupe` in it and
-    classifies requests by the closure names inside `_make_capturing_search_fns`); they must keep existing under the same names."""
-    import cgscout.retrieval.search_adapters as adapter
-    for name in ("search_and_dedupe", "STRUCTURAL_HOP1_SEARCH_LIMIT", "STRUCTURAL_HOP2_SEARCH_LIMIT", "STRUCTURAL_SEARCH_SOURCES",
-                 "_make_capturing_search_fns", "make_need_semantic_search_fn", "papers_for_stage3", "provenance_index"):
-        assert hasattr(adapter, name), name
+def test_search_wrappers_keep_the_module_level_names_the_harness_uses():
+    """The two bridges and the benchmark recorders access these as attributes of the modules (the recorder wraps `search_and_dedupe` in from_planner and
+    classifies requests by the closure names inside `_make_capturing_search_fns`); they must keep existing under the same names.
+    (Formerly retrieval/search_adapters.py: the wrappers and adapters now live in direct/from_planner.py, the Hop-1/Hop-2 depths in retrieval/search.py.)"""
+    import cgscout.retrieval.direct.from_planner as planner_bridge
+    import cgscout.retrieval.search as search
+    for name in ("search_and_dedupe", "_make_capturing_search_fns", "make_need_semantic_search_fn", "papers_for_stage3", "provenance_index"):
+        assert hasattr(planner_bridge, name), name
+    for name in ("STRUCTURAL_HOP1_SEARCH_LIMIT", "STRUCTURAL_HOP2_SEARCH_LIMIT", "STRUCTURAL_SEARCH_SOURCES"):
+        assert hasattr(search, name), name
 
 
 def test_methodology_table_has_a_single_definition():

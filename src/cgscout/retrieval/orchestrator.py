@@ -129,15 +129,8 @@ from pydantic import BaseModel, Field
 
 from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
 from cgscout.planning.expert_prior_planner import ExpertPriorOutput, TransferAxis  # noqa: E402
-from cgscout.retrieval.direct.from_planner import run_retrieval_from_plan  # noqa: E402
+from cgscout.retrieval.direct.from_planner import run_retrieval_from_plan, papers_for_stage3, provenance_index  # noqa: E402
 from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets  # noqa: E402
-from cgscout.retrieval.search_adapters import (  # noqa: E402
-    STRUCTURAL_HOP1_SEARCH_LIMIT,
-    STRUCTURAL_HOP2_SEARCH_LIMIT,
-    STRUCTURAL_SEARCH_SOURCES,
-    papers_for_stage3,
-    provenance_index,
-)
 from cgscout.retrieval.related_systems.discovery import discover_related_systems, _paper_ref  # noqa: E402
 from cgscout.retrieval.related_systems.hop2 import (  # noqa: E402 -- converged Hop-2: structured anchor normalization + at most A/B (+C) queries per system
     HOP2_MAX_SYSTEMS_PER_AXIS, HOP2_MAX_TO_NORMALIZE, SystemInput, merge_and_select, normalize_search_anchors, run_converged_hop2,
@@ -152,7 +145,12 @@ from cgscout.screening.sim_classifier import SIM_CLASSIFIER_THRESHOLD  # noqa: E
 from cgscout.retrieval.related_systems.semantic_intent import rephrase_hop1_semantic_intent  # noqa: E402
 from cgscout.retrieval.concept_3a import render_direct_concept_queries  # noqa: E402
 from cgscout.models import Paper  # noqa: E402
-from cgscout.retrieval.search import search_and_dedupe  # noqa: E402
+from cgscout.retrieval.search import (  # noqa: E402
+    STRUCTURAL_HOP1_SEARCH_LIMIT,
+    STRUCTURAL_HOP2_SEARCH_LIMIT,
+    STRUCTURAL_SEARCH_SOURCES,
+    search_and_dedupe,
+)
 
 # Hard cap on how many direct_concept_search axes get a semantic query in
 # one case/run -- a defensive bound, not something normal cases are

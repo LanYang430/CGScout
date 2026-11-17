@@ -8,7 +8,7 @@ Each record: kind, mode, limit, query, served_from (http | cache), n_results, se
 from __future__ import annotations
 import sys, time, importlib
 
-MODULES = ["cgscout.retrieval.search_adapters", "cgscout.retrieval.orchestrator", "cgscout.retrieval.direct.from_planner",
+MODULES = ["cgscout.retrieval.orchestrator", "cgscout.retrieval.direct.from_planner",
            "cgscout.retrieval.direct.route_plan"]
 _KINDS = [("need_semantic_search_fn", "need_semantic"), ("flat_search_fn", "flat"), ("_run_direct_concept_search", "3A"),
           ("structural_hop1_search_fn", "hop1"), ("structural_hop2_search_fn", "hop2"),

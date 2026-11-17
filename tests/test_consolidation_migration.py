@@ -47,9 +47,12 @@ def sim(monkeypatch):
 
 
 def sim_layout(*, entry=SIM, patch=SIM, aliases=True, name="simulated_move"):
+    """The ACTIVE layout with the orchestrator's role played by SIM: same collaborators, the binder `orchestrator` replaced by SIM, and the approved alias SIM -> orchestrator
+    added on top of whatever aliases the active layout already carries."""
+    cur = LY.active_layout()
     return LY.Layout(name=name, entry=(entry, "run_expert_prior_retrieval"), adapter="legacy_retrieval", patch_targets=LY.baseline_targets(patch),
-                     recorder_binders=(SIM, "cgscout.retrieval.search_adapters"), module_aliases={SIM: LY.BASE_FLOW} if aliases else {},
-                     approval="self-test only")
+                     recorder_binders=tuple(SIM if b == LY.BASE_FLOW else b for b in cur.recorder_binders),
+                     module_aliases={**cur.module_aliases, SIM: LY.BASE_FLOW} if aliases else {}, approval="self-test only")
 
 
 _runs = {"n": 0}
@@ -68,7 +71,7 @@ def test_simulated_move_reproduces_the_baseline(name, sim, tmp_path, monkeypatch
     why = LY.diff_against_baseline(got, BASELINE_OF[name], sim_layout())
     assert not why, f"{name}: {why}"
     if name == "R01_real_search_stack_recorder":
-        assert got["recorder_installed_in"] == sorted([SIM, "cgscout.retrieval.search_adapters"])          # really wrapped in the NEW module (not the old) ...
+        assert got["recorder_installed_in"] == sorted(sim_layout().recorder_binders)                       # really wrapped in the NEW module (not the old) ...
         assert LY.normalize(got, sim_layout())["recorder_installed_in"] == BASE_A[name]["recorder_installed_in"]   # ... and equal to the old list after the approved rename
 
 

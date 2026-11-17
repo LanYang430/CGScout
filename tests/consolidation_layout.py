@@ -23,6 +23,7 @@ tests/test_consolidation_migration.py proves, offline and with no production cha
 from __future__ import annotations
 
 import copy
+import dataclasses
 import importlib
 import os
 from dataclasses import dataclass, field
@@ -107,11 +108,21 @@ BASELINE = Layout(
     recorder_binders=("cgscout.retrieval.orchestrator", "cgscout.retrieval.search_adapters"),
     module_aliases={}, approval="baseline = tag consol-0-baseline (c8be98c); nothing to approve")
 
-LAYOUTS = {"baseline": BASELINE}
+# Phase 1 / A3: retrieval/search_adapters.py was merged into direct/from_planner.py, which now binds `search_and_dedupe` at module level; the recorder's
+# MODULES lost `search_adapters`.  Entry, collaborators and patch targets are those of the baseline (the flow has not moved yet).
+PHASE1 = dataclasses.replace(
+    BASELINE, name="phase1",
+    recorder_binders=("cgscout.retrieval.orchestrator", "cgscout.retrieval.direct.from_planner"),
+    module_aliases={"cgscout.retrieval.direct.from_planner": "cgscout.retrieval.search_adapters"},
+    approval="Phase 1 / A3: search_adapters merged into from_planner (owner approved Phase 1-4 on 2026-11-16; CONSOLIDATION_PLAN_v2 section 3.3 + Addendum)")
+
+# `baseline` is kept as the reference object for the aliases but is no longer a valid layout of the current tree (search_adapters is gone), so it is not registered.
+LAYOUTS = {"phase1": PHASE1}
+CURRENT = "phase1"
 
 
 def active_layout() -> Layout:
-    name = os.environ.get("CGSCOUT_CONSOLIDATION_LAYOUT", "baseline")
+    name = os.environ.get("CGSCOUT_CONSOLIDATION_LAYOUT", CURRENT)
     assert name in LAYOUTS, f"unknown layout {name!r}; known: {sorted(LAYOUTS)} (a layout is registered in the commit that moves the code)"
     return LAYOUTS[name]
 

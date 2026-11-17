@@ -14,6 +14,22 @@ from cgscout.models import Paper
 from cgscout.sources.openalex import search_openalex
 from cgscout.sources.semantic_scholar import search_semantic_scholar
 
+# ===== moved verbatim from `retrieval/search_adapters.py` (consolidation A3): the Hop-1 / Hop-2 retrieval depths and sources, used by the 3B route ========
+# Hop-1 per-query retrieval depth: fixed at 15, per the cross-case retrieval-
+# depth sensitivity experiment (beta-helix/coiled-coil/TIM-barrel, this
+# session) -- was 8.
+STRUCTURAL_HOP1_SEARCH_LIMIT = 15
+# Hop-2 per-query retrieval depth: was 8, then 15 (diagnosed against the
+# live end-to-end run: the query "pertactin coarse-grained model" genuinely
+# returns the target paper at rank 14/24 -- top-8 cut it off; not a ranking
+# problem, a pure depth cutoff). Now 20, per the Hop-2 simplification
+# (one query per system instead of three) -- this is now the ONLY retrieval
+# depth per system, so it carries what three queries' worth of depth used
+# to. Hop-2 ranking ((-n_support, first_seen_rank) for system selection)
+# is unchanged by this.
+STRUCTURAL_HOP2_SEARCH_LIMIT = 20
+STRUCTURAL_SEARCH_SOURCES = ("openalex",)
+
 # ===== merged from `retrieval/dedupe.py` (moved verbatim; its docstring is this comment) ===================================
 # Cross-source deduplication.
 #

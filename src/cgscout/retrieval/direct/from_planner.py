@@ -5,9 +5,9 @@ Owns zero retrieval logic of its own: it only maps PlannerOutput fields
 onto the EXISTING, UNMODIFIED plan_evidence_routes() / run_route_retrieval()
 public functions (evidence_plan.py / route_plan.py --
 shared, unedited infrastructure used by both the old and new intake path)
-and reuses search_adapters.py's _make_capturing_search_fns /
-papers_for_stage3 / provenance_index helpers UNCHANGED rather than
-reimplementing them.
+and owns the capturing search wrappers (_make_capturing_search_fns /
+make_need_semantic_search_fn) and the papers_for_stage3 / provenance_index
+adapters (formerly retrieval/search_adapters.py, merged here unchanged).
 
 Deliberately does NOT touch the structural branch: grounded_structural_
 feature is always None here, so EvidenceRoutePlan.structural_terms stays
@@ -33,14 +33,89 @@ from cgscout.retrieval.direct.route_plan import (  # noqa: E402
     resolve_structural_and_safety_budgets,
     run_route_retrieval,
 )
-from cgscout.retrieval.search_adapters import (  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import _paper_ref  # noqa: E402 -- same paper_ref convention used throughout
+from cgscout.retrieval.search import (  # noqa: E402
+    STRUCTURAL_HOP1_SEARCH_LIMIT,
     STRUCTURAL_HOP2_SEARCH_LIMIT,
-    _make_capturing_search_fns,
-    make_need_semantic_search_fn,
+    STRUCTURAL_SEARCH_SOURCES,
+    search_and_dedupe,
 )
 from cgscout.models import Paper  # noqa: E402
 
 from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
+
+
+# ===== moved verbatim from `retrieval/search_adapters.py` (consolidation A3) =================================================================
+# The capturing search wrappers (every real Paper retrieved is cached by paper_ref for Stage 3) and the two small adapters from a
+# RouteRetrievalResult to the Stage 3 contract.  `_make_capturing_search_fns` keeps its two unused Hop-1/Hop-2 closures (their removal is a
+# separate, later cleanup).  The route code (3A / 3B in orchestrator.py) calls papers_for_stage3 / provenance_index from here.
+
+def _make_capturing_search_fns(paper_cache: dict[str, Paper], budgets: RouteRetrievalBudgets):
+    """One shared paper_cache across all 5 routes -- the sidecar paper_ref ->
+    full Paper mapping Stage 3 needs, since RouteRetrievalResult.papers
+    itself only carries paper_ref/title/year, not abstract/authors/etc."""
+
+    def flat_search_fn(query: str, limit: int) -> list[Paper]:
+        papers = search_and_dedupe(query, limit=limit)
+        for p in papers:
+            paper_cache.setdefault(_paper_ref(p), p)
+        return papers
+
+    def structural_hop1_search_fn(query: str) -> list[Paper]:
+        papers = search_and_dedupe(query, limit=STRUCTURAL_HOP1_SEARCH_LIMIT, sources=STRUCTURAL_SEARCH_SOURCES)
+        for p in papers:
+            paper_cache.setdefault(_paper_ref(p), p)
+        return papers
+
+    def structural_hop2_search_fn(query: str) -> list[Paper]:
+        papers = search_and_dedupe(query, limit=STRUCTURAL_HOP2_SEARCH_LIMIT, sources=STRUCTURAL_SEARCH_SOURCES)
+        for p in papers:
+            paper_cache.setdefault(_paper_ref(p), p)
+        return papers
+
+    return flat_search_fn, structural_hop1_search_fn, structural_hop2_search_fn
+
+
+def make_need_semantic_search_fn(paper_cache: dict[str, Paper]):
+    """P3: the SEMANTIC counterpart of flat_search_fn, for the `need_semantic` route (OpenAlex `search.semantic=`, capped at 50
+    by the engine).  Same shared paper_cache as the other routes, so Stage 3 sees the full Paper."""
+    def need_semantic_search_fn(query: str, limit: int) -> list[Paper]:
+        papers = search_and_dedupe(query, limit=limit, mode="semantic")
+        for p in papers:
+            paper_cache.setdefault(_paper_ref(p), p.model_copy(update={"retrieval_modes": ["semantic"]}))
+        return papers
+
+    return need_semantic_search_fn
+
+
+def papers_for_stage3(result: RouteRetrievalResult, paper_cache: dict[str, Paper]) -> list[Paper]:
+    """Smallest adapter to the existing Stage 3 contract (filter_papers(list[Paper])).
+    Provenance is NOT flattened away: result.papers (indexable by paper_ref)
+    remains the sidecar; the caller reattaches it after Stage 3/4 by looking
+    up each retained/extracted Paper's paper_ref in result.papers."""
+    out = []
+    missing = []
+    for rp in result.papers:
+        p = paper_cache.get(rp.paper_ref)
+        if p is None:
+            missing.append(rp.paper_ref)
+            continue
+        out.append(p)
+    if missing:
+        # Should not happen -- every RouteRetrievalResult.papers entry was
+        # produced by a search_fn call this module itself wrapped. Surfaced,
+        # not silently dropped, if it ever does.
+        import sys as _sys
+        print(f"route_retrieval_live_adapter: WARNING -- {len(missing)} paper_ref(s) in "
+              f"RouteRetrievalResult had no cached Paper object: {missing}", file=_sys.stderr)
+    return out
+
+
+def provenance_index(result: RouteRetrievalResult) -> dict[str, "object"]:
+    """paper_ref -> RetrievedPaper (route provenance + hop1_provenance),
+    for reattaching provenance to a Paper after Stage 3/4 by paper_ref."""
+    return {rp.paper_ref: rp for rp in result.papers}
+
 
 
 def _norm_ctx(s: str) -> str:

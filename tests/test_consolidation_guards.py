@@ -45,7 +45,7 @@ PATCH_POINTS = [
     ("cgscout.cli", "run_expert_prior_retrieval"), ("cgscout.cli", "run_stage4_v2"), ("cgscout.cli", "rank_for_display"),
     ("harness", "run_expert_prior_retrieval"), ("harness", "run_stage4_v2"), ("harness", "run_plan"), ("harness", "run_plan_checked"),
     ("harness", "rank_for_display"),
-    ("cgscout.retrieval.search_adapters", "search_and_dedupe"),
+    ("cgscout.retrieval.direct.from_planner", "search_and_dedupe"),          # was search_adapters (A3)
 ]
 
 # names the 3B chain looks up as globals of the flow module at call time (a patch on the module takes effect only because of this).
