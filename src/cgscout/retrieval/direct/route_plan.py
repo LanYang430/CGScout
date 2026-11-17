@@ -9,7 +9,7 @@ blocks the others.
 The old structural route (TerminologyExpander -> Hop-1 -> Hop-2 inside this
 module) is historical code, kept in the git tag `legacy-pre-cgscout`: the live
 path never enables it (the structural / related-system work is done by
-retrieval/transfer.py). Its provenance and result types stay in the
+agent.py / retrieval/transfer.py). Its provenance and result types stay in the
 schema below.
 
 Reuses, UNMODIFIED:
@@ -1002,7 +1002,7 @@ def run_route_retrieval(
     never blocks the others (each route is independently try/except'd).
     The structural branch (EvidenceRoutePlan.structural_terms non-empty) is no
     longer part of this function: the live path never enables it (the
-    structural / related-system work is done by retrieval/transfer.py), and
+    structural / related-system work is done by agent.py / retrieval/transfer.py), and
     a plan that enables it raises NotImplementedError. The parameters `call`,
     `hop1_search_fn`, `hop1_extract_fn`, `hop2_search_fn` and `hop1_progress_fn`
     are accepted for signature compatibility but not used."""

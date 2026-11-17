@@ -40,13 +40,13 @@ DONE_STATUSES = ("OK", "REFUSED", "NOT_RUN_CLARIFICATION")   # a checkpoint with
 CLARIFY_REPLY = "I have no further details beyond my question as written; please proceed with your best reasonable interpretation."
 # `harness` (and with it cgscout.llm, which reads CGSCOUT_USAGE_LOG_PATH at import time) is imported inside configure(), AFTER the environment is set.
 RL = U = None
-RP = TR = AG = TerminologyExpansion = get_backend = backend_label = read_usage_log = Stage4Config = None      # TR: retrieval.transfer (P3's expand_terminology is looked up there), AG: cgscout.agent
+RP = AG = TerminologyExpansion = get_backend = backend_label = read_usage_log = Stage4Config = None      # AG: cgscout.agent (P3's expand_terminology is looked up there; Stage 3's filter_papers too)
 
 
 def configure(arm_name):
     """Environment + imports that must be in place before any pipeline module reads them (cache dir, usage log, model, effort)."""
     global ARM_NAME, ROOT, RES, INPUT, USAGE_LOG, LOG, BUDGETS, STOP_USD, DAILY_CREDITS, MIN_CREDITS, DEEP_CAP, STOP_EXPLICIT, PROFILE
-    global RL, U, RP, TR, AG, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config
+    global RL, U, RP, AG, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config
     ARM_NAME, ROOT, INPUT = arm_name, AR.ROOT, AR.INPUT
     PROFILE = AR.profile_for(arm_name)
     os.environ["CGSCOUT_CACHE_DIR"] = str(AR.SHARED_CACHE)           # shared by every arm: identical queries are fetched once
@@ -57,19 +57,18 @@ def configure(arm_name):
     os.environ.setdefault("OPENALEX_STRICT_BUDGET", "1")
     import harness as _RL
     import cgscout.retrieval.direct.route_plan as _RP
-    import cgscout.retrieval.transfer as _TR
     import cgscout.agent as _AG
     from cgscout.retrieval.related_systems.terminology import TerminologyExpansion as _TE
     from cgscout.llm import get_backend as _gb, backend_label as _bl, read_usage_log as _rul
     from cgscout.assessment.stage4 import Stage4Config as _S4C
     RL, U = _RL, _RL.U
-    RP, TR, AG, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config = _RP, _TR, _AG, _TE, _gb, _bl, _rul, _S4C
+    RP, AG, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config = _RP, _AG, _TE, _gb, _bl, _rul, _S4C
     BUDGETS = AR.budgets_for(ARM_NAME, RP)
     # Hop-1's terminology expansion is an UNCACHED live LLM call whose output only feeds the banned-name list of Hop-1 discovery.  To keep Hop-1/Hop-2
     # identical across arms it is memoised per scientific_class in terminology_memo.json: the first arm that needs it records it, the others replay it.
     memo_path = ROOT / "terminology_memo.json"
-    assert hasattr(TR, "expand_terminology"), "R-2: assigning to a missing module attribute would silently do nothing"
-    orig_expand = TR.expand_terminology
+    assert hasattr(AG, "expand_terminology"), "R-2: assigning to a missing module attribute would silently do nothing"
+    orig_expand = AG.expand_terminology
 
     def _memo_expand(system_term, *, call):
         memo = json.loads(memo_path.read_text()) if memo_path.exists() else {}
@@ -80,7 +79,7 @@ def configure(arm_name):
         tmp = memo_path.with_suffix(".tmp"); tmp.write_text(json.dumps(memo, ensure_ascii=False, indent=1)); tmp.replace(memo_path)
         return r
 
-    TR.expand_terminology = _memo_expand
+    AG.expand_terminology = _memo_expand
     RES = ROOT / "results" / ARM_NAME
     STOP_EXPLICIT = "CGSCOUT_STOP_USD" in os.environ or "NEW37_STOP_USD" in os.environ
     STOP_USD = float(os.environ.get("CGSCOUT_STOP_USD", os.environ.get("NEW37_STOP_USD", "5.0")))     # hard LLM-spend ceiling per arm; a full run requires it to be set explicitly

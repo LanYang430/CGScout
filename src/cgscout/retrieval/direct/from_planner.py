@@ -48,7 +48,7 @@ from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
 # ===== moved verbatim from `retrieval/search_adapters.py` (consolidation A3) =================================================================
 # The capturing search wrappers (every real Paper retrieved is cached by paper_ref for Stage 3) and the two small adapters from a
 # RouteRetrievalResult to the Stage 3 contract.  `_make_capturing_search_fns` keeps its two unused Hop-1/Hop-2 closures (their removal is a
-# separate, later cleanup).  The route code (3A / 3B in transfer.py) calls papers_for_stage3 / provenance_index from here.
+# separate, later cleanup).  retrieve_direct (below) calls papers_for_stage3 / provenance_index from here.
 
 def _make_capturing_search_fns(paper_cache: dict[str, Paper], budgets: RouteRetrievalBudgets):
     """One shared paper_cache across all 5 routes -- the sidecar paper_ref ->

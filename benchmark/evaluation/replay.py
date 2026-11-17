@@ -48,8 +48,7 @@ socket.getaddrinfo = _blocked
 
 import harness as RL                             # noqa: E402  (was regression_lib)
 import cgscout.retrieval.direct.route_plan as RP         # noqa: E402
-import cgscout.retrieval.transfer as TR                  # noqa: E402  (P3's expand_terminology is looked up in this module)
-import cgscout.agent as AG                               # noqa: E402  (Stage 3's filter_papers is looked up in this module)
+import cgscout.agent as AG                               # noqa: E402  (P3's expand_terminology and Stage 3's filter_papers are looked up in this module)
 from cgscout.retrieval.related_systems.terminology import TerminologyExpansion   # noqa: E402
 from cgscout.planning.expert_prior_planner import ExpertPriorOutput    # noqa: E402
 from cgscout.retrieval.direct.from_planner import evidence_plan_from_planner_output   # noqa: E402
@@ -92,8 +91,8 @@ def _memo_expand(system_term, *, call):
     if system_term in MEMO:
         return TerminologyExpansion.model_validate(MEMO[system_term])
     MEMO_MISS.append(system_term); raise RuntimeError("replay: terminology memo miss")
-assert hasattr(TR, "expand_terminology"), "R-2: assigning to a missing module attribute would silently do nothing"
-TR.expand_terminology = _memo_expand
+assert hasattr(AG, "expand_terminology"), "R-2: assigning to a missing module attribute would silently do nothing"
+AG.expand_terminology = _memo_expand
 
 STUB, UNKNOWN = {}, []
 def _stub_classify(papers):

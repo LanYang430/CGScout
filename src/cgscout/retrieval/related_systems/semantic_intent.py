@@ -31,7 +31,7 @@ Design, per this round's explicit constraints:
   - ONE call per DISTINCT (scientific_class, objective) pair, not one call
     per query -- discovery.py's own internal loop (build_
     discovery_queries(), UNCHANGED) fires many lexical-style candidate
-    queries per Hop-1 axis, but transfer.py calls this
+    queries per Hop-1 axis, but agent.py calls this
     module exactly once per axis (same override-closure trick the deleted
     template used), and the persistent cache below collapses any repeat of
     the exact same pair -- across axes, across cases, across process runs

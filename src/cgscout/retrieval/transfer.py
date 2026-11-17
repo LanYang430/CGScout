@@ -1,7 +1,8 @@
-"""transfer (formerly orchestrator.py; consolidation 2b) -- the executors of the transfer axes: direct_concept_search (3A), related_system_discovery (3B:
-Hop-1 -> cleanup -> identity -> Hop-2) and the paper-merge helper.  The dispatch over the axes, the merge of the direct and transfer streams and Stage 3 are in
-cgscout.agent.retrieve.  What follows is the original description, kept as it was (it still says "this file" for the code that used to share a file with the
-dispatch).
+"""transfer (formerly orchestrator.py; consolidation 2b, 3) -- the transfer-axis executors that stay out of the dispatch: the 3A executor (direct_concept_search), the search closures
+used by Hop-1 / Hop-2 (_make_search_fn: the recorder classifies searches by these function names), the paper-merge helper, and the three assembly steps of 3B
+(hop1_seed_terms, hop2_candidates, tag_hop2_papers).  The dispatch over the axes, the 3B workflow itself (cgscout.agent._discover_related_systems), the merge of the direct and
+transfer streams and Stage 3 are in cgscout.agent.  What follows is the original description of the module, kept as it was (it still says "this file" for code that used to
+share a file with the dispatch and with the 3B workflow).
 
 Original description: executes an
 ExpertPriorOutput (transfer_axes) for a resolved
@@ -131,24 +132,11 @@ from typing import Optional
 
 from cgscout.planning.expert_prior_planner import TransferAxis  # noqa: E402
 from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets  # noqa: E402
-from cgscout.retrieval.related_systems.discovery import discover_related_systems, _paper_ref  # noqa: E402
-from cgscout.retrieval.related_systems.hop2 import (  # noqa: E402 -- converged Hop-2: structured anchor normalization + at most A/B (+C) queries per system
-    HOP2_MAX_SYSTEMS_PER_AXIS, HOP2_MAX_TO_NORMALIZE, SystemInput, merge_and_select, normalize_search_anchors, run_converged_hop2,
-)
-from cgscout.retrieval.related_systems.postprocess import (  # noqa: E402
-    RelatedSystemIdentity, build_related_system_identities, cleanup_discovered_systems,
-)
-from cgscout.retrieval.related_systems.terminology import expand_terminology, TerminologyExpansion  # noqa: E402
-from cgscout.llm import LLMBackend, make_call_fn  # noqa: E402 -- single-backend-per-run
-from cgscout.retrieval.related_systems.extraction import extract_related_systems_rich  # noqa: E402
-from cgscout.retrieval.related_systems.semantic_intent import rephrase_hop1_semantic_intent  # noqa: E402
+from cgscout.retrieval.related_systems.discovery import DiscoveredSystem, _paper_ref  # noqa: E402
+from cgscout.retrieval.related_systems.hop2 import SystemInput  # noqa: E402 -- converged Hop-2: structured anchor normalization + at most A/B (+C) queries per system
+from cgscout.retrieval.related_systems.postprocess import RelatedSystemIdentity  # noqa: E402
 from cgscout.models import Paper  # noqa: E402
-from cgscout.retrieval.search import (  # noqa: E402
-    STRUCTURAL_HOP1_SEARCH_LIMIT,
-    STRUCTURAL_HOP2_SEARCH_LIMIT,
-    STRUCTURAL_SEARCH_SOURCES,
-    search_and_dedupe,
-)
+from cgscout.retrieval.search import search_and_dedupe  # noqa: E402
 
 
 def _make_search_fn(
@@ -261,34 +249,10 @@ def _run_direct_concept_search(
     return list(combined.values()), queries
 
 
-def _run_related_system_discovery(
-    axis: TransferAxis, *, scientific_objective: str, original_system: str,
-    paper_cache: dict[str, Paper], budgets: RouteRetrievalBudgets,
-    backend: LLMBackend, case_id: Optional[str] = None,
-) -> tuple[list[Paper], list[str], list[RelatedSystemIdentity], list[str], Optional[str], list[dict]]:
-    """Returns (papers, hop1_queries, related_system_identities, hop2_queries, error, hop2_plan).
-
-    `original_system` (plan.system) is accepted but not used by the current
-    code (an earlier version used it only to normalize the objective for Hop-2,
-    via objective_normalization.normalize_objective()); it never propagated any
-    system/component text onto related-system queries.
-
-    `backend` is REQUIRED (no default -- see llm.get_backend()'s
-    docstring): the SAME LLMBackend instance this whole run already
-    resolved once, used for BOTH LLM calls this function makes
-    (terminology expansion below, and every Hop-1 per-paper extraction
-    call inside discover_related_systems())."""
-    error: Optional[str] = None
-    scientific_class = axis.scientific_class
-    try:
-        expansion = expand_terminology(scientific_class, call=make_call_fn(
-            backend, response_schema=TerminologyExpansion,
-            label="hop1_terminology_expansion", case_id=case_id))
-        term_aka = list(expansion.expansion_terms)
-    except Exception as exc:  # noqa: BLE001 -- degrade to no expansion terms, don't fail the axis yet
-        term_aka = []
-        error = f"terminology_expansion: {exc}"
-
+def hop1_seed_terms(axis: TransferAxis, scientific_class: str, scientific_objective: str, term_aka: list[str]) -> list[str]:
+    """The Hop-1 `expansion_terms`: the class combined with each retrieval anchor, the class combined with the objective, THEN the P3 aliases.  PURE, but ORDER-SENSITIVE:
+    discover_related_systems receives the list whole and in this order, so it is part of every P5 user message and therefore of every P5 cache key
+    (tests/test_consolidation_p5.py).  Moved from the former _run_related_system_discovery (consolidation 3); the statements are unchanged."""
     # Hop-1 seed: scientific_class alone is system_description; every
     # combination below rides in as an "expansion term" of build_discovery_
     # queries() (discovery.py, UNCHANGED) -- which builds
@@ -299,76 +263,18 @@ def _run_related_system_discovery(
     combo_terms = [f"{scientific_class} {anchor}".strip() for anchor in axis.retrieval_anchors]
     combo_terms.append(f"{scientific_class} {scientific_objective}".strip())
     expansion_terms = combo_terms + term_aka
+    return expansion_terms
 
-    # Hop-1 describes a STRUCTURAL CLASS to find OTHER, not-yet-named
-    # systems sharing it -- the search target here is never one named
-    # entity's exact identity (if it were, this would just be a direct
-    # search for that name, not a discovery step) -- so it routes semantic.
-    # One precomputed sentence, produced by semantic_intent.py's small
-    # cached rephrase call (kept entirely separate from direct_concept_
-    # search's own cleanup call, concept_3a.py -- see
-    # semantic_intent.py's docstring for why); discovery.
-    # py's own per-term lexical-style query construction (build_discovery_
-    # queries(), UNCHANGED) still runs internally and calls this closure
-    # once per term, but every call is overridden to the SAME sentence --
-    # search_and_dedupe()'s mode-aware cache collapses those into one real
-    # HTTP request, and semantic_intent's own cache collapses repeat
-    # calls for the same (scientific_class, objective) pair across axes/
-    # cases into zero additional LLM calls.
-    hop1_semantic_query = rephrase_hop1_semantic_intent(
-        scientific_class, scientific_objective, backend=backend, case_id=case_id)
-    hop1_search_fn = _make_search_fn(
-        paper_cache, STRUCTURAL_HOP1_SEARCH_LIMIT, STRUCTURAL_SEARCH_SOURCES,
-        mode="semantic", semantic_query_override=hop1_semantic_query,
-    )
-    # Hop-2 already knows the related system's NAME -- exact-identity
-    # retrieval, stays lexical, unchanged behavior (mode= is explicit here
-    # purely for audit/provenance tagging via _make_search_fn).
-    hop2_search_fn = _make_search_fn(
-        paper_cache, STRUCTURAL_HOP2_SEARCH_LIMIT, STRUCTURAL_SEARCH_SOURCES, mode="lexical",
-    )
 
-    # discover_related_systems() (discovery.py, UNCHANGED)
-    # calls extract_fn(title, abstract, structural_class, aka) positionally
-    # -- this closure threads axis.basis (scopes the relationship-fidelity
-    # gate to "distinctive_structure" axes only) AND this function's own
-    # `backend`/`case_id` one call further, into extract_related_systems_
-    # rich's REQUIRED `backend` param -- every one of the (up to hundreds
-    # of, one per candidate paper) Hop-1 extraction calls discover_related_
-    # systems() fires concurrently uses this SAME backend instance, never
-    # resolving or falling back to a different one on its own.
-    def _extract_fn(title, abstract, structural_class_arg, also_known_as=None):
-        return extract_related_systems_rich(
-            title, abstract, structural_class_arg, also_known_as,
-            backend=backend, basis=axis.basis, case_id=case_id)
-
-    try:
-        discovery = discover_related_systems(
-            scientific_class, expansion_terms, search_fn=hop1_search_fn,
-            extract_fn=_extract_fn,
-            max_discovered=budgets.structural_max_discovered_systems,
-            max_papers_to_extract=budgets.structural_max_papers_to_extract,
-            max_workers=budgets.hop1_extraction_max_workers,
-        )
-    except Exception as exc:  # noqa: BLE001
-        return [], [], [], [], f"hop1: {exc}", []
-
-    if not discovery.discovered_systems:
-        return [], [hop1_semantic_query], [], [], error, []
-
-    discovery.discovered_systems, _cleanup_log = cleanup_discovered_systems(
-        discovery.discovered_systems, clean_objective=scientific_objective)
-
-    # Identity preservation: qualify (or drop) every discovered label
-    # BEFORE it can become a bare Hop-2 anchor -- see related_system_
-    # postprocess.py (identity section). Only grounded_full/grounded_contextual identities carry
-    # a query_anchor and go on to Hop-2; insufficient ones are kept as
-    # audit records only.
-    identities = build_related_system_identities(
-        discovery.discovered_systems, scientific_class=scientific_class, basis=axis.basis)
+def hop2_candidates(identities: list[RelatedSystemIdentity], systems: list[DiscoveredSystem], *, cap: int) -> list[SystemInput]:
+    """The candidates for Hop-2's single normalization call (P6): grounded identities only, paired with the discovered system of the same label, in the stable order
+    (-n_support, first_seen_rank), cut to `cap`, re-indexed from 0.  PURE, but CACHE-KEY SENSITIVE: the order, the cut and the indices are part of the P6 user message.
+    Two systems whose lower-cased names are equal share one entry of `ds_by_label` (the LAST one wins), so both take its n_support / first_seen_rank.
+    `systems` is the cleaned list (cleanup_discovered_systems has already merged duplicates into the survivors, in place).  Moved from the former
+    _run_related_system_discovery (consolidation 3); the statements are unchanged apart from `systems` and `cap`."""
     # Hop-2 is CONVERGED (hop2.py): Hop-1 may diverge, Hop-2 must not. Only grounded identities enter; their
     # `query_anchor` (which for distinctive_structure axes carries the whole class phrase) is NOT used as query text.
-    ds_by_label = {ds.name.strip().lower(): ds for ds in discovery.discovered_systems}
+    ds_by_label = {ds.name.strip().lower(): ds for ds in systems}
     candidates = []
     for ident in identities:
         ds = ds_by_label.get(ident.label.strip().lower())
@@ -377,19 +283,17 @@ def _run_related_system_discovery(
                 index=len(candidates), label=ident.label, entity_type=ident.entity_type, identity_context=ident.identity_context,
                 aliases=ident.aliases, evidence_quotes=ident.source_grounding, source_titles=ident.source_paper_titles,
                 n_support=ds.n_support, first_seen_rank=ds.first_seen_rank))
-    candidates = sorted(candidates, key=lambda c: (-c.n_support, c.first_seen_rank))[:HOP2_MAX_TO_NORMALIZE]
+    candidates = sorted(candidates, key=lambda c: (-c.n_support, c.first_seen_rank))[:cap]
     candidates = [c.model_copy(update={"index": k}) for k, c in enumerate(candidates)]
-    if not candidates:
-        return [], [hop1_semantic_query], identities, [], error, []
+    return candidates
 
-    normalized = normalize_search_anchors(candidates, scientific_objective, backend, case_id=case_id)
-    selected = merge_and_select(normalized, HOP2_MAX_SYSTEMS_PER_AXIS)
-    try:
-        plans, found = run_converged_hop2(selected, hop2_search_fn, _paper_ref)
-    except Exception as exc:  # noqa: BLE001
-        return [], [hop1_semantic_query], identities, [], f"hop2: {exc}", []
-    hop2_queries = [q["query"] for pl in plans for q in pl.queries]
 
+def tag_hop2_papers(found: dict, paper_cache: dict[str, Paper], axis: TransferAxis) -> list[Paper]:
+    """Tag the papers Hop-2 found with their system label, route categories and queries.  COPY-ON-WRITE, but it READS MUTABLE STATE: every copy is derived from the
+    CURRENT entry of `paper_cache` (the dict shared by all axes, which the search closures have been updating), never from an earlier copy, with shallow `model_copy`
+    semantics (nested objects stay shared with the cache entry); a paper found by two systems yields two copies, each carrying its own label; a ref the cache does not
+    have is skipped silently.  The output order is `found` order x refs order, which later becomes the order of transfer_papers.  Moved from the former
+    _run_related_system_discovery (consolidation 3); the statements are unchanged."""
     tagged: list[Paper] = []
     for label, refs in found.items():
         for ref, queries in refs.items():
@@ -407,7 +311,7 @@ def _run_related_system_discovery(
                 "structural_discovered_system": p.structural_discovered_system or label,
                 "structural_discovered_systems": existing_systems,
             }))
-    return (tagged, [hop1_semantic_query], identities, hop2_queries, error, [pl.model_dump() for pl in plans])
+    return tagged
 
 
 def _merge_papers(existing: dict[str, Paper], new_papers: list[Paper]) -> None:

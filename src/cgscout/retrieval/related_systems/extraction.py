@@ -396,7 +396,7 @@ def extract_related_systems_rich(
     the "one run, one backend" invariant. `case_id` just rides through to
     the usage log, same as every other .structured() call already does.
 
-    `basis` is the axis's own axis.basis (transfer.py threads
+    `basis` is the axis's own axis.basis (agent.py threads
     it in through a closure; execution_mode dispatch still reads only
     axis.execution_mode). It selects the RELATIONSHIP CRITERION appended to
     the user message (AXIS_RELATIONSHIP_CRITERIA: family / architecture /

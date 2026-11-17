@@ -39,7 +39,7 @@ def _eval_module(name):
 
 # (module, attribute): assigned somewhere in tests/ or benchmark/evaluation/ today
 PATCH_POINTS = [
-    ("cgscout.retrieval.transfer", "expand_terminology"),                                                    # run_benchmark / replay (the terminology memo), tests
+    ("cgscout.agent", "expand_terminology"),                                                                 # run_benchmark / replay (the terminology memo), tests
     ("cgscout.agent", "filter_papers"),                                                                      # replay (the stored Stage-3 classifier), tests
     ("cgscout.agent", "retrieve"), ("cgscout.agent", "assess"), ("cgscout.agent", "retrieve_direct"),       # test_cli, the entry tests
     ("cgscout.retrieval.transfer", "search_and_dedupe"), ("cgscout.retrieval.direct.from_planner", "search_and_dedupe"),
@@ -51,14 +51,14 @@ PATCH_POINTS = [
 # the commit that moves a function; the layout-driven test below (every patch target is looked up by some function of its module) is what survives a move unedited.
 LOOKED_UP_AT_CALL_TIME = {
     "cgscout.retrieval.transfer": {
-        "_run_related_system_discovery": ["expand_terminology", "rephrase_hop1_semantic_intent", "discover_related_systems", "cleanup_discovered_systems",
-                                          "build_related_system_identities", "normalize_search_anchors", "merge_and_select", "run_converged_hop2",
-                                          "extract_related_systems_rich", "_make_search_fn"],
         "_make_search_fn": ["search_and_dedupe"],
         "_run_direct_concept_search": ["search_and_dedupe"],
     },
     "cgscout.agent": {
-        "retrieve": ["retrieve_direct", "_plan_axis_queries", "_run_direct_concept_search", "_run_related_system_discovery", "_merge_papers", "_stage3_screen"],
+        "retrieve": ["retrieve_direct", "_plan_axis_queries", "_run_direct_concept_search", "_discover_related_systems", "_merge_papers", "_stage3_screen"],
+        "_discover_related_systems": ["expand_terminology", "hop1_seed_terms", "rephrase_hop1_semantic_intent", "_make_search_fn", "discover_related_systems",
+                                      "cleanup_discovered_systems", "build_related_system_identities", "hop2_candidates", "normalize_search_anchors",
+                                      "merge_and_select", "run_converged_hop2", "tag_hop2_papers", "extract_related_systems_rich"],
         "_plan_axis_queries": ["render_direct_concept_queries"],
         "_stage3_screen": ["filter_papers"],
         "execute": ["retrieve", "assess"], "run": ["propose_prior", "execute"], "assess": ["run_stage4_v2"],

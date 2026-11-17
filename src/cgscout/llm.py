@@ -73,7 +73,7 @@ class LLMBackend(Protocol):
 # take a `call: CallFn` of shape `(system_prompt: str, user_message: str,
 # schema: dict) -> str` -- predates LLMBackend. make_call_fn() bridges an
 # injected LLMBackend into that shape, so every call site (e.g.
-# transfer.py's terminology expansion step, part of the
+# agent.py's terminology expansion step, part of the
 # Hop-1 chain) goes through the one configured backend -- the "one run, one
 # backend" invariant get_backend() documents.
 

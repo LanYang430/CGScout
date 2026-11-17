@@ -139,7 +139,7 @@ class Bench:
 @pytest.fixture
 def bench(tmp_path, monkeypatch):
     import run_benchmark as rb
-    import cgscout.retrieval.transfer as orch                                      # P3's expand_terminology is looked up in retrieval/transfer.py
+    import cgscout.agent as orch                                                   # P3's expand_terminology is looked up in cgscout/agent.py
     run = tmp_path / "run"; run.mkdir()
     for name, value in (("ROOT", run), ("INPUT", run / "queries.csv"), ("SHARED_CACHE", run / "cache_work"), ("PLANS", run / "plans_frozen")):
         monkeypatch.setattr(arms, name, value)

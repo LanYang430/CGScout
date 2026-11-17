@@ -113,37 +113,37 @@ BASELINE = Layout(
     recorder_binders=("cgscout.retrieval.orchestrator", "cgscout.retrieval.search_adapters"),
     module_aliases={}, approval="baseline = tag consol-0-baseline (c8be98c); nothing to approve")
 
-# Phase 2b: the dispatch moved into agent.retrieve; retrieval/orchestrator.py became retrieval/transfer.py (the 3A / 3B executors and `_merge_papers`, function names
-# unchanged); the direct stream is `from_planner.retrieve_direct`.  Where each patched collaborator is now LOOKED UP (rule R-1):
-#   transfer   P3 expand_terminology, P4 rephrase_hop1_semantic_intent, P5 extract_related_systems_rich, discover_related_systems, cleanup_discovered_systems,
-#              build_related_system_identities, normalize_search_anchors (P6), merge_and_select, run_converged_hop2, and search_and_dedupe (3A and the Hop closures)
-#   from_planner  run_retrieval_from_plan, papers_for_stage3, provenance_index (retrieve_direct)
-#   agent      filter_papers (_stage3_screen); agent binds NO search_and_dedupe
-# Recorder: the binders of search_and_dedupe are transfer and from_planner; both map onto the baseline module paths through approved aliases.
+# Phase 3 (3B L2): the 3B workflow is cgscout.agent._discover_related_systems; the former retrieval/transfer._run_related_system_discovery is gone.  Where each patched
+# collaborator is LOOKED UP now (rule R-1):
+#   agent         P3 expand_terminology, P4 rephrase_hop1_semantic_intent, P5 extract_related_systems_rich (in the closure), discover_related_systems, cleanup_discovered_systems,
+#                 build_related_system_identities, normalize_search_anchors (P6), merge_and_select, run_converged_hop2, and filter_papers (_stage3_screen)
+#   transfer      search_and_dedupe (the 3A executor and the Hop-1 / Hop-2 closures made by _make_search_fn)
+#   from_planner  run_retrieval_from_plan, papers_for_stage3, provenance_index (retrieve_direct), and search_and_dedupe (the capturing wrappers)
+# agent binds NO search_and_dedupe.  Recorder binders, aliases and entry are those of 2b (the closures that search are still in transfer, function names unchanged).
 TRANSFER, PLANNER_BRIDGE, AGENT = "cgscout.retrieval.transfer", "cgscout.retrieval.direct.from_planner", "cgscout.agent"
 
 
-def phase2b_targets() -> dict:
-    t = {name: ((TRANSFER, name),) for name in (
-        "expand_terminology", "rephrase_hop1_semantic_intent", "search_and_dedupe", "extract_related_systems_rich", "discover_related_systems",
-        "cleanup_discovered_systems", "build_related_system_identities", "normalize_search_anchors", "merge_and_select", "run_converged_hop2")}
+def phase3_targets() -> dict:
+    t = {name: ((AGENT, name),) for name in (
+        "expand_terminology", "rephrase_hop1_semantic_intent", "extract_related_systems_rich", "discover_related_systems", "cleanup_discovered_systems",
+        "build_related_system_identities", "normalize_search_anchors", "merge_and_select", "run_converged_hop2", "filter_papers")}
+    t["search_and_dedupe"] = ((TRANSFER, "search_and_dedupe"),)
     t.update({name: ((PLANNER_BRIDGE, name),) for name in ("run_retrieval_from_plan", "papers_for_stage3", "provenance_index")})
-    t["filter_papers"] = ((AGENT, "filter_papers"),)
     t["search_openalex"] = ((SEARCH_MODULE, "search_openalex"),)                # the HTTP boundary never moves
     assert set(t) == set(COLLABORATORS)
     return t
 
 
-PHASE2B = Layout(
-    name="phase2b", entry=(AGENT, "execute"), adapter="agent_execute", patch_targets=phase2b_targets(),
+PHASE3 = Layout(
+    name="phase3", entry=(AGENT, "execute"), adapter="agent_execute", patch_targets=phase3_targets(),
     recorder_binders=(TRANSFER, PLANNER_BRIDGE),
     module_aliases={TRANSFER: BASE_FLOW, PLANNER_BRIDGE: "cgscout.retrieval.search_adapters"},
-    approval="Phase 2b: dispatch into agent.retrieve, orchestrator.py -> transfer.py (owner approved Phase 1-4 on 2026-11-16; CONSOLIDATION_PLAN_v2 section 8 + Addendum; "
-             "Phase 1/2a layouts are history: their entry and modules no longer exist)")
+    approval="Phase 3: 3B L2 skeleton in agent.py (owner approved Phase 1-4 on 2026-11-16; CONSOLIDATION_PLAN_v2 sections 4, 5.3, 8 + Addendum; own commit, own acceptance); "
+             "earlier layouts are history: their patch targets are no longer looked up where they were")
 
-# `baseline` stays as the reference object for the aliases; phase1 / phase2a were valid only while orchestrator.py and run_expert_prior_retrieval existed.
-LAYOUTS = {"phase2b": PHASE2B}
-CURRENT = "phase2b"
+# `baseline` stays as the reference object for the aliases; the earlier layouts were valid only while their modules / functions existed.
+LAYOUTS = {"phase3": PHASE3}
+CURRENT = "phase3"
 
 
 def active_layout() -> Layout:

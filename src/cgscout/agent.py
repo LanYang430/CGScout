@@ -7,8 +7,8 @@ and the evidence judgement, and results are not guaranteed to repeat run to run)
     assess(...)          Stage 4 (tier-1 screen -> evidence extraction -> judge -> rank)  -> Stage4Result
     propose_prior(plan)  P2, written once (the four planner fields are not repeated by every caller)
 
-Consolidation step 2b: `retrieve` is the dispatch (it was `run_expert_prior_retrieval` in retrieval/orchestrator.py): direct routes, the per-axis loop over the transfer
-axes (3A and 3B executors live in retrieval/transfer.py), the merge and Stage 3 (a private named step).  `assess` still delegates to `run_stage4_v2`.  `budgets` / the
+Consolidation steps 2b and 3: `retrieve` is the dispatch (it was `run_expert_prior_retrieval` in retrieval/orchestrator.py): direct routes, the per-axis loop over the transfer
+axes (3A: retrieval/transfer.py; 3B: `_discover_related_systems` below, a workflow whose order and failure handling are documented there), the merge and Stage 3 (a private named step).  `assess` still delegates to `run_stage4_v2`.  `budgets` / the
 Stage-4 `config` are forwarded only when they are given (None and "omitted" are the same: `budgets or RouteRetrievalBudgets()`, `config or Stage4Config()`).
 
 The two callers differ on purpose and `gate` is how that is expressed.  The CLI's default gate runs Stage 4 only when something was retained.  The evaluation harness
@@ -24,7 +24,7 @@ from typing import Callable, Optional
 from pydantic import BaseModel, Field
 
 from cgscout.assessment.stage4 import Stage4Config, Stage4Result, run_stage4_v2
-from cgscout.llm import LLMBackend
+from cgscout.llm import LLMBackend, make_call_fn
 from cgscout.models import Paper
 from cgscout.planning.expert_prior_planner import ExpertPriorOutput, ExpertPriorPlanner, TransferAxis
 from cgscout.planning.scientific_planner import PlannerOutput
@@ -32,11 +32,17 @@ from cgscout.planning.session import PlannerSession
 from cgscout.retrieval.concept_3a import render_direct_concept_queries
 from cgscout.retrieval.direct.from_planner import retrieve_direct
 from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets
-from cgscout.retrieval.related_systems.postprocess import RelatedSystemIdentity
-# The transfer-axis executors.  The underscore names are imported on purpose: they are the executors this dispatch calls and nothing else uses them; renaming them would
-# also change the recorder's classification by function name (benchmark/evaluation/recorder.py), so that is a separate step.  This module must not bind
-# `search_and_dedupe` itself: every search is made by the executors in retrieval/transfer.py, which is where the recorder looks.
-from cgscout.retrieval.transfer import _merge_papers, _run_direct_concept_search, _run_related_system_discovery
+from cgscout.retrieval.related_systems.discovery import _paper_ref, discover_related_systems
+from cgscout.retrieval.related_systems.extraction import extract_related_systems_rich
+from cgscout.retrieval.related_systems.hop2 import HOP2_MAX_SYSTEMS_PER_AXIS, HOP2_MAX_TO_NORMALIZE, merge_and_select, normalize_search_anchors, run_converged_hop2
+from cgscout.retrieval.related_systems.postprocess import RelatedSystemIdentity, build_related_system_identities, cleanup_discovered_systems
+from cgscout.retrieval.related_systems.semantic_intent import rephrase_hop1_semantic_intent
+from cgscout.retrieval.related_systems.terminology import TerminologyExpansion, expand_terminology
+from cgscout.retrieval.search import STRUCTURAL_HOP1_SEARCH_LIMIT, STRUCTURAL_HOP2_SEARCH_LIMIT, STRUCTURAL_SEARCH_SOURCES      # the constants only: see below
+# The 3A executor, the search closures and the pure/copy-on-write assembly steps of 3B live in retrieval/transfer.py.  The underscore names are imported on purpose (nothing
+# else uses them; renaming them would also change the recorder's classification by function name, benchmark/evaluation/recorder.py, so that is a separate step).
+# This module must not bind `search_and_dedupe` itself: every search is made by the closures / executors in retrieval/transfer.py, which is where the recorder looks.
+from cgscout.retrieval.transfer import _make_search_fn, _merge_papers, _run_direct_concept_search, hop1_seed_terms, hop2_candidates, tag_hop2_papers
 from cgscout.screening.filter import Stage3Verdict, filter_papers
 from cgscout.screening.sim_classifier import SIM_CLASSIFIER_THRESHOLD
 
@@ -108,6 +114,128 @@ def propose_prior(plan: PlannerOutput, *, backend: LLMBackend, case_id: Optional
         scientific_objective=plan.scientific_objective, search_context=plan.search_context,
         case_id=case_id,
     )
+
+
+def _discover_related_systems(
+    axis: TransferAxis, *, scientific_objective: str,
+    paper_cache: dict[str, Paper], budgets: RouteRetrievalBudgets,
+    backend: LLMBackend, case_id: Optional[str] = None,
+) -> tuple[list[Paper], list[str], list[RelatedSystemIdentity], list[str], Optional[str], list[dict]]:
+    """3B -- related-system discovery for ONE axis.  Returns (papers, hop1_queries, related_system_identities, hop2_queries, error, hop2_plan).
+
+    The order of the steps, and where a failure goes, is the contract (it decides the axis log's `error`, which the evaluation harness turns into `degraded`):
+      P3 terminology expansion      own try: a failure means no aliases and error="terminology_expansion: ..."; the axis goes on, and a later success keeps this error
+      Hop-1 seed terms              pure assembly (order = part of the P5 cache keys)
+      P4 semantic sentence          NOT in any try: a failure propagates to the axis-level handler in retrieve (error = str(exc), no papers)
+      Hop-1 discovery (+ P5 each)   try: a failure returns error="hop1: ..." with no queries
+      no systems found              returns the P4 sentence as the only Hop-1 query and keeps the P3 error
+      cleanup, identities           not in a try (cleanup merges into the surviving DiscoveredSystem objects IN PLACE)
+      Hop-2 candidates              pure assembly (order, cut and indices = part of the P6 cache key); none -> identities only, P3 error kept
+      P6 anchor normalization       its LLM failure does not raise (it degrades to flagged fallback anchors)
+      Hop-2 search                  try: a failure returns error="hop2: ..." (REPLACING the P3 error), keeping the identities and the P4 sentence
+      tagging                       copy-on-write over the shared paper cache (tag_hop2_papers)
+    A BaseException (budget exhaustion) passes every handler.  The searches themselves are made by the closures of retrieval/transfer.py (_make_search_fn), so the
+    recorder sees them there.  Replaces the former retrieval/transfer._run_related_system_discovery (consolidation 3); its unused `original_system` argument is gone.
+
+    `backend` is REQUIRED (no default -- see llm.get_backend()'s docstring): the SAME LLMBackend instance this whole run already resolved once, used for the LLM calls this
+    function makes (terminology expansion, P4, every Hop-1 per-paper extraction, P6)."""
+    error: Optional[str] = None
+    scientific_class = axis.scientific_class
+    try:
+        expansion = expand_terminology(scientific_class, call=make_call_fn(
+            backend, response_schema=TerminologyExpansion,
+            label="hop1_terminology_expansion", case_id=case_id))
+        term_aka = list(expansion.expansion_terms)
+    except Exception as exc:  # noqa: BLE001 -- degrade to no expansion terms, don't fail the axis yet
+        term_aka = []
+        error = f"terminology_expansion: {exc}"
+
+    # Hop-1 seed terms: the class + each retrieval anchor, the class + the objective, then the P3 aliases (order matters: it is part of every P5 cache key) -- hop1_seed_terms.
+    expansion_terms = hop1_seed_terms(axis, scientific_class, scientific_objective, term_aka)
+
+    # Hop-1 describes a STRUCTURAL CLASS to find OTHER, not-yet-named
+    # systems sharing it -- the search target here is never one named
+    # entity's exact identity (if it were, this would just be a direct
+    # search for that name, not a discovery step) -- so it routes semantic.
+    # One precomputed sentence, produced by semantic_intent.py's small
+    # cached rephrase call (kept entirely separate from direct_concept_
+    # search's own cleanup call, concept_3a.py -- see
+    # semantic_intent.py's docstring for why); discovery.
+    # py's own per-term lexical-style query construction (build_discovery_
+    # queries(), UNCHANGED) still runs internally and calls this closure
+    # once per term, but every call is overridden to the SAME sentence --
+    # search_and_dedupe()'s mode-aware cache collapses those into one real
+    # HTTP request, and semantic_intent's own cache collapses repeat
+    # calls for the same (scientific_class, objective) pair across axes/
+    # cases into zero additional LLM calls.
+    hop1_semantic_query = rephrase_hop1_semantic_intent(
+        scientific_class, scientific_objective, backend=backend, case_id=case_id)
+    hop1_search_fn = _make_search_fn(
+        paper_cache, STRUCTURAL_HOP1_SEARCH_LIMIT, STRUCTURAL_SEARCH_SOURCES,
+        mode="semantic", semantic_query_override=hop1_semantic_query,
+    )
+    # Hop-2 already knows the related system's NAME -- exact-identity
+    # retrieval, stays lexical, unchanged behavior (mode= is explicit here
+    # purely for audit/provenance tagging via _make_search_fn).
+    hop2_search_fn = _make_search_fn(
+        paper_cache, STRUCTURAL_HOP2_SEARCH_LIMIT, STRUCTURAL_SEARCH_SOURCES, mode="lexical",
+    )
+
+    # discover_related_systems() (discovery.py, UNCHANGED)
+    # calls extract_fn(title, abstract, structural_class, aka) positionally
+    # -- this closure threads axis.basis (scopes the relationship-fidelity
+    # gate to "distinctive_structure" axes only) AND this function's own
+    # `backend`/`case_id` one call further, into extract_related_systems_
+    # rich's REQUIRED `backend` param -- every one of the (up to hundreds
+    # of, one per candidate paper) Hop-1 extraction calls discover_related_
+    # systems() fires concurrently uses this SAME backend instance, never
+    # resolving or falling back to a different one on its own.
+    def _extract_fn(title, abstract, structural_class_arg, also_known_as=None):
+        return extract_related_systems_rich(
+            title, abstract, structural_class_arg, also_known_as,
+            backend=backend, basis=axis.basis, case_id=case_id)
+
+    try:
+        discovery = discover_related_systems(
+            scientific_class, expansion_terms, search_fn=hop1_search_fn,
+            extract_fn=_extract_fn,
+            max_discovered=budgets.structural_max_discovered_systems,
+            max_papers_to_extract=budgets.structural_max_papers_to_extract,
+            max_workers=budgets.hop1_extraction_max_workers,
+        )
+    except Exception as exc:  # noqa: BLE001
+        return [], [], [], [], f"hop1: {exc}", []
+
+    if not discovery.discovered_systems:
+        return [], [hop1_semantic_query], [], [], error, []
+
+    discovery.discovered_systems, _cleanup_log = cleanup_discovered_systems(
+        discovery.discovered_systems, clean_objective=scientific_objective)
+
+    # Identity preservation: qualify (or drop) every discovered label
+    # BEFORE it can become a bare Hop-2 anchor -- see related_system_
+    # postprocess.py (identity section). Only grounded_full/grounded_contextual identities carry
+    # a query_anchor and go on to Hop-2; insufficient ones are kept as
+    # audit records only.
+    identities = build_related_system_identities(
+        discovery.discovered_systems, scientific_class=scientific_class, basis=axis.basis)
+    # Hop-2 is CONVERGED (hop2.py): Hop-1 may diverge, Hop-2 must not.  Only grounded identities enter, in a stable order, cut to HOP2_MAX_TO_NORMALIZE -- hop2_candidates.
+    candidates = hop2_candidates(identities, discovery.discovered_systems, cap=HOP2_MAX_TO_NORMALIZE)
+    if not candidates:
+        return [], [hop1_semantic_query], identities, [], error, []
+
+    normalized = normalize_search_anchors(candidates, scientific_objective, backend, case_id=case_id)
+    selected = merge_and_select(normalized, HOP2_MAX_SYSTEMS_PER_AXIS)
+    try:
+        plans, found = run_converged_hop2(selected, hop2_search_fn, _paper_ref)
+    except Exception as exc:  # noqa: BLE001
+        return [], [hop1_semantic_query], identities, [], f"hop2: {exc}", []
+    hop2_queries = [q["query"] for pl in plans for q in pl.queries]
+
+    tagged = tag_hop2_papers(found, paper_cache, axis)
+    return (tagged, [hop1_semantic_query], identities, hop2_queries, error, [pl.model_dump() for pl in plans])
+
+
 
 
 def _plan_axis_queries(plan: PlannerOutput, expert_prior: ExpertPriorOutput, evidence_plan, budgets: RouteRetrievalBudgets) -> dict[int, list[str]]:
@@ -207,8 +335,8 @@ def retrieve(plan: PlannerOutput, prior: ExpertPriorOutput, *, backend: LLMBacke
                     paper_cache=transfer_paper_cache, budgets=budgets)
                 error: Optional[str] = None
             elif axis.execution_mode == "related_system_discovery":
-                papers, hop1_queries, identities, hop2_queries, error, hop2_plan = _run_related_system_discovery(
-                    axis, scientific_objective=plan.scientific_objective, original_system=plan.system,
+                papers, hop1_queries, identities, hop2_queries, error, hop2_plan = _discover_related_systems(
+                    axis, scientific_objective=plan.scientific_objective,
                     paper_cache=transfer_paper_cache, budgets=budgets, backend=backend, case_id=case_id)
             else:  # unrecognized mode from a malformed/unexpected model output -- skip, don't guess
                 papers = []
