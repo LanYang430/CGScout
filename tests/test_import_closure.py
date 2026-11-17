@@ -56,6 +56,14 @@ def test_importing_the_agent_loads_no_benchmark_code_and_no_heavy_or_legacy_pack
     assert not [w for w in watch if loaded[w]], loaded
 
 
+def test_importing_the_stage4_module_loads_no_benchmark_code_no_numpy_stack_and_no_legacy_code():
+    """The Stage 4 module stays light: it never loads the benchmark code, the numpy/scikit-learn stack, or any legacy / local-model package.  (`requests` is
+    deliberately not in the watch list: whether importing this module also imports it is not part of this guard.)"""
+    watch = LEGACY + ["benchmark", "numpy", "joblib", "sklearn"]
+    loaded = _loaded("import cgscout.assessment.stage4", watch)
+    assert not [w for w in watch if loaded[w]], loaded
+
+
 def test_search_wrappers_keep_the_module_level_names_the_harness_uses():
     """The two bridges and the benchmark recorders access these as attributes of the modules (the recorder wraps `search_and_dedupe` in from_planner and
     classifies requests by the closure names inside `_make_capturing_search_fns`); they must keep existing under the same names.

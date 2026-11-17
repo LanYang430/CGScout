@@ -15,6 +15,7 @@ What these tests pin down (the design requirements, not implementation details):
   * an LLM failure is status="error" -- never a silent 0 and never counted as 'not relevant'.
 """
 import json
+import urllib.request
 
 import pytest
 
@@ -323,7 +324,7 @@ def test_europepmc_lookup_by_doi_strips_markup_and_is_cached(monkeypatch):
     def fake(req, timeout=None):
         calls.append(req.full_url)
         return _Resp(_epmc([{"doi": "10.9/Abc", "abstractText": "<h4>Background</h4><p>We built a <i>coarse-grained</i> model of folding.</p>"}]))
-    monkeypatch.setattr(s4.urllib.request, "urlopen", fake)
+    monkeypatch.setattr(urllib.request, "urlopen", fake)
     p = Paper(title="T", doi="10.9/ABC", abstract=None)
     out = s4.europepmc_abstract(p)
     assert out["via"] == "doi" and "coarse-grained model of folding" in out["abstract"] and "<" not in out["abstract"]
@@ -337,14 +338,14 @@ def test_europepmc_negative_answers_are_cached_but_failures_are_not(monkeypatch)
     def none_found(req, timeout=None):
         n["calls"] += 1
         return _Resp(_epmc([]))
-    monkeypatch.setattr(s4.urllib.request, "urlopen", none_found)
+    monkeypatch.setattr(urllib.request, "urlopen", none_found)
     p = Paper(title="T", doi="10.9/none")
     assert s4.europepmc_abstract(p)["abstract"] is None and s4.europepmc_abstract(p)["abstract"] is None and n["calls"] == 1
 
     def failing(req, timeout=None):
         n["calls"] += 1
         raise OSError("boom")
-    monkeypatch.setattr(s4.urllib.request, "urlopen", failing)
+    monkeypatch.setattr(urllib.request, "urlopen", failing)
     q = Paper(title="Q", doi="10.9/fail")
     for _ in range(2):
         with pytest.raises(OSError):
@@ -353,13 +354,13 @@ def test_europepmc_negative_answers_are_cached_but_failures_are_not(monkeypatch)
 
 
 def test_europepmc_rejects_a_record_whose_doi_does_not_match(monkeypatch):
-    monkeypatch.setattr(s4.urllib.request, "urlopen", lambda req, timeout=None: _Resp(_epmc([{"doi": "10.1/other", "abstractText": "x" * 100}])))
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout=None: _Resp(_epmc([{"doi": "10.1/other", "abstractText": "x" * 100}])))
     assert s4.europepmc_abstract(Paper(title="T", doi="10.9/mine"))["abstract"] is None
 
 
 def test_europepmc_falls_back_to_pmid_and_does_nothing_without_any_identifier(monkeypatch):
     urls = []
-    monkeypatch.setattr(s4.urllib.request, "urlopen",
+    monkeypatch.setattr(urllib.request, "urlopen",
                         lambda req, timeout=None: (urls.append(req.full_url), _Resp(_epmc([{"abstractText": "Abstract text " * 5}])))[1])
     from cgscout.models import ExternalIds
     out = s4.europepmc_abstract(Paper(title="T", external_ids=ExternalIds(pmid="12345")))
@@ -370,6 +371,138 @@ def test_europepmc_falls_back_to_pmid_and_does_nothing_without_any_identifier(mo
 def urllib_unquote(u):
     import urllib.parse
     return urllib.parse.unquote(u)
+
+
+# --- the Europe PMC abstract lookup, pinned in detail (written BEFORE the function moves to sources/europepmc.py; every test below reaches it through
+# `s4.europepmc_abstract`, which exists before and after the move, and patches `urllib.request.urlopen` itself, so none of them depends on where the code lives) ----
+from cgscout import cache  # noqa: E402
+
+# Literal digests of cache.content_hash("epmc-abstract-v1", via, ident), computed on the code before the move: a cache written by an earlier run must keep hitting.
+_EPMC_KEY_DOI_ABC = "fb59a314b14aacfb6e06230f7ad325769728e9778a1828e1d34900a5753f16f5"       # ("epmc-abstract-v1", "doi", "10.9/abc")
+_EPMC_KEY_PMID_12345 = "f3b600ef944133b37f63a8193969ea8287fe61d580845ce828ce6ac308b17189"    # ("epmc-abstract-v1", "pmid", "12345")
+_EPMC_NS = "stage4_epmc_abstract"
+
+
+class _SpyResp(_Resp):
+    reads = []
+
+    def read(self, n=-1):
+        _SpyResp.reads.append(n)
+        return super().read(n)
+
+
+_MARKUP_CASES = [
+    ("<h4>Background</h4><p>We built a <i>coarse-grained</i> model.</p>", "Background We built a coarse-grained model."),
+    ("A &lt; B &amp; C &#945; &gt; D", "A < B & C α > D"),                       # entities are unescaped AFTER tags are stripped ...
+    ("3 &lt;tag&gt; kept", "3 <tag> kept"),                                           # ... so an escaped tag-like text survives
+    ("line one\n\n  line   two\t.\r\nthree", "line one line two . three"),
+    ("<b><i>nested <u>tags</u></i></b>", "nested tags"),
+    ("  plain  ", "plain"),
+    ("<p></p><br/>", None),                                                            # nothing left after stripping -> "no abstract"
+    ("", None),
+    (None, None),
+]
+
+
+@pytest.mark.parametrize("text,expected", _MARKUP_CASES)
+def test_europepmc_abstract_text_is_cleaned_exactly_like_this(monkeypatch, text, expected):
+    rec = {"doi": "10.9/MK"}
+    if text is not None:
+        rec["abstractText"] = text
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout=None: _Resp(_epmc([rec])))
+    assert s4.europepmc_abstract(Paper(title="T", doi="10.9/mk")) == {"abstract": expected, "via": "doi"}
+
+
+def test_europepmc_request_has_exactly_this_url_headers_timeout_and_read_limit(monkeypatch):
+    seen = []
+
+    def fake(req, timeout=None):
+        seen.append({"url": req.full_url, "ua": req.get_header("User-agent"), "accept": req.get_header("Accept"), "timeout": timeout, "method": req.get_method()})
+        return _SpyResp(_epmc([{"doi": "10.9/req", "abstractText": "x" * 50}]))
+    monkeypatch.setattr(urllib.request, "urlopen", fake)
+    _SpyResp.reads.clear()
+    s4.europepmc_abstract(Paper(title="T", doi="10.9/req"))
+    s4.europepmc_abstract(Paper(title="T2", doi="10.9/req2"), timeout=3.5)
+    from cgscout.models import ExternalIds
+    s4.europepmc_abstract(Paper(title="T3", external_ids=ExternalIds(pmid="12345")))
+    base = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query="
+    tail = "&resultType=core&format=json&pageSize=1"
+    assert [c["url"] for c in seen] == [base + "DOI%3A%2210.9/req%22" + tail, base + "DOI%3A%2210.9/req2%22" + tail, base + "EXT_ID%3A12345%20AND%20SRC%3AMED" + tail]
+    assert {c["ua"] for c in seen} == {"BEAM-stage4-abstract-fallback/0.1"}             # renamed later, in the release preparation (R3), together with this line
+    assert {c["accept"] for c in seen} == {"application/json"} and {c["method"] for c in seen} == {"GET"}
+    assert [c["timeout"] for c in seen] == [20.0, 3.5, 20.0]                              # default 20 s, a given timeout is forwarded
+    assert _SpyResp.reads == [2_000_000, 2_000_000, 2_000_000]                            # the response body is read with this cap
+
+
+def test_europepmc_answers_are_cached_under_this_namespace_key_and_file_layout(monkeypatch, tmp_path):
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout=None: _Resp(_epmc([{"doi": "10.9/abc", "abstractText": "<p>Hello abstract</p>"}])))
+    out = s4.europepmc_abstract(Paper(title="T", doi="10.9/abc"))
+    assert out == {"abstract": "Hello abstract", "via": "doi"}
+    assert cache.get(_EPMC_NS, _EPMC_KEY_DOI_ABC) == out                                  # namespace and key are the stored literals, not recomputed
+    cache_dir = tmp_path / "test-cache"                                                   # tests/conftest.py's per-test CGSCOUT_CACHE_DIR
+    assert (cache_dir / _EPMC_NS / f"{_EPMC_KEY_DOI_ABC}.json").is_file()
+    assert json.loads((cache_dir / _EPMC_NS / f"{_EPMC_KEY_DOI_ABC}.json").read_text())["value"] == out
+    from cgscout.models import ExternalIds
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout=None: _Resp(_epmc([{"abstractText": "pmid abstract text " * 3}])))
+    out2 = s4.europepmc_abstract(Paper(title="P", external_ids=ExternalIds(pmid="12345")))
+    assert out2["via"] == "pmid" and cache.get(_EPMC_NS, _EPMC_KEY_PMID_12345) == out2
+
+
+def test_europepmc_found_but_without_abstract_is_cached_and_a_failure_writes_nothing(monkeypatch):
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout=None: _Resp(_epmc([{"doi": "10.9/abc"}])))
+    assert s4.europepmc_abstract(Paper(title="T", doi="10.9/abc")) == {"abstract": None, "via": "doi"}
+    assert cache.get(_EPMC_NS, _EPMC_KEY_DOI_ABC) == {"abstract": None, "via": "doi"}
+    cache_miss_before = cache.get(_EPMC_NS, _EPMC_KEY_PMID_12345)
+    assert cache_miss_before is None
+
+    def failing(req, timeout=None):
+        raise OSError("down")
+    monkeypatch.setattr(urllib.request, "urlopen", failing)
+    from cgscout.models import ExternalIds
+    with pytest.raises(OSError):
+        s4.europepmc_abstract(Paper(title="P", external_ids=ExternalIds(pmid="12345")))
+    assert cache.get(_EPMC_NS, _EPMC_KEY_PMID_12345) is None                              # the failure left no entry
+
+
+def test_europepmc_doi_is_stripped_and_lowercased_for_the_query_and_the_cache_key(monkeypatch):
+    urls = []
+    monkeypatch.setattr(urllib.request, "urlopen",
+                        lambda req, timeout=None: (urls.append(req.full_url), _Resp(_epmc([{"doi": "10.9/ABC", "abstractText": "x" * 60}])))[1])
+    first = s4.europepmc_abstract(Paper(title="T", doi="  10.9/AbC \n"))
+    assert "DOI%3A%2210.9/abc%22" in urls[0]
+    assert cache.get(_EPMC_NS, _EPMC_KEY_DOI_ABC) == first
+    assert s4.europepmc_abstract(Paper(title="T", doi="10.9/abc")) == first and len(urls) == 1      # same record, served from the cache
+
+
+def test_europepmc_prefers_the_doi_over_the_pmid_when_a_paper_has_both(monkeypatch):
+    from cgscout.models import ExternalIds
+    urls = []
+    monkeypatch.setattr(urllib.request, "urlopen",
+                        lambda req, timeout=None: (urls.append(urllib_unquote(req.full_url)), _Resp(_epmc([{"doi": "10.9/both", "abstractText": "x" * 60}])))[1])
+    out = s4.europepmc_abstract(Paper(title="T", doi="10.9/both", external_ids=ExternalIds(pmid="777")))
+    assert out["via"] == "doi" and 'DOI:"10.9/both"' in urls[0] and "EXT_ID" not in urls[0]
+
+
+def test_the_usable_abstract_threshold_is_40_characters_after_stripping():
+    assert s4.MIN_ABSTRACT_CHARS == 40
+    cases = {None: False, "": False, "x" * 39: False, "x" * 40: True, "  " + "x" * 39 + "  ": False, "  " + "x" * 40 + " ": True}
+    for text, usable in cases.items():
+        assert s4.has_usable_abstract(Paper(title="T", abstract=text)) is usable, repr(text)
+
+
+def test_stage4_uses_the_default_europepmc_lookup_and_accepts_exactly_40_recovered_characters(monkeypatch):
+    def fake(req, timeout=None):
+        ident = urllib_unquote(req.full_url).split('DOI:"', 1)[1].split('"', 1)[0]
+        text = {"10.7/r40": "x" * 40, "10.7/r39": "x" * 39}[ident]
+        return _Resp(_epmc([{"doi": ident, "abstractText": text}]))
+    monkeypatch.setattr(urllib.request, "urlopen", fake)
+    ok = paper("G3 recovered40", abstract=None).model_copy(update={"doi": "10.7/r40"})
+    short = paper("G3 recovered39", abstract=None).model_copy(update={"doi": "10.7/r39"})
+    res, be = run([ok, short], abstract_lookup=None)                                      # None = the production default: the real europepmc_abstract
+    by = {a.title: a for a in res.assessments}
+    assert by["G3 recovered40"].abstract_source == "europepmc" and by["G3 recovered40"].status == "assessed"
+    assert by["G3 recovered39"].status == "missing_evidence" and by["G3 recovered39"].abstract_source == "none"
+    assert res.workload["n_abstract_lookup_attempted"] == 2 and res.workload["n_abstract_recovered_europepmc"] == 1
 
 
 # --- tier-1 sees the whole abstract (regression: a 1200-character cut hid the computational sentence of long abstracts) ------------------------------
