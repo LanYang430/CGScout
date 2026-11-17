@@ -5,12 +5,11 @@ entry must PRESERVE the differences, not erase them:
   * CLI      retrieval gets no budgets (library defaults); Stage 4 runs only when it was asked for and at least one paper was retained; no Stage-4 config;
   * harness  budgets are forwarded only when given; Stage 4 runs when `stage4` is set and the run is not degraded (an axis error or a failed HTTP request) --
              also when nothing was retained; the Stage-4 config is forwarded when given.
-Since 2a all entries go through cgscout.agent.execute (the CLI via agent.run), and the two functions the flow is entered through are still
-`run_expert_prior_retrieval` and `run_stage4_v2`; they are replaced by recorders here (agent.run_expert_prior_retrieval / agent.run_stage4_v2: what agent.retrieve /
-agent.assess delegate to in 2a), so no network and no LLM is involved.  The call SHAPES asserted below are the ones the old code made itself:  `budgets` / `config` are
-forwarded only when they are given (None and "omitted" are the same call: `budgets or RouteRetrievalBudgets()`, `config or Stage4Config()`).
-Test-side coverage of the CLI itself (printing, loop, `--no-stage4`, no candidates, case_id) lives in tests/test_cli.py.
-Re-pointed in 2b (retrieve gets the dispatch body: the seams become the collaborators of the flow, see tests/consolidation_world.py)."""
+Since 2a all entries go through cgscout.agent.execute (the CLI via agent.run); they enter the flow through agent.retrieve and agent.assess, which are replaced by recorders
+here, so no network and no LLM is involved.  What the entries hand over is the AgentConfig: `budgets` / `stage4` are None unless the caller gave them (None means the
+library default: `budgets or RouteRetrievalBudgets()` in retrieve, `config or Stage4Config()` in run_stage4_v2).  (Until 2a the same facts were asserted one level
+deeper, at run_expert_prior_retrieval / run_stage4_v2; since 2b that function is the body of agent.retrieve, whose behaviour the trace world pins.)
+Test-side coverage of the CLI itself (printing, loop, `--no-stage4`, no candidates, case_id) lives in tests/test_cli.py."""
 from types import SimpleNamespace
 
 import pytest
@@ -56,15 +55,15 @@ def rig(monkeypatch):
     calls = SimpleNamespace(ret=[], s4=[])
     box = SimpleNamespace(res=_res())
 
-    def fake_ret(plan, ep, **kw):
-        calls.ret.append(dict(plan=plan, prior=ep, **kw))
+    def fake_ret(plan, ep, *, backend, config=None, case_id=None):
+        calls.ret.append(dict(plan=plan, prior=ep, backend=backend, config=config, case_id=case_id))
         return box.res
 
-    def fake_s4(plan, ep, retained, backend, **kw):
-        calls.s4.append(dict(plan=plan, prior=ep, retained=list(retained), backend=backend, **kw))
+    def fake_s4(plan, ep, retained, *, backend, config=None, case_id=None, user_request=None):
+        calls.s4.append(dict(plan=plan, prior=ep, retained=list(retained), backend=backend, config=config, case_id=case_id, user_request=user_request))
         return SimpleNamespace(workload={}, assessments=[], by_key=lambda: {})
-    monkeypatch.setattr(agent, "run_expert_prior_retrieval", fake_ret)
-    monkeypatch.setattr(agent, "run_stage4_v2", fake_s4)
+    monkeypatch.setattr(agent, "retrieve", fake_ret)
+    monkeypatch.setattr(agent, "assess", fake_s4)
     monkeypatch.setattr(H, "read_usage_log", lambda: [])
     monkeypatch.setattr(H.U, "exhausted", lambda: None)
     monkeypatch.setattr(H.U, "reset_run", lambda *_: None)
@@ -77,10 +76,10 @@ def rig(monkeypatch):
 # ------------------------------------------------------------------------------------------------------------------ the harness entry
 def test_harness_forwards_budgets_only_when_given(rig):
     rig.run()
-    assert "budgets" not in rig.calls.ret[0] and rig.calls.ret[0]["case_id"] == "CASE-1" and rig.calls.ret[0]["backend"] == "BACKEND"
+    assert rig.calls.ret[0]["config"].budgets is None and rig.calls.ret[0]["case_id"] == "CASE-1" and rig.calls.ret[0]["backend"] == "BACKEND"
     b = RouteRetrievalBudgets(need_semantic_enabled=True)
     rig.run(budgets=b)
-    assert rig.calls.ret[1]["budgets"] is b
+    assert rig.calls.ret[1]["config"].budgets is b
 
 
 def test_harness_stage4_runs_when_not_degraded_even_with_nothing_retained(rig):
@@ -88,12 +87,12 @@ def test_harness_stage4_runs_when_not_degraded_even_with_nothing_retained(rig):
     rig.run(stage4=True, stage4_config=cfg, user_request="req")
     assert len(rig.calls.s4) == 1
     s4 = rig.calls.s4[0]
-    assert s4["retained"] == [] and s4["config"] is cfg and s4["user_request"] == "req" and s4["case_id"] == "CASE-1"      # empty retained still reaches Stage 4
+    assert s4["retained"] == [] and s4["config"].stage4 is cfg and s4["user_request"] == "req" and s4["case_id"] == "CASE-1"      # empty retained still reaches Stage 4
 
 
 def test_harness_stage4_config_is_forwarded_only_when_given(rig):
     rig.run(stage4=True)
-    assert "config" not in rig.calls.s4[0]                      # was `config=None` before 2a: the same call, `config or Stage4Config()`
+    assert rig.calls.s4[0]["config"].stage4 is None             # None = `config or Stage4Config()` inside run_stage4_v2
 
 
 def test_harness_stage4_skipped_when_an_axis_errored(rig):
@@ -153,9 +152,9 @@ def _calls(rig):
 
 
 def test_three_entries_enter_the_flow_with_the_same_calls(rig):
-    """The interactive path (agent.run, what the CLI calls), the direct path (agent.execute) and the evaluation harness (H.run_plan) must hand run_expert_prior_retrieval and
-    run_stage4_v2 the same arguments for the same input.  The only differences allowed are the two gates: nothing retained -> the CLI/default gate skips Stage 4, the harness
-    (healthy run) does not; and `case_id` / `user_request` are whatever each caller was given (here: the same)."""
+    """The interactive path (agent.run, what the CLI calls), the direct path (agent.execute) and the evaluation harness (H.run_plan) must hand retrieve and assess the same
+    arguments for the same input.  The only differences allowed are the two gates: nothing retained -> the CLI/default gate skips Stage 4, the harness (healthy run) does
+    not; and `case_id` / `user_request` are whatever each caller was given (here: the same)."""
     be = ScriptedBackend()
     plan = H.make_plan(FIELDS)
     ep = ExpertPriorOutput(transfer_needed=False, transfer_axes=[])
@@ -176,8 +175,8 @@ def test_three_entries_enter_the_flow_with_the_same_calls(rig):
 
     assert via_run == via_execute == via_harness
     (ret,), (s4,) = via_run
-    assert ret == {"backend": be, "case_id": "CASE-1"}                                         # library defaults: no budgets, no threshold override
-    assert s4 == {"retained": [paper], "backend": be, "user_request": "my request", "case_id": "CASE-1"}
+    assert ret == {"backend": be, "config": agent.AgentConfig(), "case_id": "CASE-1"}           # library defaults: no budgets, no Stage-4 config, default threshold
+    assert s4 == {"retained": [paper], "backend": be, "config": agent.AgentConfig(), "user_request": "my request", "case_id": "CASE-1"}
 
 
 def test_the_gates_are_the_only_difference_between_the_entries(rig):
@@ -191,12 +190,33 @@ def test_the_gates_are_the_only_difference_between_the_entries(rig):
     assert len(rig.calls.s4) == 1 and rig.calls.s4[0]["retained"] == []                       # ... the harness gate (healthy run) does run it
 
 
-def test_budgets_and_stage_four_config_reach_the_flow_as_given(rig):
+def test_the_agent_configuration_reaches_retrieve_and_assess_as_given(rig):
     be = ScriptedBackend()
     plan, ep = H.make_plan(FIELDS), ExpertPriorOutput(transfer_needed=False, transfer_axes=[])
     b, c = RouteRetrievalBudgets(need_semantic_enabled=True), Stage4Config(deep_cap=7)
     rig.box.res = _res(retained=[_paper()])
-    agent.execute(plan, ep, backend=be, config=agent.AgentConfig(budgets=b, stage4=c), case_id="X", user_request="r")
-    assert rig.calls.ret[0]["budgets"] is b and rig.calls.s4[0]["config"] is c
-    agent.execute(plan, ep, backend=be, config=agent.AgentConfig(stage3_threshold=0.9), case_id="X")
-    assert rig.calls.ret[1]["stage3_classifier_threshold"] == 0.9 and "budgets" not in rig.calls.ret[1]
+    cfg = agent.AgentConfig(budgets=b, stage4=c, stage3_threshold=0.9)
+    agent.execute(plan, ep, backend=be, config=cfg, case_id="X", user_request="r")
+    assert rig.calls.ret[0]["config"] is cfg and rig.calls.s4[0]["config"] is cfg
+
+
+# ------------------------------------------------------------------------------------------------------------------ what retrieve does with the configuration
+def test_retrieve_applies_the_budgets_default_and_passes_the_stage3_threshold(monkeypatch):
+    """`budgets=None` -> RouteRetrievalBudgets(); the threshold and `recover_abstracts` reach Stage 3 (filter_papers), the budgets reach the direct stream."""
+    seen = {}
+
+    def fake_direct(plan_, budgets):
+        seen["budgets"] = budgets
+        return None, []
+
+    def fake_filter(papers, **kw):
+        seen["stage3"] = kw
+        return [], [], []
+    monkeypatch.setattr(agent, "retrieve_direct", fake_direct)
+    monkeypatch.setattr(agent, "filter_papers", fake_filter)
+    plan, ep = H.make_plan(FIELDS), ExpertPriorOutput(transfer_needed=False, transfer_axes=[])
+    agent.retrieve(plan, ep, backend=ScriptedBackend())
+    assert seen["budgets"] == RouteRetrievalBudgets() and seen["stage3"] == {"classifier_threshold": agent.SIM_CLASSIFIER_THRESHOLD, "recover_abstracts": RouteRetrievalBudgets().stage3_recover_abstracts}
+    b = RouteRetrievalBudgets(stage3_recover_abstracts=True)
+    agent.retrieve(plan, ep, backend=ScriptedBackend(), config=agent.AgentConfig(budgets=b, stage3_threshold=0.9))
+    assert seen["budgets"] is b and seen["stage3"] == {"classifier_threshold": 0.9, "recover_abstracts": True}

@@ -1,4 +1,9 @@
-"""orchestrator (scientific-planner-v2 branch) -- executes an
+"""transfer (formerly orchestrator.py; consolidation 2b) -- the executors of the transfer axes: direct_concept_search (3A), related_system_discovery (3B:
+Hop-1 -> cleanup -> identity -> Hop-2) and the paper-merge helper.  The dispatch over the axes, the merge of the direct and transfer streams and Stage 3 are in
+cgscout.agent.retrieve.  What follows is the original description, kept as it was (it still says "this file" for the code that used to share a file with the
+dispatch).
+
+Original description: executes an
 ExpertPriorOutput (transfer_axes) for a resolved
 PlannerOutput, merges the transfer evidence stream with the existing
 direct-evidence stream, and runs the existing Stage 3 gate ONCE over the
@@ -124,12 +129,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from pydantic import BaseModel, Field
-
-
-from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
-from cgscout.planning.expert_prior_planner import ExpertPriorOutput, TransferAxis  # noqa: E402
-from cgscout.retrieval.direct.from_planner import run_retrieval_from_plan, papers_for_stage3, provenance_index  # noqa: E402
+from cgscout.planning.expert_prior_planner import TransferAxis  # noqa: E402
 from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets  # noqa: E402
 from cgscout.retrieval.related_systems.discovery import discover_related_systems, _paper_ref  # noqa: E402
 from cgscout.retrieval.related_systems.hop2 import (  # noqa: E402 -- converged Hop-2: structured anchor normalization + at most A/B (+C) queries per system
@@ -141,10 +141,7 @@ from cgscout.retrieval.related_systems.postprocess import (  # noqa: E402
 from cgscout.retrieval.related_systems.terminology import expand_terminology, TerminologyExpansion  # noqa: E402
 from cgscout.llm import LLMBackend, make_call_fn  # noqa: E402 -- single-backend-per-run
 from cgscout.retrieval.related_systems.extraction import extract_related_systems_rich  # noqa: E402
-from cgscout.screening.filter import filter_papers, Stage3Verdict  # noqa: E402
-from cgscout.screening.sim_classifier import SIM_CLASSIFIER_THRESHOLD  # noqa: E402
 from cgscout.retrieval.related_systems.semantic_intent import rephrase_hop1_semantic_intent  # noqa: E402
-from cgscout.retrieval.concept_3a import render_direct_concept_queries  # noqa: E402
 from cgscout.models import Paper  # noqa: E402
 from cgscout.retrieval.search import (  # noqa: E402
     STRUCTURAL_HOP1_SEARCH_LIMIT,
@@ -152,40 +149,6 @@ from cgscout.retrieval.search import (  # noqa: E402
     STRUCTURAL_SEARCH_SOURCES,
     search_and_dedupe,
 )
-
-# Hard cap on how many direct_concept_search axes get a semantic query in
-# one case/run -- a defensive bound, not something normal cases are
-# expected to hit (every case seen so far proposes at most 2). Axes beyond
-# the cap are skipped for retrieval (recorded in their axis_log), not
-# silently truncated into a combined query.
-MAX_DIRECT_CONCEPT_SEMANTIC_QUERIES_PER_CASE = 3
-
-
-class TransferAxisExecutionLog(BaseModel):
-    axis: TransferAxis
-    executed: bool
-    skip_reason: Optional[str] = None
-    direct_queries: list[str] = Field(default_factory=list)          # direct_concept_search only
-    hop1_queries: list[str] = Field(default_factory=list)            # discovery only
-    related_system_identities: list[RelatedSystemIdentity] = Field(default_factory=list)
-    hop2_queries: list[str] = Field(default_factory=list)            # exact per-identity Hop-2 query text
-    hop2_plan: list[dict] = Field(default_factory=list)              # per system: search_anchor / core_process / stable_descriptor, queries + n_results, fallback_used
-    n_papers_found: int = 0
-    error: Optional[str] = None
-
-
-class ExpertPriorRetrievalResult(BaseModel):
-    transfer_needed: bool = False
-    axis_logs: list[TransferAxisExecutionLog] = Field(default_factory=list)
-    direct_papers: list[Paper] = Field(default_factory=list)
-    transfer_papers: list[Paper] = Field(default_factory=list)
-    retained: list[Paper] = Field(default_factory=list)
-    rejected: list[Paper] = Field(default_factory=list)
-    stage3_verdicts: list[Stage3Verdict] = Field(
-        default_factory=list,
-        description="One Stage3Verdict per paper in retained+rejected -- review_flagged/review_reason, "
-        "classifier_score, keep, and reason, for per-paper audit (e.g. the Pertactin end-to-end check).",
-    )
 
 
 def _make_search_fn(
@@ -237,7 +200,7 @@ def _run_direct_concept_search(
     """direct_concept_search axes describe a transferable PROCESS/
     CAPABILITY/ENVIRONMENT, never one named entity, by construction -- so
     this route is semantic. `queries` is precomputed by the caller
-    (run_expert_prior_retrieval, via concept_3a.
+    (agent.retrieve, via concept_3a.
     render_direct_concept_queries() -- 3 fixed deterministic templates,
     no LLM call) -- this function just executes them and unions the
     results; it builds no query of its own.
@@ -464,151 +427,3 @@ def _merge_papers(existing: dict[str, Paper], new_papers: list[Paper]) -> None:
             existing[ref] = p
 
 
-def run_expert_prior_retrieval(
-    plan: PlannerOutput, expert_prior: ExpertPriorOutput, *,
-    backend: LLMBackend, budgets: Optional[RouteRetrievalBudgets] = None,
-    case_id: Optional[str] = None,
-    stage3_classifier_threshold: float = SIM_CLASSIFIER_THRESHOLD,
-) -> ExpertPriorRetrievalResult:
-    """`backend` is REQUIRED (no default -- llm.get_backend()'s
-    docstring: no module resolves or falls back to a backend on its own).
-    The caller resolves ONE backend for the whole run/session and passes
-    the SAME instance here as it does to ScientificPlanner/
-    ExpertPriorPlanner -- this function threads it into every Hop-1 LLM
-    call a discovery-mode transfer axis makes. Routes that
-    make no LLM call at all (direct-route
-    retrieval, direct_concept_search axes, Stage 3) don't need it and don't
-    receive it.
-
-    `stage3_classifier_threshold`: pass-through to filter_papers()'s own
-    `classifier_threshold` -- the one knob to change the sim classifier's
-    decision boundary for a whole run, without editing sim_classifier.py's
-    module constant. Defaults to that same constant."""
-    budgets = budgets or RouteRetrievalBudgets()
-    result = ExpertPriorRetrievalResult(transfer_needed=expert_prior.transfer_needed)
-
-    # -- direct evidence: UNCHANGED, reuse from_planner --
-    # budgets are forwarded so the flat-query / need_semantic switches (RouteRetrievalBudgets) reach the direct-evidence routes too;
-    # with budgets=None this is exactly the previous call (defaults are applied inside).
-    evidence_plan, route_result, direct_paper_cache = run_retrieval_from_plan(plan, budgets=budgets)
-    direct_papers = papers_for_stage3(route_result, direct_paper_cache)
-    prov = provenance_index(route_result)
-    for p in direct_papers:
-        rp = prov.get(_paper_ref(p))
-        if rp:
-            p.found_by_queries = list(dict.fromkeys(e.query for e in rp.found_by))
-            p.query_categories = list(dict.fromkeys(e.route for e in rp.found_by))
-    result.direct_papers = direct_papers
-
-    # -- transfer evidence: high/medium confidence axes only. execution_mode
-    # is read verbatim from each axis, never mapped from a basis -> mode
-    # table in this file. --
-
-    # direct_concept_search's queries: 3 fixed deterministic templates per
-    # axis (no LLM call -- see concept_3a.py), capped
-    # to at most MAX_DIRECT_CONCEPT_SEMANTIC_QUERIES_PER_CASE axes per
-    # case (so at most 3x that many OpenAlex calls). Computed up front so
-    # the per-axis loop below just looks its result up.
-    direct_concept_axis_indices = [
-        i for i, a in enumerate(expert_prior.transfer_axes)
-        if a.confidence != "low" and a.execution_mode == "direct_concept_search"
-    ]
-    capped_indices = direct_concept_axis_indices[:MAX_DIRECT_CONCEPT_SEMANTIC_QUERIES_PER_CASE]
-    if budgets.query_construction_v2:
-        from cgscout.retrieval.direct.query_construction_v2 import analyze, render_direct_concept_queries_v2       # lazy: avoids a circular import
-        _qc = analyze(evidence_plan, budgets)
-        queries_by_axis_index: dict[int, list[str]] = {
-            i: render_direct_concept_queries_v2(expert_prior.transfer_axes[i].scientific_class, _qc) for i in capped_indices
-        }
-    else:
-        queries_by_axis_index = {
-            i: render_direct_concept_queries(expert_prior.transfer_axes[i].scientific_class, plan.scientific_objective)
-            for i in capped_indices
-        }
-
-    transfer_paper_cache: dict[str, Paper] = {}
-    merged_transfer: dict[str, Paper] = {}
-    for axis_index, axis in enumerate(expert_prior.transfer_axes):
-        if axis.confidence == "low":
-            result.axis_logs.append(TransferAxisExecutionLog(
-                axis=axis, executed=False,
-                skip_reason="low confidence -- recorded internally, not retrieved, not shown",
-            ))
-            continue
-
-        direct_queries: list[str] = []
-        hop1_queries: list[str] = []
-        identities: list[RelatedSystemIdentity] = []
-        hop2_queries: list[str] = []
-        hop2_plan: list[dict] = []
-        try:
-            if axis.execution_mode == "direct_concept_search":
-                if axis_index not in queries_by_axis_index:
-                    result.axis_logs.append(TransferAxisExecutionLog(
-                        axis=axis, executed=False,
-                        skip_reason=f"direct_concept_search semantic-query cap reached "
-                                    f"({MAX_DIRECT_CONCEPT_SEMANTIC_QUERIES_PER_CASE} per case)",
-                    ))
-                    continue
-                if not queries_by_axis_index[axis_index]:
-                    result.axis_logs.append(TransferAxisExecutionLog(
-                        axis=axis, executed=False,
-                        skip_reason="direct_concept_search template rendering produced no query "
-                                    "(empty scientific_class or objective)",
-                    ))
-                    continue
-                papers, direct_queries = _run_direct_concept_search(
-                    axis, queries=queries_by_axis_index[axis_index],
-                    paper_cache=transfer_paper_cache, budgets=budgets)
-                error: Optional[str] = None
-            elif axis.execution_mode == "related_system_discovery":
-                papers, hop1_queries, identities, hop2_queries, error, hop2_plan = _run_related_system_discovery(
-                    axis, scientific_objective=plan.scientific_objective, original_system=plan.system,
-                    paper_cache=transfer_paper_cache, budgets=budgets, backend=backend, case_id=case_id)
-            else:  # unrecognized mode from a malformed/unexpected model output -- skip, don't guess
-                papers = []
-                error = f"unrecognized execution_mode {axis.execution_mode!r}"
-        except Exception as exc:  # noqa: BLE001 -- one axis's failure never blocks the others
-            papers, error = [], str(exc)
-
-        _merge_papers(merged_transfer, papers)
-        result.axis_logs.append(TransferAxisExecutionLog(
-            axis=axis, executed=True, direct_queries=direct_queries, hop1_queries=hop1_queries,
-            related_system_identities=identities, hop2_queries=hop2_queries, hop2_plan=hop2_plan,
-            n_papers_found=len(papers), error=error,
-        ))
-
-    result.transfer_papers = list(merged_transfer.values())
-
-    # -- merge direct + transfer, dedupe by paper_ref, run Stage 3 ONCE --
-    merged: dict[str, Paper] = {}
-    _merge_papers(merged, result.direct_papers)
-    _merge_papers(merged, result.transfer_papers)
-
-    retained, rejected, verdicts = filter_papers(list(merged.values()), classifier_threshold=stage3_classifier_threshold,
-                                                 recover_abstracts=budgets.stage3_recover_abstracts)
-    result.retained = retained
-    result.rejected = rejected
-    result.stage3_verdicts = verdicts
-    return result
-
-
-# --- display ranking (direct evidence first, then executed transfer axes) --
-
-_TIER_LABELS = (
-    ("system_specific_cg", 0), ("process", 0), ("context", 0), ("need_semantic", 0),
-    ("structural", 1), ("transfer_direct", 1),
-)
-
-
-def provenance_tier(paper: Paper) -> int:
-    """direct(0) < transfer high/medium(1). No separate low tier: a
-    low-confidence axis never executes, so no paper can ever carry a
-    low-confidence transfer label at this stage."""
-    cats = set(paper.query_categories or [])
-    tiers = [t for label, t in _TIER_LABELS if label in cats]
-    return min(tiers) if tiers else 2
-
-
-def rank_for_display(papers: list[Paper]) -> list[Paper]:
-    return sorted(papers, key=lambda p: (provenance_tier(p), -(p.year or 0)))

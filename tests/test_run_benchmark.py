@@ -108,6 +108,10 @@ def test_cli_resume_with_everything_finished_exits_0_and_records_each_start(tmp_
     cfg = json.loads((run / "run_config_CUR.json").read_text())
     assert cfg["selection"]["full_run"] is True and cfg["selection"]["n_selected"] == 5 and cfg["stop_usd_explicit"] is True
     assert cfg["effective_config"]["budgets"] == EFFECTIVE_BUDGETS and cfg["effective_config"]["stage4"] == EFFECTIVE_STAGE4
+    # B4 (consolidation 2b): the record of the entry defaults keeps its old key, keys, key order and values although the entry is now agent.retrieve
+    ed = cfg["effective_config"]["entry_defaults"]
+    assert list(ed["run_expert_prior_retrieval"].items()) == [("budgets", None), ("case_id", None), ("stage3_classifier_threshold", 0.5)]
+    assert cfg["effective_config"]["stage3_classifier"]["threshold"] == 0.5 and set(ed) == {"run_expert_prior_retrieval", "run_stage4_v2"}
 
 
 def test_cli_ceiling_already_reached_is_an_error_not_success(tmp_path):
@@ -135,7 +139,7 @@ class Bench:
 @pytest.fixture
 def bench(tmp_path, monkeypatch):
     import run_benchmark as rb
-    import cgscout.retrieval.orchestrator as orch
+    import cgscout.retrieval.transfer as orch                                      # P3's expand_terminology is looked up in retrieval/transfer.py
     run = tmp_path / "run"; run.mkdir()
     for name, value in (("ROOT", run), ("INPUT", run / "queries.csv"), ("SHARED_CACHE", run / "cache_work"), ("PLANS", run / "plans_frozen")):
         monkeypatch.setattr(arms, name, value)

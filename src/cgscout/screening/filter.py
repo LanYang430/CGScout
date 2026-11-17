@@ -473,7 +473,7 @@ def score_paper_against_its_provenance(
     # Route-aware CG/system gate (this session's fix -- diagnosed real false
     # negative). A paper found via MORE THAN ONE route (e.g. both Hop-2/
     # structural AND a flat direct_concept_search -- query_categories is
-    # their UNION once orchestrator.py's _merge_papers combines
+    # their UNION once transfer.py's _merge_papers combines
     # duplicate refs) used to be judged ONLY by whichever branch an if/elif
     # happened to check first -- in practice always the stricter structural
     # branch whenever "structural" was among its categories, even when the

@@ -5,7 +5,7 @@ one, imported below, is what cleanup uses): they normalize differently, so they 
 
 CLEANUP (formerly cleanup.py)
 Hop-1 conservative cleanup: high-confidence duplicate/fragment handling
-ONLY. Called from orchestrator.py, strictly between
+ONLY. Called from transfer.py, strictly between
 discover_related_systems() (Hop-1 discovery + grounding, UNTOUCHED) and the
 Hop-2 query building (UNTOUCHED) -- so
 Hop-1's own recall behavior is provably unaffected by anything in this
@@ -338,7 +338,7 @@ def build_related_system_identity(ds, *, scientific_class: str, basis: Optional[
     needed -- entity_type/identity_context already rode along on each
     SupportingPaper, already grounding-verified by _ground_mention().
 
-    `basis` is the axis's own axis.basis (orchestrator.py
+    `basis` is the axis's own axis.basis (transfer.py
     threads it in -- not a new field, execution_mode dispatch is untouched).
     It exists ONLY to gate the canonical-class-projection query_anchor rule
     described in this module's own docstring to "distinctive_structure"

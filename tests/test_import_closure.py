@@ -44,7 +44,7 @@ def test_search_module_loads_no_legacy_code():
 def test_cgscout_path_loads_no_legacy_code_and_needs_no_local_model_packages():
     # `sys.modules[name] = None` makes `import name` raise ImportError: the path must work on an install without these packages.
     code = ("sys.modules['mellea'] = None\nsys.modules['ollama'] = None\n"
-            "import cgscout.retrieval.orchestrator, cgscout.assessment.stage4, cgscout.cli, cgscout.agent\n")
+            "import cgscout.retrieval.transfer, cgscout.assessment.stage4, cgscout.cli, cgscout.agent\n")
     loaded = _loaded(code, LEGACY)
     assert not [w for w in LEGACY if loaded[w]], loaded
 

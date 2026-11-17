@@ -8,7 +8,7 @@ Each record: kind, mode, limit, query, served_from (http | cache), n_results, se
 from __future__ import annotations
 import sys, time, importlib
 
-MODULES = ["cgscout.retrieval.orchestrator", "cgscout.retrieval.direct.from_planner",
+MODULES = ["cgscout.retrieval.transfer", "cgscout.retrieval.direct.from_planner",
            "cgscout.retrieval.direct.route_plan"]
 _KINDS = [("need_semantic_search_fn", "need_semantic"), ("flat_search_fn", "flat"), ("_run_direct_concept_search", "3A"),
           ("structural_hop1_search_fn", "hop1"), ("structural_hop2_search_fn", "hop2"),
@@ -19,7 +19,7 @@ def classify(qualname: str, mode: str) -> str:
     for needle, kind in _KINDS:
         if needle in qualname:
             return kind
-    if "_make_search_fn" in qualname:                  # Hop-1 / Hop-2 closure of orchestrator
+    if "_make_search_fn" in qualname:                  # Hop-1 / Hop-2 closure of retrieval/transfer.py
         return "hop1" if mode == "semantic" else "hop2"
     return "other:" + qualname
 

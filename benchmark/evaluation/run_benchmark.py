@@ -40,13 +40,13 @@ DONE_STATUSES = ("OK", "REFUSED", "NOT_RUN_CLARIFICATION")   # a checkpoint with
 CLARIFY_REPLY = "I have no further details beyond my question as written; please proceed with your best reasonable interpretation."
 # `harness` (and with it cgscout.llm, which reads CGSCOUT_USAGE_LOG_PATH at import time) is imported inside configure(), AFTER the environment is set.
 RL = U = None
-RP = TB = TerminologyExpansion = get_backend = backend_label = read_usage_log = Stage4Config = None
+RP = TR = AG = TerminologyExpansion = get_backend = backend_label = read_usage_log = Stage4Config = None      # TR: retrieval.transfer (P3's expand_terminology is looked up there), AG: cgscout.agent
 
 
 def configure(arm_name):
     """Environment + imports that must be in place before any pipeline module reads them (cache dir, usage log, model, effort)."""
     global ARM_NAME, ROOT, RES, INPUT, USAGE_LOG, LOG, BUDGETS, STOP_USD, DAILY_CREDITS, MIN_CREDITS, DEEP_CAP, STOP_EXPLICIT, PROFILE
-    global RL, U, RP, TB, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config
+    global RL, U, RP, TR, AG, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config
     ARM_NAME, ROOT, INPUT = arm_name, AR.ROOT, AR.INPUT
     PROFILE = AR.profile_for(arm_name)
     os.environ["CGSCOUT_CACHE_DIR"] = str(AR.SHARED_CACHE)           # shared by every arm: identical queries are fetched once
@@ -57,17 +57,19 @@ def configure(arm_name):
     os.environ.setdefault("OPENALEX_STRICT_BUDGET", "1")
     import harness as _RL
     import cgscout.retrieval.direct.route_plan as _RP
-    import cgscout.retrieval.orchestrator as _TB
+    import cgscout.retrieval.transfer as _TR
+    import cgscout.agent as _AG
     from cgscout.retrieval.related_systems.terminology import TerminologyExpansion as _TE
     from cgscout.llm import get_backend as _gb, backend_label as _bl, read_usage_log as _rul
     from cgscout.assessment.stage4 import Stage4Config as _S4C
     RL, U = _RL, _RL.U
-    RP, TB, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config = _RP, _TB, _TE, _gb, _bl, _rul, _S4C
+    RP, TR, AG, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config = _RP, _TR, _AG, _TE, _gb, _bl, _rul, _S4C
     BUDGETS = AR.budgets_for(ARM_NAME, RP)
     # Hop-1's terminology expansion is an UNCACHED live LLM call whose output only feeds the banned-name list of Hop-1 discovery.  To keep Hop-1/Hop-2
     # identical across arms it is memoised per scientific_class in terminology_memo.json: the first arm that needs it records it, the others replay it.
     memo_path = ROOT / "terminology_memo.json"
-    orig_expand = TB.expand_terminology
+    assert hasattr(TR, "expand_terminology"), "R-2: assigning to a missing module attribute would silently do nothing"
+    orig_expand = TR.expand_terminology
 
     def _memo_expand(system_term, *, call):
         memo = json.loads(memo_path.read_text()) if memo_path.exists() else {}
@@ -78,7 +80,7 @@ def configure(arm_name):
         tmp = memo_path.with_suffix(".tmp"); tmp.write_text(json.dumps(memo, ensure_ascii=False, indent=1)); tmp.replace(memo_path)
         return r
 
-    TB.expand_terminology = _memo_expand
+    TR.expand_terminology = _memo_expand
     RES = ROOT / "results" / ARM_NAME
     STOP_EXPLICIT = "CGSCOUT_STOP_USD" in os.environ or "NEW37_STOP_USD" in os.environ
     STOP_USD = float(os.environ.get("CGSCOUT_STOP_USD", os.environ.get("NEW37_STOP_USD", "5.0")))     # hard LLM-spend ceiling per arm; a full run requires it to be set explicitly
@@ -313,7 +315,10 @@ def effective_config(backend, s4cfg):
     def entry_defaults(fn):
         return {n: p.default for n, p in inspect.signature(fn).parameters.items()
                 if p.default is not inspect.Parameter.empty and isinstance(p.default, (bool, int, float, str, type(None)))}
-    retrieval_defaults = entry_defaults(TB.run_expert_prior_retrieval)
+    # The entry is cgscout.agent.retrieve since consolidation 2b; the record keeps its old key and the same values: the budgets and the Stage-3 threshold are the defaults of
+    # AgentConfig, the case_id default is the entry's own.
+    _cfg0, _ret = AG.AgentConfig(), entry_defaults(AG.retrieve)
+    retrieval_defaults = {"budgets": _cfg0.budgets, "case_id": _ret["case_id"], "stage3_classifier_threshold": _cfg0.stage3_threshold}      # same keys, same order, same values as before 2b
     return {
         "profile": AR.ARMS[ARM_NAME]["profile"], "profile_label": PROFILE["label"],
         "llm": {"model": backend.model, "default_effort": backend.default_effort, "lift_explicit_low_effort": PROFILE["llm"]["lift_low_effort_to_medium"],

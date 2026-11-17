@@ -9,10 +9,10 @@ CGScout turns a modeling question into a ranked, explained list of papers. Promp
 | planning | decompose the request: system, target component, objective, search context/axes; ask a clarifying question only when the ambiguity changes what to search | `planning/scientific_planner.py`, `planning/session.py` | P1 |
 | expert prior | propose related systems/classes ("transfer axes") worth searching, each with confidence and execution mode | `planning/expert_prior_planner.py` | P2 |
 | Direct route | deterministic flat queries (system-specific CG, process, context; optional semantic query) from the plan; `evidence_plan.py` fills the process and context terms | `retrieval/direct/from_planner.py`, `evidence_plan.py`, `route_plan.py`, `query_construction_v2.py` (experimental, off) | — |
-| 3A (concept queries) | fixed template queries per high/medium-confidence axis | `retrieval/concept_3a.py`, `retrieval/orchestrator.py` | — |
+| 3A (concept queries) | fixed template queries per high/medium-confidence axis | `retrieval/concept_3a.py`, `retrieval/transfer.py` | — |
 | 3B Hop-1 | find concrete related systems in the literature | `retrieval/related_systems/{terminology,semantic_intent,extraction,discovery,identity,cleanup}.py` | P3 terminology, P4 semantic intent, P5 per-paper extraction |
 | 3B Hop-2 | search each discovered system's own CG literature | `retrieval/related_systems/hop2.py` | P6 search-anchor normalization |
-| merge | union of Direct + 3A + 3B with per-paper route provenance | `retrieval/orchestrator.py` | — |
+| merge | union of Direct + 3A + 3B with per-paper route provenance | `agent.py` (`retrieve`), executors in `retrieval/transfer.py` | — |
 | Stage 3 | keyword/CG-evidence gate, review filter, embedding classifier, Europe PMC abstract recovery | `screening/{filter,sim_classifier}.py` (filter.py also holds the review/perspective check), `sources/europepmc.py` | — (embeddings only) |
 | Stage 4 | tier-1 screen → evidence extraction → judge → rank | `assessment/stage4.py` (also holds the P8 extraction prompt and message builder) | P7 screen, P8 extraction, P9 judge |
 

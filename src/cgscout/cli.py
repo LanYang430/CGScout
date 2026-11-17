@@ -27,7 +27,7 @@ from cgscout import agent  # noqa: E402
 from cgscout.planning.session import PlannerSession  # noqa: E402
 from cgscout.llm import get_backend, backend_label, LLMBackend  # noqa: E402
 from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
-from cgscout.retrieval.orchestrator import rank_for_display  # noqa: E402
+from cgscout.agent import rank_for_display  # noqa: E402
 
 BANNER = (
     "BEAM (scientific-planner-v2 -- Plan B live path)\n"

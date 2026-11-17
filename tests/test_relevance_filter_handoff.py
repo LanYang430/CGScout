@@ -321,7 +321,7 @@ def test_falls_back_to_singular_field_when_plural_list_is_empty():
 # includes "transfer_direct") -- its own provenance alone would clear the
 # simple CG-evidence-only gate -- but Hop-2 ALSO (mis-)attached it to
 # unrelated discovered systems, adding "structural" to its merged query_
-# categories (orchestrator.py's _merge_papers unions
+# categories (transfer.py's _merge_papers unions
 # categories across every route that found the same paper_ref). The OLD
 # if/elif branching judged such a paper ONLY by the stricter structural
 # gate whenever "structural" was present at all, discarding it on a

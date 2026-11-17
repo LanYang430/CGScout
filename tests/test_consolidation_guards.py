@@ -39,27 +39,33 @@ def _eval_module(name):
 
 # (module, attribute): assigned somewhere in tests/ or benchmark/evaluation/ today
 PATCH_POINTS = [
-    ("cgscout.retrieval.orchestrator", "expand_terminology"), ("cgscout.retrieval.orchestrator", "filter_papers"),
-    ("cgscout.retrieval.orchestrator", "run_expert_prior_retrieval"), ("cgscout.retrieval.orchestrator", "rank_for_display"),
-    ("cgscout.retrieval.orchestrator", "search_and_dedupe"),
-    ("cgscout.cli", "get_backend"), ("cgscout.cli", "rank_for_display"),                                     # 2a: the CLI reaches the flow through agent.run
-    ("cgscout.agent", "retrieve"), ("cgscout.agent", "assess"),                                               # test_cli replaces these two
-    ("cgscout.agent", "run_expert_prior_retrieval"), ("cgscout.agent", "run_stage4_v2"),                      # 2a only: what retrieve / assess delegate to
+    ("cgscout.retrieval.transfer", "expand_terminology"),                                                    # run_benchmark / replay (the terminology memo), tests
+    ("cgscout.agent", "filter_papers"),                                                                      # replay (the stored Stage-3 classifier), tests
+    ("cgscout.agent", "retrieve"), ("cgscout.agent", "assess"), ("cgscout.agent", "retrieve_direct"),       # test_cli, the entry tests
+    ("cgscout.retrieval.transfer", "search_and_dedupe"), ("cgscout.retrieval.direct.from_planner", "search_and_dedupe"),
+    ("cgscout.cli", "get_backend"), ("cgscout.cli", "rank_for_display"),
     ("harness", "run_plan"), ("harness", "run_plan_checked"), ("harness", "rank_for_display"),
-    ("cgscout.retrieval.direct.from_planner", "search_and_dedupe"),          # was search_adapters (A3)
 ]
 
-# names the 3B chain looks up as globals of the flow module at call time (a patch on the module takes effect only because of this).
-# Function-specific and therefore BASELINE-ONLY (`_run_related_system_discovery` disappears in Phase 3, the loop moves in Phase 2b): re-pointed in the
-# commit that moves them.  The layout-driven test below (every patch target is looked up by some function of its module) is what survives a move unedited.
+# names each function looks up as a global of ITS module at call time (a patch on the module takes effect only because of this).  Function-specific, so re-pointed in
+# the commit that moves a function; the layout-driven test below (every patch target is looked up by some function of its module) is what survives a move unedited.
 LOOKED_UP_AT_CALL_TIME = {
-    "_run_related_system_discovery": ["expand_terminology", "rephrase_hop1_semantic_intent", "discover_related_systems", "cleanup_discovered_systems",
-                                      "build_related_system_identities", "normalize_search_anchors", "merge_and_select", "run_converged_hop2",
-                                      "extract_related_systems_rich", "_make_search_fn"],
-    "run_expert_prior_retrieval": ["filter_papers", "run_retrieval_from_plan", "papers_for_stage3", "provenance_index", "_run_direct_concept_search",
-                                   "_run_related_system_discovery", "_merge_papers", "render_direct_concept_queries"],
-    "_make_search_fn": ["search_and_dedupe"],
-    "_run_direct_concept_search": ["search_and_dedupe"],
+    "cgscout.retrieval.transfer": {
+        "_run_related_system_discovery": ["expand_terminology", "rephrase_hop1_semantic_intent", "discover_related_systems", "cleanup_discovered_systems",
+                                          "build_related_system_identities", "normalize_search_anchors", "merge_and_select", "run_converged_hop2",
+                                          "extract_related_systems_rich", "_make_search_fn"],
+        "_make_search_fn": ["search_and_dedupe"],
+        "_run_direct_concept_search": ["search_and_dedupe"],
+    },
+    "cgscout.agent": {
+        "retrieve": ["retrieve_direct", "_plan_axis_queries", "_run_direct_concept_search", "_run_related_system_discovery", "_merge_papers", "_stage3_screen"],
+        "_plan_axis_queries": ["render_direct_concept_queries"],
+        "_stage3_screen": ["filter_papers"],
+        "execute": ["retrieve", "assess"], "run": ["propose_prior", "execute"], "assess": ["run_stage4_v2"],
+    },
+    "cgscout.retrieval.direct.from_planner": {
+        "retrieve_direct": ["run_retrieval_from_plan", "papers_for_stage3", "provenance_index"],
+    },
 }
 
 
@@ -88,30 +94,24 @@ def test_every_patch_target_is_looked_up_by_a_function_of_its_module(logical):
             f"R-1: no function of {module} reads {attr!r}; a patch on it would silently do nothing")
 
 
-AGENT_LOOKED_UP_AT_CALL_TIME = {"execute": ["retrieve", "assess"], "run": ["propose_prior", "execute"],
-                                "retrieve": ["run_expert_prior_retrieval"], "assess": ["run_stage4_v2"]}
-
-
-def test_agent_functions_look_patched_names_up_at_call_time():
-    """test_cli replaces agent.retrieve / agent.assess; that works only because execute reads them from the module's globals at call time (2a also
-    keeps the two delegations patchable).  Re-pointed in 2b (retrieve gets the dispatch body) and 3."""
-    agent = importlib.import_module("cgscout.agent")
-    for fn, names in AGENT_LOOKED_UP_AT_CALL_TIME.items():
-        missing = [n for n in names if n not in set(getattr(agent, fn).__code__.co_names)]
-        assert not missing, f"R-1: agent.{fn} no longer references {missing} as globals; patches on the module would not reach it"
-
-
 def test_flow_functions_look_patched_names_up_at_call_time():
-    flow = importlib.import_module("cgscout.retrieval.orchestrator")
-    for fn, names in LOOKED_UP_AT_CALL_TIME.items():
-        code = getattr(flow, fn).__code__
-        # a nested closure's names live in the code objects of the enclosing function's constants
-        allnames = set(code.co_names)
-        for c in code.co_consts:
-            if inspect.iscode(c):
-                allnames |= set(c.co_names)
-        missing = [n for n in names if n not in allnames]
-        assert not missing, f"R-1: {fn} no longer references {missing} as globals; patches on the module would not reach it"
+    """R-1: a patch on a module attribute takes effect only if the function reads the name from its module's globals when it is called (not at definition time, not
+    through a default argument).  A nested closure's names live in the code objects among the enclosing function's constants."""
+    for module, table in LOOKED_UP_AT_CALL_TIME.items():
+        mod = importlib.import_module(module)
+        for fn, names in table.items():
+            code = getattr(mod, fn).__code__
+            allnames = set(code.co_names)
+            for c in code.co_consts:
+                if inspect.iscode(c):
+                    allnames |= set(c.co_names)
+            missing = [n for n in names if n not in allnames]
+            assert not missing, f"R-1: {module}.{fn} no longer references {missing} as globals; patches on the module would not reach it"
+
+
+def test_agent_binds_no_search_and_dedupe():
+    """Every search is made by the executors in transfer.py / the direct routes, where the recorder looks.  A search_and_dedupe bound in agent.py would be an unrecorded call site."""
+    assert "search_and_dedupe" not in vars(importlib.import_module("cgscout.agent"))
 
 
 # ---------------------------------------------------------------------------------------------------------------- 2. recorder coverage
@@ -185,15 +185,19 @@ def test_effective_config_equals_baseline_record():
 
 
 def test_none_equals_default_construction():
+    import dataclasses as dc
+    from cgscout import agent
     from cgscout.assessment.stage4 import Stage4Config, run_stage4_v2
     from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets
-    from cgscout.retrieval.orchestrator import run_expert_prior_retrieval
-    # `config or Stage4Config()` / `budgets or RouteRetrievalBudgets()`: a default-constructed instance is truthy, so None and "the default instance" behave alike
+    # `config or Stage4Config()` / `cfg.budgets or RouteRetrievalBudgets()`: a default-constructed instance is truthy, so None and "the default instance" behave alike
     assert bool(Stage4Config()) and bool(RouteRetrievalBudgets())
+    cfg = agent.AgentConfig()
+    assert (cfg.budgets, cfg.stage4, cfg.stage3_threshold) == (None, None, agent.SIM_CLASSIFIER_THRESHOLD)
     assert inspect.signature(run_stage4_v2).parameters["config"].default is None
-    assert inspect.signature(run_expert_prior_retrieval).parameters["budgets"].default is None
+    assert inspect.signature(agent.retrieve).parameters["config"].default is None
     assert "cfg = config or Stage4Config()" in inspect.getsource(run_stage4_v2)
-    assert "budgets = budgets or RouteRetrievalBudgets()" in inspect.getsource(run_expert_prior_retrieval)
+    assert "budgets = cfg.budgets or RouteRetrievalBudgets()" in inspect.getsource(agent.retrieve)
+    assert [f.name for f in dc.fields(agent.AgentConfig)] == ["budgets", "stage4", "stage3_threshold"]
 
 
 def test_cli_uses_library_defaults_and_paper_differs_by_design():

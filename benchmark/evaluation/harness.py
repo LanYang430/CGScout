@@ -20,8 +20,7 @@ from cgscout.sources import openalex_usage as U  # noqa: E402  (budget / cache /
 from cgscout.sources import openalex as _OA  # noqa: E402
 from cgscout import cache as _cache  # noqa: E402
 from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
-from cgscout.agent import AgentConfig, execute as agent_execute, propose_prior  # noqa: E402
-from cgscout.retrieval.orchestrator import rank_for_display  # noqa: E402
+from cgscout.agent import AgentConfig, execute as agent_execute, propose_prior, rank_for_display  # noqa: E402
 from cgscout.assessment.stage4 import _paper_key as _s4_key  # noqa: E402
 from cgscout.llm import read_usage_log  # noqa: E402
 

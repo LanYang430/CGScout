@@ -18,5 +18,5 @@ jobs:
       - name: installed-package smoke test (no checkout on the path)
         run: |
           cd "$(mktemp -d)"
-          python -I -c "import cgscout, cgscout.cli, cgscout.agent, cgscout.retrieval.orchestrator, cgscout.assessment.stage4; print(cgscout.__version__)"
+          python -I -c "import cgscout, cgscout.cli, cgscout.agent, cgscout.retrieval.transfer, cgscout.assessment.stage4; print(cgscout.__version__)"
           cgscout --help

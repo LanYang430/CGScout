@@ -48,7 +48,7 @@ from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
 # ===== moved verbatim from `retrieval/search_adapters.py` (consolidation A3) =================================================================
 # The capturing search wrappers (every real Paper retrieved is cached by paper_ref for Stage 3) and the two small adapters from a
 # RouteRetrievalResult to the Stage 3 contract.  `_make_capturing_search_fns` keeps its two unused Hop-1/Hop-2 closures (their removal is a
-# separate, later cleanup).  The route code (3A / 3B in orchestrator.py) calls papers_for_stage3 / provenance_index from here.
+# separate, later cleanup).  The route code (3A / 3B in transfer.py) calls papers_for_stage3 / provenance_index from here.
 
 def _make_capturing_search_fns(paper_cache: dict[str, Paper], budgets: RouteRetrievalBudgets):
     """One shared paper_cache across all 5 routes -- the sidecar paper_ref ->
@@ -173,3 +173,19 @@ def run_retrieval_from_plan(
 
     result = run_route_retrieval(evidence_plan, flat_search_fn=flat_search_fn, budgets=budgets, need_semantic_search_fn=need_fn)
     return evidence_plan, result, paper_cache
+
+
+def retrieve_direct(plan: PlannerOutput, budgets: RouteRetrievalBudgets) -> tuple[EvidenceRoutePlan, list[Paper]]:
+    """The direct-evidence stream (rule-based routes, no LLM): -> (evidence_plan, direct_papers).  Moved verbatim from the dispatch body of
+    run_expert_prior_retrieval (consolidation 2b); each paper's `found_by_queries` / `query_categories` are written IN PLACE from the route provenance, as before."""
+    # budgets are forwarded so the flat-query / need_semantic switches (RouteRetrievalBudgets) reach the direct-evidence routes too;
+    # with budgets=None this is exactly the previous call (defaults are applied inside).
+    evidence_plan, route_result, direct_paper_cache = run_retrieval_from_plan(plan, budgets=budgets)
+    direct_papers = papers_for_stage3(route_result, direct_paper_cache)
+    prov = provenance_index(route_result)
+    for p in direct_papers:
+        rp = prov.get(_paper_ref(p))
+        if rp:
+            p.found_by_queries = list(dict.fromkeys(e.query for e in rp.found_by))
+            p.query_categories = list(dict.fromkeys(e.route for e in rp.found_by))
+    return evidence_plan, direct_papers

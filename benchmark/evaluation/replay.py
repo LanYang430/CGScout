@@ -48,7 +48,8 @@ socket.getaddrinfo = _blocked
 
 import harness as RL                             # noqa: E402  (was regression_lib)
 import cgscout.retrieval.direct.route_plan as RP         # noqa: E402
-import cgscout.retrieval.orchestrator as TB              # noqa: E402
+import cgscout.retrieval.transfer as TR                  # noqa: E402  (P3's expand_terminology is looked up in this module)
+import cgscout.agent as AG                               # noqa: E402  (Stage 3's filter_papers is looked up in this module)
 from cgscout.retrieval.related_systems.terminology import TerminologyExpansion   # noqa: E402
 from cgscout.planning.expert_prior_planner import ExpertPriorOutput    # noqa: E402
 from cgscout.retrieval.direct.from_planner import evidence_plan_from_planner_output   # noqa: E402
@@ -91,7 +92,8 @@ def _memo_expand(system_term, *, call):
     if system_term in MEMO:
         return TerminologyExpansion.model_validate(MEMO[system_term])
     MEMO_MISS.append(system_term); raise RuntimeError("replay: terminology memo miss")
-TB.expand_terminology = _memo_expand
+assert hasattr(TR, "expand_terminology"), "R-2: assigning to a missing module attribute would silently do nothing"
+TR.expand_terminology = _memo_expand
 
 STUB, UNKNOWN = {}, []
 def _stub_classify(papers):
@@ -101,8 +103,9 @@ def _stub_classify(papers):
         if k not in STUB: UNKNOWN.append(k); out.append(0.5)
         else: out.append(0.99 if STUB[k] else 0.01)
     return out
-_orig_filter = TB.filter_papers
-TB.filter_papers = lambda papers, **kw: _orig_filter(papers, classify_fn=_stub_classify, **kw)
+assert hasattr(AG, "filter_papers"), "R-2: assigning to a missing module attribute would silently do nothing"
+_orig_filter = AG.filter_papers
+AG.filter_papers = lambda papers, **kw: _orig_filter(papers, classify_fn=_stub_classify, **kw)
 
 _VOL = re.compile(r"(seconds|elapsed|^ts$|_ts$|latency|timestamp|started|duration)", re.I)
 def ser(o):

@@ -3,7 +3,7 @@
 Scoped minimally, per explicit instruction: this round only touches
 direct_concept_search's own query construction, nothing else (Hop-1,
 Hop-2, the direct route, canonical-method verification, ExpertPriorPlanner's
-own schema are all untouched -- see orchestrator.py).
+own schema are all untouched -- see transfer.py).
 
 History on this one file (kept here rather than in git alone, since the
 earlier attempts are exactly what this round had to reckon with):
@@ -18,7 +18,7 @@ earlier attempts are exactly what this round had to reckon with):
   3. THIS round: back to deterministic, no-LLM rendering -- but not a
      repeat of (1). Where (1) tried to guarantee ONE "correct" sentence,
      this renders 3 differently-STRUCTURED templates per axis and unions
-     their search results (orchestrator.py's
+     their search results (transfer.py's
      _run_direct_concept_search already loops over a queries list, so this
      is a union at the retrieval layer, not a single bet). Motivation: a
      forensic trace on one case (the 2026-09-27/28 thermoresponsive-IDP

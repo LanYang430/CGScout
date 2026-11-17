@@ -23,7 +23,6 @@ tests/test_consolidation_migration.py proves, offline and with no production cha
 from __future__ import annotations
 
 import copy
-import dataclasses
 import importlib
 import os
 from dataclasses import dataclass, field
@@ -114,24 +113,37 @@ BASELINE = Layout(
     recorder_binders=("cgscout.retrieval.orchestrator", "cgscout.retrieval.search_adapters"),
     module_aliases={}, approval="baseline = tag consol-0-baseline (c8be98c); nothing to approve")
 
-# Phase 1 / A3: retrieval/search_adapters.py was merged into direct/from_planner.py, which now binds `search_and_dedupe` at module level; the recorder's
-# MODULES lost `search_adapters`.  Entry, collaborators and patch targets are those of the baseline (the flow has not moved yet).
-PHASE1 = dataclasses.replace(
-    BASELINE, name="phase1",
-    recorder_binders=("cgscout.retrieval.orchestrator", "cgscout.retrieval.direct.from_planner"),
-    module_aliases={"cgscout.retrieval.direct.from_planner": "cgscout.retrieval.search_adapters"},
-    approval="Phase 1 / A3: search_adapters merged into from_planner (owner approved Phase 1-4 on 2026-11-16; CONSOLIDATION_PLAN_v2 section 3.3 + Addendum)")
+# Phase 2b: the dispatch moved into agent.retrieve; retrieval/orchestrator.py became retrieval/transfer.py (the 3A / 3B executors and `_merge_papers`, function names
+# unchanged); the direct stream is `from_planner.retrieve_direct`.  Where each patched collaborator is now LOOKED UP (rule R-1):
+#   transfer   P3 expand_terminology, P4 rephrase_hop1_semantic_intent, P5 extract_related_systems_rich, discover_related_systems, cleanup_discovered_systems,
+#              build_related_system_identities, normalize_search_anchors (P6), merge_and_select, run_converged_hop2, and search_and_dedupe (3A and the Hop closures)
+#   from_planner  run_retrieval_from_plan, papers_for_stage3, provenance_index (retrieve_direct)
+#   agent      filter_papers (_stage3_screen); agent binds NO search_and_dedupe
+# Recorder: the binders of search_and_dedupe are transfer and from_planner; both map onto the baseline module paths through approved aliases.
+TRANSFER, PLANNER_BRIDGE, AGENT = "cgscout.retrieval.transfer", "cgscout.retrieval.direct.from_planner", "cgscout.agent"
 
-# Phase 2a: the entry is agent.execute (the CLI reaches it through agent.run, the evaluation harness calls it); the flow itself has not moved (it is still
-# run_expert_prior_retrieval in orchestrator.py, which agent.retrieve delegates to), so collaborators, patch targets and recorder binders are those of phase1.
-# The legacy entry still exists in 2a, so `phase1` stays valid and is registered next to it: both entries must reproduce the same baseline traces.
-PHASE2A = dataclasses.replace(
-    PHASE1, name="phase2a", entry=("cgscout.agent", "execute"), adapter="agent_execute",
-    approval="Phase 2a: unified entry cgscout.agent (owner approved Phase 1-4 on 2026-11-16; CONSOLIDATION_PLAN_v2 section 8 + Addendum)")
 
-# `baseline` is kept as the reference object for the aliases but is no longer a valid layout of the current tree (search_adapters is gone), so it is not registered.
-LAYOUTS = {"phase1": PHASE1, "phase2a": PHASE2A}
-CURRENT = "phase2a"
+def phase2b_targets() -> dict:
+    t = {name: ((TRANSFER, name),) for name in (
+        "expand_terminology", "rephrase_hop1_semantic_intent", "search_and_dedupe", "extract_related_systems_rich", "discover_related_systems",
+        "cleanup_discovered_systems", "build_related_system_identities", "normalize_search_anchors", "merge_and_select", "run_converged_hop2")}
+    t.update({name: ((PLANNER_BRIDGE, name),) for name in ("run_retrieval_from_plan", "papers_for_stage3", "provenance_index")})
+    t["filter_papers"] = ((AGENT, "filter_papers"),)
+    t["search_openalex"] = ((SEARCH_MODULE, "search_openalex"),)                # the HTTP boundary never moves
+    assert set(t) == set(COLLABORATORS)
+    return t
+
+
+PHASE2B = Layout(
+    name="phase2b", entry=(AGENT, "execute"), adapter="agent_execute", patch_targets=phase2b_targets(),
+    recorder_binders=(TRANSFER, PLANNER_BRIDGE),
+    module_aliases={TRANSFER: BASE_FLOW, PLANNER_BRIDGE: "cgscout.retrieval.search_adapters"},
+    approval="Phase 2b: dispatch into agent.retrieve, orchestrator.py -> transfer.py (owner approved Phase 1-4 on 2026-11-16; CONSOLIDATION_PLAN_v2 section 8 + Addendum; "
+             "Phase 1/2a layouts are history: their entry and modules no longer exist)")
+
+# `baseline` stays as the reference object for the aliases; phase1 / phase2a were valid only while orchestrator.py and run_expert_prior_retrieval existed.
+LAYOUTS = {"phase2b": PHASE2B}
+CURRENT = "phase2b"
 
 
 def active_layout() -> Layout:
