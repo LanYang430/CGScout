@@ -1,0 +1,126 @@
+{
+ "interactive": {
+  "budgets": {
+   "flat_anchor_short_context": true,
+   "flat_query_hygiene": true,
+   "hop1_extraction_max_workers": 2,
+   "max_papers_per_query": 20,
+   "max_papers_per_route": 60,
+   "max_queries_per_route": 3,
+   "max_total_unique_papers": 120,
+   "need_semantic_enabled": false,
+   "need_semantic_include_context": false,
+   "need_semantic_limit": 20,
+   "query_construction_v2": false,
+   "stage3_recover_abstracts": true,
+   "structural_hop2_max_systems": 30,
+   "structural_max_discovered_systems": 150,
+   "structural_max_papers_to_extract": 150,
+   "structural_total_budget": null
+  },
+  "stage4": {
+   "abstract_fallback": true,
+   "abstract_workers": 3,
+   "deep_cap": 80,
+   "extract_effort": "low",
+   "judge_effort": "medium",
+   "reject_min_confidence": "medium",
+   "retries": 1,
+   "screen_abstract_chars": 4000,
+   "screen_batch_size": 12,
+   "screen_effort": "low",
+   "timeout_s": 150.0,
+   "workers": 6
+  }
+ },
+ "library_default": {
+  "budgets": {
+   "flat_anchor_short_context": true,
+   "flat_query_hygiene": true,
+   "hop1_extraction_max_workers": 2,
+   "max_papers_per_query": 20,
+   "max_papers_per_route": 60,
+   "max_queries_per_route": 3,
+   "max_total_unique_papers": 120,
+   "need_semantic_enabled": false,
+   "need_semantic_include_context": false,
+   "need_semantic_limit": 20,
+   "query_construction_v2": false,
+   "stage3_recover_abstracts": true,
+   "structural_hop2_max_systems": 30,
+   "structural_max_discovered_systems": 150,
+   "structural_max_papers_to_extract": 150,
+   "structural_total_budget": null
+  },
+  "stage4": {
+   "abstract_fallback": true,
+   "abstract_workers": 3,
+   "deep_cap": 80,
+   "extract_effort": "low",
+   "judge_effort": "medium",
+   "reject_min_confidence": "medium",
+   "retries": 1,
+   "screen_abstract_chars": 4000,
+   "screen_batch_size": 12,
+   "screen_effort": "low",
+   "timeout_s": 150.0,
+   "workers": 6
+  }
+ },
+ "paper": {
+  "budgets": {
+   "flat_anchor_short_context": true,
+   "flat_query_hygiene": true,
+   "hop1_extraction_max_workers": 2,
+   "max_papers_per_query": 20,
+   "max_papers_per_route": 60,
+   "max_queries_per_route": 3,
+   "max_total_unique_papers": 120,
+   "need_semantic_enabled": true,
+   "need_semantic_include_context": false,
+   "need_semantic_limit": 20,
+   "query_construction_v2": false,
+   "stage3_recover_abstracts": true,
+   "structural_hop2_max_systems": 30,
+   "structural_max_discovered_systems": 150,
+   "structural_max_papers_to_extract": 150,
+   "structural_total_budget": null
+  },
+  "stage4": {
+   "abstract_fallback": true,
+   "abstract_workers": 3,
+   "deep_cap": 500,
+   "extract_effort": "medium",
+   "judge_effort": "medium",
+   "reject_min_confidence": "medium",
+   "retries": 1,
+   "screen_abstract_chars": 4000,
+   "screen_batch_size": 12,
+   "screen_effort": "medium",
+   "timeout_s": 150.0,
+   "workers": 6
+  }
+ },
+ "paper_minus_default": {
+  "budgets": {
+   "need_semantic_enabled": {
+    "library_default": false,
+    "paper": true
+   }
+  },
+  "stage4": {
+   "deep_cap": {
+    "library_default": 80,
+    "paper": 500
+   },
+   "extract_effort": {
+    "library_default": "low",
+    "paper": "medium"
+   },
+   "screen_effort": {
+    "library_default": "low",
+    "paper": "medium"
+   }
+  }
+ }
+}

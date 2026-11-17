@@ -1,0 +1,6879 @@
+{
+ "P5R01_p3_aliases_reach_p5": {
+  "events": [
+   {
+    "budgets": "77c83037",
+    "kind": "direct_route"
+   },
+   {
+    "call_is_callable": true,
+    "kind": "P3",
+    "system_term": "alpha helix repeat"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P4",
+    "objective": "folding mechanism",
+    "scientific_class": "alpha helix repeat"
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "hit": false,
+    "key": "82123a626dd17315b0178fe59dd029e6d6051b704c06729afa9aa5a1bceb421a",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 1 for semantic sentence about alpha helix repeat\n\nABSTRACT: Caelum protein adopts an alpha helix repeat fold in vitro. Extra context 1.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "c9a0d862",
+    "worker": true
+   },
+   {
+    "key": "82123a626dd17315b0178fe59dd029e6d6051b704c06729afa9aa5a1bceb421a",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "921f8f655c7f88f4cb275aace1439cd8fe5a86cca1c3bb043d8b2e2bb1fb4c26",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 0 for semantic sentence about alpha helix repeat\n\nABSTRACT: Borealis protein adopts an alpha helix repeat fold in vitro. Extra context 0.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "80100bca",
+    "worker": true
+   },
+   {
+    "key": "921f8f655c7f88f4cb275aace1439cd8fe5a86cca1c3bb043d8b2e2bb1fb4c26",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "d9aaa538ca1c7397b1d05687f58ae7e80dda56837260a4558a4f2b3cec5e8bc1",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 2 for semantic sentence about alpha helix repeat\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold in vitro. Extra context 2.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "08e7f09b",
+    "worker": true
+   },
+   {
+    "key": "d9aaa538ca1c7397b1d05687f58ae7e80dda56837260a4558a4f2b3cec5e8bc1",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "f9cd650fb127b1b89dae84bd01b280f6e7f414c2de4bf874f5e5b488c2402d20",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Shared coarse-grained study\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold. A shared abstract about coarse-grained models.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "d3a6b07a",
+    "worker": true
+   },
+   {
+    "key": "f9cd650fb127b1b89dae84bd01b280f6e7f414c2de4bf874f5e5b488c2402d20",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "kind": "cleanup_in",
+    "objective": "folding mechanism",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "basis": "distinctive_structure",
+    "kind": "identities_in",
+    "scientific_class": "alpha helix repeat",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "identities": [
+     [
+      "Aquila protein",
+      "grounded_contextual",
+      "Aquila protein alpha helix repeat",
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "grounded_contextual",
+      "Borealis protein alpha helix repeat",
+      1,
+      1
+     ],
+     [
+      "Caelum protein",
+      "grounded_contextual",
+      "Caelum protein alpha helix repeat",
+      1,
+      2
+     ]
+    ],
+    "kind": "identities_out"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P6_in",
+    "objective": "folding mechanism",
+    "systems": [
+     [
+      0,
+      "Aquila protein",
+      2,
+      0,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      1,
+      "Borealis protein",
+      1,
+      1,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      2,
+      "Caelum protein",
+      1,
+      2,
+      [],
+      "specific_protein_or_system",
+      null
+     ]
+    ]
+   },
+   {
+    "hit": false,
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.get",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "case_id": "T",
+    "effort": "low",
+    "kind": "llm",
+    "label": "hop2_search_anchor",
+    "purpose": "hop2_search_anchor",
+    "schema": "_AnchorBatch",
+    "system_sha": "2e3cae79",
+    "timeout": 90,
+    "user": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0] label: Aquila protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Aquila protein adopts an alpha helix repeat fold.\n    evidence: Aquila protein adopts an alpha helix repeat fold in vitro.\n    paper: Shared coarse-grained study\n    paper: Hit 2 for semantic sentence about alpha helix repeat\n[1] label: Borealis protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Borealis protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 0 for semantic sentence about alpha helix repeat\n[2] label: Caelum protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Caelum protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 1 for semantic sentence about alpha helix repeat",
+    "user_head": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0]",
+    "user_sha": "5173ef11"
+   },
+   {
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.set",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "kind": "merge_and_select",
+    "max": 2,
+    "n": 3
+   },
+   {
+    "kind": "hop2_in",
+    "selected": [
+     [
+      "Aquila protein",
+      "Aquila protein",
+      "folding",
+      "",
+      [],
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "Borealis protein",
+      "folding",
+      "",
+      [],
+      1,
+      1
+     ]
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "found": {
+     "Aquila protein": {
+      "10.1/0fadfd450": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd451": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd452": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/f397a19a0": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a1": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a2": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Aquila protein folding coarse-grained model",
+       "Aquila protein coarse-grained model"
+      ]
+     },
+     "Borealis protein": {
+      "10.1/cec7ed320": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed321": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed322": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/f4a6fb420": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb421": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb422": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Borealis protein folding coarse-grained model",
+       "Borealis protein coarse-grained model"
+      ]
+     }
+    },
+    "kind": "hop2_out"
+   },
+   {
+    "kind": "stage3",
+    "recover": true,
+    "refs": [
+     "10.1/shared",
+     "10.1/0fadfd450",
+     "10.1/0fadfd451",
+     "10.1/0fadfd452",
+     "10.1/f397a19a0",
+     "10.1/f397a19a1",
+     "10.1/f397a19a2",
+     "10.1/f4a6fb420",
+     "10.1/f4a6fb421",
+     "10.1/f4a6fb422",
+     "10.1/cec7ed320",
+     "10.1/cec7ed321",
+     "10.1/cec7ed322"
+    ],
+    "threshold": 0.5
+   }
+  ],
+  "llm_calls": 5,
+  "patch_calls": {
+   "build_related_system_identities": 1,
+   "cleanup_discovered_systems": 1,
+   "expand_terminology": 1,
+   "filter_papers": 1,
+   "merge_and_select": 1,
+   "normalize_search_anchors": 1,
+   "papers_for_stage3": 1,
+   "provenance_index": 1,
+   "rephrase_hop1_semantic_intent": 1,
+   "run_converged_hop2": 1,
+   "run_retrieval_from_plan": 1,
+   "search_and_dedupe": 20
+  },
+  "runs": [
+   {
+    "events_from": 0,
+    "events_to": 46,
+    "l_from": 0,
+    "l_to": 0,
+    "raised": null,
+    "result": {
+     "axis_logs": [
+      {
+       "conf": "high",
+       "direct_queries": [],
+       "error": null,
+       "executed": true,
+       "hop1_queries": [
+        "semantic sentence about alpha helix repeat"
+       ],
+       "hop2_plan": [
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Aquila protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Aquila protein",
+         "stable_descriptor": ""
+        },
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Borealis protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Borealis protein",
+         "stable_descriptor": ""
+        }
+       ],
+       "hop2_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "identities": [
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 0,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Aquila protein",
+         "n_support": 2,
+         "query_anchor": "Aquila protein alpha helix repeat",
+         "source_grounding": [
+          "Aquila protein adopts an alpha helix repeat fold.",
+          "Aquila protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Shared coarse-grained study",
+          "Hit 2 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 1,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Borealis protein",
+         "n_support": 1,
+         "query_anchor": "Borealis protein alpha helix repeat",
+         "source_grounding": [
+          "Borealis protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 0 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 2,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Caelum protein",
+         "n_support": 1,
+         "query_anchor": "Caelum protein alpha helix repeat",
+         "source_grounding": [
+          "Caelum protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 1 for semantic sentence about alpha helix repeat"
+         ]
+        }
+       ],
+       "mode": "related_system_discovery",
+       "n_papers_found": 14,
+       "skip": null
+      }
+     ],
+     "direct_papers": [],
+     "rejected": [
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "retained": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      }
+     ],
+     "transfer_needed": true,
+     "transfer_papers": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "verdicts": 0
+    },
+    "x_from": 0,
+    "x_to": 0
+   }
+  ]
+ },
+ "P5R02_other_aliases": {
+  "events": [
+   {
+    "budgets": "77c83037",
+    "kind": "direct_route"
+   },
+   {
+    "call_is_callable": true,
+    "kind": "P3",
+    "system_term": "alpha helix repeat"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P4",
+    "objective": "folding mechanism",
+    "scientific_class": "alpha helix repeat"
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "hit": false,
+    "key": "09eff745d926841f804c40f24950b1d412c8a5ba303fa58534321bbc6452db25",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"helical repeat\", \"solenoid protein\".\n\nTITLE: Hit 1 for semantic sentence about alpha helix repeat\n\nABSTRACT: Caelum protein adopts an alpha helix repeat fold in vitro. Extra context 1.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "3f2994e0",
+    "worker": true
+   },
+   {
+    "key": "09eff745d926841f804c40f24950b1d412c8a5ba303fa58534321bbc6452db25",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "5bc87b6db0c4ef63b0a907c5cc54c817994809f837171e8f976c2b5814c65f9d",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"helical repeat\", \"solenoid protein\".\n\nTITLE: Hit 2 for semantic sentence about alpha helix repeat\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold in vitro. Extra context 2.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "af8743da",
+    "worker": true
+   },
+   {
+    "key": "5bc87b6db0c4ef63b0a907c5cc54c817994809f837171e8f976c2b5814c65f9d",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "6e32bc9fe5443c4934a20c3370a3ae643c534696e4fc77d9e517beacc7e311e9",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"helical repeat\", \"solenoid protein\".\n\nTITLE: Hit 0 for semantic sentence about alpha helix repeat\n\nABSTRACT: Borealis protein adopts an alpha helix repeat fold in vitro. Extra context 0.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "ef564fc1",
+    "worker": true
+   },
+   {
+    "key": "6e32bc9fe5443c4934a20c3370a3ae643c534696e4fc77d9e517beacc7e311e9",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "ecee65b7b779ddccd9b5e7a4c43be87d04e92d9e6a5c75e25064e1d05b1dcbf5",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"helical repeat\", \"solenoid protein\".\n\nTITLE: Shared coarse-grained study\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold. A shared abstract about coarse-grained models.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "919597a4",
+    "worker": true
+   },
+   {
+    "key": "ecee65b7b779ddccd9b5e7a4c43be87d04e92d9e6a5c75e25064e1d05b1dcbf5",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "kind": "cleanup_in",
+    "objective": "folding mechanism",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "basis": "distinctive_structure",
+    "kind": "identities_in",
+    "scientific_class": "alpha helix repeat",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "identities": [
+     [
+      "Aquila protein",
+      "grounded_contextual",
+      "Aquila protein alpha helix repeat",
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "grounded_contextual",
+      "Borealis protein alpha helix repeat",
+      1,
+      1
+     ],
+     [
+      "Caelum protein",
+      "grounded_contextual",
+      "Caelum protein alpha helix repeat",
+      1,
+      2
+     ]
+    ],
+    "kind": "identities_out"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P6_in",
+    "objective": "folding mechanism",
+    "systems": [
+     [
+      0,
+      "Aquila protein",
+      2,
+      0,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      1,
+      "Borealis protein",
+      1,
+      1,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      2,
+      "Caelum protein",
+      1,
+      2,
+      [],
+      "specific_protein_or_system",
+      null
+     ]
+    ]
+   },
+   {
+    "hit": false,
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.get",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "case_id": "T",
+    "effort": "low",
+    "kind": "llm",
+    "label": "hop2_search_anchor",
+    "purpose": "hop2_search_anchor",
+    "schema": "_AnchorBatch",
+    "system_sha": "2e3cae79",
+    "timeout": 90,
+    "user": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0] label: Aquila protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Aquila protein adopts an alpha helix repeat fold.\n    evidence: Aquila protein adopts an alpha helix repeat fold in vitro.\n    paper: Shared coarse-grained study\n    paper: Hit 2 for semantic sentence about alpha helix repeat\n[1] label: Borealis protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Borealis protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 0 for semantic sentence about alpha helix repeat\n[2] label: Caelum protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Caelum protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 1 for semantic sentence about alpha helix repeat",
+    "user_head": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0]",
+    "user_sha": "5173ef11"
+   },
+   {
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.set",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "kind": "merge_and_select",
+    "max": 2,
+    "n": 3
+   },
+   {
+    "kind": "hop2_in",
+    "selected": [
+     [
+      "Aquila protein",
+      "Aquila protein",
+      "folding",
+      "",
+      [],
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "Borealis protein",
+      "folding",
+      "",
+      [],
+      1,
+      1
+     ]
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "found": {
+     "Aquila protein": {
+      "10.1/0fadfd450": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd451": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd452": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/f397a19a0": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a1": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a2": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Aquila protein folding coarse-grained model",
+       "Aquila protein coarse-grained model"
+      ]
+     },
+     "Borealis protein": {
+      "10.1/cec7ed320": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed321": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed322": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/f4a6fb420": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb421": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb422": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Borealis protein folding coarse-grained model",
+       "Borealis protein coarse-grained model"
+      ]
+     }
+    },
+    "kind": "hop2_out"
+   },
+   {
+    "kind": "stage3",
+    "recover": true,
+    "refs": [
+     "10.1/shared",
+     "10.1/0fadfd450",
+     "10.1/0fadfd451",
+     "10.1/0fadfd452",
+     "10.1/f397a19a0",
+     "10.1/f397a19a1",
+     "10.1/f397a19a2",
+     "10.1/f4a6fb420",
+     "10.1/f4a6fb421",
+     "10.1/f4a6fb422",
+     "10.1/cec7ed320",
+     "10.1/cec7ed321",
+     "10.1/cec7ed322"
+    ],
+    "threshold": 0.5
+   }
+  ],
+  "llm_calls": 5,
+  "patch_calls": {
+   "build_related_system_identities": 1,
+   "cleanup_discovered_systems": 1,
+   "expand_terminology": 1,
+   "filter_papers": 1,
+   "merge_and_select": 1,
+   "normalize_search_anchors": 1,
+   "papers_for_stage3": 1,
+   "provenance_index": 1,
+   "rephrase_hop1_semantic_intent": 1,
+   "run_converged_hop2": 1,
+   "run_retrieval_from_plan": 1,
+   "search_and_dedupe": 16
+  },
+  "runs": [
+   {
+    "events_from": 0,
+    "events_to": 42,
+    "l_from": 0,
+    "l_to": 0,
+    "raised": null,
+    "result": {
+     "axis_logs": [
+      {
+       "conf": "high",
+       "direct_queries": [],
+       "error": null,
+       "executed": true,
+       "hop1_queries": [
+        "semantic sentence about alpha helix repeat"
+       ],
+       "hop2_plan": [
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Aquila protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Aquila protein",
+         "stable_descriptor": ""
+        },
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Borealis protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Borealis protein",
+         "stable_descriptor": ""
+        }
+       ],
+       "hop2_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "identities": [
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 0,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Aquila protein",
+         "n_support": 2,
+         "query_anchor": "Aquila protein alpha helix repeat",
+         "source_grounding": [
+          "Aquila protein adopts an alpha helix repeat fold.",
+          "Aquila protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Shared coarse-grained study",
+          "Hit 2 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 1,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Borealis protein",
+         "n_support": 1,
+         "query_anchor": "Borealis protein alpha helix repeat",
+         "source_grounding": [
+          "Borealis protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 0 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 2,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Caelum protein",
+         "n_support": 1,
+         "query_anchor": "Caelum protein alpha helix repeat",
+         "source_grounding": [
+          "Caelum protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 1 for semantic sentence about alpha helix repeat"
+         ]
+        }
+       ],
+       "mode": "related_system_discovery",
+       "n_papers_found": 14,
+       "skip": null
+      }
+     ],
+     "direct_papers": [],
+     "rejected": [
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "retained": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      }
+     ],
+     "transfer_needed": true,
+     "transfer_papers": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "verdicts": 0
+    },
+    "x_from": 0,
+    "x_to": 0
+   }
+  ]
+ },
+ "P5R03_p3_fails_no_aliases": {
+  "events": [
+   {
+    "budgets": "77c83037",
+    "kind": "direct_route"
+   },
+   {
+    "call_is_callable": true,
+    "kind": "P3",
+    "system_term": "alpha helix repeat"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P4",
+    "objective": "folding mechanism",
+    "scientific_class": "alpha helix repeat"
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "hit": false,
+    "key": "304afc259cd3c787612f579d012a831e46c6f9a0fdb26efe20ecf96644e89a6b",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\".\n\nTITLE: Hit 0 for semantic sentence about alpha helix repeat\n\nABSTRACT: Borealis protein adopts an alpha helix repeat fold in vitro. Extra context 0.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "663b0141",
+    "worker": true
+   },
+   {
+    "key": "304afc259cd3c787612f579d012a831e46c6f9a0fdb26efe20ecf96644e89a6b",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "395f824e8fa567896c9cd795cae24e401996a12dafddd90e9c53ceb078ec008b",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\".\n\nTITLE: Shared coarse-grained study\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold. A shared abstract about coarse-grained models.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "2fe3b474",
+    "worker": true
+   },
+   {
+    "key": "395f824e8fa567896c9cd795cae24e401996a12dafddd90e9c53ceb078ec008b",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "d18da64ca66df3748a6787c744dd0e7a6411f3e6ea86d2de56a25ba713e715dc",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\".\n\nTITLE: Hit 1 for semantic sentence about alpha helix repeat\n\nABSTRACT: Caelum protein adopts an alpha helix repeat fold in vitro. Extra context 1.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "ed7be5c2",
+    "worker": true
+   },
+   {
+    "key": "d18da64ca66df3748a6787c744dd0e7a6411f3e6ea86d2de56a25ba713e715dc",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "f0656f4a41c173091e96ee5a04122e983de7f70111cbc52f1b21500231176e16",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\".\n\nTITLE: Hit 2 for semantic sentence about alpha helix repeat\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold in vitro. Extra context 2.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "d41a9bcd",
+    "worker": true
+   },
+   {
+    "key": "f0656f4a41c173091e96ee5a04122e983de7f70111cbc52f1b21500231176e16",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "kind": "cleanup_in",
+    "objective": "folding mechanism",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "basis": "distinctive_structure",
+    "kind": "identities_in",
+    "scientific_class": "alpha helix repeat",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "identities": [
+     [
+      "Aquila protein",
+      "grounded_contextual",
+      "Aquila protein alpha helix repeat",
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "grounded_contextual",
+      "Borealis protein alpha helix repeat",
+      1,
+      1
+     ],
+     [
+      "Caelum protein",
+      "grounded_contextual",
+      "Caelum protein alpha helix repeat",
+      1,
+      2
+     ]
+    ],
+    "kind": "identities_out"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P6_in",
+    "objective": "folding mechanism",
+    "systems": [
+     [
+      0,
+      "Aquila protein",
+      2,
+      0,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      1,
+      "Borealis protein",
+      1,
+      1,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      2,
+      "Caelum protein",
+      1,
+      2,
+      [],
+      "specific_protein_or_system",
+      null
+     ]
+    ]
+   },
+   {
+    "hit": false,
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.get",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "case_id": "T",
+    "effort": "low",
+    "kind": "llm",
+    "label": "hop2_search_anchor",
+    "purpose": "hop2_search_anchor",
+    "schema": "_AnchorBatch",
+    "system_sha": "2e3cae79",
+    "timeout": 90,
+    "user": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0] label: Aquila protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Aquila protein adopts an alpha helix repeat fold.\n    evidence: Aquila protein adopts an alpha helix repeat fold in vitro.\n    paper: Shared coarse-grained study\n    paper: Hit 2 for semantic sentence about alpha helix repeat\n[1] label: Borealis protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Borealis protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 0 for semantic sentence about alpha helix repeat\n[2] label: Caelum protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Caelum protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 1 for semantic sentence about alpha helix repeat",
+    "user_head": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0]",
+    "user_sha": "5173ef11"
+   },
+   {
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.set",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "kind": "merge_and_select",
+    "max": 2,
+    "n": 3
+   },
+   {
+    "kind": "hop2_in",
+    "selected": [
+     [
+      "Aquila protein",
+      "Aquila protein",
+      "folding",
+      "",
+      [],
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "Borealis protein",
+      "folding",
+      "",
+      [],
+      1,
+      1
+     ]
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "found": {
+     "Aquila protein": {
+      "10.1/0fadfd450": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd451": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd452": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/f397a19a0": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a1": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a2": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Aquila protein folding coarse-grained model",
+       "Aquila protein coarse-grained model"
+      ]
+     },
+     "Borealis protein": {
+      "10.1/cec7ed320": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed321": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed322": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/f4a6fb420": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb421": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb422": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Borealis protein folding coarse-grained model",
+       "Borealis protein coarse-grained model"
+      ]
+     }
+    },
+    "kind": "hop2_out"
+   },
+   {
+    "kind": "stage3",
+    "recover": true,
+    "refs": [
+     "10.1/shared",
+     "10.1/0fadfd450",
+     "10.1/0fadfd451",
+     "10.1/0fadfd452",
+     "10.1/f397a19a0",
+     "10.1/f397a19a1",
+     "10.1/f397a19a2",
+     "10.1/f4a6fb420",
+     "10.1/f4a6fb421",
+     "10.1/f4a6fb422",
+     "10.1/cec7ed320",
+     "10.1/cec7ed321",
+     "10.1/cec7ed322"
+    ],
+    "threshold": 0.5
+   }
+  ],
+  "llm_calls": 5,
+  "patch_calls": {
+   "build_related_system_identities": 1,
+   "cleanup_discovered_systems": 1,
+   "expand_terminology": 1,
+   "filter_papers": 1,
+   "merge_and_select": 1,
+   "normalize_search_anchors": 1,
+   "papers_for_stage3": 1,
+   "provenance_index": 1,
+   "rephrase_hop1_semantic_intent": 1,
+   "run_converged_hop2": 1,
+   "run_retrieval_from_plan": 1,
+   "search_and_dedupe": 12
+  },
+  "runs": [
+   {
+    "events_from": 0,
+    "events_to": 38,
+    "l_from": 0,
+    "l_to": 0,
+    "raised": null,
+    "result": {
+     "axis_logs": [
+      {
+       "conf": "high",
+       "direct_queries": [],
+       "error": "terminology_expansion: p3 boom",
+       "executed": true,
+       "hop1_queries": [
+        "semantic sentence about alpha helix repeat"
+       ],
+       "hop2_plan": [
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Aquila protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Aquila protein",
+         "stable_descriptor": ""
+        },
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Borealis protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Borealis protein",
+         "stable_descriptor": ""
+        }
+       ],
+       "hop2_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "identities": [
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 0,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Aquila protein",
+         "n_support": 2,
+         "query_anchor": "Aquila protein alpha helix repeat",
+         "source_grounding": [
+          "Aquila protein adopts an alpha helix repeat fold.",
+          "Aquila protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Shared coarse-grained study",
+          "Hit 2 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 1,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Borealis protein",
+         "n_support": 1,
+         "query_anchor": "Borealis protein alpha helix repeat",
+         "source_grounding": [
+          "Borealis protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 0 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 2,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Caelum protein",
+         "n_support": 1,
+         "query_anchor": "Caelum protein alpha helix repeat",
+         "source_grounding": [
+          "Caelum protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 1 for semantic sentence about alpha helix repeat"
+         ]
+        }
+       ],
+       "mode": "related_system_discovery",
+       "n_papers_found": 14,
+       "skip": null
+      }
+     ],
+     "direct_papers": [],
+     "rejected": [
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "retained": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      }
+     ],
+     "transfer_needed": true,
+     "transfer_papers": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "verdicts": 0
+    },
+    "x_from": 0,
+    "x_to": 0
+   }
+  ]
+ },
+ "P5R04_warm_second_run": {
+  "events": [
+   {
+    "budgets": "77c83037",
+    "kind": "direct_route"
+   },
+   {
+    "call_is_callable": true,
+    "kind": "P3",
+    "system_term": "alpha helix repeat"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P4",
+    "objective": "folding mechanism",
+    "scientific_class": "alpha helix repeat"
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "hit": false,
+    "key": "82123a626dd17315b0178fe59dd029e6d6051b704c06729afa9aa5a1bceb421a",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 1 for semantic sentence about alpha helix repeat\n\nABSTRACT: Caelum protein adopts an alpha helix repeat fold in vitro. Extra context 1.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "c9a0d862",
+    "worker": true
+   },
+   {
+    "key": "82123a626dd17315b0178fe59dd029e6d6051b704c06729afa9aa5a1bceb421a",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "921f8f655c7f88f4cb275aace1439cd8fe5a86cca1c3bb043d8b2e2bb1fb4c26",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 0 for semantic sentence about alpha helix repeat\n\nABSTRACT: Borealis protein adopts an alpha helix repeat fold in vitro. Extra context 0.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "80100bca",
+    "worker": true
+   },
+   {
+    "key": "921f8f655c7f88f4cb275aace1439cd8fe5a86cca1c3bb043d8b2e2bb1fb4c26",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "d9aaa538ca1c7397b1d05687f58ae7e80dda56837260a4558a4f2b3cec5e8bc1",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 2 for semantic sentence about alpha helix repeat\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold in vitro. Extra context 2.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "08e7f09b",
+    "worker": true
+   },
+   {
+    "key": "d9aaa538ca1c7397b1d05687f58ae7e80dda56837260a4558a4f2b3cec5e8bc1",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "f9cd650fb127b1b89dae84bd01b280f6e7f414c2de4bf874f5e5b488c2402d20",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Shared coarse-grained study\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold. A shared abstract about coarse-grained models.\n\nRELATIONSHIP CRITERION: The entity must share the architecture or structural organization that defines the class (for example its fold, domain composition or assembly geometry). The text itself must describe that structure for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "d3a6b07a",
+    "worker": true
+   },
+   {
+    "key": "f9cd650fb127b1b89dae84bd01b280f6e7f414c2de4bf874f5e5b488c2402d20",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "kind": "cleanup_in",
+    "objective": "folding mechanism",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "basis": "distinctive_structure",
+    "kind": "identities_in",
+    "scientific_class": "alpha helix repeat",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "identities": [
+     [
+      "Aquila protein",
+      "grounded_contextual",
+      "Aquila protein alpha helix repeat",
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "grounded_contextual",
+      "Borealis protein alpha helix repeat",
+      1,
+      1
+     ],
+     [
+      "Caelum protein",
+      "grounded_contextual",
+      "Caelum protein alpha helix repeat",
+      1,
+      2
+     ]
+    ],
+    "kind": "identities_out"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P6_in",
+    "objective": "folding mechanism",
+    "systems": [
+     [
+      0,
+      "Aquila protein",
+      2,
+      0,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      1,
+      "Borealis protein",
+      1,
+      1,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      2,
+      "Caelum protein",
+      1,
+      2,
+      [],
+      "specific_protein_or_system",
+      null
+     ]
+    ]
+   },
+   {
+    "hit": false,
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.get",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "case_id": "T",
+    "effort": "low",
+    "kind": "llm",
+    "label": "hop2_search_anchor",
+    "purpose": "hop2_search_anchor",
+    "schema": "_AnchorBatch",
+    "system_sha": "2e3cae79",
+    "timeout": 90,
+    "user": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0] label: Aquila protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Aquila protein adopts an alpha helix repeat fold.\n    evidence: Aquila protein adopts an alpha helix repeat fold in vitro.\n    paper: Shared coarse-grained study\n    paper: Hit 2 for semantic sentence about alpha helix repeat\n[1] label: Borealis protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Borealis protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 0 for semantic sentence about alpha helix repeat\n[2] label: Caelum protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Caelum protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 1 for semantic sentence about alpha helix repeat",
+    "user_head": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0]",
+    "user_sha": "5173ef11"
+   },
+   {
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.set",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "kind": "merge_and_select",
+    "max": 2,
+    "n": 3
+   },
+   {
+    "kind": "hop2_in",
+    "selected": [
+     [
+      "Aquila protein",
+      "Aquila protein",
+      "folding",
+      "",
+      [],
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "Borealis protein",
+      "folding",
+      "",
+      [],
+      1,
+      1
+     ]
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "found": {
+     "Aquila protein": {
+      "10.1/0fadfd450": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd451": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd452": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/f397a19a0": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a1": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a2": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Aquila protein folding coarse-grained model",
+       "Aquila protein coarse-grained model"
+      ]
+     },
+     "Borealis protein": {
+      "10.1/cec7ed320": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed321": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed322": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/f4a6fb420": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb421": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb422": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Borealis protein folding coarse-grained model",
+       "Borealis protein coarse-grained model"
+      ]
+     }
+    },
+    "kind": "hop2_out"
+   },
+   {
+    "kind": "stage3",
+    "recover": true,
+    "refs": [
+     "10.1/shared",
+     "10.1/0fadfd450",
+     "10.1/0fadfd451",
+     "10.1/0fadfd452",
+     "10.1/f397a19a0",
+     "10.1/f397a19a1",
+     "10.1/f397a19a2",
+     "10.1/f4a6fb420",
+     "10.1/f4a6fb421",
+     "10.1/f4a6fb422",
+     "10.1/cec7ed320",
+     "10.1/cec7ed321",
+     "10.1/cec7ed322"
+    ],
+    "threshold": 0.5
+   },
+   {
+    "budgets": "77c83037",
+    "kind": "direct_route"
+   },
+   {
+    "call_is_callable": true,
+    "kind": "P3",
+    "system_term": "alpha helix repeat"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P4",
+    "objective": "folding mechanism",
+    "scientific_class": "alpha helix repeat"
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "hit": true,
+    "key": "82123a626dd17315b0178fe59dd029e6d6051b704c06729afa9aa5a1bceb421a",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": true,
+    "key": "921f8f655c7f88f4cb275aace1439cd8fe5a86cca1c3bb043d8b2e2bb1fb4c26",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": true,
+    "key": "d9aaa538ca1c7397b1d05687f58ae7e80dda56837260a4558a4f2b3cec5e8bc1",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": true,
+    "key": "f9cd650fb127b1b89dae84bd01b280f6e7f414c2de4bf874f5e5b488c2402d20",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "kind": "cleanup_in",
+    "objective": "folding mechanism",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "basis": "distinctive_structure",
+    "kind": "identities_in",
+    "scientific_class": "alpha helix repeat",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "identities": [
+     [
+      "Aquila protein",
+      "grounded_contextual",
+      "Aquila protein alpha helix repeat",
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "grounded_contextual",
+      "Borealis protein alpha helix repeat",
+      1,
+      1
+     ],
+     [
+      "Caelum protein",
+      "grounded_contextual",
+      "Caelum protein alpha helix repeat",
+      1,
+      2
+     ]
+    ],
+    "kind": "identities_out"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P6_in",
+    "objective": "folding mechanism",
+    "systems": [
+     [
+      0,
+      "Aquila protein",
+      2,
+      0,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      1,
+      "Borealis protein",
+      1,
+      1,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      2,
+      "Caelum protein",
+      1,
+      2,
+      [],
+      "specific_protein_or_system",
+      null
+     ]
+    ]
+   },
+   {
+    "hit": true,
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.get",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "kind": "merge_and_select",
+    "max": 2,
+    "n": 3
+   },
+   {
+    "kind": "hop2_in",
+    "selected": [
+     [
+      "Aquila protein",
+      "Aquila protein",
+      "folding",
+      "",
+      [],
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "Borealis protein",
+      "folding",
+      "",
+      [],
+      1,
+      1
+     ]
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "found": {
+     "Aquila protein": {
+      "10.1/0fadfd450": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd451": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd452": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/f397a19a0": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a1": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a2": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Aquila protein folding coarse-grained model",
+       "Aquila protein coarse-grained model"
+      ]
+     },
+     "Borealis protein": {
+      "10.1/cec7ed320": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed321": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed322": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/f4a6fb420": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb421": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb422": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Borealis protein folding coarse-grained model",
+       "Borealis protein coarse-grained model"
+      ]
+     }
+    },
+    "kind": "hop2_out"
+   },
+   {
+    "kind": "stage3",
+    "recover": true,
+    "refs": [
+     "10.1/shared",
+     "10.1/0fadfd450",
+     "10.1/0fadfd451",
+     "10.1/0fadfd452",
+     "10.1/f397a19a0",
+     "10.1/f397a19a1",
+     "10.1/f397a19a2",
+     "10.1/f4a6fb420",
+     "10.1/f4a6fb421",
+     "10.1/f4a6fb422",
+     "10.1/cec7ed320",
+     "10.1/cec7ed321",
+     "10.1/cec7ed322"
+    ],
+    "threshold": 0.5
+   }
+  ],
+  "llm_calls": 5,
+  "patch_calls": {
+   "build_related_system_identities": 2,
+   "cleanup_discovered_systems": 2,
+   "expand_terminology": 2,
+   "filter_papers": 2,
+   "merge_and_select": 2,
+   "normalize_search_anchors": 2,
+   "papers_for_stage3": 2,
+   "provenance_index": 2,
+   "rephrase_hop1_semantic_intent": 2,
+   "run_converged_hop2": 2,
+   "run_retrieval_from_plan": 2,
+   "search_and_dedupe": 40
+  },
+  "runs": [
+   {
+    "events_from": 0,
+    "events_to": 46,
+    "l_from": 0,
+    "l_to": 0,
+    "raised": null,
+    "result": {
+     "axis_logs": [
+      {
+       "conf": "high",
+       "direct_queries": [],
+       "error": null,
+       "executed": true,
+       "hop1_queries": [
+        "semantic sentence about alpha helix repeat"
+       ],
+       "hop2_plan": [
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Aquila protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Aquila protein",
+         "stable_descriptor": ""
+        },
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Borealis protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Borealis protein",
+         "stable_descriptor": ""
+        }
+       ],
+       "hop2_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "identities": [
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 0,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Aquila protein",
+         "n_support": 2,
+         "query_anchor": "Aquila protein alpha helix repeat",
+         "source_grounding": [
+          "Aquila protein adopts an alpha helix repeat fold.",
+          "Aquila protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Shared coarse-grained study",
+          "Hit 2 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 1,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Borealis protein",
+         "n_support": 1,
+         "query_anchor": "Borealis protein alpha helix repeat",
+         "source_grounding": [
+          "Borealis protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 0 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 2,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Caelum protein",
+         "n_support": 1,
+         "query_anchor": "Caelum protein alpha helix repeat",
+         "source_grounding": [
+          "Caelum protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 1 for semantic sentence about alpha helix repeat"
+         ]
+        }
+       ],
+       "mode": "related_system_discovery",
+       "n_papers_found": 14,
+       "skip": null
+      }
+     ],
+     "direct_papers": [],
+     "rejected": [
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "retained": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      }
+     ],
+     "transfer_needed": true,
+     "transfer_papers": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "verdicts": 0
+    },
+    "x_from": 0,
+    "x_to": 0
+   },
+   {
+    "events_from": 46,
+    "events_to": 82,
+    "l_from": 0,
+    "l_to": 0,
+    "raised": null,
+    "result": {
+     "axis_logs": [
+      {
+       "conf": "high",
+       "direct_queries": [],
+       "error": null,
+       "executed": true,
+       "hop1_queries": [
+        "semantic sentence about alpha helix repeat"
+       ],
+       "hop2_plan": [
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Aquila protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Aquila protein",
+         "stable_descriptor": ""
+        },
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Borealis protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Borealis protein",
+         "stable_descriptor": ""
+        }
+       ],
+       "hop2_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "identities": [
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 0,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Aquila protein",
+         "n_support": 2,
+         "query_anchor": "Aquila protein alpha helix repeat",
+         "source_grounding": [
+          "Aquila protein adopts an alpha helix repeat fold.",
+          "Aquila protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Shared coarse-grained study",
+          "Hit 2 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 1,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Borealis protein",
+         "n_support": 1,
+         "query_anchor": "Borealis protein alpha helix repeat",
+         "source_grounding": [
+          "Borealis protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 0 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 2,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Caelum protein",
+         "n_support": 1,
+         "query_anchor": "Caelum protein alpha helix repeat",
+         "source_grounding": [
+          "Caelum protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 1 for semantic sentence about alpha helix repeat"
+         ]
+        }
+       ],
+       "mode": "related_system_discovery",
+       "n_papers_found": 14,
+       "skip": null
+      }
+     ],
+     "direct_papers": [],
+     "rejected": [
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "retained": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      }
+     ],
+     "transfer_needed": true,
+     "transfer_papers": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:distinctive_structure"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "verdicts": 0
+    },
+    "x_from": 0,
+    "x_to": 0
+   }
+  ]
+ },
+ "P5R05_basis_physical_process": {
+  "events": [
+   {
+    "budgets": "77c83037",
+    "kind": "direct_route"
+   },
+   {
+    "call_is_callable": true,
+    "kind": "P3",
+    "system_term": "alpha helix repeat"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P4",
+    "objective": "folding mechanism",
+    "scientific_class": "alpha helix repeat"
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 15,
+    "mode": "semantic",
+    "query": "semantic sentence about alpha helix repeat",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "hit": false,
+    "key": "472ac2ced252f73d37b43d96911cc46f76e48df33bcfed42461000ad997ea3c4",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 0 for semantic sentence about alpha helix repeat\n\nABSTRACT: Borealis protein adopts an alpha helix repeat fold in vitro. Extra context 0.\n\nRELATIONSHIP CRITERION: The entity must undergo or carry out the same physical process or mechanism that defines the class (for example the same kind of mechanical, thermodynamic, assembly or transport process). The text itself must describe that process for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "36656cc4",
+    "worker": true
+   },
+   {
+    "key": "472ac2ced252f73d37b43d96911cc46f76e48df33bcfed42461000ad997ea3c4",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "4f0e364f7b0317d69e8bbec84faeeb48ea88ee979f9870c75e9d4e7d78c97136",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 2 for semantic sentence about alpha helix repeat\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold in vitro. Extra context 2.\n\nRELATIONSHIP CRITERION: The entity must undergo or carry out the same physical process or mechanism that defines the class (for example the same kind of mechanical, thermodynamic, assembly or transport process). The text itself must describe that process for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "e26d31d0",
+    "worker": true
+   },
+   {
+    "key": "4f0e364f7b0317d69e8bbec84faeeb48ea88ee979f9870c75e9d4e7d78c97136",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "afb85cdb3abc6cfddca7ee04da5de28d9787a882672682eb3931cebbe4d43421",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Shared coarse-grained study\n\nABSTRACT: Aquila protein adopts an alpha helix repeat fold. A shared abstract about coarse-grained models.\n\nRELATIONSHIP CRITERION: The entity must undergo or carry out the same physical process or mechanism that defines the class (for example the same kind of mechanical, thermodynamic, assembly or transport process). The text itself must describe that process for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "c4eea0da",
+    "worker": true
+   },
+   {
+    "key": "afb85cdb3abc6cfddca7ee04da5de28d9787a882672682eb3931cebbe4d43421",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "hit": false,
+    "key": "df4469fc19d72e541c577eedf75524477e4c01b3f73a7330a64825989f33cfee",
+    "kind": "cache.get",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "case_id": "T",
+    "effort": null,
+    "kind": "llm",
+    "label": "hop1_extract_rich",
+    "purpose": "hop1_related_system_extraction",
+    "schema": "RichSystemExtractionLLM",
+    "system_sha": "ad741c43",
+    "timeout": 20,
+    "user": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed search phrases for this class: \"alpha helix repeat repeat fold\", \"alpha helix repeat stacked strands\", \"alpha helix repeat folding mechanism\", \"alpha-solenoid\", \"repeat protein\", \"armadillo-like fold\", \"tandem repeat motif\".\n\nTITLE: Hit 1 for semantic sentence about alpha helix repeat\n\nABSTRACT: Caelum protein adopts an alpha helix repeat fold in vitro. Extra context 1.\n\nRELATIONSHIP CRITERION: The entity must undergo or carry out the same physical process or mechanism that defines the class (for example the same kind of mechanical, thermodynamic, assembly or transport process). The text itself must describe that process for this entity.",
+    "user_head": "CLASS: \"alpha helix repeat\"\nRelated terms and constructed se",
+    "user_sha": "163f1e0e",
+    "worker": true
+   },
+   {
+    "key": "df4469fc19d72e541c577eedf75524477e4c01b3f73a7330a64825989f33cfee",
+    "kind": "cache.set",
+    "ns": "hop1_extract_rich",
+    "worker": true
+   },
+   {
+    "kind": "cleanup_in",
+    "objective": "folding mechanism",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "basis": "physical_process",
+    "kind": "identities_in",
+    "scientific_class": "alpha helix repeat",
+    "systems": [
+     {
+      "n_support": 2,
+      "name": "Aquila protein",
+      "norm": "aquila protein",
+      "papers": 2,
+      "rank": 0
+     },
+     {
+      "n_support": 1,
+      "name": "Borealis protein",
+      "norm": "borealis protein",
+      "papers": 1,
+      "rank": 1
+     },
+     {
+      "n_support": 1,
+      "name": "Caelum protein",
+      "norm": "caelum protein",
+      "papers": 1,
+      "rank": 2
+     }
+    ]
+   },
+   {
+    "identities": [
+     [
+      "Aquila protein",
+      "grounded_contextual",
+      "Aquila protein",
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "grounded_contextual",
+      "Borealis protein",
+      1,
+      1
+     ],
+     [
+      "Caelum protein",
+      "grounded_contextual",
+      "Caelum protein",
+      1,
+      2
+     ]
+    ],
+    "kind": "identities_out"
+   },
+   {
+    "backend": "mock",
+    "case_id": "T",
+    "kind": "P6_in",
+    "objective": "folding mechanism",
+    "systems": [
+     [
+      0,
+      "Aquila protein",
+      2,
+      0,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      1,
+      "Borealis protein",
+      1,
+      1,
+      [],
+      "specific_protein_or_system",
+      null
+     ],
+     [
+      2,
+      "Caelum protein",
+      1,
+      2,
+      [],
+      "specific_protein_or_system",
+      null
+     ]
+    ]
+   },
+   {
+    "hit": false,
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.get",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "case_id": "T",
+    "effort": "low",
+    "kind": "llm",
+    "label": "hop2_search_anchor",
+    "purpose": "hop2_search_anchor",
+    "schema": "_AnchorBatch",
+    "system_sha": "2e3cae79",
+    "timeout": 90,
+    "user": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0] label: Aquila protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Aquila protein adopts an alpha helix repeat fold.\n    evidence: Aquila protein adopts an alpha helix repeat fold in vitro.\n    paper: Shared coarse-grained study\n    paper: Hit 2 for semantic sentence about alpha helix repeat\n[1] label: Borealis protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Borealis protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 0 for semantic sentence about alpha helix repeat\n[2] label: Caelum protein\n    kind: specific_protein_or_system\n    context: -\n    evidence: Caelum protein adopts an alpha helix repeat fold in vitro.\n    paper: Hit 1 for semantic sentence about alpha helix repeat",
+    "user_head": "SCIENTIFIC OBJECTIVE: folding mechanism\n\nRELATED SYSTEMS\n[0]",
+    "user_sha": "5173ef11"
+   },
+   {
+    "key": "a0a22841d0086b495d6905f27b4b00a3cebb26c9f60eec3c75fc546986371617",
+    "kind": "cache.set",
+    "ns": "hop2_anchor_normalization"
+   },
+   {
+    "kind": "merge_and_select",
+    "max": 2,
+    "n": 3
+   },
+   {
+    "kind": "hop2_in",
+    "selected": [
+     [
+      "Aquila protein",
+      "Aquila protein",
+      "folding",
+      "",
+      [],
+      2,
+      0
+     ],
+     [
+      "Borealis protein",
+      "Borealis protein",
+      "folding",
+      "",
+      [],
+      1,
+      1
+     ]
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Aquila protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein folding coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "kind": "search",
+    "limit": 20,
+    "mode": "lexical",
+    "query": "Borealis protein coarse-grained model",
+    "sources": [
+     "openalex"
+    ]
+   },
+   {
+    "found": {
+     "Aquila protein": {
+      "10.1/0fadfd450": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd451": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/0fadfd452": [
+       "Aquila protein folding coarse-grained model"
+      ],
+      "10.1/f397a19a0": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a1": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/f397a19a2": [
+       "Aquila protein coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Aquila protein folding coarse-grained model",
+       "Aquila protein coarse-grained model"
+      ]
+     },
+     "Borealis protein": {
+      "10.1/cec7ed320": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed321": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/cec7ed322": [
+       "Borealis protein coarse-grained model"
+      ],
+      "10.1/f4a6fb420": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb421": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/f4a6fb422": [
+       "Borealis protein folding coarse-grained model"
+      ],
+      "10.1/shared": [
+       "Borealis protein folding coarse-grained model",
+       "Borealis protein coarse-grained model"
+      ]
+     }
+    },
+    "kind": "hop2_out"
+   },
+   {
+    "kind": "stage3",
+    "recover": true,
+    "refs": [
+     "10.1/shared",
+     "10.1/0fadfd450",
+     "10.1/0fadfd451",
+     "10.1/0fadfd452",
+     "10.1/f397a19a0",
+     "10.1/f397a19a1",
+     "10.1/f397a19a2",
+     "10.1/f4a6fb420",
+     "10.1/f4a6fb421",
+     "10.1/f4a6fb422",
+     "10.1/cec7ed320",
+     "10.1/cec7ed321",
+     "10.1/cec7ed322"
+    ],
+    "threshold": 0.5
+   }
+  ],
+  "llm_calls": 5,
+  "patch_calls": {
+   "build_related_system_identities": 1,
+   "cleanup_discovered_systems": 1,
+   "expand_terminology": 1,
+   "filter_papers": 1,
+   "merge_and_select": 1,
+   "normalize_search_anchors": 1,
+   "papers_for_stage3": 1,
+   "provenance_index": 1,
+   "rephrase_hop1_semantic_intent": 1,
+   "run_converged_hop2": 1,
+   "run_retrieval_from_plan": 1,
+   "search_and_dedupe": 20
+  },
+  "runs": [
+   {
+    "events_from": 0,
+    "events_to": 46,
+    "l_from": 0,
+    "l_to": 0,
+    "raised": null,
+    "result": {
+     "axis_logs": [
+      {
+       "conf": "high",
+       "direct_queries": [],
+       "error": null,
+       "executed": true,
+       "hop1_queries": [
+        "semantic sentence about alpha helix repeat"
+       ],
+       "hop2_plan": [
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Aquila protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Aquila protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Aquila protein",
+         "stable_descriptor": ""
+        },
+        {
+         "core_process": "folding",
+         "fallback_used": false,
+         "flags": [],
+         "label": "Borealis protein",
+         "n_papers": 7,
+         "queries": [
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein folding coarse-grained model",
+           "role": "A"
+          },
+          {
+           "error": null,
+           "n_results": 4,
+           "query": "Borealis protein coarse-grained model",
+           "role": "C"
+          }
+         ],
+         "search_anchor": "Borealis protein",
+         "stable_descriptor": ""
+        }
+       ],
+       "hop2_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "identities": [
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 0,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Aquila protein",
+         "n_support": 2,
+         "query_anchor": "Aquila protein",
+         "source_grounding": [
+          "Aquila protein adopts an alpha helix repeat fold.",
+          "Aquila protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Shared coarse-grained study",
+          "Hit 2 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 1,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Borealis protein",
+         "n_support": 1,
+         "query_anchor": "Borealis protein",
+         "source_grounding": [
+          "Borealis protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 0 for semantic sentence about alpha helix repeat"
+         ]
+        },
+        {
+         "aliases": [],
+         "entity_type": "specific_protein_or_system",
+         "first_seen_rank": 2,
+         "grounding": "grounded_contextual",
+         "identity_context": null,
+         "label": "Caelum protein",
+         "n_support": 1,
+         "query_anchor": "Caelum protein",
+         "source_grounding": [
+          "Caelum protein adopts an alpha helix repeat fold in vitro."
+         ],
+         "source_paper_titles": [
+          "Hit 1 for semantic sentence about alpha helix repeat"
+         ]
+        }
+       ],
+       "mode": "related_system_discovery",
+       "n_papers_found": 14,
+       "skip": null
+      }
+     ],
+     "direct_papers": [],
+     "rejected": [
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "retained": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      }
+     ],
+     "transfer_needed": true,
+     "transfer_papers": [
+      {
+       "doi": "10.1/shared",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model",
+        "Aquila protein coarse-grained model",
+        "Borealis protein folding coarse-grained model",
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "semantic",
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein",
+        "Borealis protein"
+       ],
+       "title": "Shared coarse-grained study"
+      },
+      {
+       "doi": "10.1/0fadfd450",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd451",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/0fadfd452",
+       "found_by_queries": [
+        "Aquila protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a0",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 0 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a1",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 1 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f397a19a2",
+       "found_by_queries": [
+        "Aquila protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Aquila protein",
+       "sds": [
+        "Aquila protein"
+       ],
+       "title": "Hit 2 for Aquila protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb420",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb421",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/f4a6fb422",
+       "found_by_queries": [
+        "Borealis protein folding coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein folding coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed320",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 0 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed321",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 1 for Borealis protein coarse-grained model"
+      },
+      {
+       "doi": "10.1/cec7ed322",
+       "found_by_queries": [
+        "Borealis protein coarse-grained model"
+       ],
+       "query_categories": [
+        "structural",
+        "transfer:physical_process"
+       ],
+       "retrieval_modes": [
+        "lexical"
+       ],
+       "sd": "Borealis protein",
+       "sds": [
+        "Borealis protein"
+       ],
+       "title": "Hit 2 for Borealis protein coarse-grained model"
+      }
+     ],
+     "verdicts": 0
+    },
+    "x_from": 0,
+    "x_to": 0
+   }
+  ]
+ }
+}
