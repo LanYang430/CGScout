@@ -1,4 +1,4 @@
-"""Run configuration of the paper evaluation: one arm, "CUR" = the live CGScout code run with the named profile `cgscout.profiles.PAPER`.
+"""Run configuration of the paper evaluation: one arm, "CUR" = the live CGScout code run with the named profile `cgscout.config.PAPER`.
 
 PAPER is the single source of every evaluation setting: the five retrieval switches (P1 flat_anchor_short_context, P2 flat_query_hygiene, P3 need_semantic, Stage-3 abstract
 recovery, query_construction_v2 off), the Stage-4 settings (efforts, deep_cap, the 4000 abstract characters the tier-1 screen sees), the LLM (model, effort, lifting explicit
@@ -14,7 +14,7 @@ is used, run_benchmark.py only accepts plans whose provenance matches the code t
 from pathlib import Path
 import csv, json, os
 
-from cgscout.profiles import PAPER, PROFILES
+from cgscout.config import PAPER, PROFILES
 
 ROOT = Path(os.environ.get("CGSCOUT_BENCH_DIR", ".")).resolve()
 SHARED_CACHE = ROOT / "cache_work"          # fresh cache dir: no reuse of any earlier dev-run cache
@@ -22,7 +22,7 @@ INPUT = ROOT / "queries.csv"                # columns: REQUIRED_COLUMNS
 
 REQUIRED_COLUMNS = ("Paper ID", "Latest query (v2)", "DOI", "OpenAlex ID")
 
-# single source of truth: cgscout.profiles.PAPER (pinned value-by-value in tests/test_profiles.py)
+# single source of truth: cgscout.config.PAPER (pinned value-by-value in tests/test_profiles.py)
 ARMS = {
     "CUR": dict(profile="paper", label=PAPER["label"], classifier=PAPER["stage3_classifier"], screen_chars=PAPER["stage4"]["screen_abstract_chars"], budgets=dict(PAPER["budgets"])),
 }

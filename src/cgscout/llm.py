@@ -36,7 +36,7 @@ from typing import Callable, Optional, Protocol, TypeVar
 
 from pydantic import BaseModel
 
-from cgscout import _env
+from cgscout import config as _env
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -203,7 +203,7 @@ def get_backend() -> LLMBackend:
     """CGSCOUT_LLM_BACKEND=openai (default; the only supported value -- anything
     else raises ValueError). CGSCOUT_LLM_MODEL / CGSCOUT_LLM_EFFORT override the
     openai backend's model / default reasoning effort.  (Every CGSCOUT_* name
-    also reads the legacy BEAM_* spelling -- see cgscout._env.)
+    also reads the legacy BEAM_* spelling -- see cgscout.config.)
 
     Global invariant (one BEAM run uses exactly one LLM backend, no mixed
     execution): call this ONCE per run/session and thread the SAME instance

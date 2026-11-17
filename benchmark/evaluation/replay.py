@@ -57,7 +57,7 @@ from recorder import Recorder                        # noqa: E402  (benchmark/ev
 import arms as AR                                  # noqa: E402  (benchmark/evaluation/arms.py)
 U = RL.U
 
-BUDGETS = AR.budgets_for("CUR", RP)          # both from cgscout.profiles.PAPER, like run_benchmark.py
+BUDGETS = AR.budgets_for("CUR", RP)          # both from cgscout.config.PAPER, like run_benchmark.py
 S4CFG = AR.stage4_config("CUR")
 
 

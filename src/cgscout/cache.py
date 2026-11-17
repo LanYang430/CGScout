@@ -42,7 +42,7 @@ import time
 from pathlib import Path
 from typing import Any, Optional
 
-from cgscout import _env
+from cgscout import config as _env
 
 def _source_checkout_root() -> Optional[Path]:
     """The repository root when running from a source checkout (src/cgscout/cache.py -> <root>/pyproject.toml), else None

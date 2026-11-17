@@ -47,7 +47,7 @@ Settings (the legacy `BEAM_*` spellings of these are still read, with a one-time
 ## Repository layout
 
 ```
-src/cgscout/          the package: planning/ retrieval/ sources/ screening/ assessment/ + llm, cache, models, text, profiles, cli
+src/cgscout/          the package: planning/ retrieval/ sources/ screening/ assessment/ + llm, cache, models, text, config, cli
 tests/                unit and structure tests (pytest); test_golden_replay.py is skipped unless a replay fixture is configured
 benchmark/            not installed: evaluation/ (freeze_plans, run_benchmark, arms, provenance, harness, recorder, replay), baselines/, generation/ (benchmark construction), training/
 docs/                 architecture.md, reproduce.md, phase3_cleanup_record.md (what the Phase 3 cleanup removed or moved, and how to undo it)
@@ -62,7 +62,7 @@ pytest
 
 ## Reproducing the paper evaluation
 
-See [docs/reproduce.md](docs/reproduce.md). The paper configuration is `cgscout.profiles.PAPER`; the default entry point (`cgscout`) uses the library defaults.
+See [docs/reproduce.md](docs/reproduce.md). The paper configuration is `cgscout.config.PAPER`; the default entry point (`cgscout`) uses the library defaults.
 
 ## History
 

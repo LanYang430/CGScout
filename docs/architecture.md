@@ -25,7 +25,7 @@ Shared: `llm.py` (backend protocol, OpenAI backend, usage log), `cache.py`, `mod
 - Caches are content-keyed (prompt + schema + input [+ backend/model]) so an edit to a prompt invalidates exactly the entries it affects. Searches are cached for 24 h.
 - Hop-1 discovery grounds every discovered system in a verbatim quote of a retrieved paper; no system name comes from the model's memory.
 - Stage 4 never grades a paper without an abstract (`missing_evidence`), and a failed LLM call is an error, never a "not relevant".
-- Run configuration is explicit data: `profiles.py` (`PAPER`, `INTERACTIVE`).
+- Run configuration is explicit data: `config.py` (`PAPER`, `INTERACTIVE`; also the `CGSCOUT_*` environment lookup).
 
 ## Known issues, recorded but not changed in the cleanup
 

@@ -10,7 +10,7 @@
 ## Run directory (not in the repository)
 
 `CGSCOUT_BENCH_DIR=<run dir>` holds `queries.csv` (columns `Paper ID`, `Latest query (v2)`, `DOI`, `OpenAlex ID`) and everything a run writes.
-Use a **new, empty directory** for the final run. Every evaluation setting comes from one place, `cgscout.profiles.PAPER`; `benchmark/evaluation/arms.py` and the runner read it.
+Use a **new, empty directory** for the final run. Every evaluation setting comes from one place, `cgscout.config.PAPER`; `benchmark/evaluation/arms.py` and the runner read it.
 
 ```bash
 export CGSCOUT_BENCH_DIR=/path/to/run

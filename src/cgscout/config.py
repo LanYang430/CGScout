@@ -1,4 +1,10 @@
-"""Named run configurations -- pure data, no code and no imports of the pipeline.
+"""cgscout configuration: the environment variables and the named run configurations.
+
+ENVIRONMENT  `get(name, default)`: `CGSCOUT_<NAME>` is the name; the legacy `BEAM_<NAME>` is still read (a one-time notice on stderr when only the legacy name
+             is set), so existing scripts and caches keep working.  Semantics are exactly those of os.environ.get: a variable that is present (even empty) wins,
+             the new name before the legacy one.  (Imported as `_env` by cache.py and llm.py.)
+
+PROFILES     pure data, no imports of the pipeline.
 
 PAPER        the configuration the paper evaluation runs with ("CUR" arm of benchmark/evaluation).  It names the five retrieval switches below, the Stage-4 efforts / deep_cap /
              screen abstract length, the LLM model and effort, and the Stage-3 classifier.  Every setting it does NOT name (e.g. max_papers_per_query, the Stage-4 worker counts)
@@ -9,7 +15,25 @@ A profile is a dict of overrides for the pieces that take configuration: `budget
 `stage4` -> assessment.stage4.Stage4Config (+ the abstract length shown to the tier-1 screen), `llm` -> model / reasoning effort (the evaluation harness
 additionally lifts any explicit effort="low" request to "medium" for this profile).  PAPER is selected only by the evaluation runner (benchmark/evaluation/arms.py).
 """
+import os
+import sys
 
+_WARNED: set = set()
+
+
+def get(name: str, default=None):
+    new, old = f"CGSCOUT_{name}", f"BEAM_{name}"
+    if new in os.environ:
+        return os.environ[new]
+    if old in os.environ:
+        if old not in _WARNED:
+            _WARNED.add(old)
+            print(f"cgscout: environment variable {old} is deprecated; use {new}", file=sys.stderr)
+        return os.environ[old]
+    return default
+
+
+# ---------------------------------------------------------------- named run configurations (formerly profiles.py)
 PAPER = {
     "label": "paper: P1+P2+P3 on, Stage-3 abstract recovery on, query_construction_v2 off, tier-1 sees 4000 abstract characters",
     "budgets": dict(flat_anchor_short_context=True, flat_query_hygiene=True, need_semantic_enabled=True,

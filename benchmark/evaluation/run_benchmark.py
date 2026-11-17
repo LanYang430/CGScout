@@ -8,7 +8,7 @@ Exit code:  0 every selected query has a final result | 2 not started (bad comma
 Pre-specified rules (fixed before the run; nothing is changed after seeing results):
   INPUT     only the frozen query text reaches CGScout; seed title/DOI/OpenAlex ID are used ONLY after retrieval to locate the seed.
   SELECT    a full run needs --expect-rows (queries.csv must have exactly that many rows) and an explicit CGSCOUT_STOP_USD; --pids must be non-empty and all known.
-  CONFIG    every setting comes from cgscout.profiles.PAPER (model, effort, Stage-4 settings, retrieval switches; harness wrapper lifts explicit 'low' to the profile effort, counted);
+  CONFIG    every setting comes from cgscout.config.PAPER (model, effort, Stage-4 settings, retrieval switches; harness wrapper lifts explicit 'low' to the profile effort, counted);
             run_config_<arm>.json records the full effective values; each start is appended to run_starts_<arm>.jsonl.
   PLANS     plans_frozen/<pid>.json must carry the provenance of the P1/P2 code that is running (provenance.py); stale, foreign or missing plans stop the run before any spend.
   CLARIFY   one fixed generic reply, max 2 rounds (done in freeze_plans.py); if the planner still does not proceed the query is NOT_RUN_CLARIFICATION (a final result).
@@ -34,7 +34,7 @@ ROOT = RES = INPUT = USAGE_LOG = LOG = None
 BUDGETS = None
 STOP_USD = DAILY_CREDITS = MIN_CREDITS = DEEP_CAP = None
 STOP_EXPLICIT = False        # True when CGSCOUT_STOP_USD (or the legacy NEW37_STOP_USD) is set in the environment
-PROFILE = None               # the cgscout.profiles entry of the arm: the single source of every setting below
+PROFILE = None               # the cgscout.config entry of the arm: the single source of every setting below
 EXIT_OK, EXIT_NOT_STARTED, EXIT_INCOMPLETE = 0, 2, 4          # (3 = OpenAlex budget, exit code of RL.run_guarded)
 DONE_STATUSES = ("OK", "REFUSED", "NOT_RUN_CLARIFICATION")   # a checkpoint with one of these is a final result; DEGRADED / ERROR are retried
 CLARIFY_REPLY = "I have no further details beyond my question as written; please proceed with your best reasonable interpretation."

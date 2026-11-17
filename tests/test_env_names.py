@@ -1,7 +1,7 @@
-"""CGSCOUT_<NAME> is the environment variable name; the legacy BEAM_<NAME> keeps working (one-time notice) -- cgscout._env."""
+"""CGSCOUT_<NAME> is the environment variable name; the legacy BEAM_<NAME> keeps working (one-time notice) -- cgscout.config."""
 import pytest
 
-from cgscout import _env, cache
+from cgscout import config as _env, cache
 
 
 @pytest.fixture(autouse=True)

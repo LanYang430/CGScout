@@ -1,11 +1,11 @@
-"""The named run configurations (cgscout.profiles) are pure data and are pinned here value by value:
+"""The named run configurations (cgscout.config) are pure data and are pinned here value by value:
   * PAPER must equal the evaluation arm that produced the paper's runs (values copied from the original arm definition);
   * INTERACTIVE is the library defaults, i.e. no overrides.
 Changing a default (or a PAPER value) therefore fails a test instead of silently changing what a run means."""
 import sys
 from pathlib import Path
 
-from cgscout.profiles import INTERACTIVE, PAPER, PROFILES
+from cgscout.config import INTERACTIVE, PAPER, PROFILES
 from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets
 
 EVAL = Path(__file__).resolve().parents[1] / "benchmark" / "evaluation"

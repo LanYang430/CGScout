@@ -13,7 +13,7 @@ if str(EVAL) not in sys.path:
     sys.path.insert(0, str(EVAL))              # arms, provenance, run_benchmark, freeze_plans, harness, recorder
 
 import provenance as PV  # noqa: E402
-from cgscout.profiles import PAPER  # noqa: E402
+from cgscout.config import PAPER  # noqa: E402
 
 COLUMNS = ["Paper ID", "Latest query (v2)", "DOI", "OpenAlex ID"]
 

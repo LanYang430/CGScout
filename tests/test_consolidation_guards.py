@@ -150,7 +150,7 @@ def test_recorder_kinds_still_name_existing_functions():
 
 def current_effective():
     from cgscout.assessment.stage4 import Stage4Config
-    from cgscout.profiles import INTERACTIVE, PAPER
+    from cgscout.config import INTERACTIVE, PAPER
     from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets
 
     def d4(c):
@@ -185,14 +185,14 @@ def test_none_equals_default_construction():
 def test_cli_uses_library_defaults_and_paper_differs_by_design():
     rec = json.loads(CONFIG_FIXTURE.read_text())
     assert rec["interactive"] == rec["library_default"]                      # INTERACTIVE = the library defaults (the CLI does not read profiles)
-    assert rec["paper"] != rec["library_default"]                            # PAPER is NOT the CLI configuration -- by design (profiles.py docstring)
+    assert rec["paper"] != rec["library_default"]                            # PAPER is NOT the CLI configuration -- by design (config.py docstring)
     assert set(rec["paper_minus_default"]["stage4"]) == {"screen_effort", "extract_effort", "deep_cap"}
 
 
 def test_default_budgets_reach_the_direct_route_unchanged():
     """E-1b / E-2b, executed: budgets=None reaches run_retrieval_from_plan as RouteRetrievalBudgets(); explicit PAPER budgets reach it as given."""
     import hashlib
-    from cgscout.profiles import PAPER
+    from cgscout.config import PAPER
     from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets
     import consolidation_world as W
 
