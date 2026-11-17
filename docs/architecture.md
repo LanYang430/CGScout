@@ -43,7 +43,7 @@ assembly steps of 3B), `retrieval/direct/*` (the direct stream: `evidence_plan.p
 `retrieval/related_systems/*` (`terminology`, `semantic_intent`, `extraction`, `discovery`, `postprocess` = cleanup + identity, `hop2`), `retrieval/concept_3a.py`, `retrieval/search.py` (`search_and_dedupe`, the Hop depths),
 `screening/{filter,sim_classifier}.py` (filter.py also holds the keyword helpers and the review/perspective check), `assessment/stage4.py` (also holds the P8 extraction prompt and message builder).
 
-Sources: `sources/openalex.py` (+ `openalex_usage.py`: budget, request cache, ledger), `sources/europepmc.py`, `sources/semantic_scholar.py` (optional, off by default).
+Sources: `sources/openalex.py` (+ `openalex_usage.py`: budget, request cache, ledger), `sources/europepmc.py` (the Methods-snippet client for Stage 3 and the abstract lookup used by Stage 3 recovery and the Stage 4 fallback), `sources/semantic_scholar.py` (optional, off by default).
 Shared: `llm.py` (backend protocol, OpenAI backend, usage log), `cache.py`, `models.py` (`Paper`), `config.py` (`PAPER`, `INTERACTIVE`; also the `CGSCOUT_*` environment lookup).
 
 ## Invariants worth knowing

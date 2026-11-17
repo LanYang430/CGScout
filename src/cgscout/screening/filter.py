@@ -625,9 +625,9 @@ def _recover_missing_abstracts(
     same MIN_ABSTRACT_CHARS rule as Stage 4's abstract fallback, which this moves in front of Stage 3). Returns the
     papers (enriched copies where an abstract was found) and a per-paper `recovered` flag. A failed or empty
     lookup leaves the paper untouched -- Stage 3 then sees exactly what it saw before. Lookups run in a small
-    thread pool; successful answers are cached by stage4 (failures never are)."""
+    thread pool; successful answers are cached by the lookup itself (failures never are)."""
     from concurrent.futures import ThreadPoolExecutor
-    from cgscout.assessment.stage4 import MIN_ABSTRACT_CHARS, europepmc_abstract   # local import: optional network dependency, only touched here
+    from cgscout.sources.europepmc import MIN_ABSTRACT_CHARS, europepmc_abstract   # local import: optional network dependency, only touched here
     lookup = lookup or europepmc_abstract
     need = [i for i, p in enumerate(papers) if len((p.abstract or "").strip()) < MIN_ABSTRACT_CHARS]
     out, recovered = list(papers), [False] * len(papers)

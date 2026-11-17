@@ -40,13 +40,8 @@ ranked, never treated as "not relevant").
 """
 from __future__ import annotations
 
-import html
-import json
 import re
 import time
-import urllib.error
-import urllib.parse
-import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from typing import Callable, Literal, Optional
@@ -56,6 +51,7 @@ from pydantic import BaseModel, Field
 from cgscout import cache
 from cgscout.models import Paper, ProcessEvidenceItem
 from cgscout.llm import LLMBackend
+from cgscout.sources.europepmc import MIN_ABSTRACT_CHARS, europepmc_abstract   # the abstract lookup lives in sources/europepmc.py; both names are used below and stay importable from here
 
 # ===== merged from `assessment/evidence_extraction.py` (moved verbatim; its docstring is this comment) =====================
 # Stage 4 per-paper extraction prompt (P8) and its user-message builder.
@@ -176,13 +172,11 @@ _build_extraction_message = _build_user_message
 SCREEN_PROMPT_VERSION = "s4v2-screen-3"   # v3: prompt no longer names the project (P7 audit); v2: reject/pass/insufficient_evidence (v1 graded 0-3)
 JUDGE_PROMPT_VERSION = "s4v2-judge-3"   # v3: prompt no longer names the project (P9 audit); v2: adds the verdict field (graded | insufficient_evidence)
 _NS_SCREEN, _NS_EXTRACT, _NS_JUDGE = "stage4_v2_screen", "stage4_v2_extract", "stage4_v2_judge"
-_NS_EPMC = "stage4_epmc_abstract"
 
 Computational = Literal["coarse_grained", "other_computational", "not_computational", "review_or_perspective"]
 Confidence = Literal["low", "medium", "high"]
 ScreenComputational = Literal["coarse_grained", "other_computational", "not_computational", "review_or_perspective", "unknown"]
 ScreenDecision = Literal["reject", "pass", "insufficient_evidence"]
-MIN_ABSTRACT_CHARS = 40     # below this there is no usable abstract
 
 
 # ------------------------------------------------------------------ schemas
@@ -454,43 +448,6 @@ def _screen_message(ctx: str, batch: list[tuple[int, Paper]], cfg: Stage4Config)
 
 def has_usable_abstract(p: Paper) -> bool:
     return len((p.abstract or "").strip()) >= MIN_ABSTRACT_CHARS
-
-
-# ------------------------------------------------- abstract fallback (Europe PMC)
-def _strip_markup(s: str) -> str:
-    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s or ""))).strip()
-
-
-def europepmc_abstract(p: Paper, *, timeout: float = 20.0) -> Optional[dict]:
-    """Look the paper up in Europe PMC by DOI (else PMID) and return {"abstract": str|None, "via": "doi"|"pmid"}.
-    Returns None when the paper has neither identifier (nothing to look up). Raises on a transport / HTTP
-    failure so the caller can tell 'no abstract exists' from 'could not ask'. Successful answers -- including
-    'found, but no abstract' -- are cached, failures never are."""
-    doi = (getattr(p, "doi", None) or "").strip().lower()
-    pmid = (getattr(getattr(p, "external_ids", None), "pmid", None) or "").strip()
-    if doi:
-        via, ident, query = "doi", doi, f'DOI:"{doi}"'
-    elif pmid:
-        via, ident, query = "pmid", pmid, f"EXT_ID:{pmid} AND SRC:MED"
-    else:
-        return None
-    key = cache.content_hash("epmc-abstract-v1", via, ident)
-    hit = cache.get(_NS_EPMC, key)
-    if hit is not None:
-        return hit
-    url = ("https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=" + urllib.parse.quote(query)
-           + "&resultType=core&format=json&pageSize=1")
-    req = urllib.request.Request(url, headers={"User-Agent": "BEAM-stage4-abstract-fallback/0.1", "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:        # URLError / HTTPError / timeout propagate
-        data = json.loads(r.read(2_000_000).decode("utf-8", "replace"))
-    results = (data.get("resultList") or {}).get("result") or []
-    rec = results[0] if results else None
-    if rec is not None and via == "doi" and (rec.get("doi") or "").strip().lower() != doi:
-        rec = None                                                  # not the same record -> do not borrow its abstract
-    abstract = _strip_markup(rec.get("abstractText") or "") if rec else ""
-    out = {"abstract": abstract or None, "via": via}
-    cache.set(_NS_EPMC, key, out)
-    return out
 
 
 def _apply_abstract_fallback(papers: list[Paper], cfg, counter) -> tuple[list[Paper], dict[str, str], dict[str, str]]:

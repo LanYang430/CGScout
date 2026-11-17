@@ -31,16 +31,26 @@ title/abstract before this. Deliberately narrow scope:
 Cached via beam_agent.cache (dev-speed + avoids re-hitting Europe PMC for
 the same DOI across runs) -- keyed on DOI alone, no TTL (a paper's own
 Methods text does not change after publication).
+
+The abstract lookup (`europepmc_abstract`, with `_strip_markup`, the cache namespace `_NS_EPMC` and the usable-abstract threshold `MIN_ABSTRACT_CHARS`) was moved
+here verbatim from assessment/stage4.py (Phase 5 / C3) so that both Stage 3 (abstract recovery) and Stage 4 (abstract fallback) reach it without Stage 3
+importing Stage 4.  It is a different client from fetch_methods_text: it uses urllib, looks a paper up by DOI (else PMID) in the search endpoint, and RAISES on
+a transport / HTTP failure, so a caller can tell "no abstract exists" from "could not ask"; its answers are cached under its own namespace.
 """
 from __future__ import annotations
 
+import html
+import json
 import re
+import urllib.parse
+import urllib.request
 import xml.etree.ElementTree as ET
 from typing import Optional
 
 import requests
 
 from cgscout import cache
+from cgscout.models import Paper
 
 _SEARCH_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
 _FULLTEXT_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML"
@@ -145,3 +155,44 @@ def snippet_around(text: str, markers: tuple[str, ...]) -> Optional[str]:
     prefix = "…" if start > 0 else ""
     suffix = "…" if end < len(text) else ""
     return prefix + text[start:end].strip() + suffix
+
+
+# ===== moved verbatim from assessment/stage4.py (Phase 5 / C3): the abstract lookup used by Stage 3 recovery and the Stage 4 fallback =====
+_NS_EPMC = "stage4_epmc_abstract"
+MIN_ABSTRACT_CHARS = 40     # below this there is no usable abstract
+
+
+def _strip_markup(s: str) -> str:
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s or ""))).strip()
+
+
+def europepmc_abstract(p: Paper, *, timeout: float = 20.0) -> Optional[dict]:
+    """Look the paper up in Europe PMC by DOI (else PMID) and return {"abstract": str|None, "via": "doi"|"pmid"}.
+    Returns None when the paper has neither identifier (nothing to look up). Raises on a transport / HTTP
+    failure so the caller can tell 'no abstract exists' from 'could not ask'. Successful answers -- including
+    'found, but no abstract' -- are cached, failures never are."""
+    doi = (getattr(p, "doi", None) or "").strip().lower()
+    pmid = (getattr(getattr(p, "external_ids", None), "pmid", None) or "").strip()
+    if doi:
+        via, ident, query = "doi", doi, f'DOI:"{doi}"'
+    elif pmid:
+        via, ident, query = "pmid", pmid, f"EXT_ID:{pmid} AND SRC:MED"
+    else:
+        return None
+    key = cache.content_hash("epmc-abstract-v1", via, ident)
+    hit = cache.get(_NS_EPMC, key)
+    if hit is not None:
+        return hit
+    url = ("https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=" + urllib.parse.quote(query)
+           + "&resultType=core&format=json&pageSize=1")
+    req = urllib.request.Request(url, headers={"User-Agent": "BEAM-stage4-abstract-fallback/0.1", "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:        # URLError / HTTPError / timeout propagate
+        data = json.loads(r.read(2_000_000).decode("utf-8", "replace"))
+    results = (data.get("resultList") or {}).get("result") or []
+    rec = results[0] if results else None
+    if rec is not None and via == "doi" and (rec.get("doi") or "").strip().lower() != doi:
+        rec = None                                                  # not the same record -> do not borrow its abstract
+    abstract = _strip_markup(rec.get("abstractText") or "") if rec else ""
+    out = {"abstract": abstract or None, "via": via}
+    cache.set(_NS_EPMC, key, out)
+    return out
