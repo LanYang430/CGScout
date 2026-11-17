@@ -28,7 +28,8 @@ SIM_T = "cgscout.retrieval._sim_transfer"       # plays the executors module (3A
 SIM_A = "cgscout._sim_agent"                    # plays the dispatch module (agent.py): entry, Stage 3
 BASE_A = json.loads(W.FIXTURE.read_text())
 BASE_P5 = json.loads(W.FIXTURE_P5.read_text())
-BASELINE_OF = {**BASE_A, **BASE_P5}
+BASE_L2 = json.loads(W.FIXTURE_L2.read_text())
+BASELINE_OF = {**BASE_A, **BASE_P5, **BASE_L2}
 
 
 def _exec_as(name, source_path, rewrite=None):
@@ -180,5 +181,5 @@ def test_every_registered_layout_is_consistent(layout):
 
 def test_the_baseline_fixtures_are_the_tagged_ones():
     """Read-only: the stored baselines carry the structural facts of tag consol-0-baseline; a cheap tripwire against an accidental regeneration."""
-    assert sorted(BASE_A) == sorted(W.SCENARIOS) and sorted(BASE_P5) == sorted(W.SCENARIOS_P5)
+    assert sorted(BASE_A) == sorted(W.SCENARIOS) and sorted(BASE_P5) == sorted(W.SCENARIOS_P5) and sorted(BASE_L2) == sorted(W.SCENARIOS_L2)
     assert BASE_A["R01_real_search_stack_recorder"]["recorder_installed_in"] == ["cgscout.retrieval.orchestrator", "cgscout.retrieval.search_adapters"]

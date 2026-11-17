@@ -49,6 +49,7 @@ from cgscout.retrieval.related_systems.terminology import TerminologyExpansion
 
 FIXTURE = Path(__file__).resolve().parent / "fixtures" / "consolidation" / "baseline_traces.json"
 FIXTURE_P5 = Path(__file__).resolve().parent / "fixtures" / "consolidation" / "baseline_p5_traces.json"
+FIXTURE_L2 = Path(__file__).resolve().parent / "fixtures" / "consolidation" / "baseline_l2_traces.json"
 
 
 class BudgetExhausted(BaseException):
@@ -276,7 +277,23 @@ SCENARIOS_P5 = {
     "P5R04_warm_second_run": dict(prior=[axis()], aliases=ALIASES_A, real_p5=True, runs=2),
     "P5R05_basis_physical_process": dict(prior=[axis(basis="physical_process")], aliases=ALIASES_A, real_p5=True),
 }
-ALL_SCENARIOS = {**SCENARIOS, **SCENARIOS_P5}
+
+
+# ---- third family (written from the code of tag consol-2b-done, i.e. with the OLD _run_related_system_discovery, before the 3B L2 skeleton replaced it): the real cleanup /
+# identity / candidate assembly / tag write-back on data that exercises the in-place merges and the shared paper cache across axes.
+def _systems_cleanup():
+    """EspP survives; "of the Escherichia coli Autotransporter EspP" ends with it (suffix duplicate: merged into EspP, in place); "related" is on the fragment blocklist
+    (dropped); "EspP-BamA interaction" is an interaction-shaped duplicate (merged for a monomer objective)."""
+    return [system("EspP", 3, 1), system("Hbp", 2, 2), system("of the Escherichia coli Autotransporter EspP", 1, 4), system("related", 1, 5),
+            system("EspP-BamA interaction", 1, 6)]
+
+
+SCENARIOS_L2 = {
+    "L2R01_cleanup_merges_in_place": dict(prior=[axis()], aliases=["alpha-solenoid"], systems=_systems_cleanup),
+    "L2R02_cleanup_then_p3_fails_and_hop2_raises": dict(prior=[axis()], p3="fail", hop2="raise", systems=_systems_cleanup),
+    "L2R03_two_3b_axes_share_the_paper_cache": dict(prior=[axis(), axis(anchors=("second anchor",))], aliases=["alpha-solenoid"], systems=_systems_basic),
+}
+ALL_SCENARIOS = {**SCENARIOS, **SCENARIOS_P5, **SCENARIOS_L2}
 
 
 def _paper_row(p):
@@ -495,5 +512,7 @@ if __name__ == "__main__":
         _write(FIXTURE, SCENARIOS)
     elif "--write-p5" in sys.argv:
         _write(FIXTURE_P5, SCENARIOS_P5)
+    elif "--write-l2" in sys.argv:
+        _write(FIXTURE_L2, SCENARIOS_L2)
     else:
-        sys.exit("usage: python tests/consolidation_world.py --write | --write-p5   (baseline only; refuses to overwrite)")
+        sys.exit("usage: python tests/consolidation_world.py --write | --write-p5 | --write-l2   (baseline only; refuses to overwrite)")
