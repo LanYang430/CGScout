@@ -11,8 +11,8 @@ adapters (formerly retrieval/search_adapters.py, merged here unchanged).
 
 Deliberately does NOT touch the structural branch: grounded_structural_
 feature is always None here, so EvidenceRoutePlan.structural_terms stays
-empty and structural_branch_enabled is False -- the structural/related-
-system branch stays fully paused, exactly as on the old path right now.
+empty -- the structural/related-system branch stays fully paused, exactly as
+on the old path right now.
 run_route_retrieval() has no parameters for the structural branch (Hop-1
 / Hop-2 search and extraction functions): a plan that enables it raises
 NotImplementedError.

@@ -213,12 +213,6 @@ class RouteRetrievalPlan(BaseModel):
     system_description: str
     scientific_objective: str
     route_queries: list[RouteQuery] = Field(default_factory=list)
-    structural_branch_enabled: bool = False
-    structural_branch_structural_class: Optional[str] = None
-    structural_branch_structural_class_source: Optional[str] = None
-    structural_branch_also_known_as: list[str] = Field(default_factory=list)  # filled during execution (TerminologyExpander)
-    # audit trail for structural terms NOT chosen as primary (never re-run through Hop-1)
-    structural_branch_secondary_terms: list[dict] = Field(default_factory=list)  # [{"term":..., "source":...}]
     budgets: RouteRetrievalBudgets = Field(default_factory=RouteRetrievalBudgets)
     empty_routes: list[str] = Field(default_factory=list)
 
@@ -765,16 +759,10 @@ def build_route_retrieval_plan(
     else:
         route_queries += build_need_semantic_queries(evidence_plan, budgets)     # P3 (empty unless budgets.need_semantic_enabled)
 
-    primary, secondary = select_primary_structural_term(evidence_plan.structural_terms)
-
     plan = RouteRetrievalPlan(
         system_description=evidence_plan.system_description,
         scientific_objective=evidence_plan.scientific_objective,
         route_queries=route_queries,
-        structural_branch_enabled=primary is not None,
-        structural_branch_structural_class=primary.term if primary else None,
-        structural_branch_structural_class_source=primary.source if primary else None,
-        structural_branch_secondary_terms=[{"term": t.term, "source": t.source} for t in secondary],
         budgets=budgets,
         empty_routes=list(evidence_plan.empty_routes),
     )
@@ -1014,7 +1002,7 @@ def run_route_retrieval(
         per_route.append(_run_flat_route(NEED_SEMANTIC_ROUTE, need_queries, lambda q, _l: need_semantic_search_fn(q, limit), budgets, acc))
 
     structural_result: Optional[Hop2Result] = None
-    if plan.structural_branch_enabled:
+    if evidence_plan.structural_terms:
         raise NotImplementedError(
             "the structural (Hop-1/Hop-2) branch of run_route_retrieval() was removed (historical code, git tag "
             "`legacy-pre-cgscout`); the live path never enables it -- planner_retrieval_bridge always clears structural_terms."

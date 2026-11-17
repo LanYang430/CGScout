@@ -62,5 +62,5 @@ the `modeling_requirement` route name is kept in `FLAT_ROUTES` although no queri
 
 Removed in the Phase 3 cleanup because nothing read their output (verified by a reader trace and by an old-vs-new differential of the direct route): the analysers that filled
 `EvidenceRoutePlan.direct_system_terms`, `modeling_requirement_terms` and the lexically derived `structural_terms`. The fields stay in the models (schemas unchanged), as do the explicit-input
-handling of `plan_evidence_routes` (grounded structural feature, literature mentions), `select_primary_structural_term` and the `NotImplementedError` guard in `run_route_retrieval`.
+handling of `plan_evidence_routes` (grounded structural feature, literature mentions), `select_primary_structural_term` (nothing calls it since the Phase 5 cleanup: the guard tests `structural_terms` itself) and the `NotImplementedError` guard in `run_route_retrieval`.
 So `empty_routes` / `route_justification` now report the modeling-requirement route as always empty, and the structural route as empty unless a structural term is passed in explicitly (no code reads those two fields).
