@@ -200,13 +200,6 @@ def run_query(row, backend_w, s4cfg):
     run_label = f"cgscout_{pid}"
     t0 = time.time()
     rec = {"pid": pid, "query": query, "ts_start": time.strftime("%Y-%m-%d %H:%M:%S"), "clarifications": [], "code": f"cgscout_{ARM_NAME}", "arm": ARM_NAME}
-    stash = {}
-    orig_ret, orig_s4 = RL.run_expert_prior_retrieval, RL.run_stage4_v2
-    def ret_w(*a, **k):
-        r = orig_ret(*a, **k); stash["res"] = r; return r
-    def s4_w(*a, **k):
-        r = orig_s4(*a, **k); stash["s4"] = r; return r
-    RL.run_expert_prior_retrieval, RL.run_stage4_v2 = ret_w, s4_w
     try:
         fp = AR.frozen_plan(pid)                            # PHASE 0 output: one ScientificPlanner + one ExpertPrior generation per case, identical in every arm
         if fp.get("status") != "READY":
@@ -231,7 +224,7 @@ def run_query(row, backend_w, s4cfg):
                 REC.records.clear(); return _orig_run_plan(*a, **k)
             RL.run_plan = _run_plan_clear
             try:
-                run = RL.run_plan_checked(backend_w, eff, run_label, {"seed": [seed_doi]}, user_request=fp.get("user_request", query), stage4=True, stage4_config=s4cfg,
+                run, agent_result = RL.run_plan_checked(backend_w, eff, run_label, {"seed": [seed_doi]}, user_request=fp.get("user_request", query), stage4=True, stage4_config=s4cfg,
                                           expert_prior=ep_fixed, budgets=BUDGETS)
             finally:
                 RL.run_plan = _orig_run_plan; REC.uninstall()
@@ -242,7 +235,7 @@ def run_query(row, backend_w, s4cfg):
             rec["api_usage"] = u
             rec["degraded"] = bool(run.get("degraded")); rec["attempts"] = run.get("attempts")
             rec["status"] = "DEGRADED" if run.get("degraded") else "OK"
-            res, s4 = stash.get("res"), stash.get("s4")
+            res, s4 = agent_result.retrieval, agent_result.assessment       # the results of the last attempt (run_plan_checked returns them with the record)
             rec["expert_prior"] = run["expert_prior"]; rec["queries"] = run["queries"]
             n_q = {"flat": len(run["queries"]["flat_route"]),
                    "3A": sum(len(a["direct_queries"]) for a in run["queries"]["axes"]),
@@ -306,8 +299,6 @@ def run_query(row, backend_w, s4cfg):
         rec["error"] = f"{type(e).__name__}: {str(e)[:400]}"
         if rec["status"] == "ERROR":
             rec["traceback"] = traceback.format_exc()[-1500:]
-    finally:
-        RL.run_expert_prior_retrieval, RL.run_stage4_v2 = orig_ret, orig_s4
     t1 = time.time()
     rec["llm"], rec["llm_by_label"] = llm_window(t0, t1)
     rec["seconds"] = round(t1 - t0, 1); rec["ts_end"] = time.strftime("%Y-%m-%d %H:%M:%S")

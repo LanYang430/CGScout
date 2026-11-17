@@ -2,7 +2,7 @@
 
 cli.py had no test at all.  These tests PIN ITS CURRENT BEHAVIOUR (including the wording it prints today); they do not change it.
 The real PlannerSession, ScientificPlanner, ExpertPriorPlanner and main() loop run against a scripted LLM backend; only the two network-bound
-entry points (run_expert_prior_retrieval, run_stage4_v2) are replaced by recorders, and every argument the CLI hands them is asserted.
+entry points (agent.retrieve, agent.assess: what the CLI reaches through agent.run) are replaced by recorders, and every argument they receive is asserted.
 No network, no API key, no LLM."""
 import builtins
 import os
@@ -13,7 +13,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from cgscout import cli
+from cgscout import agent, cli
 from cgscout.assessment.stage4 import Judgment, PaperAssessment, Stage4Result
 from cgscout.models import Paper
 from cgscout.planning.expert_prior_planner import ExpertPriorOutput
@@ -80,22 +80,22 @@ class Rig:
                 raise v
             return v
 
-        def fake_retrieval(plan, expert_prior, *, backend, case_id=None):
-            self.retrieval_calls.append(dict(plan=plan, expert_prior=expert_prior, backend=backend, case_id=case_id))
+        def fake_retrieval(plan, expert_prior, *, backend, config=None, case_id=None):
+            self.retrieval_calls.append(dict(plan=plan, expert_prior=expert_prior, backend=backend, config=config, case_id=case_id))
             if isinstance(self.retrieval_error, Exception):
                 raise self.retrieval_error
             return SimpleNamespace(direct_papers=self.retained[:1], transfer_papers=self.retained[1:], retained=list(self.retained), rejected=[paper("Filtered", 2001)])
 
-        def fake_stage4(plan, expert_prior, retained, backend, *, user_request=None, case_id=None):
-            self.stage4_calls.append(dict(plan=plan, expert_prior=expert_prior, retained=retained, backend=backend, user_request=user_request, case_id=case_id))
+        def fake_stage4(plan, expert_prior, retained, *, backend, config=None, case_id=None, user_request=None):
+            self.stage4_calls.append(dict(plan=plan, expert_prior=expert_prior, retained=retained, backend=backend, config=config, user_request=user_request, case_id=case_id))
             return self.stage4_result
 
         self.retrieval_error = None
         monkeypatch.setattr(builtins, "input", fake_input)
         monkeypatch.setattr(sys, "argv", list(argv))
         monkeypatch.setattr(cli, "get_backend", lambda: self.backend)
-        monkeypatch.setattr(cli, "run_expert_prior_retrieval", fake_retrieval)
-        monkeypatch.setattr(cli, "run_stage4_v2", fake_stage4)
+        monkeypatch.setattr(agent, "retrieve", fake_retrieval)
+        monkeypatch.setattr(agent, "assess", fake_stage4)
 
     def run(self):
         assert cli.main() is None
@@ -166,8 +166,10 @@ def test_the_plan_and_expert_prior_are_passed_on_unchanged(rig):
     r.run()
     (call,) = r.retrieval_calls
     assert call["plan"] == p and call["expert_prior"] == ExpertPriorOutput(transfer_needed=False) and call["backend"] is r.backend
+    assert call["config"] == agent.AgentConfig()                 # the command line runs with the library defaults: no budgets, no Stage-4 config
     (s4,) = r.stage4_calls
     assert s4["plan"] == p and s4["retained"] == r.retained and s4["user_request"] == "my request" and s4["backend"] is r.backend
+    assert s4["config"] == agent.AgentConfig()
     ep_call = r.backend.calls[1]
     assert ep_call["label"] == "expert_prior_planner" and 'SYSTEM (already resolved): "EspP passenger domain"' in ep_call["user"] and "STATED CONTEXT: ['membrane']" in ep_call["user"]
 

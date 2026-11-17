@@ -3,11 +3,11 @@ Stage 4). The old A/B/Guard/Gate/C/D intake path (chat_with_beam.py,
 concept_resolver_session.py) is historical code kept in the git tag
 `legacy-pre-cgscout`.
 
-Live path:
+Live path (cgscout.agent.run does the work; this module is only the terminal loop and the printing):
     PlannerSession (one ScientificPlanner call + thin router)
-    -> retrieval.direct.from_planner.run_retrieval_from_plan()
-       -> plan_evidence_routes() + run_route_retrieval()   [UNCHANGED]
-    -> screening.filter.filter_papers()                     [UNCHANGED, Stage 3]
+    -> ExpertPriorPlanner.propose()                         [agent.propose_prior]
+    -> retrieval (direct routes, 3A, 3B, merge) + Stage 3   [agent.retrieve]
+    -> Stage 4 assessment                                   [agent.assess, only when something was retained]
 
 Stage 4 (assessment/stage4.py): an LLM evaluates the scientific relevance of every
 Stage-3-retained paper against the user's problem (graded 0-3, evidence-based
@@ -23,11 +23,11 @@ from __future__ import annotations
 import argparse
 
 
+from cgscout import agent  # noqa: E402
 from cgscout.planning.session import PlannerSession  # noqa: E402
 from cgscout.llm import get_backend, backend_label, LLMBackend  # noqa: E402
-from cgscout.planning.expert_prior_planner import ExpertPriorPlanner  # noqa: E402
-from cgscout.retrieval.orchestrator import run_expert_prior_retrieval, rank_for_display  # noqa: E402
-from cgscout.assessment.stage4 import run_stage4_v2  # noqa: E402
+from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
+from cgscout.retrieval.orchestrator import rank_for_display  # noqa: E402
 
 BANNER = (
     "BEAM (scientific-planner-v2 -- Plan B live path)\n"
@@ -37,9 +37,7 @@ BANNER = (
 )
 
 
-def run_retrieval(session: PlannerSession, backend: LLMBackend, *, case_id: str | None = None,
-                  use_stage4: bool = True, user_request: str | None = None) -> None:
-    plan = session.last_plan
+def _print_plan(plan: PlannerOutput) -> None:
     print(f"BEAM: (plan) system={plan.system!r}"
           + (f" target_component={plan.target_component!r}" if plan.target_component else ""))
     print(f"      objective={plan.scientific_objective!r}")
@@ -48,16 +46,10 @@ def run_retrieval(session: PlannerSession, backend: LLMBackend, *, case_id: str 
     if plan.search_axes:
         print(f"      search_axes={plan.search_axes!r}")
 
-    expert_prior_planner = ExpertPriorPlanner(backend)
-    expert_prior = expert_prior_planner.propose(
-        system=plan.system, target_component=plan.target_component,
-        scientific_objective=plan.scientific_objective, search_context=plan.search_context,
-        case_id=case_id,
-    )
-    result = run_expert_prior_retrieval(plan, expert_prior, backend=backend, case_id=case_id)
 
-    if use_stage4 and result.retained:
-        s4 = run_stage4_v2(plan, expert_prior, list(result.retained), backend, user_request=user_request, case_id=case_id)
+def print_result(out: agent.AgentResult) -> None:
+    result, s4 = out.retrieval, out.assessment
+    if s4 is not None:                 # Stage 4 ran: the gate said yes (it was asked for and something was retained)
         w = s4.workload
         print("\nBEAM: Evidence for your specific problem (ranked by scientific relevance)")
         print(f"  {len(result.direct_papers) + len(result.transfer_papers)} candidates -> {w['n_retained']} kept by the cheap filter -> "
@@ -103,11 +95,13 @@ def run_retrieval(session: PlannerSession, backend: LLMBackend, *, case_id: str 
 
 def handle_turn(session: PlannerSession, text: str, backend: LLMBackend, *, case_id: str | None = None,
                 use_stage4: bool = True) -> None:
-    result = session.submit_user_message(text)
-    if result.status == "awaiting_user":
-        print(f"BEAM: {result.display_question_to_user}")
-    elif result.status == "ready":
-        run_retrieval(session, backend, case_id=case_id, use_stage4=use_stage4, user_request=text)
+    out = agent.run(text, backend=backend, session=session, case_id=case_id,
+                    gate=None if use_stage4 else (lambda res: False),      # default gate: Stage 4 only when something was retained
+                    on_plan=_print_plan)
+    if isinstance(out, agent.Clarification):
+        print(f"BEAM: {out.question}")
+    else:
+        print_result(out)
 
 
 def main() -> None:

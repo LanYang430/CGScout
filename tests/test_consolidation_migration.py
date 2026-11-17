@@ -75,6 +75,16 @@ def test_simulated_move_reproduces_the_baseline(name, sim, tmp_path, monkeypatch
         assert LY.normalize(got, sim_layout())["recorder_installed_in"] == BASE_A[name]["recorder_installed_in"]   # ... and equal to the old list after the approved rename
 
 
+# ---------------------------------------------------------------------------------------------------------------- every registered entry, same baseline (T9)
+@pytest.mark.parametrize("layout", sorted(LY.LAYOUTS.values(), key=lambda l: l.name), ids=lambda l: l.name)
+def test_every_registered_layout_reproduces_every_baseline_trace(layout, tmp_path, monkeypatch):
+    """The old and the new entry are both live in 2a: each must produce the stored baseline traces (events, results, cache keys, LLM and patch call counts, recorder L/X/U)."""
+    for name in sorted(W.ALL_SCENARIOS):
+        got = run(name, layout, tmp_path, monkeypatch)
+        why = LY.diff_against_baseline(got, BASELINE_OF[name], layout)
+        assert not why, f"{layout.name} / {name}: {why}"
+
+
 # ---------------------------------------------------------------------------------------------------------------- negative controls
 def test_patch_left_on_the_old_module_is_detected(sim, tmp_path, monkeypatch):
     t = dict(LY.baseline_targets(SIM))

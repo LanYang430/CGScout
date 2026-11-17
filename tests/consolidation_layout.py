@@ -74,10 +74,16 @@ def legacy_retrieval(layout: Layout, plan, prior, *, backend, budgets, case_id):
     return fn(plan, prior, backend=backend, budgets=budgets, case_id=case_id)
 
 
-# A unified entry (plan v2, Phase 2a) is added HERE, in that phase's commit.  Its adapter must: (1) map `budgets` (None -> the default config) into the
-# new config object WITHOUT turning None into PAPER; (2) switch Stage 4 OFF (the world fakes Stage 3 only, Stage 4 has its own entry baselines in
-# tests/test_consolidation_entries.py); (3) pass backend/case_id unchanged; (4) return the retrieval result object (not an AgentResult wrapper).
-ADAPTERS = {"legacy_retrieval": legacy_retrieval}
+def agent_execute(layout: Layout, plan, prior, *, backend, budgets, case_id):
+    """Unified entry (Phase 2a): cgscout.agent.execute.  (1) `budgets` goes into the agent configuration; None stays None = the default configuration, NEVER the paper
+    profile; (2) Stage 4 is switched OFF by a gate that says no (the world fakes Stage 3 only; Stage 4 has its own entry baselines in
+    tests/test_consolidation_entries.py); (3) backend/case_id pass unchanged; (4) the adapter returns the RETRIEVAL result of the AgentResult, not the wrapper."""
+    mod = importlib.import_module(layout.entry[0])
+    out = getattr(mod, layout.entry[1])(plan, prior, backend=backend, config=mod.AgentConfig(budgets=budgets), case_id=case_id, gate=lambda res: False)
+    return out.retrieval
+
+
+ADAPTERS = {"legacy_retrieval": legacy_retrieval, "agent_execute": agent_execute}
 
 
 class ContractViolation(AssertionError):
@@ -116,9 +122,16 @@ PHASE1 = dataclasses.replace(
     module_aliases={"cgscout.retrieval.direct.from_planner": "cgscout.retrieval.search_adapters"},
     approval="Phase 1 / A3: search_adapters merged into from_planner (owner approved Phase 1-4 on 2026-11-16; CONSOLIDATION_PLAN_v2 section 3.3 + Addendum)")
 
+# Phase 2a: the entry is agent.execute (the CLI reaches it through agent.run, the evaluation harness calls it); the flow itself has not moved (it is still
+# run_expert_prior_retrieval in orchestrator.py, which agent.retrieve delegates to), so collaborators, patch targets and recorder binders are those of phase1.
+# The legacy entry still exists in 2a, so `phase1` stays valid and is registered next to it: both entries must reproduce the same baseline traces.
+PHASE2A = dataclasses.replace(
+    PHASE1, name="phase2a", entry=("cgscout.agent", "execute"), adapter="agent_execute",
+    approval="Phase 2a: unified entry cgscout.agent (owner approved Phase 1-4 on 2026-11-16; CONSOLIDATION_PLAN_v2 section 8 + Addendum)")
+
 # `baseline` is kept as the reference object for the aliases but is no longer a valid layout of the current tree (search_adapters is gone), so it is not registered.
-LAYOUTS = {"phase1": PHASE1}
-CURRENT = "phase1"
+LAYOUTS = {"phase1": PHASE1, "phase2a": PHASE2A}
+CURRENT = "phase2a"
 
 
 def active_layout() -> Layout:

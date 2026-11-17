@@ -44,9 +44,16 @@ def test_search_module_loads_no_legacy_code():
 def test_cgscout_path_loads_no_legacy_code_and_needs_no_local_model_packages():
     # `sys.modules[name] = None` makes `import name` raise ImportError: the path must work on an install without these packages.
     code = ("sys.modules['mellea'] = None\nsys.modules['ollama'] = None\n"
-            "import cgscout.retrieval.orchestrator, cgscout.assessment.stage4, cgscout.cli\n")
+            "import cgscout.retrieval.orchestrator, cgscout.assessment.stage4, cgscout.cli, cgscout.agent\n")
     loaded = _loaded(code, LEGACY)
     assert not [w for w in LEGACY if loaded[w]], loaded
+
+
+def test_importing_the_agent_loads_no_benchmark_code_and_no_heavy_or_legacy_packages():
+    """T10: `import cgscout.agent` is as light as the command line was (requests, pydantic); no benchmark code, no numpy/joblib/scikit-learn, no legacy or local-model packages."""
+    watch = LEGACY + ["benchmark", "numpy", "joblib", "sklearn"]
+    loaded = _loaded("import cgscout.agent", watch)
+    assert not [w for w in watch if loaded[w]], loaded
 
 
 def test_search_wrappers_keep_the_module_level_names_the_harness_uses():

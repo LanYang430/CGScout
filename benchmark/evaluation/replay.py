@@ -128,28 +128,21 @@ for pid in PIDS:
     plan = RP.build_route_retrieval_plan(evidence_plan_from_planner_output(po), BUDGETS)
     roles = {}
     for q in plan.route_queries: roles.setdefault(q.query, []).append([q.route, q.query_role])
-    stash = {}
-    orig_ret, orig_s4 = RL.run_expert_prior_retrieval, RL.run_stage4_v2
-    def ret_w(*a, **k):
-        r = orig_ret(*a, **k); stash["res"] = r; return r
-    def s4_w(*a, **k):
-        r = orig_s4(*a, **k); stash["s4"] = r; return r
-    RL.run_expert_prior_retrieval, RL.run_stage4_v2 = ret_w, s4_w
     REC = Recorder(lambda: U.run_usage(run_label), lambda p_: is_seed(p_, seed_doi, seed_oa), roles).install()
     n_llm0, n_net0, n_unk0 = len(BACKEND.attempts), len(NET), len(UNKNOWN)
     err = None
     try:
-        run = RL.run_plan_checked(BACKEND, eff, run_label, {"seed": [seed_doi]}, user_request=fp.get("user_request", row["Latest query (v2)"]),
+        run, agent_result = RL.run_plan_checked(BACKEND, eff, run_label, {"seed": [seed_doi]}, user_request=fp.get("user_request", row["Latest query (v2)"]),
                                   stage4=True, stage4_config=S4CFG, expert_prior=ep, budgets=BUDGETS, max_tries=1)
     except BaseException as e:   # noqa: BLE001
-        run, err = None, repr(e)
+        run, agent_result, err = None, None, repr(e)
     finally:
-        RL.run_expert_prior_retrieval, RL.run_stage4_v2 = orig_ret, orig_s4
         REC.uninstall()
-    out = {"pid": pid, "error": err, "run": ser(run), "res": ser(stash.get("res")), "s4": ser(stash.get("s4")), "requests": ser(REC.records)}
+    res_, s4_ = (agent_result.retrieval, agent_result.assessment) if agent_result is not None else (None, None)
+    out = {"pid": pid, "error": err, "run": ser(run), "res": ser(res_), "s4": ser(s4_), "requests": ser(REC.records)}
     (OUT / "cases" / f"{pid}.json").write_text(json.dumps(out, sort_keys=True, ensure_ascii=False, indent=1))
     summary["cases"][pid] = {"error": err, "llm_attempts": len(BACKEND.attempts) - n_llm0, "net_attempts": len(NET) - n_net0, "unknown_classifier_papers": len(UNKNOWN) - n_unk0,
-                             "n_requests": len(REC.records), "degraded": (run or {}).get("degraded"), "n_retained": len(getattr(stash.get("res"), "retained", []) or [])}
+                             "n_requests": len(REC.records), "degraded": (run or {}).get("degraded"), "n_retained": len(getattr(res_, "retained", []) or [])}
     print(pid, summary["cases"][pid], flush=True)
 
 summary["llm_attempt_labels"] = sorted({a["label"] for a in BACKEND.attempts})

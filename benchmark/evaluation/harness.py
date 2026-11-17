@@ -1,6 +1,6 @@
 """Shared end-to-end runner + artifact saver for the 13-case regression suite
 and the offline canonical-schema validation. Calls production code
-UNMODIFIED (ScientificPlanner / ExpertPriorPlanner / run_expert_prior_retrieval)
+UNMODIFIED (ScientificPlanner / ExpertPriorPlanner / cgscout.agent.execute)
 and only records what it returns. NOT imported by beam_agent.
 
 Route attribution is by SOURCE LIST, not by category label alone:
@@ -19,10 +19,10 @@ import time
 from cgscout.sources import openalex_usage as U  # noqa: E402  (budget / cache / ledger / latch)
 from cgscout.sources import openalex as _OA  # noqa: E402
 from cgscout import cache as _cache  # noqa: E402
-from cgscout.planning.expert_prior_planner import ExpertPriorPlanner  # noqa: E402
 from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
-from cgscout.retrieval.orchestrator import run_expert_prior_retrieval, rank_for_display  # noqa: E402
-from cgscout.assessment.stage4 import run_stage4_v2, Stage4Config, _paper_key as _s4_key  # noqa: E402
+from cgscout.agent import AgentConfig, execute as agent_execute, propose_prior  # noqa: E402
+from cgscout.retrieval.orchestrator import rank_for_display  # noqa: E402
+from cgscout.assessment.stage4 import _paper_key as _s4_key  # noqa: E402
 from cgscout.llm import read_usage_log  # noqa: E402
 
 
@@ -105,39 +105,42 @@ def make_plan(plan_fields: dict) -> PlannerOutput:
 
 
 def propose(backend, plan_fields: dict, case_id: str):
-    plan = make_plan(plan_fields)
-    return ExpertPriorPlanner(backend).propose(
-        system=plan.system, target_component=plan.target_component,
-        scientific_objective=plan.scientific_objective, search_context=plan.search_context, case_id=case_id)
+    return propose_prior(make_plan(plan_fields), backend=backend, case_id=case_id)
 
 
 def run_plan(backend, plan_fields: dict, case_id: str, targets: dict, top_n: int = 15,
-             expert_prior=None, budgets=None, user_request=None, stage4: bool = False, stage4_config=None) -> dict:
-    """targets: {label: [doi, ...]} (list = acceptable alternates).
+             expert_prior=None, budgets=None, user_request=None, stage4: bool = False, stage4_config=None) -> tuple:
+    """-> (rec, agent_result): the record dict, and the cgscout.agent.AgentResult of the run (its .retrieval / .assessment are the retrieval and Stage-4 results).
+    targets: {label: [doi, ...]} (list = acceptable alternates).
     expert_prior: reuse a previously proposed ExpertPrior (isolates planner-input effects
     from downstream effects). budgets: optional RouteRetrievalBudgets override passed
-    straight to run_expert_prior_retrieval (no production edit)."""
+    to the retrieval through the agent configuration (no production edit)."""
     plan = make_plan(plan_fields)
     ep = expert_prior or propose(backend, plan_fields, case_id)
-    kw = {"budgets": budgets} if budgets is not None else {}
     U.reset_run(case_id)
     U.set_run_label(case_id)          # every real HTTP request / cache hit below is attributed to this run
-    res = run_expert_prior_retrieval(plan, ep, backend=backend, case_id=case_id, **kw)
-    api = U.run_usage(case_id)
-    ex = U.exhausted()
-    if ex:   # budget ran out but the pipeline swallowed it (strict mode off): this run must never be scored
-        raise U.OpenAlexBudgetExhausted(U.exhausted_message(ex), headers=ex.get("headers"), reset_s=ex.get("reset_s"))
-    axis_errors = [str(l.error)[:120] for l in res.axis_logs if l.error]
-    # Any failed HTTP request (429 / network) means some searches returned nothing for reasons unrelated
-    # to retrieval quality: the run is degraded and excluded from recall counts (never a "miss").
-    degraded = bool(api["failed_requests"] or axis_errors)
+    health = {}
 
-    # ---- Stage 4 (LLM relevance evaluation of the Stage-3-retained papers) ----------------------------
-    s4 = None
+    def gate(res):
+        """The evaluation's gate between retrieval and Stage 4: budget exhaustion raises, a degraded run is not assessed."""
+        health["api"] = U.run_usage(case_id)
+        ex = U.exhausted()
+        if ex:   # budget ran out but the pipeline swallowed it (strict mode off): this run must never be scored
+            raise U.OpenAlexBudgetExhausted(U.exhausted_message(ex), headers=ex.get("headers"), reset_s=ex.get("reset_s"))
+        health["axis_errors"] = [str(l.error)[:120] for l in res.axis_logs if l.error]
+        # Any failed HTTP request (429 / network) means some searches returned nothing for reasons unrelated
+        # to retrieval quality: the run is degraded and excluded from recall counts (never a "miss").
+        health["degraded"] = bool(health["api"]["failed_requests"] or health["axis_errors"])
+        return bool(stage4 and not health["degraded"])      # a degraded run is discarded/retried; do not spend LLM calls on it
+
+    # ---- retrieval + Stage 3, the gate, and (if it says yes) Stage 4: the LLM relevance evaluation of the Stage-3-retained papers ----
+    agent_result = agent_execute(plan, ep, backend=backend, config=AgentConfig(budgets=budgets, stage4=stage4_config), case_id=case_id,
+                                 user_request=user_request, gate=gate)
+    res, s4 = agent_result.retrieval, agent_result.assessment
+    api, axis_errors, degraded = health["api"], health["axis_errors"], health["degraded"]
     s4_usage = None
-    if stage4 and not degraded:        # a degraded run is discarded/retried; do not spend LLM calls on it
-        t_s4 = time.time()
-        s4 = run_stage4_v2(plan, ep, list(res.retained), backend, user_request=user_request, case_id=case_id, config=stage4_config)
+    if s4 is not None:
+        t_s4 = agent_result.assess_started_at
         rows = [r for r in read_usage_log() if r.get("ts", 0) >= t_s4 and str(r.get("label", "")).startswith("stage4")]
         s4_usage = {"llm_calls": len(rows), "input_tokens": sum(r.get("input_tokens", 0) for r in rows),
                     "output_tokens": sum(r.get("output_tokens", 0) for r in rows),
@@ -201,7 +204,7 @@ def run_plan(backend, plan_fields: dict, case_id: str, targets: dict, top_n: int
         qlist += [("3A", q) for q in l.direct_queries] + [("hop1", q) for q in l.hop1_queries] + [("hop2", q) for q in l.hop2_queries]
     query_ranks = {label: [{"route": r, "query": q, "cached": cached_target_ranks(q, dois)} for r, q in qlist]
                    for label, dois in all_dois.items()}
-    return {
+    rec = {
         "case_id": case_id, "input": plan_fields,
         "expert_prior": {
             "transfer_needed": ep.transfer_needed,
@@ -232,27 +235,28 @@ def run_plan(backend, plan_fields: dict, case_id: str, targets: dict, top_n: int
         "targets": tinfo,
         "top_final": [{"rank": i, "title": p.title, "doi": getattr(p, "doi", None)} for i, p in enumerate(ranked[:top_n], 1)],
     }
+    return rec, agent_result
 
 
 def run_plan_checked(backend, plan_fields: dict, case_id: str, targets: dict, max_tries: int = 3,
-                     wait_s: int = 30, expert_prior=None, budgets=None, **kw) -> dict:
-    """run_plan, retried (same ExpertPrior, so only the network conditions change) while the run is
+                     wait_s: int = 30, expert_prior=None, budgets=None, **kw) -> tuple:
+    """-> (rec, agent_result) of the LAST attempt.  run_plan, retried (same ExpertPrior, so only the network conditions change) while the run is
     degraded by FAILED OpenAlex requests (e.g. transient network errors). Budget exhaustion is never
     retried: OpenAlexBudgetExhausted propagates to the caller. A run still degraded after max_tries
     is returned flagged and must be excluded from recall counts."""
     ep = expert_prior or propose(backend, plan_fields, case_id)
     total = {"http_requests": 0, "cache_hits": 0, "credits_charged": 0}
-    rec = None
+    rec, agent_result = None, None
     for attempt in range(1, max_tries + 1):
-        rec = run_plan(backend, plan_fields, case_id, targets, expert_prior=ep, budgets=budgets, **kw)
+        rec, agent_result = run_plan(backend, plan_fields, case_id, targets, expert_prior=ep, budgets=budgets, **kw)
         for k in total:
             total[k] += rec["api_usage"][k]
         rec["attempts"] = attempt
         rec["api_usage_all_attempts"] = dict(total)
         if not rec["degraded"]:
-            return rec
+            return rec, agent_result
         print(f"  [degraded run: {rec['api_usage']['failed_requests']} failed OpenAlex requests, "
               f"axis_errors={len(rec['axis_errors'])}] attempt {attempt}/{max_tries}", flush=True)
         if attempt < max_tries:
             time.sleep(wait_s)
-    return rec
+    return rec, agent_result

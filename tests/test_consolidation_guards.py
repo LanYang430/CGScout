@@ -42,9 +42,10 @@ PATCH_POINTS = [
     ("cgscout.retrieval.orchestrator", "expand_terminology"), ("cgscout.retrieval.orchestrator", "filter_papers"),
     ("cgscout.retrieval.orchestrator", "run_expert_prior_retrieval"), ("cgscout.retrieval.orchestrator", "rank_for_display"),
     ("cgscout.retrieval.orchestrator", "search_and_dedupe"),
-    ("cgscout.cli", "run_expert_prior_retrieval"), ("cgscout.cli", "run_stage4_v2"), ("cgscout.cli", "rank_for_display"),
-    ("harness", "run_expert_prior_retrieval"), ("harness", "run_stage4_v2"), ("harness", "run_plan"), ("harness", "run_plan_checked"),
-    ("harness", "rank_for_display"),
+    ("cgscout.cli", "get_backend"), ("cgscout.cli", "rank_for_display"),                                     # 2a: the CLI reaches the flow through agent.run
+    ("cgscout.agent", "retrieve"), ("cgscout.agent", "assess"),                                               # test_cli replaces these two
+    ("cgscout.agent", "run_expert_prior_retrieval"), ("cgscout.agent", "run_stage4_v2"),                      # 2a only: what retrieve / assess delegate to
+    ("harness", "run_plan"), ("harness", "run_plan_checked"), ("harness", "rank_for_display"),
     ("cgscout.retrieval.direct.from_planner", "search_and_dedupe"),          # was search_adapters (A3)
 ]
 
@@ -85,6 +86,19 @@ def test_every_patch_target_is_looked_up_by_a_function_of_its_module(logical):
     for module, attr in LY.active_layout().patch_targets[logical]:
         assert attr in _names_loaded_inside_functions(importlib.import_module(module)), (
             f"R-1: no function of {module} reads {attr!r}; a patch on it would silently do nothing")
+
+
+AGENT_LOOKED_UP_AT_CALL_TIME = {"execute": ["retrieve", "assess"], "run": ["propose_prior", "execute"],
+                                "retrieve": ["run_expert_prior_retrieval"], "assess": ["run_stage4_v2"]}
+
+
+def test_agent_functions_look_patched_names_up_at_call_time():
+    """test_cli replaces agent.retrieve / agent.assess; that works only because execute reads them from the module's globals at call time (2a also
+    keeps the two delegations patchable).  Re-pointed in 2b (retrieve gets the dispatch body) and 3."""
+    agent = importlib.import_module("cgscout.agent")
+    for fn, names in AGENT_LOOKED_UP_AT_CALL_TIME.items():
+        missing = [n for n in names if n not in set(getattr(agent, fn).__code__.co_names)]
+        assert not missing, f"R-1: agent.{fn} no longer references {missing} as globals; patches on the module would not reach it"
 
 
 def test_flow_functions_look_patched_names_up_at_call_time():
