@@ -13,8 +13,10 @@ user request
   → Stage 4         P7 tier-1 screen → P8 per-paper evidence extraction → P9 judge → ranked, explained recommendations
 ```
 
-Every LLM step goes through one injected backend (`cgscout.llm`, OpenAI `gpt-5.6-luna`); retrieval uses OpenAlex (and Europe PMC for abstracts).
-Module-level details: [docs/architecture.md](docs/architecture.md).
+The order of these steps is fixed and lives in one place, `cgscout/agent.py` (`run` -> `execute` -> `retrieve` -> `assess`): a workflow-driven agent, where the LLM does the scientific
+planning and the evidence judgement and results are not guaranteed to repeat run to run. Every LLM step goes through one injected backend (`cgscout.llm`, OpenAI `gpt-5.6-luna`);
+retrieval uses OpenAlex (and Europe PMC for abstracts).
+Stage -> function -> prompt: [docs/architecture.md](docs/architecture.md). The nine system prompts as text files: [prompts/](prompts/INDEX.md).
 
 ## Install
 
@@ -35,6 +37,26 @@ cgscout --no-stage4           # stop after Stage 3 (list ordered by route tier a
 cgscout --case-id my-run      # tag every LLM call of the session in the usage log
 ```
 
+### From Python
+
+```python
+from cgscout.agent import Clarification, run
+from cgscout.llm import get_backend
+
+backend = get_backend()                                   # one backend per run (needs OPENAI_API_KEY)
+out = run("How were coarse-grained models built for the EspP autotransporter beta-helix?", backend=backend)
+while isinstance(out, Clarification):                     # the planner asks only when the ambiguity changes what to search
+    out = run(input(out.question + "\n> "), backend=backend, session=out.session)
+if out.assessment is None:                                # Stage 4 runs only when something survived Stage 3
+    print("no candidates found")
+else:
+    for a in out.assessment.recommended:
+        print(f"[{a.rank}] {a.title} ({a.year})  grade {a.final_grade}/3")
+```
+
+`run` returns an `AgentResult` (`.plan`, `.prior`, `.retrieval` with the per-axis logs and the Stage-3 verdicts, `.assessment`). To start from a plan you already have, call
+`execute(plan, prior, backend=backend)`; `AgentConfig(budgets=..., stage4=...)` changes the retrieval switches and the Stage-4 settings (the defaults are what the command line runs with).
+
 Settings (the legacy `BEAM_*` spellings of these are still read, with a one-time notice):
 
 | variable | meaning | default |
@@ -47,7 +69,8 @@ Settings (the legacy `BEAM_*` spellings of these are still read, with a one-time
 ## Repository layout
 
 ```
-src/cgscout/          the package: planning/ retrieval/ sources/ screening/ assessment/ + llm, cache, models, config, cli
+src/cgscout/          the package: agent (the pipeline), planning/ retrieval/ sources/ screening/ assessment/ + llm, cache, models, config, cli
+prompts/              the nine system prompts as text files + SHA256SUMS + INDEX.md, generated from the code (tests/test_prompts_export.py keeps them in sync)
 tests/                unit and structure tests (pytest); test_golden_replay.py is skipped unless a replay fixture is configured
 benchmark/            not installed: evaluation/ (freeze_plans, run_benchmark, arms, provenance, harness, recorder, replay), baselines/, generation/ (benchmark construction), training/
 docs/                 architecture.md, reproduce.md, phase3_cleanup_record.md (what the Phase 3 cleanup removed or moved, and how to undo it)

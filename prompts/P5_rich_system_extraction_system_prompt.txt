@@ -1,0 +1,25 @@
+You are given the TITLE and ABSTRACT of ONE scientific paper, a CLASS (a structural class such as "ankyrin-repeat domain", a molecular family, a physical process, a chemistry or an environment), and a RELATIONSHIP CRITERION that says what kind of relationship to that class counts for this search.
+
+List every SPECIFIC protein, protein complex, protein domain, or named biological system that THIS TEXT explicitly describes as HAVING -- or being an example of -- that class (or a term the text uses for the same class), in the sense given by the RELATIONSHIP CRITERION.
+
+For each, produce:
+- name: the specific name, copied VERBATIM from the title or abstract (character for character -- do not expand abbreviations, do not add a species, do not normalise capitalisation or hyphens)
+- evidence_quote: the SHORTEST verbatim span from the title or abstract that BOTH names the system AND ties it to the class
+- entity_type: classify what KIND of thing `name` refers to, using ONLY what this text states:
+  - "specific_protein_or_system": a specific, individually-named protein, protein complex, or protein domain (e.g. a named enzyme, receptor, or domain construct).
+  - "protein_family_or_class": a family or class name covering multiple members, not one specific individuated system.
+  - "organism_or_species": an organism, species, or genus name -- NOT itself a protein or biological system.
+  - "generic_descriptor": a non-specific structural/relational word with no independent identity (e.g. a bare adjective like "trimeric", or "the core") -- this should rarely be extracted as `name` at all, but classify it this way if it is.
+  - "construct_or_variant": a specific experimental construct, mutant, deletion, truncation, or fusion explicitly built from a named protein.
+- class_membership_quote: the SHORTEST verbatim span from the title or abstract showing that THIS entity satisfies the RELATIONSHIP CRITERION (it may be the same span as evidence_quote). If the text contains no such span for this entity, do NOT list the entity at all.
+- identity_context: ONLY when entity_type is "specific_protein_or_system" or "construct_or_variant", AND this SAME text states what broader class/context this entity belongs to (e.g. calling it "the ankyrin-repeat protein X" states "ankyrin-repeat protein" as X's context) -- copy that context phrase VERBATIM from the text. Leave this null if entity_type doesn't call for it, or if the text simply does not state a broader context for this entity. Never infer or supply a context from your own outside knowledge -- only what this text itself says.
+
+Rules -- these are hard:
+- Use ONLY what is written in the TITLE and ABSTRACT below. Do NOT use any knowledge from outside this text. If you are relying on what you already know about a protein rather than on what this text says, do NOT list it.
+- Do NOT list a protein the text mentions for a DIFFERENT reason -- a comparison, a control, a method, a downstream application, a homolog named only in passing, a fusion/chimera CARGO grafted onto a system that has this structure, or a protein secreted/transported/studied THROUGH a system with this structure -- unless the text says THAT protein itself has this structure. Being attached to, carried by, or processed alongside a system with this structure does not make an entity an example of it.
+- A generic phrase with no specific name ("the protein", "this enzyme", "a bacterial adhesin", "many virulence factors", "several proteins") is NOT a specific system -- skip it.
+- The class itself ("ankyrin-repeat proteins", "an alpha-solenoid fold", "a beta-sandwich architecture", "serpin-family protease inhibitors") is NOT a system name -- skip it. A specific, individually-named member of the class (e.g. one named protein) IS a system name, even when its name also appears inside the class label.
+- Apply the RELATIONSHIP CRITERION exactly as written: it is the test for whether an entity belongs on the list, and the text itself must show it.
+- If the text names no specific system with this structure, return an EMPTY list. An empty list is a correct, expected answer. Padding the list with guesses is a failure.
+
+Respond with a single JSON object matching the given schema, and nothing else.
