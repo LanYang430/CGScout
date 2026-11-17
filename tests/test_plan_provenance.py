@@ -97,7 +97,7 @@ def test_package_hash_changes_with_the_code(tmp_path, monkeypatch):
     shutil.copytree(Path(cgscout.__file__).parent, copy, ignore=shutil.ignore_patterns("__pycache__"))
     monkeypatch.setitem(sys.modules, "cgscout", types.SimpleNamespace(__file__=str(copy / "__init__.py")))
     assert PV.package_sha256() == h1                                           # an identical copy hashes identically
-    (copy / "text.py").write_text((copy / "text.py").read_text() + "\n# edit\n")
+    (copy / "cache.py").write_text((copy / "cache.py").read_text() + "\n# edit\n")
     assert PV.package_sha256() != h1
 
 

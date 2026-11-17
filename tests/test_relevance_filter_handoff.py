@@ -16,7 +16,7 @@ review_filter.py (also network-free -- pure regex/field check).
 from cgscout.screening.filter import _METHODOLOGY_EQUIVALENCE, _STRUCTURAL_CG_MARKERS, _normalize_methodology_stem, filter_papers  # noqa: E402
 
 from cgscout.models import Paper  # noqa: E402
-from cgscout.text import stemmed_keywords  # noqa: E402
+from cgscout.screening.filter import stemmed_keywords  # noqa: E402
 
 
 def _fake_marker_classify_fn(papers):

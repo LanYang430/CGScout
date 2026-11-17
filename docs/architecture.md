@@ -17,7 +17,7 @@ CGScout turns a modeling question into a ranked, explained list of papers. Promp
 | Stage 4 | tier-1 screen → evidence extraction → judge → rank | `assessment/stage4.py` (also holds the P8 extraction prompt and message builder) | P7 screen, P8 extraction, P9 judge |
 
 Sources: `sources/openalex.py` (+ `openalex_usage.py`: budget, request cache, ledger), `sources/europepmc.py`, `sources/semantic_scholar.py` (optional, off by default).
-Shared: `llm.py` (backend protocol, OpenAI backend, usage log), `cache.py`, `models.py` (`Paper`), `text.py`.
+Shared: `llm.py` (backend protocol, OpenAI backend, usage log), `cache.py`, `models.py` (`Paper`), `config.py`. (The small keyword/stemming helpers live in `screening/filter.py`, their only user.)
 
 ## Invariants worth knowing
 

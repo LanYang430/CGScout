@@ -62,9 +62,9 @@ def test_search_wrappers_keep_the_module_level_names_the_harness_uses():
 
 
 def test_methodology_table_has_a_single_definition():
-    from cgscout import text
+    """The table (formerly text.METHODOLOGY_TERM_CLUSTERS) lives in screening/filter.py; its private alias is the same object, not a second copy."""
     import cgscout.screening.filter as handoff
-    assert handoff._METHODOLOGY_TERM_CLUSTERS is text.METHODOLOGY_TERM_CLUSTERS
+    assert handoff._METHODOLOGY_TERM_CLUSTERS is handoff.METHODOLOGY_TERM_CLUSTERS
 
 
 def test_hop1_extraction_constants_are_unchanged():

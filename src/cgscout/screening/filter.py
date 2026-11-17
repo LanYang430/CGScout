@@ -121,15 +121,94 @@ import re
 from typing import Callable, Optional
 
 
-from cgscout.text import METHODOLOGY_TERM_CLUSTERS as _METHODOLOGY_TERM_CLUSTERS  # noqa: E402 -- same table concept_resolver.py uses; lives in text.py so this module no longer imports the v1 concept resolver
 from cgscout.models import Paper  # noqa: E402
-from cgscout.text import keywords, stem, stemmed_keywords  # noqa: E402
 
 from cgscout.retrieval.types import _CG_MARKERS  # noqa: E402 -- read-only reuse, same markers Hop2Paper.mentions_cg already uses
 
 from cgscout.screening.sim_classifier import SIM_CLASSIFIER_THRESHOLD, default_classify_fn  # noqa: E402
 
 from pydantic import BaseModel, Field  # noqa: E402
+
+# ===== merged from `text.py` (consolidation A5; moved verbatim, its docstring is this comment) ====================================================
+# Shared lightweight text helpers: tokenization and stopword filtering.
+#
+# Deliberately dumb on purpose -- regex tokenization plus a small stopword list,
+# no NLP libraries, no LLM. Good enough for query trimming and keyword-overlap
+# relevance scoring; this module's keyword-overlap relevance
+# scoring builds on it, so query trimming and scoring stay consistent about what counts as a "meaningful word."
+
+STOPWORDS = frozenset(
+    {
+        "a", "an", "the", "of", "for", "with", "in", "on", "to", "and", "or",
+        "using", "based", "study", "studies", "via", "from", "by", "into",
+        "is", "are", "was", "were", "be", "been", "being", "that", "this",
+        "these", "those", "as", "at", "can", "its", "it", "we", "our", "us",
+        "new", "novel", "toward", "towards", "approach", "approaches",
+        "analysis", "such", "than", "their", "which", "how", "what",
+    }
+)
+
+_WORD_RE = re.compile(r"[A-Za-z][A-Za-z\-]+")
+
+
+def tokenize(text: str) -> list[str]:
+    """Lowercased word tokens (letters + internal hyphens only, digits dropped)."""
+    return _WORD_RE.findall(text.lower())
+
+
+def keywords(text: str, *, min_len: int = 3) -> set[str]:
+    """Tokenize and drop stopwords / very short tokens."""
+    return {t for t in tokenize(text) if t not in STOPWORDS and len(t) >= min_len}
+
+
+def _stem_word(word: str, *, prefix_len: int = 4) -> str:
+    """Truncate a single hyphen-free word to its first `prefix_len` characters."""
+    return word if len(word) <= prefix_len else word[:prefix_len]
+
+
+def stem(token: str, *, prefix_len: int = 4) -> str:
+    """Crude, deliberately dumb stemmer for cross-text keyword matching.
+
+    NOT a real stemmer -- no Porter/Snowball morphology rules, just a
+    fixed-length prefix per hyphen-separated part. That's enough to unify
+    common regular forms (protein/proteins, fold/folding/folded) and, more
+    importantly, catches irregular derivations a suffix-stripper would miss
+    entirely: "helix" and "helical" share only a 4-letter prefix, not a
+    suffix relationship, so no amount of stripping "-ing"/"-ed"/"-s" off
+    either one makes them equal.
+
+    The cost is occasional false-positive collisions between unrelated words
+    that happen to share a prefix (model/modern both stem to "mode"). That
+    tradeoff is intentional: RelevanceFilter is designed to over-retain
+    rather than over-reject (see its module docstring) -- a collision here
+    just means one extra paper reaches manual/LLM review; a missed match
+    means a paper silently vanishes before anyone sees it.
+    """
+    return "-".join(_stem_word(part, prefix_len=prefix_len) for part in token.split("-"))
+
+
+def stemmed_keywords(text: str, *, min_len: int = 3) -> set[str]:
+    """Like `keywords()`, but each token is reduced via `stem()` first.
+
+    Use this (not `keywords()`) whenever comparing two *different* texts for
+    topical overlap -- e.g. a user query against a paper's title/abstract.
+    Keep using `keywords()` when working within one text (e.g. trimming a
+    query string), where exact surface tokens are what you want to preserve.
+    """
+    return {stem(t) for t in keywords(text, min_len=min_len)}
+
+
+# Methodology synonym clusters (canonical term, [synonyms]) -- vocabulary, not protein names; read by the Stage-3 filter below.
+METHODOLOGY_TERM_CLUSTERS: list[tuple[str, list[str]]] = [
+    ("coarse-grained", ["cg", "coarse grained"]),
+    ("all-atom", ["all atom", "atomistic"]),
+    ("molecular dynamics", ["md simulation", "md"]),
+    ("machine learning", ["ml", "deep learning", "neural network"]),
+]
+
+# The Stage-3 code below refers to the table under its private name (it used to be imported under this alias from text.py).
+_METHODOLOGY_TERM_CLUSTERS = METHODOLOGY_TERM_CLUSTERS
+# ===========================================================================================================================
 
 # ===== merged from `screening/review_filter.py` (moved verbatim; its docstring is this comment) ============================
 # Stage 3 high-confidence review/perspective filter -- production version
