@@ -1,4 +1,4 @@
-"""Unit tests for cleanup.py -- the conservative Hop-1 post-processing
+"""Unit tests for postprocess.py (cleanup section) -- the conservative Hop-1 post-processing
 layer (suffix duplicate merge / exact fragment blocklist / objective-aware
 interaction-duplicate merge) added this session. Runs strictly between
 discover_related_systems() and the Hop-2 query building -- does NOT touch either;
@@ -15,7 +15,7 @@ from __future__ import annotations
 
 
 from cgscout.retrieval.related_systems.discovery import DiscoveredSystem, SupportingPaper  # noqa: E402
-from cgscout.retrieval.related_systems.cleanup import cleanup_discovered_systems  # noqa: E402
+from cgscout.retrieval.related_systems.postprocess import cleanup_discovered_systems  # noqa: E402
 
 
 def _sys(name, rank=0, n_support=1, quote=None):

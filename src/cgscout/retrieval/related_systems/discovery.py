@@ -284,7 +284,7 @@ class SupportingPaper(BaseModel):
     # evidence_quote) phrase from the SAME paper naming the broader class
     # this entity belongs to (e.g. "autotransporter" for "Pet"), or None if
     # the text never states one. Both are read, never written, by
-    # identity.py -- this file has no opinion on what they
+    # postprocess.py (identity) -- this file has no opinion on what they
     # mean, it only preserves and verbatim-verifies them.
     entity_type: Optional[str] = None
     identity_context: Optional[str] = None

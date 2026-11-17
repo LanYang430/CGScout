@@ -41,7 +41,7 @@ Design (per this session's explicit decisions):
   - NO transfer_basis field: that's an axis-level property (axis.basis,
     already available), never needs re-deriving per mention.
   - NO LLM-generated retrieval_anchor: built deterministically in
-    identity.py from entity_type + identity_context, once
+    postprocess.py (identity) from entity_type + identity_context, once
     both have flowed through discovery.py's existing
     verbatim-grounding checks.
 

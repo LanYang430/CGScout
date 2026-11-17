@@ -265,7 +265,7 @@ class RouteOutcome(BaseModel):
     n_new_unique_contributed: int = 0  # of those, how many were NEW unique paper_refs this route added
     n_dropped_route_cap: int = 0       # candidates dropped by this route's own max_papers_per_route
     n_dropped_global_cap: int = 0      # candidates dropped by the global max_total_unique_papers
-    structural_cleanup_log: list[str] = Field(default_factory=list)  # cleanup.py audit trail (structural route only)
+    structural_cleanup_log: list[str] = Field(default_factory=list)  # postprocess.py (cleanup) audit trail (structural route only)
     empty: bool = False
     empty_reason: Optional[Literal[
         "not_applicable_no_grounded_term",

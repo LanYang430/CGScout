@@ -55,7 +55,7 @@ Fixed upstream of this file, not in it: Hop-1's own per-paper extraction
 call (still ONE call per paper, no new LLM call) now also classifies each
 mention's entity_type and states its grounded identity_context, if the
 text gives one -- see extraction.py and related_system_
-identity.py. This file's own job is unchanged: it just consumes
+postprocess.py (identity section). This file's own job is unchanged: it just consumes
 identity.query_anchor as before.
 
 Reuses, UNMODIFIED:
@@ -80,7 +80,7 @@ plan.scientific_objective is what participates in query text, exactly the
 same objective the direct route already uses. Every query this module
 builds keeps scientific_class as a mandatory prefix; a bare discriminative
 feature or a bare related-system label is never searched on its own -- see
-identity.py for how a Hop-1-discovered label is qualified
+postprocess.py (identity section) for how a Hop-1-discovered label is qualified
 before ever becoming a Hop-2 anchor.
 
 Second-pass fix (same session, diagnosed live on the phospho-IDP case):
@@ -102,7 +102,7 @@ Hop-1's job is discovery ("why is this related system worth finding"),
 Hop-2's job is retrieval ("now that we know its name, search its CG
 literature as simply as possible") -- these had been blurring together.
 Concretely: (1) `identity.query_anchor` used to be able to lose the
-literal discovered label entirely (see identity.py's own
+literal discovered label entirely (see postprocess.py's (identity section) own
 docstring for the "another SPATE (EspP)" false-positive) -- fixed there,
 not here; this file's consumption of `identity.query_anchor` is
 unchanged, it just receives a correct value now. (2) Hop-2's own
@@ -118,7 +118,7 @@ retrieval_anchors, above) is NOT touched by this pass -- scientific_class
 stays central to discovery; it is Hop-2 specifically that should default
 to just the discovered system's own name once discovery is done.
 Supporting-paper quotes were never query material and still aren't --
-`identity.py`'s own fix already guarantees that.
+`postprocess.py (identity section)`'s own fix already guarantees that.
 """
 from __future__ import annotations
 
@@ -135,8 +135,9 @@ from cgscout.retrieval.related_systems.discovery import discover_related_systems
 from cgscout.retrieval.related_systems.hop2 import (  # noqa: E402 -- converged Hop-2: structured anchor normalization + at most A/B (+C) queries per system
     HOP2_MAX_SYSTEMS_PER_AXIS, HOP2_MAX_TO_NORMALIZE, SystemInput, merge_and_select, normalize_search_anchors, run_converged_hop2,
 )
-from cgscout.retrieval.related_systems.identity import RelatedSystemIdentity, build_related_system_identities  # noqa: E402
-from cgscout.retrieval.related_systems.cleanup import cleanup_discovered_systems  # noqa: E402
+from cgscout.retrieval.related_systems.postprocess import (  # noqa: E402
+    RelatedSystemIdentity, build_related_system_identities, cleanup_discovered_systems,
+)
 from cgscout.retrieval.related_systems.terminology import expand_terminology, TerminologyExpansion  # noqa: E402
 from cgscout.llm import LLMBackend, make_call_fn  # noqa: E402 -- single-backend-per-run
 from cgscout.retrieval.related_systems.extraction import extract_related_systems_rich  # noqa: E402
@@ -397,7 +398,7 @@ def _run_related_system_discovery(
 
     # Identity preservation: qualify (or drop) every discovered label
     # BEFORE it can become a bare Hop-2 anchor -- see related_system_
-    # identity.py. Only grounded_full/grounded_contextual identities carry
+    # postprocess.py (identity section). Only grounded_full/grounded_contextual identities carry
     # a query_anchor and go on to Hop-2; insufficient ones are kept as
     # audit records only.
     identities = build_related_system_identities(

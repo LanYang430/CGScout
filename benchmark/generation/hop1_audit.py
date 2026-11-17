@@ -20,8 +20,7 @@ sys.path.insert(0, str(HERE))
 import gen_backend  # noqa: E402,F401
 import cgscout.retrieval.related_systems.discovery as RSD  # noqa: E402
 import cgscout.retrieval.related_systems.extraction as TE  # noqa: E402
-from cgscout.retrieval.related_systems.cleanup import cleanup_discovered_systems  # noqa: E402
-from cgscout.retrieval.related_systems.identity import build_related_system_identities  # noqa: E402
+from cgscout.retrieval.related_systems.postprocess import build_related_system_identities, cleanup_discovered_systems  # noqa: E402
 from cgscout import cache as C  # noqa: E402
 from cgscout.models import Paper  # noqa: E402
 from cgscout.sources import openalex_usage as U  # noqa: E402

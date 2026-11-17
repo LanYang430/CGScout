@@ -1,4 +1,4 @@
-"""Unit tests for identity.py -- the entity_type/
+"""Unit tests for postprocess.py (identity section) -- the entity_type/
 identity_context-driven query-anchor policy (this session's fourth-pass
 fix, replacing the earlier Schwartz-Hearst/regex-based approach entirely).
 
@@ -10,7 +10,7 @@ them.
 
 
 from cgscout.retrieval.related_systems.discovery import DiscoveredSystem, SupportingPaper  # noqa: E402
-from cgscout.retrieval.related_systems.identity import build_related_system_identity  # noqa: E402
+from cgscout.retrieval.related_systems.postprocess import build_related_system_identity  # noqa: E402
 
 
 def _ds(name, entity_type=None, identity_context=None, n_support=1, rank=0,
