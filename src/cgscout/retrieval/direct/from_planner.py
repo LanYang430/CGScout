@@ -35,9 +35,7 @@ from cgscout.retrieval.direct.route_plan import (  # noqa: E402
 )
 from cgscout.retrieval.related_systems.discovery import _paper_ref  # noqa: E402 -- same paper_ref convention used throughout
 from cgscout.retrieval.search import (  # noqa: E402
-    STRUCTURAL_HOP1_SEARCH_LIMIT,
     STRUCTURAL_HOP2_SEARCH_LIMIT,
-    STRUCTURAL_SEARCH_SOURCES,
     search_and_dedupe,
 )
 from cgscout.models import Paper  # noqa: E402
@@ -46,14 +44,12 @@ from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
 
 
 # ===== moved verbatim from `retrieval/search_adapters.py` (consolidation A3) =================================================================
-# The capturing search wrappers (every real Paper retrieved is cached by paper_ref for Stage 3) and the two small adapters from a
-# RouteRetrievalResult to the Stage 3 contract.  `_make_capturing_search_fns` keeps its two unused Hop-1/Hop-2 closures (their removal is a
-# separate, later cleanup).  retrieve_direct (below) calls papers_for_stage3 / provenance_index from here.
+# The capturing search wrapper (every real Paper retrieved is cached by paper_ref for Stage 3) and the two small adapters from a
+# RouteRetrievalResult to the Stage 3 contract.  retrieve_direct (below) calls papers_for_stage3 / provenance_index from here.
 
 def _make_capturing_search_fns(paper_cache: dict[str, Paper], budgets: RouteRetrievalBudgets):
-    """One shared paper_cache across all 5 routes -- the sidecar paper_ref ->
-    full Paper mapping Stage 3 needs, since RouteRetrievalResult.papers
-    itself only carries paper_ref/title/year, not abstract/authors/etc."""
+    """The flat (lexical) search function of the direct route: it caches every Paper it retrieves in the one shared paper_cache -- the sidecar
+    paper_ref -> full Paper mapping Stage 3 needs, since RouteRetrievalResult.papers itself only carries paper_ref/title/year, not abstract/authors/etc."""
 
     def flat_search_fn(query: str, limit: int) -> list[Paper]:
         papers = search_and_dedupe(query, limit=limit)
@@ -61,19 +57,7 @@ def _make_capturing_search_fns(paper_cache: dict[str, Paper], budgets: RouteRetr
             paper_cache.setdefault(_paper_ref(p), p)
         return papers
 
-    def structural_hop1_search_fn(query: str) -> list[Paper]:
-        papers = search_and_dedupe(query, limit=STRUCTURAL_HOP1_SEARCH_LIMIT, sources=STRUCTURAL_SEARCH_SOURCES)
-        for p in papers:
-            paper_cache.setdefault(_paper_ref(p), p)
-        return papers
-
-    def structural_hop2_search_fn(query: str) -> list[Paper]:
-        papers = search_and_dedupe(query, limit=STRUCTURAL_HOP2_SEARCH_LIMIT, sources=STRUCTURAL_SEARCH_SOURCES)
-        for p in papers:
-            paper_cache.setdefault(_paper_ref(p), p)
-        return papers
-
-    return flat_search_fn, structural_hop1_search_fn, structural_hop2_search_fn
+    return flat_search_fn
 
 
 def make_need_semantic_search_fn(paper_cache: dict[str, Paper]):
@@ -167,7 +151,7 @@ def run_retrieval_from_plan(
         budgets, structural_hop2_search_limit=STRUCTURAL_HOP2_SEARCH_LIMIT)
 
     paper_cache: dict[str, Paper] = {}
-    flat_search_fn, _hop1_fn, _hop2_fn = _make_capturing_search_fns(paper_cache, budgets)
+    flat_search_fn = _make_capturing_search_fns(paper_cache, budgets)
     # P3: the semantic function exists only when the route is enabled -- with the default budgets nothing changes.
     need_fn = make_need_semantic_search_fn(paper_cache) if budgets.need_semantic_enabled else None
 

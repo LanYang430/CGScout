@@ -11,7 +11,6 @@ import sys, time, importlib
 MODULES = ["cgscout.retrieval.transfer", "cgscout.retrieval.direct.from_planner",
            "cgscout.retrieval.direct.route_plan"]
 _KINDS = [("need_semantic_search_fn", "need_semantic"), ("flat_search_fn", "flat"), ("_run_direct_concept_search", "3A"),
-          ("structural_hop1_search_fn", "hop1"), ("structural_hop2_search_fn", "hop2"),
           ("_default_flat_search", "flat")]
 
 
