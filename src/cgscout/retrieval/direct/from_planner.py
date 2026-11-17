@@ -13,9 +13,9 @@ Deliberately does NOT touch the structural branch: grounded_structural_
 feature is always None here, so EvidenceRoutePlan.structural_terms stays
 empty and structural_branch_enabled is False -- the structural/related-
 system branch stays fully paused, exactly as on the old path right now.
-No hop1_search_fn/hop1_extract_fn/hop2_search_fn are passed to
-run_route_retrieval() because they are never needed while structural_
-terms is empty.
+run_route_retrieval() has no parameters for the structural branch (Hop-1
+/ Hop-2 search and extraction functions): a plan that enables it raises
+NotImplementedError.
 
 modeling_requirement_mode="rule" + call=None: the modeling_requirement
 LLM call (dead -- that route is disabled, see route_plan.py) is

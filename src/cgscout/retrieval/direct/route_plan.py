@@ -28,13 +28,8 @@ from pydantic import BaseModel, Field
 
 
 from cgscout.retrieval.direct.evidence_plan import EvidenceRoutePlan, RouteTerm  # noqa: E402
-from cgscout.retrieval.related_systems.discovery import (  # noqa: E402
-    ExtractFn,
-    SearchFn as StructuralSearchFn,
-    _paper_ref,
-)
+from cgscout.retrieval.related_systems.discovery import _paper_ref  # noqa: E402
 from cgscout.retrieval.types import Hop1Provenance, Hop2Result  # noqa: E402
-from cgscout.retrieval.related_systems.terminology import CallFn  # noqa: E402
 
 
 # --- budgets ------------------------------------------------------------
@@ -991,11 +986,6 @@ def run_route_retrieval(
     *,
     flat_search_fn: Optional[FlatSearchFn] = None,
     budgets: Optional[RouteRetrievalBudgets] = None,
-    call: Optional[CallFn] = None,
-    hop1_search_fn: Optional[StructuralSearchFn] = None,
-    hop1_extract_fn: Optional[ExtractFn] = None,
-    hop2_search_fn: Optional[StructuralSearchFn] = None,
-    hop1_progress_fn: Optional[Callable[[int, int], None]] = None,
     need_semantic_search_fn: Optional[FlatSearchFn] = None,
 ) -> RouteRetrievalResult:
     """Run all five routes (plus the optional P3 `need_semantic` route when budgets.need_semantic_enabled). A route with nothing to search, or that errors,
@@ -1003,9 +993,7 @@ def run_route_retrieval(
     The structural branch (EvidenceRoutePlan.structural_terms non-empty) is no
     longer part of this function: the live path never enables it (the
     structural / related-system work is done by agent.py / retrieval/transfer.py), and
-    a plan that enables it raises NotImplementedError. The parameters `call`,
-    `hop1_search_fn`, `hop1_extract_fn`, `hop2_search_fn` and `hop1_progress_fn`
-    are accepted for signature compatibility but not used."""
+    a plan that enables it raises NotImplementedError."""
     t0 = time.time()
     budgets = budgets or RouteRetrievalBudgets()
     flat_search_fn = flat_search_fn or _default_flat_search
