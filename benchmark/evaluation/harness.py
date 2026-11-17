@@ -108,12 +108,17 @@ def propose(backend, plan_fields: dict, case_id: str):
 
 
 def run_plan(backend, plan_fields: dict, case_id: str, targets: dict, top_n: int = 15,
-             expert_prior=None, budgets=None, user_request=None, stage4: bool = False, stage4_config=None) -> tuple:
+             expert_prior=None, budgets=None, user_request=None, stage4: bool = False, stage4_config=None, partial: dict = None) -> tuple:
     """-> (rec, agent_result): the record dict, and the cgscout.agent.AgentResult of the run (its .retrieval / .assessment are the retrieval and Stage-4 results).
     targets: {label: [doi, ...]} (list = acceptable alternates).
     expert_prior: reuse a previously proposed ExpertPrior (isolates planner-input effects
     from downstream effects). budgets: optional RouteRetrievalBudgets override passed
-    to the retrieval through the agent configuration (no production edit)."""
+    to the retrieval through the agent configuration (no production edit).
+    partial: optional dict that the caller keeps; it is emptied at the start and then filled with what had been completed when an exception ends the
+    run: "retrieval" (the retrieval result, as soon as the gate has seen it) and "agent_result" (once agent_execute returned). Never read here; the
+    normal path is unchanged."""
+    if partial is not None:
+        partial.clear()
     plan = make_plan(plan_fields)
     ep = expert_prior or propose(backend, plan_fields, case_id)
     U.reset_run(case_id)
@@ -122,6 +127,8 @@ def run_plan(backend, plan_fields: dict, case_id: str, targets: dict, top_n: int
 
     def gate(res):
         """The evaluation's gate between retrieval and Stage 4: budget exhaustion raises, a degraded run is not assessed."""
+        if partial is not None:
+            partial["retrieval"] = res
         health["api"] = U.run_usage(case_id)
         ex = U.exhausted()
         if ex:   # budget ran out but the pipeline swallowed it (strict mode off): this run must never be scored
@@ -135,6 +142,8 @@ def run_plan(backend, plan_fields: dict, case_id: str, targets: dict, top_n: int
     # ---- retrieval + Stage 3, the gate, and (if it says yes) Stage 4: the LLM relevance evaluation of the Stage-3-retained papers ----
     agent_result = agent_execute(plan, ep, backend=backend, config=AgentConfig(budgets=budgets, stage4=stage4_config), case_id=case_id,
                                  user_request=user_request, gate=gate)
+    if partial is not None:
+        partial["agent_result"] = agent_result
     res, s4 = agent_result.retrieval, agent_result.assessment
     api, axis_errors, degraded = health["api"], health["axis_errors"], health["degraded"]
     s4_usage = None
@@ -235,6 +244,15 @@ def run_plan(backend, plan_fields: dict, case_id: str, targets: dict, top_n: int
         "top_final": [{"rank": i, "title": p.title, "doi": getattr(p, "doi", None)} for i, p in enumerate(ranked[:top_n], 1)],
     }
     return rec, agent_result
+
+
+def results_of(agent_result, partial: dict) -> tuple:
+    """-> (retrieval result, Stage-4 result) of a run, for a record: taken from the AgentResult when run_plan returned one, otherwise from what `partial`
+    (the dict given to run_plan) caught before an exception -- None for whatever had not completed."""
+    done = agent_result if agent_result is not None else partial.get("agent_result")
+    if done is not None:
+        return done.retrieval, done.assessment
+    return partial.get("retrieval"), None
 
 
 def run_plan_checked(backend, plan_fields: dict, case_id: str, targets: dict, max_tries: int = 3,

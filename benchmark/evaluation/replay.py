@@ -132,15 +132,15 @@ for pid in PIDS:
     for q in plan.route_queries: roles.setdefault(q.query, []).append([q.route, q.query_role])
     REC = Recorder(lambda: U.run_usage(run_label), lambda p_: is_seed(p_, seed_doi, seed_oa), roles).install()
     n_llm0, n_net0, n_unk0 = len(BACKEND.attempts), len(NET), len(UNKNOWN)
-    err = None
+    err, partial = None, {}
     try:
         run, agent_result = RL.run_plan_checked(BACKEND, eff, run_label, {"seed": [seed_doi]}, user_request=fp.get("user_request", row["Latest query (v2)"]),
-                                  stage4=True, stage4_config=S4CFG, expert_prior=ep, budgets=BUDGETS, max_tries=1)
+                                  stage4=True, stage4_config=S4CFG, expert_prior=ep, budgets=BUDGETS, max_tries=1, partial=partial)
     except BaseException as e:   # noqa: BLE001
         run, agent_result, err = None, None, repr(e)
     finally:
         REC.uninstall()
-    res_, s4_ = (agent_result.retrieval, agent_result.assessment) if agent_result is not None else (None, None)
+    res_, s4_ = RL.results_of(agent_result, partial)
     out = {"pid": pid, "error": err, "run": ser(run), "res": ser(res_), "s4": ser(s4_), "requests": ser(REC.records)}
     (OUT / "cases" / f"{pid}.json").write_text(json.dumps(out, sort_keys=True, ensure_ascii=False, indent=1))
     summary["cases"][pid] = {"error": err, "llm_attempts": len(BACKEND.attempts) - n_llm0, "net_attempts": len(NET) - n_net0, "unknown_classifier_papers": len(UNKNOWN) - n_unk0,

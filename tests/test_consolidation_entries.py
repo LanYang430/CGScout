@@ -132,6 +132,78 @@ def test_harness_returns_the_record_and_the_agent_result_and_times_stage4_from_t
     assert rec["stage4"]["llm_usage"] == {"llm_calls": 1, "input_tokens": 10, "output_tokens": 20, "cost_usd": 1.0}
 
 
+# ---- partial results: what had completed when an exception ended the run (benchmark/evaluation/replay.py records it) ----
+
+def _stage4_fails(monkeypatch):
+    def boom(*a, **k):
+        raise RuntimeError("injected Stage-4 failure")
+    monkeypatch.setattr(agent, "assess", boom)
+
+
+def test_partial_changes_nothing_on_the_normal_path(rig):
+    rig.box.res = _res(retained=[_paper()])
+    rec1, ar1 = rig.run(stage4=True)
+    partial = {}
+    rec2, ar2 = rig.run(stage4=True, partial=partial)
+    assert rec1 == rec2 and ar1.retrieval is ar2.retrieval
+    assert partial["retrieval"] is rig.box.res and partial["agent_result"] is ar2
+    assert H.results_of(ar2, partial) == (ar2.retrieval, ar2.assessment)
+
+
+def test_a_stage4_exception_keeps_the_retrieval_result_and_no_stage4_result(rig, monkeypatch):
+    rig.box.res = _res(retained=[_paper()])
+    _stage4_fails(monkeypatch)
+    partial = {}
+    with pytest.raises(RuntimeError, match="injected Stage-4 failure"):
+        rig.run(stage4=True, partial=partial)
+    assert partial == {"retrieval": rig.box.res}
+    res, s4 = H.results_of(None, partial)
+    assert res is rig.box.res and len(res.retained) == 1 and s4 is None
+
+
+def test_an_exception_after_execute_keeps_the_agent_result_with_its_stage4_result(rig, monkeypatch):
+    def boom(*a, **k):
+        raise RuntimeError("post-processing failure")
+    monkeypatch.setattr(H, "rank_for_display", boom)
+    partial = {}
+    with pytest.raises(RuntimeError, match="post-processing"):
+        rig.run(stage4=True, partial=partial)
+    res, s4 = H.results_of(None, partial)
+    assert res is rig.box.res and s4 is not None and s4 is partial["agent_result"].assessment
+
+
+def test_budget_exhaustion_in_the_gate_keeps_the_retrieval_result(rig, monkeypatch):
+    monkeypatch.setattr(H.U, "exhausted", lambda: {"headers": {}, "reset_s": 5})
+    monkeypatch.setattr(H.U, "exhausted_message", lambda ex: "exhausted")
+    partial = {}
+    with pytest.raises(H.U.OpenAlexBudgetExhausted):
+        rig.run(stage4=True, partial=partial)
+    assert H.results_of(None, partial) == (rig.box.res, None)
+
+
+def test_a_failure_before_retrieval_completes_leaves_partial_empty_even_if_it_held_an_earlier_attempt(rig, monkeypatch):
+    def boom(*a, **k):
+        raise RuntimeError("retrieval failed")
+    monkeypatch.setattr(agent, "retrieve", boom)
+    partial = {"retrieval": "stale", "agent_result": "stale"}
+    with pytest.raises(RuntimeError, match="retrieval failed"):
+        rig.run(stage4=True, partial=partial)
+    assert partial == {} and H.results_of(None, partial) == (None, None)
+
+
+def test_run_plan_checked_passes_partial_through(rig, monkeypatch):
+    _stage4_fails(monkeypatch)
+    partial = {}
+    with pytest.raises(RuntimeError):
+        H.run_plan_checked("BACKEND", dict(FIELDS), "CASE-1", {}, max_tries=1, wait_s=0, expert_prior=rig.ep, stage4=True, partial=partial)
+    assert partial["retrieval"] is rig.box.res
+
+
+def test_results_of_prefers_the_agent_result_that_run_plan_returned(rig):
+    ar = SimpleNamespace(retrieval="R", assessment="S")
+    assert H.results_of(ar, {"retrieval": "other", "agent_result": SimpleNamespace(retrieval="X", assessment="Y")}) == ("R", "S")
+
+
 def test_harness_run_plan_checked_retries_only_degraded_runs_and_reuses_the_prior(rig, monkeypatch):
     monkeypatch.setattr(H.time, "sleep", lambda *_: None)
     rig.box.res = _res(axis_errors=["boom"])
