@@ -62,6 +62,10 @@ The scripts that need the author's labelled Stage-3 exports have no built-in pat
 the older name `BEAM_STAGE3_TRAIN_CSV` is still read), and `benchmark/generation/{l3_verify,overlap_audit,propose14}.py` take `--stage3-data-dir DIR` (or `CGSCOUT_STAGE3_DATA_DIR`) naming the directory
 that holds the four `beam_stage3_*.csv` files. Without them each script stops with a message that says what to set; `--help` works without any data.
 
+## Publisher abstracts are not distributed
+
+The construction data of the benchmark under `benchmark/generation/data/` keeps the DOI, title, authors, year and venue of every seed and candidate paper, but not the abstract text, which belongs to the publishers. Where a record once carried `abstract` (`seed_abstract` in the `pilot_v*` files) it now carries `abstract_sha256` (the SHA-256 of the UTF-8 text) and `abstract_chars` (its length; `seed_abstract_sha256` / `seed_abstract_chars` in the pilot files). To check a paper, fetch its abstract by DOI from OpenAlex and compare `hashlib.sha256(text.encode("utf-8")).hexdigest()` with the stored value (a publisher may have corrected an abstract since, in which case they differ). 248 abstracts were replaced this way; the scripts that read them are the archived ones listed below.
+
 ## Benchmark-generation scripts are a historical record
 
 `benchmark/generation/` records how the 200-query benchmark was built. It was written against the code before the CGScout restructure and has not been maintained for the
