@@ -77,3 +77,12 @@ def test_reproduce_md_lists_all_nine_archived_scripts_in_its_table():
     rows = [line for line in table.splitlines() if line.startswith("| `")]
     assert sorted(line.split("`")[1] for line in rows) == sorted(NINE), rows
     assert "archived / historical" in table and "nothing was re-run" in table
+
+
+def test_reproduce_md_says_exactly_what_the_legacy_tag_keeps_and_what_it_cannot_reproduce():
+    text = (ROOT / "docs" / "reproduce.md").read_text(encoding="utf-8")
+    for needle in ("30 reviewed Python files", "Only those 30 Python files are kept from `benchmarks/` in the published history", "benchmarks/regression_13/",
+                   "sim_classifier_train.py", "not part of the published history", "cannot reproduce the historical experiments or their outputs",
+                   "Publisher abstracts were removed from every version of the published history before publication", "no experiment was re-run"):
+        assert needle in text, needle
+    assert "in no version at all" not in text and "no abstract exists" not in text      # nothing may suggest that other copies of the repository are free of them
