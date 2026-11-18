@@ -852,29 +852,17 @@ def _run_flat_route(
     return outcome
 
 
-# --- TerminologyExpander input: deterministic surface normalization --------
+# --- conversational-prefix stripping: deterministic surface normalization ----
 #
-# Diagnosed (run_terminology_input_diagnostic.py, 3 reps/input, 100% stable
-# each): expand_terminology("beta-helix protein") -> 5 terms including
-# "autotransporter passenger domain" / "beta-helix adhesin"; expand_
-# terminology("I have a beta-helix protein") -> only 3 terms, family-crossing
-# terms absent. The bare fold name ("beta-helix") ALSO only produces 3 terms
-# -- so neither of the two inputs actually available in the live pipeline
-# (structural_class alone, or system_description with its conversational
-# wrapper) reaches the richer output; only the clean noun phrase does.
+# Every flat-route query builder (and query_construction_v2) strips a narrow, closed set of first-person conversational/intent PREFIXES ("I have a ...",
+# "I want to study ...", "could you recommend a CG model for ...") from the text it turns into an OpenAlex query, so the query is scientific content
+# rather than the user's raw sentence.  It is not a biology ontology and not a mapping for any one system, and it only strips a prefix.
 #
-# No existing field on EvidenceRoutePlan/RouteRetrievalPlan carries that
-# clean phrase -- ConceptResolverSession.system_span does (it's exactly
-# "beta-helix protein" in the diagnosed live case), but route_retrieval_
-# plan.py has no session dependency by design, and threading it through
-# would mean a new field on two schemas plus a live-adapter change, for a
-# fix scoped to one call site. This deterministic stripper is the smaller,
-# self-contained alternative: a narrow, closed set of first-person
-# conversational/intent PREFIXES (not a biology ontology, not a
-# beta-helix-specific mapping) stripped from system_description before it
-# reaches TerminologyExpander only -- structural_class, Hop-1, Hop-2, and
-# banned_norms grounding all keep using structural_class exactly as before,
-# untouched by this normalization.
+# History: the stripper was first written for the input of the TerminologyExpander (P3) in the structural branch that has since been removed from this module.
+# A diagnostic run at the time (3 repetitions per input, identical every time) had shown that a clean noun phrase ("beta-helix protein") made the expander
+# return 5 terms, including family-crossing ones, while the same phrase inside a sentence ("I have a beta-helix protein") or the bare fold name returned only 3.
+# P3 is now called from agent.py with the planner's scientific_class, which needs no stripping; nothing in this module feeds the TerminologyExpander any more.
+#
 # A leading article, IF present, must be followed by whitespace -- written
 # as `(?:(?:an|a|the|some)\s+)?` (NOT `(?:an|a|the|some)?\s*`) so the bare
 # "a" cannot eat the first letter of a content word that happens to start
@@ -916,9 +904,11 @@ def _strip_conversational_wrapper(text: str) -> str:
     """Strip a narrow, closed set of first-person conversational/intent
     prefixes that carry no grounded biological content ('I have a...',
     'I want to study...', 'could you recommend a CG model for...', ...).
-    Used by BOTH the structural branch (so TerminologyExpander sees a clean
-    noun phrase) AND every flat-route query builder (so the OpenAlex query
-    is normalized scientific content, not the user's raw sentence).
+    Used by every flat-route query builder in this module and by
+    query_construction_v2 (so the OpenAlex query is normalized scientific
+    content, not the user's raw sentence).  The structural branch that once
+    also used it (so TerminologyExpander saw a clean noun phrase) is gone
+    from this module.
     Repeated application handles a stacked prefix; never strips down to an
     empty string -- falls back to the original text if it would.
     Prefix-only; does not attempt to strip trailing clauses."""

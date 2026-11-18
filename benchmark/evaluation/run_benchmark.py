@@ -64,8 +64,9 @@ def configure(arm_name):
     RL, U = _RL, _RL.U
     RP, AG, TerminologyExpansion, get_backend, backend_label, read_usage_log, Stage4Config = _RP, _AG, _TE, _gb, _bl, _rul, _S4C
     BUDGETS = AR.budgets_for(ARM_NAME, RP)
-    # Hop-1's terminology expansion is an UNCACHED live LLM call whose output only feeds the banned-name list of Hop-1 discovery.  To keep Hop-1/Hop-2
-    # identical across arms it is memoised per scientific_class in terminology_memo.json: the first arm that needs it records it, the others replay it.
+    # Hop-1's terminology expansion (P3) is an UNCACHED live LLM call.  Its terms do not enter the Hop-1 search (one P4 sentence replaces every per-term query),
+    # but they join the banned-name list of Hop-1 discovery and are passed to the P5 per-paper extraction as "also known as" (and to its structural_term_matched check).
+    # To keep Hop-1/Hop-2 identical across arms it is memoised per scientific_class in terminology_memo.json: the first arm that needs it records it, the others replay it.
     memo_path = ROOT / "terminology_memo.json"
     assert hasattr(AG, "expand_terminology"), "R-2: assigning to a missing module attribute would silently do nothing"
     orig_expand = AG.expand_terminology
