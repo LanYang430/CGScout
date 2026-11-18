@@ -186,7 +186,7 @@ def search_and_dedupe(
     results. Failures are printed to stderr-equivalent via a raised warning
     collected in `errors` accessible through `search_and_dedupe.last_errors`.
 
-    Dev-speed cache (beam_agent.cache): keyed on (query, limit, sources, mode) --
+    Dev-speed cache (cgscout.cache): keyed on (query, limit, sources, mode) --
     the exact inputs that determine what this function asks the sources for.
     Only a call with ZERO source errors is ever cached, so a rate-limit/
     timeout/malformed-response is never mistaken for "this query genuinely

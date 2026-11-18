@@ -1,5 +1,5 @@
 """Unit tests for search_and_dedupe()'s dev-speed retrieval cache
-(beam_agent/search.py). No real network -- search_openalex/
+(cgscout/retrieval/search.py). No real network -- search_openalex/
 search_semantic_scholar are monkeypatched with call-counting fakes.
 tests/conftest.py isolates CGSCOUT_CACHE_DIR per test automatically.
 """

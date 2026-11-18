@@ -30,15 +30,15 @@ from cgscout.planning.scientific_planner import PlannerOutput  # noqa: E402
 from cgscout.agent import rank_for_display  # noqa: E402
 
 BANNER = (
-    "BEAM (scientific-planner-v2 -- Plan B live path)\n"
+    "CGScout -- literature scout for coarse-grained protein models\n"
     "Type 'quit' to exit, 'new' to start a new session.\n\n"
-    "BEAM: Hi! I'm an agent for discovering protein coarse-grained models "
+    "CGScout: Hi! I'm an agent for discovering protein coarse-grained models "
     "and related simulation literature.\n"
 )
 
 
 def _print_plan(plan: PlannerOutput) -> None:
-    print(f"BEAM: (plan) system={plan.system!r}"
+    print(f"CGScout: (plan) system={plan.system!r}"
           + (f" target_component={plan.target_component!r}" if plan.target_component else ""))
     print(f"      objective={plan.scientific_objective!r}")
     if plan.search_context:
@@ -51,7 +51,7 @@ def print_result(out: agent.AgentResult) -> None:
     result, s4 = out.retrieval, out.assessment
     if s4 is not None:                 # Stage 4 ran: the gate said yes (it was asked for and something was retained)
         w = s4.workload
-        print("\nBEAM: Evidence for your specific problem (ranked by scientific relevance)")
+        print("\nCGScout: Evidence for your specific problem (ranked by scientific relevance)")
         print(f"  {len(result.direct_papers) + len(result.transfer_papers)} candidates -> {w['n_retained']} kept by the cheap filter -> "
               f"{w['n_recommended']} recommended, {w['n_background']} background, {w['n_rejected']} judged not relevant"
               + (f", {len(s4.errors)} could not be evaluated" if s4.errors else ""))
@@ -69,7 +69,7 @@ def print_result(out: agent.AgentResult) -> None:
             for a in s4.background[:10]:
                 print(f"    - {a.title} ({a.year})")
         return
-    print("\nBEAM: Evidence for your specific problem")
+    print("\nCGScout: Evidence for your specific problem")
     ranked = rank_for_display(result.retained)
     if not ranked:
         print("  (no candidates found across direct or transfer evidence)")
@@ -99,13 +99,13 @@ def handle_turn(session: PlannerSession, text: str, backend: LLMBackend, *, case
                     gate=None if use_stage4 else (lambda res: False),      # default gate: Stage 4 only when something was retained
                     on_plan=_print_plan)
     if isinstance(out, agent.Clarification):
-        print(f"BEAM: {out.question}")
+        print(f"CGScout: {out.question}")
     else:
         print_result(out)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="BEAM v2 -- scientific-planner live path")
+    parser = argparse.ArgumentParser(description="CGScout -- literature scout for coarse-grained protein models")
     parser.add_argument("--case-id", default=None,
                          help="tag every LLM call this session makes in the usage log")
     parser.add_argument("--no-stage4", action="store_true",
@@ -135,12 +135,12 @@ def main() -> None:
             break
         if text.lower() == "new":
             session = PlannerSession(backend=backend, case_id=args.case_id)
-            print("BEAM: (started a new session)")
+            print("CGScout: (started a new session)")
             continue
         try:
             handle_turn(session, text, backend, case_id=args.case_id, use_stage4=not args.no_stage4)
         except Exception as e:  # noqa: BLE001 -- surface, don't crash the loop
-            print(f"BEAM: (error) {e}")
+            print(f"CGScout: (error) {e}")
 
 
 if __name__ == "__main__":

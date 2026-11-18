@@ -1,7 +1,7 @@
 """Shared end-to-end runner + artifact saver for the 13-case regression suite
 and the offline canonical-schema validation. Calls production code
 UNMODIFIED (ScientificPlanner / ExpertPriorPlanner / cgscout.agent.execute)
-and only records what it returns. NOT imported by beam_agent.
+and only records what it returns. NOT imported by cgscout.
 
 Route attribution is by SOURCE LIST, not by category label alone:
   in_flat      = target DOI present in result.direct_papers (flat/direct route)

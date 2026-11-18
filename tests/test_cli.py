@@ -129,7 +129,7 @@ def test_a_clarifying_question_is_shown_and_the_answer_continues_the_same_conver
     r = rig(["I study a helix", "the folding of it", "quit"], [plan_out(question="Which helix protein?"), plan_out(system="alpha-helical bundle", objective="folding")])
     r.stage4_result = Stage4Result(assessments=[], problem_context="", workload={"n_retained": 0, "n_recommended": 0, "n_background": 0, "n_rejected": 0})
     out = r.run()
-    assert "BEAM: Which helix protein?" in out
+    assert "CGScout: Which helix protein?" in out
     assert len(r.retrieval_calls) == 1                # retrieval only after the second turn
     second_user_message = r.backend.calls[1]["user"]
     assert "[1] user: I study a helix" in second_user_message and "[2] Assistant (asked): Which helix protein?" in second_user_message and "[3] user: the folding of it" in second_user_message
@@ -138,7 +138,7 @@ def test_a_clarifying_question_is_shown_and_the_answer_continues_the_same_conver
 def test_new_starts_an_empty_conversation(rig):
     r = rig(["first message", "new", "second message", "quit"], [plan_out(question="q?"), plan_out(question="q2?")])
     out = r.run()
-    assert "BEAM: (started a new session)" in out
+    assert "CGScout: (started a new session)" in out
     assert r.backend.calls[1]["user"] == "CONVERSATION (most recent entry is what you are responding to):\n[1] user: second message"
 
 
@@ -146,7 +146,7 @@ def test_an_error_in_a_turn_is_printed_and_the_loop_goes_on(rig):
     r = rig(["go", "next", "quit"], [plan_out(), plan_out(question="still there?")])
     r.retrieval_error = RuntimeError("boom")
     out = r.run()
-    assert "BEAM: (error) boom" in out and "BEAM: still there?" in out
+    assert "CGScout: (error) boom" in out and "CGScout: still there?" in out
 
 
 def test_case_id_reaches_every_call(rig):
@@ -183,9 +183,9 @@ def test_stage4_result_is_printed_ranked_with_evidence(rig):
                      assessment(3, "Weak paper", 2010, 1), assessment(4, "Irrelevant paper", 2000, 0)],
         problem_context="", workload={"n_retained": 4, "n_recommended": 2, "n_background": 1, "n_rejected": 1})
     out = r.run()
-    assert "BEAM: (plan) system='beta-helix protein' target_component='N-terminal domain'" in out
+    assert "CGScout: (plan) system='beta-helix protein' target_component='N-terminal domain'" in out
     assert "objective='folding mechanism'" in out and "search_context=['membrane']" in out and "search_axes=['axis one']" in out
-    assert "BEAM: Evidence for your specific problem (ranked by scientific relevance)" in out
+    assert "CGScout: Evidence for your specific problem (ranked by scientific relevance)" in out
     assert "2 candidates -> 4 kept by the cheap filter -> 2 recommended, 1 background, 1 judged not relevant" in out
     assert "[1] Direct CG paper  (2021)  grade 3/3  [direct application]" in out and "doi=10.1/direct" in out
     assert "why: Builds a CG model of the same protein." in out and 'evidence: "we built a coarse-grained model"' in out
@@ -215,7 +215,7 @@ def test_no_stage4_prints_the_stage3_list_in_route_tier_then_year_order(rig):
     r.retained = [paper("Transfer paper 2024", 2024, cats=("transfer_direct",)), paper("Direct 2010", 2010), paper("Direct 2022", 2022, venue="JCTC", doi="10.1/d22", keywords=("Go model",))]
     out = r.run()
     assert r.stage4_calls == []
-    assert "BEAM: Evidence for your specific problem\n" in out and "(ranked by" not in out
+    assert "CGScout: Evidence for your specific problem\n" in out and "(ranked by" not in out
     assert "3 candidates -> 3 worth reading (1 filtered for lacking explicit CG evidence)" in out       # candidates = direct + transfer papers (the rig splits retained 1 + 2)
     assert out.index("[1] Direct 2022") < out.index("[2] Direct 2010") < out.index("[3] Transfer paper 2024")      # tier 0 before tier 1, newer first inside a tier
     assert "2022  JCTC  doi=10.1/d22" in out and "found via: system_specific_cg" in out and "CG evidence: Go model" in out

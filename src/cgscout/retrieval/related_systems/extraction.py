@@ -143,7 +143,7 @@ def _find_structural_term_matched(evidence_quote: str, structural_class: str, al
 # --- Hop-1 extraction robustness: abstract length cap + call timeout ------
 #
 # Diagnosed against a real case (cold-profile investigation):
-# one retrieved paper's abstract, reconstructed by beam_agent.sources.
+# one retrieved paper's abstract, reconstructed by cgscout.sources.
 # openalex._reconstruct_abstract() from OpenAlex's own abstract_inverted_
 # index, came out 23,046 characters long and visibly garbled/repetitive --
 # ~10-40x the observed normal range (500-2,500 chars). The
@@ -389,7 +389,7 @@ def extract_related_systems_rich(
     contributing nothing.
 
     `backend` is REQUIRED, no default -- the single LLMBackend this whole
-    BEAM run/session already resolved once (llm.get_backend(),
+    CGScout run/session already resolved once (llm.get_backend(),
     called by the top-level entry point, threaded down through every
     caller in between). This function never resolves or falls back to a
     backend on its own -- see llm.get_backend()'s own docstring on

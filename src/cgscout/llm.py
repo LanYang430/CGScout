@@ -205,7 +205,7 @@ def get_backend() -> LLMBackend:
     openai backend's model / default reasoning effort.  (Every CGSCOUT_* name
     also reads the legacy BEAM_* spelling -- see cgscout.config.)
 
-    Global invariant (one BEAM run uses exactly one LLM backend, no mixed
+    Global invariant (one CGScout run uses exactly one LLM backend, no mixed
     execution): call this ONCE per run/session and thread the SAME instance
     into every module that needs an LLM -- ScientificPlanner,
     ExpertPriorPlanner, and Hop-1 related-system extraction

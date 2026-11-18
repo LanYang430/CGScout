@@ -108,7 +108,7 @@ def get_json(url, params=None):
     status = None
     for a in range(3):
         try:
-            r = requests.get(url, params=q, timeout=40, headers={"User-Agent": "BEAM-benchmark/1.0"})
+            r = requests.get(url, params=q, timeout=40, headers={"User-Agent": "CGScout-benchmark/1.0"})
             status = r.status_code
             if status == 200:
                 cp.write_text(r.text)

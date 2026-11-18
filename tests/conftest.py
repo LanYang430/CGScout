@@ -1,8 +1,8 @@
 """Shared pytest fixtures for tests/.
 
-Every test gets its own fresh, isolated cache directory (beam_agent.cache
+Every test gets its own fresh, isolated cache directory (cgscout.cache
 reads CGSCOUT_CACHE_DIR fresh on every call, never at import time -- see
-beam_agent/cache.py) -- this is required, not just convenient: several
+cgscout/cache.py) -- this is required, not just convenient: several
 existing extractor tests intentionally reuse the same default paper/prompt
 fixture across different success/failure scenarios in the same file, and
 without isolation a cache entry written by an earlier test would silently

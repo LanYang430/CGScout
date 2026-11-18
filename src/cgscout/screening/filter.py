@@ -1,7 +1,7 @@
 """Stage 3 (cheap relevance filter) handoff for the new RetrievalIntent /
 query-role retrieval path.
 
-Inspection of the existing Stage 3 (beam_agent/relevance_filter.py,
+Inspection of the existing Stage 3 (relevance_filter.py of the v1 package, git tag `legacy-pre-cgscout`,
 RuleBasedRelevanceFilter -- UNCHANGED by this file, not one line touched):
   - No LLM. Pure deterministic stem-based keyword overlap between a paper's
     title/abstract and a match vocabulary.
@@ -16,14 +16,14 @@ RuleBasedRelevanceFilter -- UNCHANGED by this file, not one line touched):
     |abstract matches|, keep if score >= min_score (defaults 2.0/1.0/1.0)
     -- i.e. a SINGLE keyword hit anywhere already passes. Already an
     explicit high-recall design; nothing to fix there.
-  - Called by beam_agent/pipeline.py's run_pipeline() (Stage 3 of that
+  - Called by the v1 package's pipeline.py run_pipeline() (Stage 3 of that
     pipeline). NOT called anywhere in the new chat_with_beam.py /
     execute_query_plan() path before this pass.
 
 Because the profile dependency is architecturally identical to
 QueryPlanner's, the fix is the same shape as query_planner_handoff.py:
 reuse the underlying, already-profile-agnostic primitives
-(beam_agent.text_utils.stem/stemmed_keywords/keywords -- plain string
+(`stem` / `stemmed_keywords` / `keywords`, defined in this module -- plain string
 functions) directly, rather than constructing a legacy profile.
 
 Role-aware scoring (unchanged from the first version of this file): each
@@ -220,7 +220,7 @@ _METHODOLOGY_TERM_CLUSTERS = METHODOLOGY_TERM_CLUSTERS
 # review-artifact title pattern) left out as too prone to false positives:
 #
 #   1. OpenAlex's own `type` field says "review" (Paper.oa_type -- see
-#      beam_agent/sources/openalex.py's `_SELECT`/`_to_paper()`). OpenAlex
+#      cgscout/sources/openalex.py's `_SELECT`/`_to_paper()`). OpenAlex
 #      normalizes publisher-level sub-types ("Review", "Mini Review",
 #      "Advanced Review", ...) into this one coarse category; there is no
 #      more granular field to check beyond it. None for any non-OpenAlex

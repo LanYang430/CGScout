@@ -1,4 +1,4 @@
-"""Which LLM writes the benchmark.  The point is to NOT use the model family BEAM itself runs on (GPT-5.6 Luna in the
+"""Which LLM writes the benchmark.  The point is to NOT use the model family CGScout itself runs on (GPT-5.6 Luna in the
 planner / expert prior / Stage 4), so queries do not carry that model's wording.  No Claude / Gemini key exists in this
 environment yet, so the pilot falls back to the existing OpenAI backend and records the model name on every row
 (`generator_model`).  To switch, add a backend with the same `structured(...)` signature (see LLMBackend in

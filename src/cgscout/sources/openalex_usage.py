@@ -10,7 +10,7 @@ harness the pieces needed to prevent that:
 
   * request-level cache  -- every search_openalex() caller (including
     diagnostic scripts that bypass search_and_dedupe) shares the existing
-    beam_agent.cache. Only successful (HTTP 200) responses are ever stored.
+    cgscout.cache. Only successful (HTTP 200) responses are ever stored.
   * usage ledger         -- one JSON line per real HTTP attempt, plus an
     in-process per-run-label counter, so a benchmark run can report exactly
     how many requests / cache hits / credits it consumed.
@@ -408,7 +408,7 @@ def _reset_for_tests() -> None:
 # ----------------------------------------------------------------- CLI
 def _main() -> int:
     import argparse
-    ap = argparse.ArgumentParser(prog="python -m beam_agent.sources.openalex_usage")
+    ap = argparse.ArgumentParser(prog="python -m cgscout.sources.openalex_usage")
     ap.add_argument("cmd", choices=["status", "today"])
     ap.add_argument("--force", action="store_true", help="make a live request instead of using the latch/recent response")
     a = ap.parse_args()

@@ -1,6 +1,6 @@
 """Pilot generator: seed abstract -> need card (stage A) -> 3 blind query candidates (stage B); L3 adds a sister-system
 step.  Writes data/pilot_v0.jsonl (everything) and data/pilot_v0.csv (for the human pick).  Benchmark code only:
-nothing here touches BEAM's pipeline.
+nothing here touches CGScout's pipeline.
 
   D/H (L1, L2):  A sees ONLY the abstract (no title / methods / discussion).  B sees ONLY the need card.
                  L1 uses `specific_need`, L2 uses `abstracted_need`.
@@ -22,7 +22,7 @@ from typing import Callable, Optional
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import gen_backend  # noqa: E402,F401  (sets sys.path for BEAM modules)
+import gen_backend  # noqa: E402,F401  (sets sys.path for CGScout modules)
 import leakage as LK  # noqa: E402
 import prompts as P  # noqa: E402
 from schemas import (DirectCheck, NeedCard, NeedCards, QueryCandidates, SisterProposals)  # noqa: E402
@@ -257,7 +257,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only"); ap.add_argument("--out", default=str(HERE / "data" / "pilot_v1"))
     ap.add_argument("--seeds", default=str(HERE / "data" / "pilot_seeds_final.json")); a = ap.parse_args()
-    import regression_lib as RL                              # budget guard + usage ledger (same one the BEAM harness uses)
+    import regression_lib as RL                              # budget guard + usage ledger (same one the CGScout harness uses)
     from cgscout.sources.openalex import search_openalex
     seeds = json.loads(Path(a.seeds).read_text())
     if a.only:

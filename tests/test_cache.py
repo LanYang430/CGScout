@@ -1,4 +1,4 @@
-"""Unit tests for beam_agent/cache.py -- the generic file-based dev-speed
+"""Unit tests for cgscout/cache.py -- the generic file-based dev-speed
 cache. Pure filesystem behavior, no network, no LLM. Each test passes its
 own tmp_path as cache_dir explicitly (in addition to tests/conftest.py's
 autouse CGSCOUT_CACHE_DIR isolation) so this file's assertions don't depend on

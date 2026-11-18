@@ -7,7 +7,7 @@ No network: every filter_papers() call here injects a fake `classify_fn`
 (_fake_marker_classify_fn, or an inline lambda for the classifier-specific
 tests below) instead of the real sim_classifier.default_classify_fn, which
 would call the OpenAI embeddings API and load the persisted model
-artifact. filter.py itself only needs beam_agent.
+artifact. filter.py itself only needs cgscout.
 models/text/concept_resolver's read-only cluster table, plus
 review_filter.py (also network-free -- pure regex/field check).
 """

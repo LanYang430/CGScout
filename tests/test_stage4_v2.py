@@ -428,7 +428,7 @@ def test_europepmc_request_has_exactly_this_url_headers_timeout_and_read_limit(m
     base = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query="
     tail = "&resultType=core&format=json&pageSize=1"
     assert [c["url"] for c in seen] == [base + "DOI%3A%2210.9/req%22" + tail, base + "DOI%3A%2210.9/req2%22" + tail, base + "EXT_ID%3A12345%20AND%20SRC%3AMED" + tail]
-    assert {c["ua"] for c in seen} == {"BEAM-stage4-abstract-fallback/0.1"}             # renamed later, in the release preparation (R3), together with this line
+    assert {c["ua"] for c in seen} == {"CGScout-stage4-abstract-fallback/0.1"}
     assert {c["accept"] for c in seen} == {"application/json"} and {c["method"] for c in seen} == {"GET"}
     assert [c["timeout"] for c in seen] == [20.0, 3.5, 20.0]                              # default 20 s, a given timeout is forwarded
     assert _SpyResp.reads == [2_000_000, 2_000_000, 2_000_000]                            # the response body is read with this cap

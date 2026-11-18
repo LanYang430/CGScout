@@ -10,7 +10,7 @@ registration -- Europe PMC's REST API is free and open.
 
 Docs: https://europepmc.org/RestfulWebService
 
-This is a NEW capability -- nothing in beam_agent/sources/ reached past
+This is a NEW capability -- nothing in the v1 package's sources/ reached past
 title/abstract before this. Deliberately narrow scope:
   - looks up a paper by DOI only (not by title/author -- avoids ambiguous
     matches)
@@ -28,7 +28,7 @@ title/abstract before this. Deliberately narrow scope:
     retry-then-explicit-exception is the deliberate EXCEPTION to this, for
     rate-limit accounting; this module has no equivalent budget to track)
 
-Cached via beam_agent.cache (dev-speed + avoids re-hitting Europe PMC for
+Cached via cgscout.cache (dev-speed + avoids re-hitting Europe PMC for
 the same DOI across runs) -- keyed on DOI alone, no TTL (a paper's own
 Methods text does not change after publication).
 
@@ -185,7 +185,7 @@ def europepmc_abstract(p: Paper, *, timeout: float = 20.0) -> Optional[dict]:
         return hit
     url = ("https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=" + urllib.parse.quote(query)
            + "&resultType=core&format=json&pageSize=1")
-    req = urllib.request.Request(url, headers={"User-Agent": "BEAM-stage4-abstract-fallback/0.1", "Accept": "application/json"})
+    req = urllib.request.Request(url, headers={"User-Agent": "CGScout-stage4-abstract-fallback/0.1", "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:        # URLError / HTTPError / timeout propagate
         data = json.loads(r.read(2_000_000).decode("utf-8", "replace"))
     results = (data.get("resultList") or {}).get("result") or []

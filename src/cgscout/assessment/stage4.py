@@ -1,6 +1,6 @@
 """Stage 4 (v2): LLM scientific-relevance evaluation of the Stage-3-retained papers.
 
-Pipeline position (BEAM v2):
+Pipeline position (CGScout):
 
     Stage 2 retrieval -> Stage 3 cheap filter (keyword gate + simulation classifier)
         -> Stage 4 LLM relevance evaluation + ranking   <- THIS MODULE
@@ -11,7 +11,7 @@ cannot decide scientific relevance. This module does, with an explicit graded ru
 evidence-based explanation for every deeply-evaluated paper, and a final rank that comes from
 that assessment -- never from retrieval route or publication year (those only break ties).
 
-Reuse of the old Stage 4a (beam_agent/evidence_extraction.py): its query-independent extraction
+Reuse of the old Stage 4a (evidence_extraction.py of the v1 package, git tag `legacy-pre-cgscout`): its query-independent extraction
 prompt, user-message builder, output field semantics (PaperEvidence method / system / processes)
 and its content-hash caching idea are reused unchanged; the LLM transport is
 LLMBackend.structured(). The old Stage 4b/5 keyword matching (evidence_matching.py)

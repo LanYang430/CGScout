@@ -1,5 +1,5 @@
 """Seed-paper candidate search + selection for the pilot.  Candidates come from 16 neutral domain queries (NOT
-BEAM's own queries) run once through OpenAlex semantic search; selection is rule-based and deterministic.
+CGScout's own queries) run once through OpenAlex semantic search; selection is rule-based and deterministic.
 
 Hard filters: research article, DOI present, abstract >= 300 chars, CG/mesoscale modelling is in the abstract, not a
 review/perspective, not one of the 13 dev-case targets, not in the dev domains (condensates / phase separation / folding).

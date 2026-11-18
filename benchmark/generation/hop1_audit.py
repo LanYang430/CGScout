@@ -1,9 +1,9 @@
 """READ-ONLY Hop-1 audit of the routing smoke test (Q15, Q16, Q19, Q20): why did related-system discovery end at 0 systems?
-Everything is reconstructed from what the smoke run already left on disk -- no OpenAI call, no OpenAlex request, no BEAM file touched:
+Everything is reconstructed from what the smoke run already left on disk -- no OpenAI call, no OpenAlex request, no CGScout file touched:
   * the Hop-1 sentence + axis       <- data/routing_smoke.json
   * the 15 papers Hop-1 retrieved    <- OpenAlex request cache (same sentence, semantic, limit 15)
   * the ORIGINAL per-paper LLM extractions <- .cache/hop1_extract_rich, matched to usage-log rows by write time, then to papers by evidence quote
-  * the relationship-fidelity gate / grounding / cleanup / identity steps re-applied with BEAM's own functions to those extractions.
+  * the relationship-fidelity gate / grounding / cleanup / identity steps re-applied with CGScout's own functions to those extractions.
 Caveat: ExpertPrior's retrieval_anchors were not saved by the smoke run, so `also_known_as` (used only to ban class-like names) is approximated by
 {class + objective}; the stored structural_term_matched values come from the original run."""
 from __future__ import annotations

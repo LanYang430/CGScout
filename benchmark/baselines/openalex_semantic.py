@@ -4,7 +4,7 @@ Request (exactly the endpoint/param the repo's search_openalex(mode="semantic") 
     GET https://api.openalex.org/works?search.semantic=<Latest query (v2)>&per_page=50&select=...
 No filters (no year / publication type / CG term), no title / DOI / OpenAlex-ID / seed metadata in the request, no reranking,
 no LLM.  Throttle (1 request/s across processes), usage ledger, budget latch and exhaustion detection are the repo's own
-(beam_agent.sources.openalex_usage).  This script differs from search_openalex() only in that it keeps the RAW response
+(cgscout.sources.openalex_usage).  This script differs from search_openalex() only in that it keeps the RAW response
 (rank order, relevance_score, headers) instead of normalising it to Paper objects, which drop the score.
 
 Seed matching happens only AFTER retrieval: OpenAlex ID first, then normalised DOI.  A title-only look-alike in the top 50

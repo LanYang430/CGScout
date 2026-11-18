@@ -26,7 +26,7 @@ what they say, deterministically:
 
 direct_concept_search fires 3 fixed, deterministic template queries per
 axis (see concept_3a.render_direct_concept_queries(),
-no LLM call) via beam_agent.search.search_and_dedupe() directly
+no LLM call) via cgscout.retrieval.search.search_and_dedupe() directly
 (function-level reuse, bypassing route_plan.py's routing layer
 -- there is nothing case-specific this needs from that layer), and unions
 their results.
@@ -75,7 +75,7 @@ Reuses, UNMODIFIED:
     -- the injected backend, so the whole run uses one backend)
   - extraction.extract_related_systems_rich  (Hop-1's per-paper LLM call, richer schema, also backend-injected -- see that module)
   - filter.filter_papers()  (Stage 3, run ONCE over the merged pool)
-  - beam_agent.search.search_and_dedupe()
+  - search.search_and_dedupe()
 
 Query generation (this session's structured-signature redesign): axis.
 concept (a single free-text field) is GONE -- TransferAxis now carries

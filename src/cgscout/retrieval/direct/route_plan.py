@@ -13,7 +13,7 @@ agent.py / retrieval/transfer.py). Its provenance and result types stay in the
 schema below.
 
 Reuses, UNMODIFIED:
-  - beam_agent.search.search_and_dedupe()        (the flat routes)
+  - cgscout.retrieval.search.search_and_dedupe()  (the flat routes)
 
 Does NOT touch Hop-1/Hop-2 internals, Stage 3/4, evidence matching, or the
 live CLI.
@@ -960,7 +960,7 @@ def run_route_retrieval(
     if evidence_plan.structural_terms:
         raise NotImplementedError(
             "the structural (Hop-1/Hop-2) branch of run_route_retrieval() was removed (historical code, git tag "
-            "`legacy-pre-cgscout`); the live path never enables it -- planner_retrieval_bridge always clears structural_terms."
+            "`legacy-pre-cgscout`); the live path never enables it -- from_planner always clears structural_terms."
         )
 
     papers = [acc.papers[ref] for ref in acc.order]

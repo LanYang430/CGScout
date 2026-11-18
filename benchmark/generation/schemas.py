@@ -1,4 +1,4 @@
-"""Pydantic schemas for the benchmark-generation LLM calls (benchmark code only; not part of BEAM)."""
+"""Pydantic schemas for the benchmark-generation LLM calls (benchmark code only; not part of CGScout)."""
 from typing import Literal
 
 from pydantic import BaseModel, Field

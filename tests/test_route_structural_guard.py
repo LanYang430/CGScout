@@ -18,7 +18,7 @@ RUN, BUILD = RP.run_route_retrieval, RP.build_route_retrieval_plan              
 EVIDENCE_PLAN_FROM_PLANNER_OUTPUT = FP.evidence_plan_from_planner_output
 
 MESSAGE = ("the structural (Hop-1/Hop-2) branch of run_route_retrieval() was removed (historical code, git tag `legacy-pre-cgscout`); "
-           "the live path never enables it -- planner_retrieval_bridge always clears structural_terms.")
+           "the live path never enables it -- from_planner always clears structural_terms.")
 
 
 def term(text, source="USER_GROUNDED"):
