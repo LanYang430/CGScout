@@ -1,4 +1,10 @@
-"""Re-run of the routing smoke test AFTER the 3B generalization (axis-aligned relationship validation, concrete-entity
+"""ARCHIVED / HISTORICAL SCRIPT -- it cannot run on the current CGScout.  It was written against the code before the CGScout restructure (git tag
+`legacy-pre-cgscout`, where it is benchmarks/beam_bench_v1/routing_smoke_v2.py, in the same checkout as the modules it uses).  Here it fails at import: `cgscout.retrieval.orchestrator`
+was renamed `cgscout.retrieval.transfer`, `regression_lib` was replaced by benchmark/evaluation/harness.py, and `run_expert_prior_retrieval` became
+the body of `cgscout.agent.retrieve`.  It is kept, with the output files data/routing_smoke_v2*.json, as the record of how the benchmark was built;
+nothing in it is needed to use CGScout or to repeat the evaluation (docs/reproduce.md).
+
+Re-run of the routing smoke test AFTER the 3B generalization (axis-aligned relationship validation, concrete-entity
 grounding, abstract ExpertPrior classes), on the CURRENT production code.  Q15/16/18/19/20 + the old Pertactin/EspP 3B
 regression cases (regression_13 cases 11, 12).  In this process only: Stage 3 pass-through, canonical-method verification
 skipped, no Stage 4.  Three layers are reported separately:

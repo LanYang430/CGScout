@@ -61,3 +61,16 @@ The 200-query workbook, per-run result JSONs, LLM usage logs, `plans_frozen/`, `
 The scripts that need the author's labelled Stage-3 exports have no built-in path: `benchmark/training/train_sim_classifier.py` takes `--train-csv PATH` (or `CGSCOUT_STAGE3_TRAIN_CSV`;
 the older name `BEAM_STAGE3_TRAIN_CSV` is still read), and `benchmark/generation/{l3_verify,overlap_audit,propose14}.py` take `--stage3-data-dir DIR` (or `CGSCOUT_STAGE3_DATA_DIR`) naming the directory
 that holds the four `beam_stage3_*.csv` files. Without them each script stops with a message that says what to set; `--help` works without any data.
+
+## Benchmark-generation scripts are a historical record
+
+`benchmark/generation/` records how the 200-query benchmark was built; it was written against the code before the CGScout restructure and has not been maintained for the
+current version. **`routing_smoke.py` and `routing_smoke_v2.py` are archived scripts**: they cannot run on CGScout (`cgscout.retrieval.orchestrator` was renamed `cgscout.retrieval.transfer`,
+`regression_lib` was replaced by `benchmark/evaluation/harness.py`, and `run_expert_prior_retrieval` became the body of `cgscout.agent.retrieve`), so importing them raises `ModuleNotFoundError`.
+Their outputs, `benchmark/generation/data/routing_smoke*.json`, are kept as they were produced; nothing was re-run.
+Several other scripts in the same directory (`generate.py`, `l3_find_more.py`, `l3_verify.py`, `overlap_audit.py`, `probe.py`, `propose14.py`, `seeds.py`) import `regression_lib`, and
+`overlap_audit.py` also imports `sim_classifier_train` (now `benchmark/training/train_sim_classifier.py`), so they stop with `ModuleNotFoundError` as well (`--help` and the
+data-directory check of the three that take `--stage3-data-dir` still run); treat the whole directory as an archive, and its files under `data/` as the benchmark's construction record.
+
+To trace how the benchmark was built, and to read the scripts next to the modules they were written against, check out the git tag `legacy-pre-cgscout` (`git worktree add ../cgscout-legacy legacy-pre-cgscout`): there the scripts are
+in `benchmarks/beam_bench_v1/`, in the same checkout as the modules they import. The evaluation itself (`benchmark/evaluation/`, above) does not depend on any of these scripts.

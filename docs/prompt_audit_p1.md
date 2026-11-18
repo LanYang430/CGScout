@@ -17,7 +17,7 @@ Commits, by subject: `Phase 3 / P1 prompt audit: approved edits` (E1, E2, E3, E4
 
 ## Evidence: the old-vs-new comparison (P1 only; no retrieval, no Stage 3/4)
 
-Design: 20 questions (10 hand-written probes, the eIF4B regression query from `tests/test_scientific_planner_clarification.py`, 9 queries from stored plans), first turn of the real `PlannerSession` path, model `gpt-5.6-luna`, effort medium. Original prompt once; E1–E5 version once; E3-reverted version once; then the 7 cases with extra search_context or changed clarification (S-ID21, S-ID14, S-eIF4B, S-B039, H-AMP, S-M04, H-TMhelix) three times per arm; S-P03 and S-M09 twice more for the original and the current version. About 140 calls, about $0.05 in total. Raw data: `archived-audit-data/P1/`.
+Design: 20 questions (10 hand-written probes, the eIF4B regression query from `tests/test_scientific_planner_clarification.py`, 9 queries from stored plans), first turn of the real `PlannerSession` path, model `gpt-5.6-luna`, effort medium. Original prompt once; E1–E5 version once; E3-reverted version once; then the 7 cases with extra search_context or changed clarification (S-ID21, S-ID14, S-eIF4B, S-B039, H-AMP, S-M04, H-TMhelix) three times per arm; S-P03 and S-M09 twice more for the original and the current version. About 140 calls, about $0.05 in total. Raw data: the archived audit data, which is not part of this repository.
 
 Results that matter:
 - **Over-clarification**: the 13 clear or over-clarification-prone questions (villin, WW, titin, HIV capsid, nucleosome, riboswitch, TM helix, antimicrobial peptide, eIF4B, N09, M04, M09, B205) were never asked about, by any arm; the live eIF4B regression test passes.

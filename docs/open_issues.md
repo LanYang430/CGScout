@@ -14,7 +14,7 @@ Status: recorded 2026-11-11, owner decision: record as an independent bug, minim
 - `cli.py`: printed and passed on.
 
 **Evidence.**
-- Stored ID21 run (`benchmark_new37_beam/results/CUR/ID21.json`): `target_component = "individual nucleolar condensate or subcompartment versus the nucleolar assembly as a whole"`; three of the four flat queries contain it, e.g. `nucleolar condensates (individual nucleolar condensate or subcompartment coarse-grained model` (words cut off, parenthesis not closed).
+- Stored ID21 run (`results/CUR/ID21.json` of an archived benchmark run directory, which is not part of this repository): `target_component = "individual nucleolar condensate or subcompartment versus the nucleolar assembly as a whole"`; three of the four flat queries contain it, e.g. `nucleolar condensates (individual nucleolar condensate or subcompartment coarse-grained model` (words cut off, parenthesis not closed).
 - 2 of 123 stored plans set it (ID21, P01); in the P1 comparison it was set for P01 by the current prompt (`cytoskeletal filament vs mechanosensitive scaffold protein vs the coupled filament–scaffold assembly`) and for ID21 and P01 by the original prompt.
 - In the benchmark, P1's question is auto-answered with a fixed no-information sentence, so the ambiguity is never resolved there and the phrase stays in the plan.
 

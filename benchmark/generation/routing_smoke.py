@@ -1,4 +1,10 @@
-"""Routing smoke test for the six hand-built L3 queries (Q15-Q20): does the CURRENT BEAM route them to
+"""ARCHIVED / HISTORICAL SCRIPT -- it cannot run on the current CGScout.  It was written against the code before the CGScout restructure (git tag
+`legacy-pre-cgscout`, where it is benchmarks/beam_bench_v1/routing_smoke.py, in the same checkout as the modules it uses).  Here it fails at import: `cgscout.retrieval.orchestrator`
+was renamed `cgscout.retrieval.transfer`, `regression_lib` was replaced by benchmark/evaluation/harness.py, and `run_expert_prior_retrieval` became
+the body of `cgscout.agent.retrieve`.  It is kept, with the output files data/routing_smoke.json, as the record of how the benchmark was built;
+nothing in it is needed to use CGScout or to repeat the evaluation (docs/reproduce.md).
+
+Routing smoke test for the six hand-built L3 queries (Q15-Q20): does the CURRENT BEAM route them to
 discovery (3B)?  Runs the unmodified Planner -> ExpertPrior -> run_expert_prior_retrieval.  In THIS process only:
 Stage 3 is a pass-through (no classifier / embedding calls) and canonical-method verification is skipped -- both are
 irrelevant to routing and cost credits.  No Stage 4, no OpenAlex baseline, no routing logic touched.  One draw per case.

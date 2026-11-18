@@ -23,7 +23,7 @@ Facts checked before choosing the E2 terms: "immunoglobulin / Ig-like / titin / 
 
 ## Evidence: live P2 comparison (P2 only; no retrieval, no Stage 3/4)
 
-Design: 20 inputs, fixed (frozen P1 output reused; the P1 plan of B122 was generated once and shared by both arms): B034E, I11, ID1, B071, B055, M01, ID28, ID12, M04, B204, ID15, C9, FRESH-019, M07, B190, ID21, P01, P14, P19, B122. B250 (fibronectin) was dropped: P1 did not reach READY in 3 attempts, so it would not be a valid benchmark input. Model gpt-5.6-luna, effort medium, no response cache (`llm.py`), same call path as `harness.propose`. Old = the tree of the commit whose subject starts `docs: P1 prompt audit record` (the parent of the text commit), new = HEAD. Runs: every case 2 x old and 2 x new; ID1, M01, ID12, ID21, P19 (flagged after round 1), B034E, I11 (key cases) 4 x each; A-only arm (tree of the text commit, E2 not applied) 2 x on ID1, ID21, B071, B055, C9, ID28, B204. 132 calls, about $0.18. Raw data, inputs, prompt texts, tools: `archived-audit-data/P2/`.
+Design: 20 inputs, fixed (frozen P1 output reused; the P1 plan of B122 was generated once and shared by both arms): B034E, I11, ID1, B071, B055, M01, ID28, ID12, M04, B204, ID15, C9, FRESH-019, M07, B190, ID21, P01, P14, P19, B122. B250 (fibronectin) was dropped: P1 did not reach READY in 3 attempts, so it would not be a valid benchmark input. Model gpt-5.6-luna, effort medium, no response cache (`llm.py`), same call path as `harness.propose`. Old = the tree of the commit whose subject starts `docs: P1 prompt audit record` (the parent of the text commit), new = HEAD. Runs: every case 2 x old and 2 x new; ID1, M01, ID12, ID21, P19 (flagged after round 1), B034E, I11 (key cases) 4 x each; A-only arm (tree of the text commit, E2 not applied) 2 x on ID1, ID21, B071, B055, C9, ID28, B204. 132 calls, about $0.18. Raw data, inputs, prompt texts and tools: the archived audit data, which is not part of this repository.
 
 **What stayed inside the run-to-run noise** (54 old vs 54 new runs; noise = old-vs-old pairs):
 
@@ -51,7 +51,7 @@ E1, E3, E4, E5 together (A-only arm) kept the old behaviour in the cases tested 
 
 Decision: keep E2 ("immunoglobulin-like domain" / "beta-sandwich"); P2 is final as E1-E5; the WD40 / beta-propeller alternative pair is NOT tested. Reasons given: (1) the main scientific constraint on `scientific_class` did not degrade; (2) the ID21 route change is scientifically acceptable and the old discovery axis has no known retrieval output; (3) the ID1 risk below has no direct recall-degradation evidence and the seed's Hit@20 does not depend on that axis; (4) the plural -> singular change is wording; (5) this audit round is conservative maintenance, not a re-optimisation of P2, so the example is not swapped repeatedly to chase identical output.
 
-Science analysis behind the decision (existing data only, no new LLM call, no new retrieval): full side-by-side axes of ID1 and ID21 (old / E1+E3+E4+E5 / +E2) with every field are in `archived-audit-data/P2/E2_analysis_ID1_ID21.md` (Appendix A, B). Summary:
+Science analysis behind the decision (existing data only, no new LLM call, no new retrieval): full side-by-side axes of ID1 and ID21 (old / E1+E3+E4+E5 / +E2) with every field are in the analysis note `E2_analysis_ID1_ID21.md` (Appendix A, B), which is part of the archived audit data, which is not part of this repository. Summary:
 
 | change | classification |
 |---|---|
