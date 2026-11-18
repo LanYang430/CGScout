@@ -123,8 +123,6 @@ from typing import Callable, Optional
 
 from cgscout.models import Paper  # noqa: E402
 
-from cgscout.retrieval.types import _CG_MARKERS  # noqa: E402 -- read-only reuse, same markers Hop2Paper.mentions_cg already uses
-
 from cgscout.screening.sim_classifier import SIM_CLASSIFIER_THRESHOLD, default_classify_fn  # noqa: E402
 
 from pydantic import BaseModel, Field  # noqa: E402
@@ -284,12 +282,14 @@ MIN_TERM_LEN = 2
 # by system_specific_cg); modeling_requirement is disabled at the route-
 # planning level (route_plan.py), so it never reaches Stage 3.
 #
-# CG marker vocabulary: _CG_MARKERS (imported above) is the SAME literal
-# substring list types.py's own Hop2Paper.mentions_cg already
-# uses for an identical "does this title+abstract blob mention CG" check --
-# reused, not reinvented. Extended with "cg simulation(s)"/"cg model(s)"
-# specifically named in the design decision (not covered by the
+# CG marker vocabulary: _CG_MARKERS is the plain list of coarse-grained surface
+# forms for a "does this title+abstract blob mention CG" check. It used to live in
+# retrieval/types.py, next to Hop2Paper.mentions_cg, and was moved here verbatim
+# when that module was removed (Phase 5 / C2e). Extended with "cg simulation(s)"/
+# "cg model(s)" specifically named in the design decision (not covered by the
 # hyphen/space "coarse-grain(ed)" forms _CG_MARKERS already has).
+_CG_MARKERS = ("coarse-grained", "coarse grained", "coarsegrained", "coarse-grain ",
+               "coarse grain ")
 _STRUCTURAL_CG_MARKERS = _CG_MARKERS + (
     "cg simulation", "cg simulations", "cg model", "cg models",
     # Named CG/reduced-representation force fields (this session's fix --
