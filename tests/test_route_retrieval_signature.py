@@ -65,10 +65,7 @@ def test_retained_flat_search_fn_serves_every_flat_query_with_the_budgeted_limit
     assert [q for q, _ in search.calls] == flat_queries        # one call per planned flat query, in plan order, nothing else
     assert {lim for _, lim in search.calls} == {7}
     assert res.n_unique_papers == len(search.calls)            # every call returned a new paper
-    assert [o.route for o in res.per_route] == [*FLAT_ROUTES, "structural"]   # no need_semantic route unless it is switched on
-    structural = res.per_route[-1]
-    assert structural.empty and structural.empty_reason == "not_applicable_no_grounded_term"
-    assert res.structural_branch_result is None
+    assert [o.route for o in res.per_route] == list(FLAT_ROUTES)   # no need_semantic route unless it is switched on, and no structural entry
 
 
 def test_retained_budgets_default_when_omitted():
@@ -101,7 +98,7 @@ def test_retained_need_semantic_search_fn_runs_with_its_own_limit():
     res = RUN(_plan(), flat_search_fn=flat, need_semantic_search_fn=need,
               budgets=RouteRetrievalBudgets(need_semantic_enabled=True, need_semantic_limit=37, max_papers_per_query=7))
     assert need.calls and {lim for _, lim in need.calls} == {37} and {lim for _, lim in flat.calls} == {7}
-    assert res.per_route[-2].route == RP.NEED_SEMANTIC_ROUTE and res.per_route[-1].route == "structural"
+    assert res.per_route[-1].route == RP.NEED_SEMANTIC_ROUTE
 
 
 # ---- the new signature (meaningful only after the removal) -------------------------------------------------------------------

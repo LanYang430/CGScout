@@ -29,7 +29,7 @@ from pydantic import BaseModel, Field
 
 from cgscout.retrieval.direct.evidence_plan import EvidenceRoutePlan, RouteTerm  # noqa: E402
 from cgscout.retrieval.related_systems.discovery import _paper_ref  # noqa: E402
-from cgscout.retrieval.types import Hop1Provenance, Hop2Result  # noqa: E402
+from cgscout.retrieval.types import Hop1Provenance  # noqa: E402
 
 
 # --- budgets ------------------------------------------------------------
@@ -254,7 +254,6 @@ class RouteOutcome(BaseModel):
     n_new_unique_contributed: int = 0  # of those, how many were NEW unique paper_refs this route added
     n_dropped_route_cap: int = 0       # candidates dropped by this route's own max_papers_per_route
     n_dropped_global_cap: int = 0      # candidates dropped by the global max_total_unique_papers
-    structural_cleanup_log: list[str] = Field(default_factory=list)  # postprocess.py (cleanup) audit trail (structural route only)
     empty: bool = False
     empty_reason: Optional[Literal[
         "not_applicable_no_grounded_term",
@@ -270,7 +269,6 @@ class RouteRetrievalResult(BaseModel):
     papers: list[RetrievedPaper] = Field(default_factory=list)
     n_unique_papers: int = 0
     n_papers_multi_route: int = 0
-    structural_branch_result: Optional[Hop2Result] = None
     routes_with_zero_results: list[str] = Field(default_factory=list)
     retrieval_seconds: float = 0.0
 
@@ -1001,15 +999,11 @@ def run_route_retrieval(
         limit = budgets.need_semantic_limit
         per_route.append(_run_flat_route(NEED_SEMANTIC_ROUTE, need_queries, lambda q, _l: need_semantic_search_fn(q, limit), budgets, acc))
 
-    structural_result: Optional[Hop2Result] = None
     if evidence_plan.structural_terms:
         raise NotImplementedError(
             "the structural (Hop-1/Hop-2) branch of run_route_retrieval() was removed (historical code, git tag "
             "`legacy-pre-cgscout`); the live path never enables it -- planner_retrieval_bridge always clears structural_terms."
         )
-    per_route.append(RouteOutcome(
-        route="structural", empty=True, empty_reason="not_applicable_no_grounded_term",
-    ))
 
     papers = [acc.papers[ref] for ref in acc.order]
     n_multi = sum(1 for p in papers if len(p.found_by) > 1)
@@ -1018,7 +1012,6 @@ def run_route_retrieval(
     return RouteRetrievalResult(
         plan=plan, per_route=per_route, papers=papers,
         n_unique_papers=len(papers), n_papers_multi_route=n_multi,
-        structural_branch_result=structural_result,
         routes_with_zero_results=routes_zero,
         retrieval_seconds=round(time.time() - t0, 2),
     )

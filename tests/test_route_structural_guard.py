@@ -1,6 +1,6 @@
 """The structural-branch guard of run_route_retrieval, pinned before it is rewritten (zero API, zero network).
 
-DRAFT for Phase 5 / C2b-0 (tests only, no change to src/).  `run_route_retrieval` raises NotImplementedError when the evidence plan carries structural terms: the
+Written for Phase 5 / C2b-0 (a tests-only commit, no change to src/).  `run_route_retrieval` raises NotImplementedError when the evidence plan carries structural terms: the
 Hop-1/Hop-2 branch behind them was removed and the live path (from_planner) always clears them.  C2b replaces the way the condition is computed (today:
 `plan.structural_branch_enabled`, a field of RouteRetrievalPlan that `select_primary_structural_term` fills; after: `evidence_plan.structural_terms` itself) and deletes
 those plan fields, so every test here talks only about what must NOT change: which inputs raise, with which exception and message, and WHEN (after the flat routes and the
@@ -68,10 +68,9 @@ def test_any_structural_term_makes_run_route_retrieval_raise_with_the_exact_mess
     assert str(exc.value) == MESSAGE
 
 
-def test_without_structural_terms_nothing_is_raised_and_the_structural_outcome_is_the_stub():
+def test_without_structural_terms_nothing_is_raised_and_per_route_has_no_structural_entry():
     res = RUN(evidence_plan([]), flat_search_fn=Search())
-    structural = [o for o in res.per_route if o.route == "structural"]
-    assert len(structural) == 1 and structural[0].empty and structural[0].empty_reason == "not_applicable_no_grounded_term"
+    assert [o.route for o in res.per_route] == list(FLAT_ROUTES)
 
 
 @pytest.mark.parametrize("name", ["one USER term", "empty-string term", "LITERATURE first, USER second"])

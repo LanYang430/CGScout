@@ -1,6 +1,6 @@
 """The fields of RouteRetrievalPlan after the structural scaffolding is removed (zero API, zero network).
 
-DRAFT for Phase 5 / C2b-1.  The five `structural_branch_*` fields of RouteRetrievalPlan were filled by build_route_retrieval_plan and read by nothing except the guard
+Written for Phase 5 / C2b-1.  The five `structural_branch_*` fields of RouteRetrievalPlan were filled by build_route_retrieval_plan and read by nothing except the guard
 of run_route_retrieval (which now looks at EvidenceRoutePlan.structural_terms directly).  These tests describe the new model and record the two compatibility changes:
 a removed field is neither stored nor readable any more, and a structural term list that is not made of RouteTerm objects (possible only by assigning to the field
 after construction: pydantic does not validate assignment) now reaches the guard instead of failing earlier inside the primary-term selection."""

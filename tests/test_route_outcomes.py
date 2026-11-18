@@ -1,10 +1,9 @@
-"""What run_route_retrieval reports per route, pinned before the structural placeholder is removed (zero API, zero network).
+"""What run_route_retrieval reports per route (zero API, zero network).
 
-DRAFT for Phase 5 / C2c-0 (tests only, no change to src/).  C2c deletes the placeholder outcome `RouteOutcome(route="structural", ...)` that run_route_retrieval always
-appends to `per_route` (and with it the "structural" entry of `routes_with_zero_results`), the field `RouteOutcome.structural_cleanup_log` and the field
-`RouteRetrievalResult.structural_branch_result`.  Nothing else about the outcomes may change, and until now almost nothing pinned it: no test read
-`routes_with_zero_results`, the empty reasons, the search errors or the drop counters.  Every test below looks at the flat and need_semantic outcomes only (the
-placeholder is filtered out by name, the removed fields are never read), so all of them pass before and after C2c."""
+Pinned in Phase 5 / C2c-0, before the placeholder outcome `RouteOutcome(route="structural", ...)` that run_route_retrieval used to append to `per_route` (and with
+it the "structural" entry of `routes_with_zero_results`), the field `RouteOutcome.structural_cleanup_log` and the field `RouteRetrievalResult.structural_branch_result`
+were removed in C2c-1.  Until then almost nothing pinned the outcomes: no test read `routes_with_zero_results`, the empty reasons, the search errors or the drop
+counters.  These tests passed unchanged on the code with and without the placeholder; C2c-1 only deleted the filters that used to skip it."""
 import pytest
 
 import cgscout.retrieval.direct.route_plan as RP
@@ -43,8 +42,8 @@ def counting_search(per_call=1, fail=lambda n: False):
 
 
 def outcomes(res):
-    """The per-route outcomes by route name, without the structural placeholder (that entry is what C2c removes)."""
-    return {o.route: o for o in res.per_route if o.route != "structural"}
+    """The per-route outcomes by route name."""
+    return {o.route: o for o in res.per_route}
 
 
 def planned(plan, route):
@@ -54,9 +53,9 @@ def planned(plan, route):
 def test_the_flat_routes_come_first_in_order_then_need_semantic_when_enabled():
     flat = counting_search()
     res = RUN(evidence_plan(), flat_search_fn=flat)
-    assert [o.route for o in res.per_route if o.route != "structural"] == list(FLAT_ROUTES)
+    assert [o.route for o in res.per_route] == list(FLAT_ROUTES)
     res = RUN(evidence_plan(), flat_search_fn=flat, need_semantic_search_fn=counting_search(), budgets=RouteRetrievalBudgets(need_semantic_enabled=True))
-    assert [o.route for o in res.per_route if o.route != "structural"] == [*FLAT_ROUTES, NEED_SEMANTIC_ROUTE]
+    assert [o.route for o in res.per_route] == [*FLAT_ROUTES, NEED_SEMANTIC_ROUTE]
 
 
 def test_each_applicable_route_reports_its_term_and_its_queries_and_the_other_one_is_the_not_applicable_stub():
@@ -81,7 +80,7 @@ def test_routes_whose_queries_return_nothing_are_empty_with_that_reason():
         assert out[route].n_papers_found == 0 and out[route].search_errors == []
     assert out["modeling_requirement"].empty_reason == "not_applicable_no_grounded_term"
     assert res.papers == [] and res.n_unique_papers == 0 and res.n_papers_multi_route == 0
-    assert [r for r in res.routes_with_zero_results if r != "structural"] == list(FLAT_ROUTES)
+    assert res.routes_with_zero_results == list(FLAT_ROUTES)
 
 
 def test_routes_whose_searches_all_fail_are_empty_with_search_error_and_keep_each_error():
@@ -91,7 +90,7 @@ def test_routes_whose_searches_all_fail_are_empty_with_search_error_and_keep_eac
         assert out[route].empty and out[route].empty_reason == "search_error"
         assert out[route].search_errors == [f"{q!r}: boom" for q in planned(res.plan, route)]
         assert out[route].queries_tried == planned(res.plan, route)       # a failed query is still a query that was tried
-    assert res.papers == [] and [r for r in res.routes_with_zero_results if r != "structural"] == list(FLAT_ROUTES)
+    assert res.papers == [] and res.routes_with_zero_results == list(FLAT_ROUTES)
 
 
 def test_one_failing_query_never_blocks_the_others_and_does_not_make_its_route_empty():
@@ -151,4 +150,4 @@ def test_the_result_counters_and_the_paper_order():
     assert res.n_papers_multi_route == sum(len(p.found_by) > 1 for p in res.papers) == 0
     assert isinstance(res.retrieval_seconds, float) and res.retrieval_seconds >= 0
     assert res.plan.route_queries == BUILD(evidence_plan()).route_queries
-    assert [r for r in res.routes_with_zero_results if r != "structural"] == ["modeling_requirement"]
+    assert res.routes_with_zero_results == ["modeling_requirement"]
