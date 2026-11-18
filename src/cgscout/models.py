@@ -187,19 +187,19 @@ class Paper(BaseModel):
     )
     structural_discovered_system: Optional[str] = Field(
         default=None,
-        description="Set ONLY for a paper found via the 'structural' route (Hop-2) -- the FIRST Hop-1-discovered "
-        "system (by Hop-2 processing order, not by relevance) whose query returned this paper "
-        "(RetrievedPaper.hop1_provenance.discovered_system in route_retrieval_plan.py). None for every other "
-        "route. Kept for backward compatibility with any consumer expecting a single name; "
+        description="Set ONLY for a paper found by a related-system (Hop-2) query -- the FIRST discovered related "
+        "system (in the order retrieval/transfer.py tags papers, not by relevance) whose query returned this "
+        "paper. None for every other paper. Kept for backward compatibility with any consumer expecting a "
+        "single name; "
         "structural_discovered_systems below is the complete, order-independent set and is what Stage 3's gate "
         "actually checks.",
     )
     structural_discovered_systems: list[str] = Field(
         default_factory=list,
-        description="Every Hop-1-discovered system whose OWN Hop-2 query independently retrieved this paper "
-        "(RetrievedPaper.hop1_provenances in route_retrieval_plan.py) -- NOT the full set of all Hop-1 "
-        "discovered systems, only those that actually found this specific paper. Empty for every "
-        "non-structural-route paper. Stage 3 (relevance_filter_handoff.py) does an EXISTENTIAL check across "
+        description="Every discovered related system whose OWN Hop-2 query independently retrieved this paper "
+        "(filled and merged by retrieval/transfer.py) -- NOT the full set of all discovered related "
+        "systems, only those that actually found this specific paper. Empty for every paper that no "
+        "related-system query found. Stage 3 (screening/filter.py) does an EXISTENTIAL check across "
         "this list: pass if ANY of them has grounded lexical evidence (system name + CG marker) in "
         "title/abstract -- so a paper legitimately retrieved by multiple systems is no longer order-dependently "
         "dropped just because whichever system's query happened to be processed first isn't the one this "
