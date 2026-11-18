@@ -1,6 +1,6 @@
 # Prompt audit: P3 (`TERMINOLOGY_EXPANDER_SYSTEM_PROMPT`)
 
-Status: **CLOSED (2026-11-13). Edit applied and committed (commit `40dd17c`): the tested "G3" text.** Regression gate passed (below). **Not every pre-set evaluation criterion passed:** the count-based flag (b) was tripped, and one systematic over-expansion (sensor histidine kinases) is open; the owner accepted this trade-off. Next prompt: P4 (not started).
+Status: **CLOSED (2026-11-13). Edit applied and committed (the commit whose subject starts `Phase 3 / P3 prompt audit: example block`; find it with `git log --oneline --grep='^Phase 3 / P3 prompt audit: example block'`): the tested "G3" text.** Regression gate passed (below). **Not every pre-set evaluation criterion passed:** the count-based flag (b) was tripped, and one systematic over-expansion (sensor histidine kinases) is open; the owner accepted this trade-off. Next prompt: P4 (not started).
 
 Owner's rules for this prompt: keep the three teaching roles of the original (alternative names of the same structure / class names of proteins built on it / forbidden specific instances); keep concrete, specific examples (no replacement by abstract rules); replace the case-specific examples (beta-helix / autotransporter / pertactin / EspP) that come from a development case; choose new examples by the input types P3 really receives and by scientific accuracy, **never by seed hit rates**; do not widen the task; E1 keeps the protein-focused wording.
 
@@ -8,7 +8,7 @@ Owner's rules for this prompt: keep the three teaching roles of the original (al
 - `retrieval/related_systems/terminology.py`; called once per `related_system_discovery` axis from `agent._discover_related_systems`; input = the axis' P2 `scientific_class`; no response cache in the library (the benchmark runner memoises per class in `terminology_memo.json`, keyed by the **class string only, not by the prompt**: after this edit use a new, empty run directory, as `docs/reproduce.md` already requires; memos in older directories hold old-prompt outputs).
 - P3 terms do **not** enter the Hop-1 search (one P4 sentence is used for every term, `semantic_query_override`); they reach the P5 per-paper message ("also written in the literature as", mixed with the class+anchor and class+objective strings), the banned-name / class-variant drop in `discovery.py`, `structural_term_matched` and the quote-ties-to-class test.
 
-## What was changed (`40dd17c`; only the prompt string; 1432 -> 1523 chars, sha256 prefix `7d17860494` -> `a27f4651ad`)
+## What was changed (commit `Phase 3 / P3 prompt audit: example block`; only the prompt string; 1432 -> 1523 chars, sha256 prefix `7d17860494` -> `a27f4651ad`)
 | spot | before | after |
 |---|---|---|
 | input source (sentence 1) | `... description a researcher used for the protein system they study.` | `... description for a class of protein systems.` |

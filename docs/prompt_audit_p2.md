@@ -6,22 +6,24 @@ Owner's rule for this prompt: keep the debugged original as far as possible (sen
 
 ## What was changed (branch `cleanup/phase2-cgscout-package`)
 
+Two commits, identified by subject (a hash changes when history is rewritten): the **text commit** (subject starts `Phase 3 / P2 prompt audit: approved text edits`) and the **E2 commit** (subject starts `Phase 3 / P2 prompt audit: E2`). Find one with `git log --oneline --grep='^Phase 3 / P2 prompt audit: E2'`.
+
 | edit | content | commit |
 |---|---|---|
-| E1 | project name removed ("... planner for a literature-discovery agent focused on coarse-grained ...") | `f6eede1` |
-| E3a | "three SEPARATE fields" -> "four" (`retrieval_anchors` was added later) | `f6eede1` |
-| E3b-e | stray continuation whitespace (two 5-space runs), `physical/structural/ mechanistic`, two `discriminative_ features`, grammar "A property so generic that it would apply ..." | `f6eede1` |
-| E4 | `direct_concept_search`: "scientific_class + a retrieval_anchor" -> "scientific_class + the user's scientific objective" (the 3A templates use scientific_class and the objective phenomenon, not the anchors) | `f6eede1` |
-| E5 | `objective_relevance`: "... read by a human and by downstream logic that decides whether to search at all" -> "... and provided as context for downstream literature relevance assessment" (only reader: `stage4.build_problem_context` -> P7 screen, P9 judge) | `f6eede1` |
-| E2 | example pair "autotransporter passenger domain" / "beta-helix" -> "immunoglobulin-like domain" / "beta-sandwich" (good/bad contrast sentence unchanged) | `5f2fcc3` (own commit, revertable alone) |
+| E1 | project name removed ("... planner for a literature-discovery agent focused on coarse-grained ...") | text commit |
+| E3a | "three SEPARATE fields" -> "four" (`retrieval_anchors` was added later) | text commit |
+| E3b-e | stray continuation whitespace (two 5-space runs), `physical/structural/ mechanistic`, two `discriminative_ features`, grammar "A property so generic that it would apply ..." | text commit |
+| E4 | `direct_concept_search`: "scientific_class + a retrieval_anchor" -> "scientific_class + the user's scientific objective" (the 3A templates use scientific_class and the objective phenomenon, not the anchors) | text commit |
+| E5 | `objective_relevance`: "... read by a human and by downstream logic that decides whether to search at all" -> "... and provided as context for downstream literature relevance assessment" (only reader: `stage4.build_problem_context` -> P7 screen, P9 judge) | text commit |
+| E2 | example pair "autotransporter passenger domain" / "beta-helix" -> "immunoglobulin-like domain" / "beta-sandwich" (good/bad contrast sentence unchanged) | E2 commit (own commit, revertable alone) |
 
-Gate for both commits: 438 tests pass; 6-case offline golden replay byte-identical (0 LLM attempts); manifest differs only in the P2 prompt (chars, sha256) and the `expert_prior_planner` module hash; AST identical outside the prompt string. P2 sha256 prefix: original `28218d41e6`, after `f6eede1` `061b025269`, current `6c03b0d4eb`. P1, P3-P9 and all 54 schemas unchanged. Retrieval, scoring, cache, schema and the user-message template were not touched.
+Gate for both commits: 438 tests pass; 6-case offline golden replay byte-identical (0 LLM attempts); manifest differs only in the P2 prompt (chars, sha256) and the `expert_prior_planner` module hash; AST identical outside the prompt string. P2 sha256 prefix: original `28218d41e6`, after the text commit `061b025269`, current `6c03b0d4eb`. P1, P3-P9 and all 54 schemas unchanged. Retrieval, scoring, cache, schema and the user-message template were not touched.
 
 Facts checked before choosing the E2 terms: "immunoglobulin / Ig-like / titin / I27 / beta-sandwich / sandwich" have 0 hits in the 200-query CSV (query, paper title, Source X, Target Y, v1 query), the unified workbook and the 123 stored plans. The old terms (autotransporter, pertactin, EspP, beta-helix, solenoid) have 0 hits in `BEAM_200_queries_and_papers_latest.csv` (2026-10-15). **This was checked against that CSV only; it is not true for the working 200 (reference workbook `Run1 copy.xlsx`, 2026-11-07): see the Correction section below** (B034 there is the EspP query; B013 is ID1).
 
 ## Evidence: live P2 comparison (P2 only; no retrieval, no Stage 3/4)
 
-Design: 20 inputs, fixed (frozen P1 output reused; the P1 plan of B122 was generated once and shared by both arms): B034E, I11, ID1, B071, B055, M01, ID28, ID12, M04, B204, ID15, C9, FRESH-019, M07, B190, ID21, P01, P14, P19, B122. B250 (fibronectin) was dropped: P1 did not reach READY in 3 attempts, so it would not be a valid benchmark input. Model gpt-5.6-luna, effort medium, no response cache (`llm.py`), same call path as `harness.propose`. Old = tree at `52e8554`, new = HEAD. Runs: every case 2 x old and 2 x new; ID1, M01, ID12, ID21, P19 (flagged after round 1), B034E, I11 (key cases) 4 x each; A-only arm (tree at `f6eede1`, E2 not applied) 2 x on ID1, ID21, B071, B055, C9, ID28, B204. 132 calls, about $0.18. Raw data, inputs, prompt texts, tools: `archived-audit-data/P2/`.
+Design: 20 inputs, fixed (frozen P1 output reused; the P1 plan of B122 was generated once and shared by both arms): B034E, I11, ID1, B071, B055, M01, ID28, ID12, M04, B204, ID15, C9, FRESH-019, M07, B190, ID21, P01, P14, P19, B122. B250 (fibronectin) was dropped: P1 did not reach READY in 3 attempts, so it would not be a valid benchmark input. Model gpt-5.6-luna, effort medium, no response cache (`llm.py`), same call path as `harness.propose`. Old = the tree of the commit whose subject starts `docs: P1 prompt audit record` (the parent of the text commit), new = HEAD. Runs: every case 2 x old and 2 x new; ID1, M01, ID12, ID21, P19 (flagged after round 1), B034E, I11 (key cases) 4 x each; A-only arm (tree of the text commit, E2 not applied) 2 x on ID1, ID21, B071, B055, C9, ID28, B204. 132 calls, about $0.18. Raw data, inputs, prompt texts, tools: `archived-audit-data/P2/`.
 
 **What stayed inside the run-to-run noise** (54 old vs 54 new runs; noise = old-vs-old pairs):
 

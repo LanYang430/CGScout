@@ -8,12 +8,12 @@ Status: **closed for now (accepted by the owner, 2026-11-11)**. Next prompt: P2.
 |---|---|---|
 | E1a/E1b/E1c | no project name in the prompt; conversation role "assistant"; the history prefix sent to P1 is `Assistant (asked):` (was `BEAM (asked):`, `session.py`) | kept |
 | E2a/E2b | clarification rules reconciled: a request whose system / component / sub-problem cannot be determined is a scope ambiguity (record it in `scientific_ambiguity` or `target_component`, `clarification_needed` true, focused question); no asking for non-essential detail; the Hard rule does not forbid clarification when essential information is missing | kept |
-| E3 | `search_context`: only context stated or directly entailed by the user's wording | **reverted** (`723a9d7`), original paragraph restored byte-for-byte |
+| E3 | `search_context`: only context stated or directly entailed by the user's wording | **reverted** (commit `Phase 3 / P1: revert E3 only`), original paragraph restored byte-for-byte |
 | E4a/E4b/E4c | `search_axes`: no promise that retrieval covers a noted framing; the field is descriptive (it has no consumer in the PAPER configuration) | kept |
 | E5a | example "domain A vs domain B vs full-length protein" instead of an autotransporter-specific one | kept |
 | E5b | the "multiple IDRs of the same protein" example | **not changed** (tied to the diagnosed eIF4B over-clarification) |
 
-Commits: `3ed4782` (E1, E2, E3, E4, E5a), `723a9d7` (E3 reverted). P1 sha256 prefix: original `1226716342`, E1–E5 `5e102cff90`, current `6409f46ebf`. P2–P9 and all 54 pydantic schemas are byte-identical to before.
+Commits, by subject: `Phase 3 / P1 prompt audit: approved edits` (E1, E2, E3, E4, E5a) and `Phase 3 / P1: revert E3 only` (E3 reverted); find one with `git log --oneline --grep='^Phase 3 / P1: revert E3 only'`. P1 sha256 prefix: original `1226716342`, E1–E5 `5e102cff90`, current `6409f46ebf`. P2–P9 and all 54 pydantic schemas are byte-identical to before.
 
 ## Evidence: the old-vs-new comparison (P1 only; no retrieval, no Stage 3/4)
 

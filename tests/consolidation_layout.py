@@ -111,7 +111,7 @@ BASELINE = Layout(
     entry=(BASE_FLOW, "run_expert_prior_retrieval"), adapter="legacy_retrieval",
     patch_targets=baseline_targets(),
     recorder_binders=("cgscout.retrieval.orchestrator", "cgscout.retrieval.search_adapters"),
-    module_aliases={}, approval="baseline = tag consol-0-baseline (c8be98c); nothing to approve")
+    module_aliases={}, approval="baseline = tag consol-0-baseline; nothing to approve")
 
 # Phase 3 (3B L2): the 3B workflow is cgscout.agent._discover_related_systems; the former retrieval/transfer._run_related_system_discovery is gone.  Where each patched
 # collaborator is LOOKED UP now (rule R-1):

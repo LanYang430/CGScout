@@ -1,19 +1,28 @@
 # Phase 3 cleanup record
 
 What was removed or moved after the Phase 2 restructure, why that was safe, and how to undo each step. Prompts, schemas, cache keys, budgets, configuration and the retrieval / screening /
-scoring / ranking algorithms were not touched (prompt sha256, pydantic schemas, defaults and the P1/P2 module hashes are identical to the Phase 2 state `dc2c818`).
+scoring / ranking algorithms were not touched (prompt sha256, pydantic schemas, defaults and the P1/P2 module hashes are identical to the Phase 2 state, the commit whose subject starts `Phase 2 / S7:`).
 
-| commit | step |
+| commit (subject starts with) | step |
 |---|---|
-| `663f404` | S8a: 7 unreferenced definitions and 3 unused imports removed (every unused parameter was kept: signatures are call interfaces) |
-| `22f8a79` | S8b-1: `_extract_direct_system_terms` removed |
-| `7df62ab` | S8b-2: `_infer_modeling_requirements` removed |
-| `8e6599b` | S8b-3: `extract_lexical_structural_feature` (+ Case 3 of `_extract_structural_terms`) removed, together with its 18 tests |
-| `edfa39f` | S8e: offline tests for `cgscout` (`tests/test_cli.py`), `profiles.py` docstring and architecture notes corrected; `cli.py` unchanged |
-| `d90702b` | merge 1: `assessment/evidence_extraction.py` -> `assessment/stage4.py` |
-| `be89289` | merge 2: `screening/review_filter.py` -> `screening/filter.py` |
-| `01b8916` | merge 3: `structured.py` -> `retrieval/related_systems/terminology.py` |
-| `2bf220b` | merge 4: `retrieval/dedupe.py` -> `retrieval/search.py` |
+| `Phase 3 / S8a:` | S8a: 7 unreferenced definitions and 3 unused imports removed (every unused parameter was kept: signatures are call interfaces) |
+| `Phase 3 / S8b-1:` | S8b-1: `_extract_direct_system_terms` removed |
+| `Phase 3 / S8b-2:` | S8b-2: `_infer_modeling_requirements` removed |
+| `Phase 3 / S8b-3:` | S8b-3: `extract_lexical_structural_feature` (+ Case 3 of `_extract_structural_terms`) removed, together with its 18 tests |
+| `Phase 3 / S8e:` | S8e: offline tests for `cgscout` (`tests/test_cli.py`), `profiles.py` docstring and architecture notes corrected; `cli.py` unchanged |
+| `Phase 3 / merge 1:` | merge 1: `assessment/evidence_extraction.py` -> `assessment/stage4.py` |
+| `Phase 3 / merge 2:` | merge 2: `screening/review_filter.py` -> `screening/filter.py` |
+| `Phase 3 / merge 3:` | merge 3: `structured.py` -> `retrieval/related_systems/terminology.py` |
+| `Phase 3 / merge 4:` | merge 4: `retrieval/dedupe.py` -> `retrieval/search.py` |
+
+Commits are identified by their subject line, not by a hash: a commit's hash changes whenever the history is rewritten (for example when it is cleaned for publication), its subject does not.
+Show one with `git log --oneline --grep='^Phase 3 / S8b-2:'`, or undo it with
+
+```bash
+git revert "$(git rev-list --reverse --grep='^Phase 3 / S8b-2:' HEAD | head -n 1)"
+```
+
+(`--reverse | head -n 1` takes the oldest match, so a later commit that quotes the subject can never be picked by mistake).
 
 Not done on purpose: `query_construction_v2` and Semantic Scholar are kept; `semantic_intent` (P4) is not merged into `terminology` (P3).
 
@@ -37,8 +46,16 @@ Kept: all model fields (schemas unchanged), `select_primary_structural_term`, th
 Verified run by run (exact values) and, for everything else, by an old-vs-new differential of the whole direct route (124 real planner outputs + 1,601 synthetic ones x 5 budget settings; every query string,
 route, role, budget and the accumulator result identical).
 
-**If any active code is ever found to depend on one of these fields**, restore the matching analyser from the commit before its removal: `git revert 7df62ab` (modeling requirements),
-`git revert 8e6599b` (lexical structural extraction, with its 18 tests), `git revert 22f8a79` (direct-system term).
+**If any active code is ever found to depend on one of these fields**, restore the matching analyser by reverting its commit (each command resolves the commit by its subject, as described above):
+
+```bash
+# modeling requirements
+git revert "$(git rev-list --reverse --grep='^Phase 3 / S8b-2:' HEAD | head -n 1)"
+# lexical structural extraction, with its 18 tests
+git revert "$(git rev-list --reverse --grep='^Phase 3 / S8b-3:' HEAD | head -n 1)"
+# direct-system term
+git revert "$(git rev-list --reverse --grep='^Phase 3 / S8b-1:' HEAD | head -n 1)"
+```
 
 ## Module merges (pure moves)
 

@@ -8,7 +8,7 @@ Only the network/LLM-bound collaborators are replaced by fakes; everything that 
 
 Every scenario produces a TRACE: the ordered events at the collaborator boundaries (arguments included), the cache get/set events (namespace +
 full key), and the serialized result.  `tests/fixtures/consolidation/baseline_traces.json` holds the traces produced by the BASELINE code
-(c8be98c, tag consol-0-baseline).  After each refactoring phase the same scenarios must reproduce those traces EXACTLY (a trace difference
+(tag consol-0-baseline).  After each refactoring phase the same scenarios must reproduce those traces EXACTLY (a trace difference
 is a stop-and-report event, never something to "fix" by editing the fixture).
 
 Where the flow lives, how it is called, which names are patched and which module renames are approved is declared in ONE place: a `Layout` in
