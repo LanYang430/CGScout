@@ -7,6 +7,6 @@ The earlier v1 pipeline and the old session path are historical code, kept in th
 """
 
 # Kept in sync with pyproject.toml's [project].version by hand: a plain constant is the simplest source of truth.
-__version__ = "0.1.0"
+__version__ = "0.1.0b0"
 
 __all__ = ["__version__"]

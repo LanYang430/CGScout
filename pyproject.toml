@@ -4,11 +4,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cgscout"
-version = "0.1.0"
+version = "0.1.0b0"
 description = "CGScout: a literature-retrieval agent that recommends coarse-grained modeling papers (planning -> retrieval -> Stage 3 screening -> Stage 4 assessment)"
 readme = "README.md"
 # numpy>=2.5 (the verified version) needs Python >=3.12; only 3.14 has been tested so far.
 requires-python = ">=3.12"
+authors = [{name = "Lan Yang"}]
+keywords = ["coarse-grained modeling", "literature retrieval", "biophysics", "molecular simulation", "LLM agent"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
 dependencies = [
     "pydantic>=2.0",
     "requests>=2.31",
@@ -19,6 +30,10 @@ dependencies = [
     # with 1.9.1) needs it; pickles are not guaranteed to load across scikit-learn minor versions, hence the pin.
     "scikit-learn>=1.9.1,<1.10",
 ]
+
+[project.urls]
+Homepage = "https://github.com/LanYang430/CGScout"
+Issues = "https://github.com/LanYang430/CGScout/issues"
 
 [project.optional-dependencies]
 dev = ["pytest>=9.0"]

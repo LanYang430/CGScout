@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use CGScout, please cite it as below."
+title: "CGScout"
+type: software
+version: "0.1.0b0"
+authors:
+  - family-names: "Yang"
+    given-names: "Lan"
+    affiliation: "Georgia Institute of Technology"
+repository-code: "https://github.com/LanYang430/CGScout"
+keywords:
+  - coarse-grained modeling
+  - literature retrieval
+  - biophysics
+  - molecular simulation
+  - LLM agent
+abstract: >-
+  CGScout is a literature-retrieval agent for computational biophysicists. Given a modeling question about a protein system, it finds and ranks papers
+  that show how coarse-grained (CG) models were built and used for that system, or for structurally and functionally related systems.
