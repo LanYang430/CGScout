@@ -204,7 +204,7 @@ def test_accumulator_add_with_route_cap_none_ignores_the_route_cap():
                              query_role="structural", retrieval_rank=0)
     accepted_count = 0
     for i in range(10):  # well past max_papers_per_route=5
-        accepted, was_new = acc.add(f"paper-{i}", f"Paper {i}", 2020, e, None, accepted_count, None)
+        accepted, was_new = acc.add(f"paper-{i}", f"Paper {i}", 2020, e, accepted_count, None)
         assert accepted and was_new, f"paper-{i} should be accepted -- route_cap=None means no per-route limit"
         accepted_count += 1
     assert len(acc.papers) == 10
@@ -220,7 +220,7 @@ def test_accumulator_add_still_respects_the_route_cap_when_given():
     accepted_count = 0
     results = []
     for i in range(10):
-        accepted, was_new = acc.add(f"paper-{i}", f"Paper {i}", 2020, e, None, accepted_count, budgets.max_papers_per_route)
+        accepted, was_new = acc.add(f"paper-{i}", f"Paper {i}", 2020, e, accepted_count, budgets.max_papers_per_route)
         results.append(accepted)
         if accepted and was_new:
             accepted_count += 1

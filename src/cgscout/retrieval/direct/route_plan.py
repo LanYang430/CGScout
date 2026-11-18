@@ -29,7 +29,6 @@ from pydantic import BaseModel, Field
 
 from cgscout.retrieval.direct.evidence_plan import EvidenceRoutePlan, RouteTerm  # noqa: E402
 from cgscout.retrieval.related_systems.discovery import _paper_ref  # noqa: E402
-from cgscout.retrieval.types import Hop1Provenance  # noqa: E402
 
 
 # --- budgets ------------------------------------------------------------
@@ -232,18 +231,6 @@ class RetrievedPaper(BaseModel):
     title: str
     year: Optional[int] = None
     found_by: list[RouteProvenanceEntry] = Field(default_factory=list)
-    hop1_provenance: Optional[Hop1Provenance] = None  # populated only for structural-branch hits
-    # ALL discovered systems whose OWN Hop-2 query independently retrieved
-    # this paper (not just the first one to claim it) -- `hop1_provenance`
-    # above stays the first claimant only, UNCHANGED, for existing
-    # consumers; this list is what a caller wanting the FULL set (e.g.
-    # Stage 3's existential system-evidence gate) should read. Diagnosed
-    # against a real case: when the same paper is found by both 'EspP' and
-    # 'pertactin' Hop-2 queries, whichever system's query happened to run
-    # first (a Hop-1-ranking artifact, not a relevance judgment) used to be
-    # the ONLY one Stage 3 ever saw -- an order-dependent false drop when
-    # that first claimant's name doesn't itself appear in the paper's text.
-    hop1_provenances: list[Hop1Provenance] = Field(default_factory=list)
 
 
 class RouteOutcome(BaseModel):
@@ -789,8 +776,7 @@ class _Accumulator:
         self.order: list[str] = []
 
     def add(self, ref: str, title: str, year: Optional[int], entry: RouteProvenanceEntry,
-             hop1_provenance: Optional[Hop1Provenance], route_new_count: int,
-             route_cap: Optional[int]) -> tuple[bool, bool]:
+             route_new_count: int, route_cap: Optional[int]) -> tuple[bool, bool]:
         """Returns (accepted, was_new_unique). `route_new_count` is how many
         NEW unique papers this route has already contributed. `route_cap` is
         the max it may still contribute -- pass None for "no per-route cap,
@@ -805,34 +791,16 @@ class _Accumulator:
         explicitly, unchanged from before."""
         if ref in self.papers:
             self.papers[ref].found_by.append(entry)
-            if hop1_provenance and not self.papers[ref].hop1_provenance:
-                self.papers[ref].hop1_provenance = hop1_provenance
-            self._add_hop1_provenance(ref, hop1_provenance)
             return True, False
         # new unique candidate -- gated by the route cap (if any) and the global cap
         if route_cap is not None and route_new_count >= route_cap:
             return False, False
         if len(self.papers) >= self.budgets.max_total_unique_papers:
             return False, False
-        rp = RetrievedPaper(paper_ref=ref, title=title, year=year, found_by=[entry],
-                             hop1_provenance=hop1_provenance)
+        rp = RetrievedPaper(paper_ref=ref, title=title, year=year, found_by=[entry])
         self.papers[ref] = rp
         self.order.append(ref)
-        self._add_hop1_provenance(ref, hop1_provenance)
         return True, True
-
-    def _add_hop1_provenance(self, ref: str, hop1_provenance: Optional[Hop1Provenance]) -> None:
-        """Appends to hop1_provenances -- the FULL set of discovered systems
-        that independently retrieved this paper -- deduped by
-        discovered_system name so re-adding the same system's claim is a
-        no-op. Independent of (and never overwrites) the first-claimant-only
-        `hop1_provenance` field above."""
-        if hop1_provenance is None:
-            return
-        rp = self.papers[ref]
-        if any(p.discovered_system == hop1_provenance.discovered_system for p in rp.hop1_provenances):
-            return
-        rp.hop1_provenances.append(hop1_provenance)
 
 
 def _run_flat_route(
@@ -863,7 +831,7 @@ def _run_flat_route(
                 query_role=rq.query_role, retrieval_rank=rank,
             )
             accepted, was_new = acc.add(ref, p.title or "", getattr(p, "year", None),
-                                         entry, None, n_new_unique, budgets.max_papers_per_route)
+                                         entry, n_new_unique, budgets.max_papers_per_route)
             if accepted:
                 outcome.n_papers_found += 1
                 if was_new:

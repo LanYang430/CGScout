@@ -1,11 +1,11 @@
 """How the direct route records which routes and queries found each paper, and how that reaches Stage 3 and Stage 4 (zero API, zero network).
 
-Written for Phase 5 / C2d-0 (a tests-only commit, no change to src/).  C2d removes `RetrievedPaper.hop1_provenance` / `hop1_provenances`, the remnants of the structural
-branch's provenance (always None / [] on the direct route: the only call that fills them passes None), and the accumulator parameter that fed them.  What stays is the
-route provenance: `RetrievedPaper.found_by` (one RouteProvenanceEntry per query result a paper appeared in), `provenance_index`, `papers_for_stage3`, and
-`retrieve_direct` writing `found_by_queries` / `query_categories` onto each Paper, which Stage 3 (per-query scoring, route-aware gate) and Stage 4 (routes,
-supporting-query count) read.  Until now nothing pinned that chain in the test suite (only the consolidation mock world, which fakes it).  Every test here reads only what
-stays, so all of them pass before and after C2d."""
+Written in Phase 5 / C2d-0, before C2d-1 removed `RetrievedPaper.hop1_provenance` / `hop1_provenances` (the remnants of the structural branch's provenance, always None / []
+on the direct route because the only call that could fill them passed None) and the accumulator parameter that fed them.  What stays is the route provenance:
+`RetrievedPaper.found_by` (one RouteProvenanceEntry per query result a paper appeared in), `provenance_index`, `papers_for_stage3`, and `retrieve_direct` writing
+`found_by_queries` / `query_categories` onto each Paper, which Stage 3 (per-query scoring, route-aware gate) and Stage 4 (routes, supporting-query count) read.  Until
+then nothing pinned that chain in the test suite (only the consolidation mock world, which fakes it).  Every test here reads only what stays; they passed unchanged
+before and after C2d-1, which only touched this docstring."""
 import pytest
 
 import cgscout.retrieval.direct.from_planner as FP

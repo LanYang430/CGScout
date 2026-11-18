@@ -353,7 +353,7 @@ def build_related_system_identity(ds, *, scientific_class: str, basis: Optional[
 
     # First mention that carries an entity_type wins -- same "first
     # claimant" convention already used elsewhere in this codebase (e.g.
-    # RetrievedPaper.hop1_provenance). A DiscoveredSystem can merge mentions
+    # Paper.structural_discovered_system in retrieval/transfer.py). A DiscoveredSystem can merge mentions
     # from several papers; they are not expected to disagree in practice,
     # and this module makes no attempt to arbitrate if they do.
     entity_type: Optional[str] = None

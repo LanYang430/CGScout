@@ -96,7 +96,7 @@ def papers_for_stage3(result: RouteRetrievalResult, paper_cache: dict[str, Paper
 
 
 def provenance_index(result: RouteRetrievalResult) -> dict[str, "object"]:
-    """paper_ref -> RetrievedPaper (route provenance + hop1_provenance),
+    """paper_ref -> RetrievedPaper (its route provenance, `found_by`),
     for reattaching provenance to a Paper after Stage 3/4 by paper_ref."""
     return {rp.paper_ref: rp for rp in result.papers}
 

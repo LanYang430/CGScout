@@ -452,8 +452,8 @@ def score_paper_against_its_provenance(
     # not something this stage claims to see.
     structural_gate_note = ""
     # Existential over ALL systems that independently retrieved this paper
-    # (paper.structural_discovered_systems, route_plan.py's
-    # RetrievedPaper.hop1_provenances) -- NOT the full set of every Hop-1-
+    # (paper.structural_discovered_systems, which retrieval/transfer.py
+    # fills and merges) -- NOT the full set of every Hop-1-
     # discovered system, only the ones whose OWN Hop-2 query actually found
     # THIS paper. Falls back to the single-name field for any caller that
     # only ever set that (backward compat -- e.g. hand-built Paper fixtures
