@@ -3,7 +3,7 @@ artifact (sim_classifier_model.joblib, loaded at runtime by
 screening/sim_classifier.py). NOT imported by production code -- run manually
 whenever the training CSV/label corrections below change:
 
-    python benchmark/training/train_sim_classifier.py
+    python benchmark/training/train_sim_classifier.py --train-csv PATH
 
 Ports the exact cleaning logic (DOI-keyed relabel/exclude sets, review-note
 exclusion) and model architecture validated in this session's standalone
@@ -16,16 +16,17 @@ ROC-AUC on this training set: 0.9160. External 427-row held-out test set
 ROC-AUC 0.8477, at threshold 0.5 -- TP=166 FP=105 FN=20 TN=136, recall
 89.2%, precision 61.3%.
 
-TRAIN_CSV is the user's own labeled export (beam_stage3_training_ready_
+The training CSV is the user's own labeled export (beam_stage3_training_ready_
 yes_no.csv, 557 rows: title/doi/abstract/simulation_by_authors/label_note),
-not checked into the repo -- point TRAIN_CSV at wherever that CSV lives, or
-override via the BEAM_STAGE3_TRAIN_CSV env var.
+not checked into the repo -- pass its path with --train-csv, or set the
+CGSCOUT_STAGE3_TRAIN_CSV environment variable (the older name
+BEAM_STAGE3_TRAIN_CSV is still read, with a one-time notice).  There is no
+default path; without either the script stops with an explanation.
 """
 from __future__ import annotations
 
 import csv
 import json
-import os
 from pathlib import Path
 
 import numpy as np
@@ -38,10 +39,21 @@ from sklearn.preprocessing import StandardScaler
 
 from cgscout.screening.sim_classifier import EMBED_MODEL, MODEL_PATH  # noqa: E402
 
-TRAIN_CSV = Path(os.environ.get(
-    "BEAM_STAGE3_TRAIN_CSV",
-    "~/Downloads/beam_stage3_training_ready_yes_no.csv",
-))
+ENV_TRAIN_CSV = "CGSCOUT_STAGE3_TRAIN_CSV"
+
+
+def train_csv(explicit: str | None = None) -> Path:
+    """The labelled training export: `explicit` (--train-csv) if given, else $CGSCOUT_STAGE3_TRAIN_CSV (legacy name BEAM_STAGE3_TRAIN_CSV, read through
+    cgscout.config.get with its one-time notice), else a clear error.  Read at call time, never at import time."""
+    from cgscout import config
+    value = explicit or config.get("STAGE3_TRAIN_CSV")
+    if not value:
+        raise SystemExit(f"The Stage-3 training CSV (beam_stage3_training_ready_yes_no.csv) is not part of the repository. "
+                         f"Pass --train-csv PATH or set {ENV_TRAIN_CSV}.")
+    path = Path(value).expanduser()
+    if not path.is_file():
+        raise SystemExit(f"Stage-3 training CSV {str(path)!r} (from --train-csv or {ENV_TRAIN_CSV}) is not a file.")
+    return path
 EMBED_CACHE_PATH = Path(__file__).resolve().parent / "sim_classifier_embed_cache.json"
 N_PCA_COMPONENTS = 60
 SEED = 0
@@ -110,8 +122,8 @@ def is_train_review(note: str) -> bool:
     return "review" in n and not n.startswith("manual/web review")
 
 
-def load_train_rows() -> list[dict]:
-    with open(TRAIN_CSV, newline="", encoding="utf-8") as f:
+def load_train_rows(train_csv_path: str | None = None) -> list[dict]:
+    with open(train_csv(train_csv_path), newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     kept, n_review, n_relabel_to_no, n_relabel_to_yes, n_excluded_doi = [], 0, 0, 0, 0
     for r in rows:
@@ -155,7 +167,11 @@ def get_embeddings(texts: list[str], keys: list[str]) -> np.ndarray:
 
 
 def main() -> None:
-    train_rows = load_train_rows()
+    import argparse
+    ap = argparse.ArgumentParser(description="Train the Stage 3 experiment-vs-simulation classifier and write screening/sim_classifier_model.joblib (calls the OpenAI embeddings API).")
+    ap.add_argument("--train-csv", help=f"labelled training export (default: ${ENV_TRAIN_CSV}; it is not in the repository)")
+    a = ap.parse_args()
+    train_rows = load_train_rows(a.train_csv)
     n_yes = sum(1 for r in train_rows if r["simulation_by_authors"] == "YES")
     print(f"final training set: {len(train_rows)} rows  YES={n_yes} NO={len(train_rows) - n_yes}")
 

@@ -5,7 +5,7 @@ For each candidate:
      'MSL10' / 'Alb3' are poorly served by semantic search), seed excluded, de-duplicated, judged by the same
      DIRECT_CHECK prompt the pilot generator uses (direct = a CG / multiscale-CG model OF Y itself);
   3. a transfer rationale (axis, feature, why the seed is useful for Y, confidence, caveat) from the seed abstract.
-Nothing is generated and no query is written.  Usage: l3_verify.py [--only 1,2]"""
+Nothing is generated and no query is written.  Usage: l3_verify.py [--only 1,2] [--stage3-data-dir DIR]  (DIR, or $CGSCOUT_STAGE3_DATA_DIR, holds the author's labelled Stage-3 CSV exports, which are not in the repository)"""
 from __future__ import annotations
 
 import difflib
@@ -18,6 +18,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import gen_backend  # noqa: E402,F401
 import prompts as P  # noqa: E402
+import stage3_data  # noqa: E402
 from overlap_audit import norm  # noqa: E402
 from schemas import DirectCheck, TransferRationale  # noqa: E402
 
@@ -113,11 +114,11 @@ def verify(c, backend, search, epmc, audit_dois: dict):
             "direct_CG_hits_for_Y": direct, "verified_no_direct": not direct}
 
 
-def classifier_overlap() -> dict:
+def classifier_overlap(data_dir: str | None = None) -> dict:
     """seed DOI -> list of places it already appears (classifier files / dev-13 / earlier pilot / curated pool)."""
     import csv
     out: dict[str, list] = {}
-    dl = Path("~/Downloads")
+    dl = stage3_data.data_dir(data_dir)
     for f in ("beam_stage3_training_ready_yes_no.csv", "beam_stage3_external_test_clean_519.csv", "beam_stage3_training_labels_89.csv", "beam_stage3_silver_labels_91_web_reviewed.csv"):
         for r in csv.DictReader(open(dl / f, encoding="utf-8")):
             out.setdefault((r["doi"] or "").lower(), []).append(f"{f.split('_')[2]}:{r['case'].split(':')[0]}")
@@ -133,13 +134,16 @@ def classifier_overlap() -> dict:
 
 def main():
     import argparse
-    ap = argparse.ArgumentParser(); ap.add_argument("--only"); a = ap.parse_args()
+    ap = argparse.ArgumentParser(description=(__doc__ or "").split("\n")[0]); ap.add_argument("--only")
+    ap.add_argument("--stage3-data-dir", help=f"directory with the labelled Stage-3 CSV exports (default: ${stage3_data.ENV_NAME}; they are not in the repository)")
+    a = ap.parse_args()
+    stage3_data.data_dir(a.stage3_data_dir)             # fail fast, before any backend or search is created
     import regression_lib as RL
     from cgscout.sources.openalex import search_openalex
     import cgscout.assessment.stage4 as S4
     cands = [c for c in CANDIDATES if not a.only or str(c["n"]) in a.only.split(",")]
     backend = gen_backend.get_generator_backend()
-    ov = classifier_overlap()
+    ov = classifier_overlap(a.stage3_data_dir)
     results = []
 
     def go():

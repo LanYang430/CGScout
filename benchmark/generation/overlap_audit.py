@@ -1,6 +1,7 @@
 """Overlap audit: which curated-pool papers are safe ("clean_for_pilot") to use as benchmark seeds?
 Evidence, all from files (no memory):
-  * the user's Stage-3 classifier datasets in ~/Downloads (training_ready 557 rows, external_test 519 rows, silver/89 sets);
+  * the user's Stage-3 classifier datasets (training_ready 557 rows, external_test 519 rows, silver/89 sets; not in the repository: the directory is
+    --stage3-data-dir or $CGSCOUT_STAGE3_DATA_DIR);
   * the exact rows the production trainer really used (sim_classifier_train.load_train_rows(), after its DOI/title cleaning);
   * the `case` column of those files = which seed/case the candidates were retrieved for;
   * the 13 dev/smoke cases (data/regression_13_cases.json).
@@ -19,9 +20,9 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import gen_backend  # noqa: E402,F401
+import stage3_data  # noqa: E402
 from curated_pool import CURATED  # noqa: E402
 
-DL = Path("~/Downloads")
 FILES = {"train557": "beam_stage3_training_ready_yes_no.csv", "test519": "beam_stage3_external_test_clean_519.csv",
          "labels89": "beam_stage3_training_labels_89.csv", "silver91": "beam_stage3_silver_labels_91_web_reviewed.csv"}
 
@@ -41,8 +42,9 @@ def best_title_match(title: str, rows: list[dict], thr: float = 0.9):
     return best if best[0] >= thr else (best[0], None)
 
 
-def load_all():
-    data = {k: list(csv.DictReader(open(DL / f, encoding="utf-8"))) for k, f in FILES.items()}
+def load_all(data_dir: str | None = None):
+    dl = stage3_data.data_dir(data_dir)
+    data = {k: list(csv.DictReader(open(dl / f, encoding="utf-8"))) for k, f in FILES.items()}
     import io, contextlib
     with contextlib.redirect_stdout(io.StringIO()):
         import sim_classifier_train as T
@@ -66,8 +68,13 @@ def resolve_openalex(title: str, year: int):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser(description=(__doc__ or "").split("\n")[0])
+    ap.add_argument("--stage3-data-dir", help=f"directory with the labelled Stage-3 CSV exports (default: ${stage3_data.ENV_NAME}; they are not in the repository)")
+    a = ap.parse_args()
+    stage3_data.data_dir(a.stage3_data_dir)             # fail fast, before any other import or work
     import regression_lib as RL
-    data, used_keys = load_all()
+    data, used_keys = load_all(a.stage3_data_dir)
     all_rows = [r for rows in data.values() for r in rows]
     dev = dev13()
     dev_dois = {d["doi"] for d in dev}

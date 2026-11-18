@@ -15,6 +15,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import gen_backend  # noqa: E402,F401
 import seeds as SD  # noqa: E402
+import stage3_data  # noqa: E402
 
 QUERIES = [
     ("protein_binding_awsem", "AWSEM coarse-grained simulation of protein-protein binding and association mechanism"),
@@ -42,8 +43,8 @@ def family(text: str) -> str:
     return next((n for n, rx in FAMILY if re.search(rx, text, re.I)), "other/bespoke")
 
 
-def overlap_dois() -> set[str]:
-    dl = Path("~/Downloads")
+def overlap_dois(data_dir: str | None = None) -> set[str]:
+    dl = stage3_data.data_dir(data_dir)
     out = set()
     for f in ("beam_stage3_training_ready_yes_no.csv", "beam_stage3_external_test_clean_519.csv", "beam_stage3_training_labels_89.csv", "beam_stage3_silver_labels_91_web_reviewed.csv"):
         out |= {(r["doi"] or "").lower() for r in csv.DictReader(open(dl / f, encoding="utf-8"))}
@@ -66,13 +67,13 @@ def cached_abstract(doi: str) -> str:
     return ""
 
 
-def new_search(limit: int = 25) -> list[dict]:
+def new_search(limit: int = 25, data_dir: str | None = None) -> list[dict]:
     import regression_lib as RL
     from cgscout.sources.openalex import search_openalex
     SD.DEV_DOMAIN = re.compile(r"condensate|phase separation|liquid[- ]liquid", re.I)      # folding is allowed here; condensates are covered by the curated IDP slots
     RL.harness_guard(len(QUERIES), what="bench_v1_propose14")
     RL.U.set_run_label("bench_v1_propose14")
-    bad, seen, out = overlap_dois(), set(), []
+    bad, seen, out = overlap_dois(data_dir), set(), []
     for dom, q in QUERIES:
         for p in search_openalex(q, limit=limit, mode="semantic"):
             d = (p.doi or "").lower()
@@ -84,9 +85,14 @@ def new_search(limit: int = 25) -> list[dict]:
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser(description=(__doc__ or "").split("\n")[0])
+    ap.add_argument("--stage3-data-dir", help=f"directory with the labelled Stage-3 CSV exports (default: ${stage3_data.ENV_NAME}; they are not in the repository)")
+    a = ap.parse_args()
+    stage3_data.data_dir(a.stage3_data_dir)             # fail fast, before any search or LLM call
     audit = {p["id"]: p for p in json.loads((HERE / "data" / "curated_pool_audit.json").read_text())["papers"]}
     import regression_lib as RL
-    pool = RL.run_guarded(new_search)
+    pool = RL.run_guarded(lambda: new_search(data_dir=a.stage3_data_dir))
     backend = gen_backend.get_generator_backend()
     SD.tag_pool(pool, backend)
     for c in pool:

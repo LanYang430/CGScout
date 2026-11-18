@@ -57,3 +57,7 @@ A Claude or Gemini web-search baseline would be a further independent script her
 
 The 200-query workbook, per-run result JSONs, LLM usage logs, `plans_frozen/`, `terminology_memo.json`, and the Stage 3 classifier's training CSV
 (`benchmark/training/train_sim_classifier.py` needs it; the shipped `sim_classifier_model.joblib` is used otherwise) belong to the data release.
+
+The scripts that need the author's labelled Stage-3 exports have no built-in path: `benchmark/training/train_sim_classifier.py` takes `--train-csv PATH` (or `CGSCOUT_STAGE3_TRAIN_CSV`;
+the older name `BEAM_STAGE3_TRAIN_CSV` is still read), and `benchmark/generation/{l3_verify,overlap_audit,propose14}.py` take `--stage3-data-dir DIR` (or `CGSCOUT_STAGE3_DATA_DIR`) naming the directory
+that holds the four `beam_stage3_*.csv` files. Without them each script stops with a message that says what to set; `--help` works without any data.
