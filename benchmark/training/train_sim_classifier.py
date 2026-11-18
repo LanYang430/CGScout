@@ -7,7 +7,7 @@ whenever the training CSV/label corrections below change:
 
 Ports the exact cleaning logic (DOI-keyed relabel/exclude sets, review-note
 exclusion) and model architecture validated in this session's standalone
-diagnostic (scratchpad stage3_logreg_v5_clean_train.py): PCA(60) +
+diagnostic (an earlier standalone script, not in this repository): PCA(60) +
 StandardScaler + LogisticRegression(C=1.0), fit on ALL 424 cleaned training
 rows (reviews/tool-papers excluded from training entirely, not relabeled --
 empirically the best of three tested strategies). 5-fold GroupKFold CV
@@ -59,7 +59,7 @@ N_PCA_COMPONENTS = 60
 SEED = 0
 
 # --- Manual audit, all rounds -- FINAL union, each DOI in exactly ONE set
-# (mirrors scratchpad stage3_logreg_v5_clean_train.py's validated state) ---
+# (mirrors the validated state of that earlier standalone diagnostic) ---
 
 RELABEL_YES_TO_NO_DOIS = {
     "10.3390/molecules27051647",          # Thermoresponsive Ionic Liquid/Water Mixtures -- review

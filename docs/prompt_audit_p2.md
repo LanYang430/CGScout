@@ -4,7 +4,7 @@ Status: **CLOSED (2026-11-11). Final P2 = E1-E5, E2 included (owner decision aft
 
 Owner's rule for this prompt: keep the debugged original as far as possible (sentence structure, concrete examples, long explanations); change only project / case-specific wording, clear typos, and descriptions that contradict the code; no prompt optimisation, no new rules.
 
-## What was changed (branch `cleanup/phase2-cgscout-package`)
+## What was changed
 
 Two commits, identified by subject (a hash changes when history is rewritten): the **text commit** (subject starts `Phase 3 / P2 prompt audit: approved text edits`) and the **E2 commit** (subject starts `Phase 3 / P2 prompt audit: E2`). Find one with `git log --oneline --grep='^Phase 3 / P2 prompt audit: E2'`.
 

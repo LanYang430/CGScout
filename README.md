@@ -90,4 +90,4 @@ See [docs/reproduce.md](docs/reproduce.md). The paper configuration is `cgscout.
 ## History
 
 The earlier v1 pipeline, the old session path and the one-off experiment scripts are not part of this repository's main line; they are kept in the git tag
-`legacy-pre-cgscout` (and the branch `legacy`).
+`legacy-pre-cgscout`.

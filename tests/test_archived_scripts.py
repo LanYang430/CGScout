@@ -42,3 +42,38 @@ def test_the_docs_do_not_point_into_the_authors_working_directories():
         text = doc.read_text(encoding="utf-8")
         for needle in internal:
             assert needle not in text, f"{doc.name} mentions {needle!r}"
+
+
+NINE = ["routing_smoke.py", "routing_smoke_v2.py", "generate.py", "seeds.py", "propose14.py", "overlap_audit.py", "l3_find_more.py", "l3_verify.py", "probe.py"]
+GONE = ("regression_lib", "sim_classifier_train")
+
+
+def _imported_modules(path):
+    mods = set()
+    for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+        if isinstance(node, ast.Import):
+            mods |= {a.name for a in node.names}
+        elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+            mods.add(node.module)
+    return mods
+
+
+def test_the_archived_list_is_exactly_the_generation_scripts_that_import_something_that_no_longer_exists():
+    """Nine scripts of benchmark/generation cannot run (docs/reproduce.md lists them as archived / historical).  If one is repaired, or a new broken one appears, this fails."""
+    broken = set()
+    for py in sorted(GEN.glob("*.py")):
+        for m in _imported_modules(py):
+            top = m.split(".")[0]
+            if top in GONE or (top == "cgscout" and importlib.util.find_spec(m) is None):
+                broken.add(py.name)
+    assert broken == set(NINE), sorted(broken ^ set(NINE))
+    assert all(importlib.util.find_spec(m) is None for m in GONE)                      # still missing, so the list is still true
+    assert not list((ROOT / "benchmark").rglob("sim_classifier_train.py"))
+
+
+def test_reproduce_md_lists_all_nine_archived_scripts_in_its_table():
+    text = (ROOT / "docs" / "reproduce.md").read_text(encoding="utf-8")
+    table = text.split("## Benchmark-generation scripts are a historical record", 1)[1]
+    rows = [line for line in table.splitlines() if line.startswith("| `")]
+    assert sorted(line.split("`")[1] for line in rows) == sorted(NINE), rows
+    assert "archived / historical" in table and "nothing was re-run" in table

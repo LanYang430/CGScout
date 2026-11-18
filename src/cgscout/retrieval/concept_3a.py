@@ -37,8 +37,8 @@ earlier attempts are exactly what this round had to reckon with):
      mode=semantic depth=20 as production -- 15 (axis, target) pairs: 0
      regressions (baseline hit -> template miss), 3 recoveries (baseline
      miss -> template hit), the rest unchanged or unchanged-improved rank.
-     See scratchpad run_3a_regression_test.py / reg3a_output.log for the
-     raw run (2026-09-29 session) -- not reproduced here since it depends
+     The scripts and the log of the raw run (2026-09-29 session) are not
+     part of this repository -- not reproduced here since it depends
      on live OpenAlex/LLM calls, but the aggregate is the empirical
      grounding for this design, not a hunch.
      KNOWN RESIDUAL RISK, found while spot-checking the SAME validation

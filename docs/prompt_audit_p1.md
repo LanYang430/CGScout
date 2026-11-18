@@ -2,7 +2,7 @@
 
 Status: **closed for now (accepted by the owner, 2026-11-11)**. Next prompt: P2.
 
-## What was changed (branch `cleanup/phase2-cgscout-package`)
+## What was changed
 
 | edit | content | state |
 |---|---|---|

@@ -10,7 +10,7 @@ from cgscout.retrieval.direct.route_plan import RouteRetrievalBudgets
 
 EVAL = Path(__file__).resolve().parents[1] / "benchmark" / "evaluation"
 
-# the original "CUR" arm (benchmark_new37_beam/arms37.py), spelled out
+# the original "CUR" arm (an archived benchmark arm file), spelled out
 ORIGINAL_CUR_BUDGETS = dict(flat_anchor_short_context=True, flat_query_hygiene=True, need_semantic_enabled=True, stage3_recover_abstracts=True, query_construction_v2=False)
 ORIGINAL_CUR_SCREEN_CHARS = 4000
 

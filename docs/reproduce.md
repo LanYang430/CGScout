@@ -64,13 +64,26 @@ that holds the four `beam_stage3_*.csv` files. Without them each script stops wi
 
 ## Benchmark-generation scripts are a historical record
 
-`benchmark/generation/` records how the 200-query benchmark was built; it was written against the code before the CGScout restructure and has not been maintained for the
-current version. **`routing_smoke.py` and `routing_smoke_v2.py` are archived scripts**: they cannot run on CGScout (`cgscout.retrieval.orchestrator` was renamed `cgscout.retrieval.transfer`,
-`regression_lib` was replaced by `benchmark/evaluation/harness.py`, and `run_expert_prior_retrieval` became the body of `cgscout.agent.retrieve`), so importing them raises `ModuleNotFoundError`.
-Their outputs, `benchmark/generation/data/routing_smoke*.json`, are kept as they were produced; nothing was re-run.
-Several other scripts in the same directory (`generate.py`, `l3_find_more.py`, `l3_verify.py`, `overlap_audit.py`, `probe.py`, `propose14.py`, `seeds.py`) import `regression_lib`, and
-`overlap_audit.py` also imports `sim_classifier_train` (now `benchmark/training/train_sim_classifier.py`), so they stop with `ModuleNotFoundError` as well (`--help` and the
-data-directory check of the three that take `--stage3-data-dir` still run); treat the whole directory as an archive, and its files under `data/` as the benchmark's construction record.
+`benchmark/generation/` records how the 200-query benchmark was built. It was written against the code before the CGScout restructure and has not been maintained for the
+current version: **nine of its scripts are archived / historical workflows that cannot run on CGScout** -- importing them raises `ModuleNotFoundError`. Their outputs under
+`benchmark/generation/data/` are kept as they were produced; nothing was re-run, and no script was repaired or migrated.
+
+| script | import that no longer exists | output kept |
+|---|---|---|
+| `routing_smoke.py` | `cgscout.retrieval.orchestrator` (renamed `cgscout.retrieval.transfer`); `regression_lib` | `data/routing_smoke.json` |
+| `routing_smoke_v2.py` | the same two | `data/routing_smoke_v2*.json` (seven files) |
+| `generate.py` | `regression_lib` | `data/pilot_v0.*`, `data/pilot_v1.*` |
+| `seeds.py` | `regression_lib` | `data/seed_pool.json`, `data/pilot_seeds.json` |
+| `propose14.py` | `regression_lib` | `data/seed_proposal_14.json` |
+| `overlap_audit.py` | `regression_lib`; `sim_classifier_train` (now `benchmark/training/train_sim_classifier.py`) | `data/curated_pool_audit.json` |
+| `l3_find_more.py` | `regression_lib` | `data/l3_more_candidates*.json` |
+| `l3_verify.py` | `regression_lib` | `data/l3_verification.json` |
+| `probe.py` | `regression_lib` | none kept (it wrote `--out`, by default `data/pilot_v0_probed.*`) |
+
+`regression_lib` was replaced by `benchmark/evaluation/harness.py`, and `run_expert_prior_retrieval` became the body of `cgscout.agent.retrieve`. For the scripts that take
+`--stage3-data-dir`, `--help` and the data-directory check still run. The other files of the directory (`finalize_pilot_seeds.py`, `hop1_audit.py`, `make_review.py`, `curated_pool.py`,
+`leakage.py`, `prompts.py`, `schemas.py`, `gen_backend.py`, `stage3_data.py`) are helpers or post-processing steps of the same workflow; treat the whole directory as an archive and its
+files under `data/` as the construction record of the benchmark.
 
 To trace how the benchmark was built, and to read the scripts next to the modules they were written against, check out the git tag `legacy-pre-cgscout` (`git worktree add ../cgscout-legacy legacy-pre-cgscout`): there the scripts are
 in `benchmarks/beam_bench_v1/`, in the same checkout as the modules they import. The evaluation itself (`benchmark/evaluation/`, above) does not depend on any of these scripts.
