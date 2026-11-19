@@ -37,6 +37,6 @@ def test_no_contact_detail_is_published_in_the_metadata():
         assert "@" not in text.replace("git@", "")
 
 
-def test_readme_gives_the_former_name_and_says_what_the_legacy_tag_keeps():
-    assert "CGScout was developed under the working name BEAM." in README
+def test_readme_uses_only_the_project_name_and_says_what_the_legacy_tag_keeps():
+    assert "BEAM" not in README
     assert "benchmark-construction and regression scripts" in README and "Python files only" in README and "cannot reproduce them" in README

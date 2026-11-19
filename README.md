@@ -1,7 +1,5 @@
 # CGScout
 
-CGScout was developed under the working name BEAM.
-
 CGScout is a literature-retrieval agent for computational biophysicists. Given a modeling question about a protein system, it finds and ranks papers
 that show how coarse-grained (CG) models were built and used for that system — or for structurally and functionally related systems.
 
@@ -59,7 +57,7 @@ else:
 `run` returns an `AgentResult` (`.plan`, `.prior`, `.retrieval` with the per-axis logs and the Stage-3 verdicts, `.assessment`). To start from a plan you already have, call
 `execute(plan, prior, backend=backend)`; `AgentConfig(budgets=..., stage4=...)` changes the retrieval switches and the Stage-4 settings (the defaults are what the command line runs with).
 
-Settings (the legacy `BEAM_*` spellings of these are still read, with a one-time notice):
+Settings:
 
 | variable | meaning | default |
 |---|---|---|
@@ -91,7 +89,6 @@ See [docs/reproduce.md](docs/reproduce.md). The paper configuration is `cgscout.
 
 ## History
 
-The working name survives only in the history and in the legacy `BEAM_*` environment variables, which are still read.
 The earlier v1 pipeline, the old session path and the benchmark-construction and regression scripts of that time are not part of this repository's main line; they are kept in the git tag
 `legacy-pre-cgscout` (Python files only: the data, results and raw outputs of those experiments are not published, so the tag shows how things were done but cannot reproduce them; see
 [docs/reproduce.md](docs/reproduce.md)).
